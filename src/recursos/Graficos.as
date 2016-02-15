@@ -8,11 +8,11 @@ package recursos
 	{
 		
 		// tela inicial
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnGaleria.png")]
 		public static var ImgGaleria:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCamera.png")]
 		public static var ImgCamera:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/barra.png")]
 		public static var ImgCarregar:Class;
 		
 		// tela foto recuperada
@@ -28,45 +28,45 @@ package recursos
 		public static var ImgCancelar:Class;
 		
 		// help
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/textohelp1.png")]
 		public static var ImgHelp01:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/textohelp2.png")]
 		public static var ImgHelp02:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/textohelp3.png")]
 		public static var ImgHelp03:Class;
 		
 		// balao
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBalao01:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnBalaoPensamento.png")]
 		public static var ImgBalao02:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnBalaoRect.png")]
 		public static var ImgBalao03:Class;
 		
 		// botoes tipo de balão
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBTBalao01:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnBalaoPensamento.png")]
 		public static var ImgBTBalao02:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnBalaoRect.png")]
 		public static var ImgBTBalao03:Class;
 		
 		// botoes cor
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCor0xFF0000.png")]
 		public static var ImgBTCor01:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCor0x3FA9F5.png")]
 		public static var ImgBTCor02:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCor0x999999.png")]
 		public static var ImgBTCor03:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCor0xCCCCCC.png")]
 		public static var ImgBTCor04:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCor0xFFFFFF.png")]
 		public static var ImgBTCor05:Class;
 		
 		// botoes propriedades do balão
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnFlip.png")]
 		public static var ImgPBFlipV:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnFlipVertical.png")]
 		public static var ImgPBFlipH:Class;
 		[Embed(source = "imagens/")]
 		public static var ImgPBOK:Class;
