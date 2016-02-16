@@ -11,8 +11,10 @@ package telas
 	import flash.events.TransformGestureEvent;
 	import flash.filesystem.File;
 	import flash.media.CameraRoll;
+	import flash.media.CameraUI;
 	import flash.net.FileFilter;
 	import flash.net.URLRequest;
+	import flash.sampler.NewObjectSample;
 	import recursos.Graficos;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
@@ -39,6 +41,9 @@ package telas
 		private var _roll:CameraRoll;
 		private var _file:File;
 		
+		//camera
+		private var camera:CameraUI;
+		
 		public function TelaInicial(funcMudaTela:Function) 
 		{
 			super(funcMudaTela);
@@ -51,15 +56,20 @@ package telas
 			this._imgsHelp.push(Graficos.ImgHelp02);
 			this._imgsHelp.push(Graficos.ImgHelp03);
 			this._imgAtual = 0;
-			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;
+			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;			
 			this.addChild(this._help);
-			
 			// criar outros botões
+			this._camera = new BotaoIcone(Graficos.ImgCamera);
+			addChild(this._camera);
+			
+			this._carregar = new BotaoIcone(Graficos.ImgCarregar);
+			addChild(this._carregar);
 			
 			// criando acesso à galeria
 			this._roll = new CameraRoll();
 			this._file = File.documentsDirectory;
 			this._imagem = new Loader();
+			
 		}
 		
 		private function cliqueGaleria(evento:MouseEvent):void {
@@ -134,16 +144,40 @@ package telas
 			this._galeria.y = 0;
 			
 			this._camera.scaleX = this._camera.scaleY = this._galeria.scaleX;
-			// posicionar camera
 			
-			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
-			// posicionar carrgar
+			// posicionar camera
+			this._camera.width = stage.stageWidth / 5 ;
+			this._camera.scaleY = this._galeria.scaleX;
+			this._camera.x = stage.stageWidth - _camera.width;
+			this._camera.y = 0;
+			
+			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;	
+			
+			// posicionar carregar
+			this._carregar.width = stage.stageWidth / 5;
+			this._carregar.scaleY = this._galeria.scaleX;	
+			
+			this._carregar.x = stage.stageWidth / 2 - this._carregar.width/2;
+			this._carregar.y = stage.stageHeight - this._carregar.height ;
+			
 			
 			// pocisionar e dimensionar help aqui
+			if(stage.stageWidth < stage.stageHeight){
+			this._help.width = stage.stageWidth;
+			this._help.scaleY = _help.scaleX;
+			this._help.x = 0;
+			this._help.y = stage.stageWidth / 2 ;
+			}
+			else{
+				this._help.scaleX = _help.scaleY;
+				this._help.y = stage.stageHeight / 2 - this._help.height/2 + stage.stageHeight/5;
+				this._help.x = stage.stageWidth/2 - this._help.width/2;
+			}
 			
 			
 			// ADICIONAR CLIQUES NOS BOTOES
-			if (!this._galeria.hasEventListener(MouseEvent.CLICK)) {
+			if (!this._galeria.hasEventListener(MouseEvent.CLICK)) { 
+				
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 				this._carregar.addEventListener(MouseEvent.CLICK, cliqueCarregar);
@@ -151,8 +185,21 @@ package telas
 				// TROCA DO HELP
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
 				stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
+				stage.addEventListener(Event.RESIZE, desenho);
+
 			}
 		}
+						
+		
+		
+		private function cliqueCamera(evento:MouseEvent):void {
+			trace('camera');
+		}
+		
+		private function cliqueCarregar(evento:MouseEvent):void {
+			trace('server');
+		}
+		
 		
 		override public function escondendo(evento:Event):void 
 		{
@@ -163,18 +210,7 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 		}
-		
-		private function cliqueGaleria(evento:MouseEvent):void {
-			
-		}
-		
-		private function cliqueCamera(evento:MouseEvent):void {
-			
-		}
-		
-		private function cliqueCarregar(evento:MouseEvent):void {
-			
-		}
+
 		
 		private function swipeTela(evento:TransformGestureEvent):void {
 			// conferir evento.offsetX para saber se foi swipe direita ou esquerda

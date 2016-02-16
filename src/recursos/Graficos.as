@@ -16,9 +16,9 @@ package recursos
 		public static var ImgCarregar:Class;
 		
 		// tela foto recuperada
-		[Embed(source = "imagens/btnConfigBalao")]
+		[Embed(source = "imagens/btnConfigBalao.png")]
 		public static var ImgPropBalao:Class;
-		[Embed(source = "imagens/")]
+	/*	[Embed(source = "imagens/")]
 		public static var ImgAjusteBalao:Class;
 		[Embed(source = "imagens/")]
 		public static var ImgAjusteImagem:Class;
@@ -26,7 +26,7 @@ package recursos
 		public static var ImgSalvar:Class;
 		[Embed(source = "imagens/")]
 		public static var ImgCancelar:Class;
-		
+		*/
 		// help
 		[Embed(source = "imagens/textohelp1.png")]
 		public static var ImgHelp01:Class;
