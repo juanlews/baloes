@@ -16,7 +16,7 @@ package recursos
 		public static var ImgCarregar:Class;
 		
 		// tela foto recuperada
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnConfigBalao")]
 		public static var ImgPropBalao:Class;
 		[Embed(source = "imagens/")]
 		public static var ImgAjusteBalao:Class;
@@ -68,7 +68,7 @@ package recursos
 		public static var ImgPBFlipV:Class;
 		[Embed(source = "imagens/btnFlipVertical.png")]
 		public static var ImgPBFlipH:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCerto.png")]
 		public static var ImgPBOK:Class;
 		
 		
