@@ -12,21 +12,21 @@ package recursos
 		public static var ImgGaleria:Class;
 		[Embed(source = "imagens/btnCamera.png")]
 		public static var ImgCamera:Class;
-		[Embed(source = "imagens/barra.png")]
+		[Embed(source = "imagens/btnCarregar.png")]
 		public static var ImgCarregar:Class;
 		
 		// tela foto recuperada
 		[Embed(source = "imagens/btnConfigBalao.png")]
 		public static var ImgPropBalao:Class;
-	/*	[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnExpandir.png")]
 		public static var ImgAjusteBalao:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnEditImagem.png")]
 		public static var ImgAjusteImagem:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCerto.png")]
 		public static var ImgSalvar:Class;
-		[Embed(source = "imagens/")]
+		[Embed(source = "imagens/btnCancela.png")]
 		public static var ImgCancelar:Class;
-		*/
+		
 		// help
 		[Embed(source = "imagens/textohelp1.png")]
 		public static var ImgHelp01:Class;

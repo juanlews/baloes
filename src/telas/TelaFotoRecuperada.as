@@ -7,10 +7,13 @@ package telas
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TransformGestureEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.geom.Rectangle;
+	import flash.ui.Multitouch;
+	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
 	import recursos.Graficos;
 	
@@ -39,20 +42,89 @@ package telas
 		{
 			super(funcMudaTela);
 			
-			// criar imagem fundo
 			
 			// criar balão
 			
 			// criar botões
+			this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
+			this.addChild(this._propBalao);
 			
+			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
+			this.addChild(this._ajusteBalao);
+			
+			this._ajusteImagem = new BotaoIcone(Graficos.ImgAjusteImagem);
+			this.addChild(this._ajusteImagem);
+			
+			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
+			this.addChild(this._salvar);
+			
+			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
+			this.addChild(this._cancelar);
 		}
 		
 		override public function desenho(evento:Event = null):void 
 		{
 			super.desenho(evento);
-			
 			// posicionar e dimensionar botões
+			
+			//botão propiedades balão
+			this._propBalao.x = 0
+			this._propBalao.width = stage.stageWidth / 6;
+			this._propBalao.scaleY = this._propBalao.scaleX;
+			
+			//botão ajuste do balão
+			this._ajusteBalao.x = this._propBalao.width;
+			this._ajusteBalao.width = stage.stageWidth / 6;
+			this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
+			
+			//botão ajuste imagem
+			this._ajusteImagem.x = this._ajusteBalao.width * 2;
+			this._ajusteImagem.width = stage.stageWidth / 6;
+			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
+			
+			//botão salvar
+			
+			this._salvar.width = stage.stageWidth / 6;
+			this._salvar.scaleY = this._salvar.scaleX;
+			this._salvar.x = stage.stageWidth / 8;
+			this._salvar.y = stage.stageHeight - this._salvar.width;
+			
+			//botão cancelar
+			this._cancelar.width = stage.stageWidth / 6;
+			this._cancelar.scaleY = this._cancelar.scaleX;
+			this._cancelar.x = stage.stageWidth / 1.4;
+			this._cancelar.y = stage.stageHeight - this._cancelar.height;
+			
+			//imagem recuperada
+			this._imagem.width = stage.stageWidth;
+			this._imagem.scaleY = this._imagem.scaleX;
+			this._imagem.y = this._cancelar.width;
+			this._imagem.x = 0;
+			
+			
+			
 			// adicionar listeners dos cliques dos botões
+			if (!this._salvar.hasEventListener(MouseEvent.CLICK))
+			{
+				
+				this._salvar.addEventListener(MouseEvent.CLICK, clique);
+				this._cancelar.addEventListener(MouseEvent.CLICK, clique);
+				this._propBalao.addEventListener(MouseEvent.CLICK, clique);
+				this._ajusteBalao.addEventListener(MouseEvent.CLICK, clique);
+				this._ajusteImagem.addEventListener(MouseEvent.CLICK, clique);
+				
+				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+				
+				stage.addEventListener(Event.RESIZE, desenho);
+				
+				
+			}
+			
+		}
+		
+		private function clique(evento:MouseEvent):void{
+			trace(evento.target);
+			
 		}
 		
 		override public function escondendo(evento:Event):void 
@@ -60,6 +132,7 @@ package telas
 			super.escondendo(evento);
 			
 			// remover listeners
+			
 		}
 		
 		override public function recebeDados(dados:Object):void 
@@ -69,6 +142,8 @@ package telas
 			}
 			
 			// add child _image
+			addChild(this._imagem);
+			
 		}
 		
 		private function removeBotoes():void {
