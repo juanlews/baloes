@@ -1,4 +1,4 @@
-package telas 
+package telas
 {
 	import componentes.BotaoIcone;
 	import flash.display.Loader;
@@ -12,7 +12,7 @@ package telas
 	 * ...
 	 * @author colaboa
 	 */
-	public class TelaEditImagem extends Tela 
+	public class TelaEditImagem extends Tela
 	{
 		
 		private var _imagem:Loader;
@@ -24,21 +24,23 @@ package telas
 		private var _oPosicao:Point;
 		private var _oZoom:Number;
 		
-		public function TelaEditImagem(funcMudaTela:Function) 
+		public function TelaEditImagem(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			
+		
 		}
 		
-		override public function desenho(evento:Event = null):void 
+		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
 			Multitouch.inputMode = MultitouchInputMode.GESTURE;
 			stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
+			this._imagem.width = stage.stageWidth;
+		
 		}
 		
-		override public function escondendo(evento:Event):void 
+		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
@@ -46,22 +48,33 @@ package telas
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
 		}
 		
-		private function zoomImagem(evento:TransformGestureEvent):void {
-			
-		}
-		
-		private function rotacaoImagem(evento:TransformGestureEvent):void {
-			
-		}
-		
-		override public function recebeDados(dados:Object):void 
+		private function zoomImagem(evento:TransformGestureEvent):void
 		{
-			this._imagem = dados.imagem as Loader;
-			this._oPosicao = new Point(this._imagem.x, this._imagem.y);
-			this._oRotacao = this._imagem.rotation;
-			this._oZoom = this._imagem.scaleX;
+			_imagem.scaleX *= evento.scaleX;
+			_imagem.scaleY = _imagem.scaleX;
+		
 		}
 		
+		private function rotacaoImagem(evento:TransformGestureEvent):void
+		{
+		
+		}
+		
+		override public function recebeDados(dados:Object):void
+		{
+			if (dados != null)
+			{
+				this._imagem = dados.imagem as Loader;
+				this._oPosicao = new Point(this._imagem.x, this._imagem.y);
+				this._oRotacao = this._imagem.rotation;
+				this._oZoom = this._imagem.scaleX;
+				addChild(this._imagem);
+			}
+			else
+			{
+				trace('imagem nao carregada');
+			}
+		}
 	}
 
 }

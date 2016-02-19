@@ -1,7 +1,8 @@
-package telas 
+package telas
 {
 	import flash.display.Bitmap;
 	import flash.display.Loader;
+	import flash.errors.IOError;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.filesystem.File;
@@ -13,7 +14,7 @@ package telas
 	 * ...
 	 * @author colaboa
 	 */
-	public class TelaSalvar extends Tela 
+	public class TelaSalvar extends Tela
 	{
 		
 		private var _miniatura:Bitmap;
@@ -24,23 +25,51 @@ package telas
 		
 		private var _imagem:Loader;
 		
-		
-		
-		public function TelaSalvar(funcMudaTela:Function) 
+		public function TelaSalvar(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
 			
+		
 		}
 		
-		override public function recebeDados(dados:Object):void 
+		private function imagemCarregada(evento:Event):void
+		{   
+			trace('carregou');
+				
+			
+
+		}
+		
+		private function imagemErro(evento:IOError):void
+		{
+			
+			trace('Erro');
+		}
+		
+		override public function recebeDados(dados:Object):void
 		{
 			this._imagem = new Loader();
 			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-            this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
 			this._imagem.load(new URLRequest(File.cacheDirectory.resolvePath('bmptemp.jpg').url));
+		
 		}
 		
+		override public function desenho(evento:Event = null):void
+		{
+			super.desenho(evento);
+		    
+			_imagem.x = 0;
+			_imagem.y = 0;
+			
+		}
+		
+		override public function escondendo(evento:Event):void
+		{
+			super.escondendo(evento);
+		
+		}
+	
 	}
-
 }

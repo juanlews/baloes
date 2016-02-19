@@ -236,6 +236,7 @@ package telas
 			{
 				this._imgAtual++;
 				if (this._imgAtual >= this._imgsHelp.length) this._imgAtual = 0;
+				this._help.x = stage.stageHeight;
 
 				
 			}
@@ -243,8 +244,8 @@ package telas
 			{
 				this._imgAtual--;
 				if (this._imgAtual < 0) this._imgAtual = this._imgsHelp.length - 1;
-				
-			}
+				this._help.x = -_help.height;
+ 			}
 			this.removeChild(this._help);
 			this._help.bitmapData.dispose();
 			this._help = null;

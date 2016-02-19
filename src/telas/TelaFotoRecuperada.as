@@ -1,4 +1,4 @@
-package telas 
+package telas
 {
 	import componentes.Balao;
 	import componentes.BotaoIcone;
@@ -21,7 +21,7 @@ package telas
 	 * ...
 	 * @author colaboa
 	 */
-	public class TelaFotoRecuperada extends Tela 
+	public class TelaFotoRecuperada extends Tela
 	{
 		
 		// botoes
@@ -32,40 +32,58 @@ package telas
 		private var _cancelar:BotaoIcone;
 		
 		// balão
-		private var _balao: Balao;
+		private var _balao:Balao;
 		
 		// imagem
 		private var _imagem:Loader;
 		private var _bmpData:BitmapData;
 		
-		public function TelaFotoRecuperada(funcMudaTela:Function) 
+		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			
 			
 			// criar balão
 			
 			// criar botões
 			this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
-			this.addChild(this._propBalao);
-			
+				
 			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
-			this.addChild(this._ajusteBalao);
-			
+					
 			this._ajusteImagem = new BotaoIcone(Graficos.ImgAjusteImagem);
-			this.addChild(this._ajusteImagem);
-			
+					
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
-			this.addChild(this._salvar);
-			
+						
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			this.addChild(this._cancelar);
+			
 		}
 		
-		override public function desenho(evento:Event = null):void 
+		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			// posicionar e dimensionar botões
+			this.addChild(this._propBalao);			
+			this.addChild(this._ajusteBalao);
+			this.addChild(this._ajusteImagem);
+			this.addChild(this._salvar);
+			this.addChild(this._cancelar);
+			
+			// posicionar e dimensionar botões			
+			
+			if (this._imagem.width > this._imagem.height)
+			{
+				trace("largura");
+				this._imagem.width = stage.stageWidth;
+				this._imagem.scaleY = this._imagem.scaleX;
+				this._imagem.y = this.stage.stageHeight / 2 - this._imagem.height / 2;
+				this._imagem.x = 0;
+			}
+			else
+			{
+				trace('altura');
+				this._imagem.width = stage.stageWidth;
+				this._imagem.scaleX = this._imagem.scaleY;
+				this._imagem.y = this._cancelar.height;
+				this._imagem.x = 0;
+			}
 			
 			//botão propiedades balão
 			this._propBalao.x = 0
@@ -82,8 +100,7 @@ package telas
 			this._ajusteImagem.width = stage.stageWidth / 6;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
 			
-			//botão salvar
-			
+			//botão salvar			
 			this._salvar.width = stage.stageWidth / 6;
 			this._salvar.scaleY = this._salvar.scaleX;
 			this._salvar.x = stage.stageWidth / 8;
@@ -96,62 +113,91 @@ package telas
 			this._cancelar.y = stage.stageHeight - this._cancelar.height;
 			
 			//imagem recuperada
-			this._imagem.width = stage.stageWidth;
-			this._imagem.scaleY = this._imagem.scaleX;
-			this._imagem.y = this._cancelar.width;
-			this._imagem.x = 0;
-			
-			
 			
 			// adicionar listeners dos cliques dos botões
 			if (!this._salvar.hasEventListener(MouseEvent.CLICK))
 			{
 				
-				this._salvar.addEventListener(MouseEvent.CLICK, clique);
-				this._cancelar.addEventListener(MouseEvent.CLICK, clique);
-				this._propBalao.addEventListener(MouseEvent.CLICK, clique);
-				this._ajusteBalao.addEventListener(MouseEvent.CLICK, clique);
-				this._ajusteImagem.addEventListener(MouseEvent.CLICK, clique);
+				this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
+				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
+				this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
+				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
+				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
 				
-				
 			}
+		
+		}
+		private function cliqueCancelar(evento:MouseEvent):void
+		{			
+			this.mudaTela('inicial', null);
 			
 		}
+		private function cliquePropB(evento:MouseEvent):void
+		{
+			trace('click propB');
+		}
 		
-		private function clique(evento:MouseEvent):void{
+		private function cliqueAjusteB(evento:MouseEvent):void
+		{
+			trace('click ajustB');
+			//this.mudaTela('editbalao', null);
+		}
+		
+		private function cliqueAjusteImg(evento:MouseEvent):void
+		{
+			trace('click ajusteImg');
+			var dados:Object = new Object();
+			dados.imagem = this._imagem;
+			this.mudaTela('editimagem', dados);
+
 			trace(evento.target);
-			
+		
 		}
 		
-		override public function escondendo(evento:Event):void 
+		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
 			
 			// remover listeners
-			
+			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
+			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
+			this._propBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
+			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
+			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+
+		
 		}
 		
-		override public function recebeDados(dados:Object):void 
+		override public function recebeDados(dados:Object):void
 		{
-			if (dados != null) {
+			if (dados != null)
+			{
 				this._imagem = dados.imagem as Loader;
 			}
 			
 			// add child _image
 			addChild(this._imagem);
-			
+		
 		}
 		
-		private function removeBotoes():void {
+		private function removeBotoes():void
+		{
 			this.removeChild(this._propBalao);
+			this.removeChild(this._ajusteBalao);
+			this.removeChild(this._ajusteImagem);
+			this.removeChild(this._cancelar);
+			this.removeChild(this._salvar);
+		
+			
 			// remove child em todos os outros botoes
 		}
 		
-		private function cliqueSalvar(evento:MouseEvent):void {
+		private function cliqueSalvar(evento:MouseEvent):void
+		{
 			this.removeBotoes();
 			this._bmpData = new BitmapData(stage.stageWidth, stage.stageHeight);
 			this._bmpData.draw(stage);

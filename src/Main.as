@@ -49,9 +49,9 @@ package
 			//this._telas['visualizar'] = new TelaVisualizar(this.adicionaTela);
 			this._telas['fotorecuperada'] = new TelaFotoRecuperada(this.adicionaTela);
 			//this._telas['propriedadesbalao'] = new TelaPropriedadesBalao(this.adicionaTela);
-			//this._telas['editimagem'] = new TelaEditImagem(this.adicionaTela);
+			this._telas['editimagem'] = new TelaEditImagem(this.adicionaTela);
 			//this._telas['editbalao'] = new TelaEditBalao(this.adicionaTela);
-			//this._telas['salvar'] = new TelaSalvar(this.adicionaTela);
+			this._telas['salvar'] = new TelaSalvar(this.adicionaTela);
 			//this._telas['gravacao'] = new TelaGravacao(this.adicionaTela);
 			
 			this.addChild(this._telas['inicial']);
