@@ -63,13 +63,22 @@ package recursos
 		[Embed(source = "imagens/btnCor0xFFFFFF.png")]
 		public static var ImgBTCor05:Class;
 		
+		// fundo preview propriedades
+		[Embed(source = "imagens/Help.png")]
+		public static var ImgHelp:Class;
+		
+		
 		// botoes propriedades do balão
-		[Embed(source = "imagens/btnFlip.png")]
-		public static var ImgPBFlipV:Class;
 		[Embed(source = "imagens/btnFlipVertical.png")]
+		public static var ImgPBFlipV:Class;
+		[Embed(source = "imagens/btnFlip.png")]
 		public static var ImgPBFlipH:Class;
 		[Embed(source = "imagens/btnCerto.png")]
 		public static var ImgPBOK:Class;
+		[Embed(source = "imagens/btnCheckSmooth.png")]
+		public static var ImgCheck:Class;
+		[Embed(source = "imagens/btnCheckSmoothTrue.png")]
+		public static var ImgCheckT:Class;
 		
 		
 		// animação salva
