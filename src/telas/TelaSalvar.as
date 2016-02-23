@@ -35,8 +35,8 @@ package telas
 		private function imagemCarregada(evento:Event):void
 		{   
 			trace('carregou');
-				
-			
+			addChild(_imagem);
+            desenho();		
 
 		}
 		
@@ -53,6 +53,8 @@ package telas
 			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
 			this._imagem.load(new URLRequest(File.cacheDirectory.resolvePath('bmptemp.jpg').url));
+			
+			
 		
 		}
 		
@@ -62,6 +64,10 @@ package telas
 		    
 			_imagem.x = 0;
 			_imagem.y = 0;
+			_imagem.width = stage.stageWidth / 5;
+			_imagem.scaleY = _imagem.scaleX;
+			
+			
 			
 		}
 		

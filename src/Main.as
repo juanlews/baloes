@@ -45,7 +45,7 @@ package
 			// preparar as telas
 			this._telas = new Array();
 			this._telas['inicial'] = new TelaInicial(this.adicionaTela);
-			//this._telas['lista'] = new TelaLista(this.adicionaTela);
+			this._telas['lista'] = new TelaLista(this.adicionaTela);
 			//this._telas['visualizar'] = new TelaVisualizar(this.adicionaTela);
 			this._telas['fotorecuperada'] = new TelaFotoRecuperada(this.adicionaTela);
 			//this._telas['propriedadesbalao'] = new TelaPropriedadesBalao(this.adicionaTela);

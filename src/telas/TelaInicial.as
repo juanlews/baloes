@@ -44,10 +44,13 @@ package telas
 		
 		//camera
 		private var camera:CameraUI;
+		private var btscala:Number;
 		
 		public function TelaInicial(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
+			
+			btscala = 6;
 			
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
 			this.addChild(this._galeria);
@@ -59,6 +62,7 @@ package telas
 			this._imgAtual = 0;
 			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;
 			this.addChild(this._help);
+			
 			// criar outros botões
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
 			addChild(this._camera);
@@ -76,7 +80,6 @@ package telas
 		
 		}
 		
-			
 		private function cliqueCamera(evento:MouseEvent):void
 		{
 			
@@ -150,8 +153,6 @@ package telas
 			var dados:Object = new Object();
 			dados.imagem = this._imagem;
 			this.mudaTela('fotorecuperada', dados);
-			
-			
 		
 		}
 		
@@ -160,7 +161,7 @@ package telas
 			super.desenho(evento);
 			// POSICIONAR BOTOES
 			
-			this._galeria.width = stage.stageWidth / 5;
+			this._galeria.width = stage.stageWidth / btscala;
 			this._galeria.scaleY = this._galeria.scaleX;
 			this._galeria.x = 0;
 			this._galeria.y = 0;
@@ -168,7 +169,7 @@ package telas
 			this._camera.scaleX = this._camera.scaleY = this._galeria.scaleX;
 			
 			// posicionar camera
-			this._camera.width = stage.stageWidth / 5;
+			this._camera.width = stage.stageWidth / btscala;
 			this._camera.scaleY = this._galeria.scaleX;
 			this._camera.x = stage.stageWidth - _camera.width;
 			this._camera.y = 0;
@@ -176,7 +177,7 @@ package telas
 			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
 			
 			// posicionar carregar
-			this._carregar.width = stage.stageWidth / 5;
+			this._carregar.width = stage.stageWidth / btscala;
 			this._carregar.scaleY = this._galeria.scaleX;
 			
 			this._carregar.x = stage.stageWidth / 2 - this._carregar.width / 2;
@@ -187,14 +188,18 @@ package telas
 			{
 				this._help.width = stage.stageWidth;
 				this._help.scaleY = _help.scaleX;
-				this._help.x = 0;
+				//this._help.x = 220;
 				this._help.y = stage.stageWidth / 2;
+				Tweener.addTween(_help, {x: 0, time: 1});
 			}
 			else
 			{
+				this._help.height = stage.stageHeight - _galeria.height - _carregar.height;
 				this._help.scaleX = _help.scaleY;
-				this._help.y = stage.stageHeight / 2 - this._help.height / 2 + stage.stageHeight / 5;
-				this._help.x = stage.stageWidth / 2 - this._help.width / 2;
+				this._help.y = stage.stageHeight / 2 - this._help.height / 2 - stage.stageHeight / btscala;
+				//this._help.x = ;
+				Tweener.addTween(_help, {x: stage.stageWidth / 2 - this._help.width / 2, time: 1});
+				Tweener.addTween(_help, {y: _carregar.height, time: 1});
 			}
 			
 			// ADICIONAR CLIQUES NOS BOTOES
@@ -212,11 +217,11 @@ package telas
 				
 			}
 		}
-	
 		
 		private function cliqueCarregar(evento:MouseEvent):void
 		{
 			trace('server');
+			this.mudaTela('lista', null);
 		}
 		
 		override public function escondendo(evento:Event):void
@@ -232,27 +237,27 @@ package telas
 		private function swipeTela(evento:TransformGestureEvent):void
 		{
 			// conferir evento.offsetX para saber se foi swipe direita ou esquerda
+			var animinicial:Number;
 			if (evento.offsetX < 0)
 			{
 				this._imgAtual++;
 				if (this._imgAtual >= this._imgsHelp.length) this._imgAtual = 0;
-				this._help.x = stage.stageHeight;
-
+				animinicial = +_help.height;
 				
 			}
 			else
 			{
 				this._imgAtual--;
 				if (this._imgAtual < 0) this._imgAtual = this._imgsHelp.length - 1;
-				this._help.x = -_help.height;
- 			}
+				animinicial = -_help.height;
+				
+			}
 			this.removeChild(this._help);
 			this._help.bitmapData.dispose();
 			this._help = null;
-			
 			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;
+			this._help.x = animinicial;
 			addChild(this._help);
-			
 			this.desenho();
 		}
 	
