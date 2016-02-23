@@ -47,26 +47,25 @@ package
 			//this._telas['inicial'] = new TelaInicial(this.adicionaTela);
 			//this._telas['lista'] = new TelaLista(this.adicionaTela);
 			//this._telas['visualizar'] = new TelaVisualizar(this.adicionaTela);
-<<<<<<< HEAD
+
 			this._telas['fotorecuperada'] = new TelaFotoRecuperada(this.adicionaTela);
 			this._telas['propriedadesbalao'] = new TelaPropriedadesBalao(this.adicionaTela);
 			this._telas['editimagem'] = new TelaEditImagem(this.adicionaTela);
-=======
+
 			//this._telas['fotorecuperada'] = new TelaFotoRecuperada(this.adicionaTela);
 			this._telas['propriedadesbalao'] = new TelaPropriedadesBalao(this.adicionaTela);
 			//this._telas['editimagem'] = new TelaEditImagem(this.adicionaTela);
->>>>>>> origin/master
+
 			//this._telas['editbalao'] = new TelaEditBalao(this.adicionaTela);
 			//this._telas['salvar'] = new TelaSalvar(this.adicionaTela);
 			//this._telas['gravacao'] = new TelaGravacao(this.adicionaTela);
 			
-<<<<<<< HEAD
 			this.addChild(this._telas['propriedadesbalao']);
 			
-=======
+
 			//this.addChild(this._telas['inicial']);
-			this.addChild(this._telas['propriedadesbalao']);
->>>>>>> origin/master
+			
+
 			/*
 			var classes:Vector.<Class> = new Vector.<Class>();
 			classes.push(Graficos.ImgAnimacao1);
