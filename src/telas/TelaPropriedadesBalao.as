@@ -40,9 +40,7 @@ package telas
 		private var _checkfalse:BotaoIcone;
 		
 		private var _marcado:Boolean;
-		
-		private var _fundoPrev
-		
+			
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);

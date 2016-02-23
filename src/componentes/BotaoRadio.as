@@ -30,7 +30,7 @@ package componentes
 			return (this._selecionado);
 		}
 		
-		public function set marcado(para:Boolean) {
+		public function set marcado(para:Boolean):void {
 			this._selecionado = para;
 			
 			if (this._selecionado) {
