@@ -11,7 +11,7 @@ package componentes
 	 * ...
 	 * @author colaboa
 	 */
-	public class Balao extends Sprite 
+	public class Balao extends Sprite  
 	{
 		
 		// imagens balao
