@@ -6,6 +6,7 @@ package componentes
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
+	
 	/**
 	 * ...
 	 * @author colaboa
@@ -15,10 +16,10 @@ package componentes
 		
 		private var _texto:TextField;
 		
-		public function BotaoLista(texto:String, propTexto:TextFormat = null, posTexto:Rectangle = null, imagem:Class = null) 
+		public function BotaoLista(texto:String, imagem:Class = null, propTexto:TextFormat = null, posTexto:Rectangle = null ) 
 		{
 			super();
-			
+			mouseChildren = false;
 			if (imagem != null) {
 				var bmp:Bitmap = new imagem() as Bitmap;
 				this.addChild(bmp);
@@ -29,6 +30,10 @@ package componentes
 				this._texto.defaultTextFormat = propTexto;
 			} else {
 				// define propriedades padrão do texto
+				this._texto.defaultTextFormat = new TextFormat(null, 50, null);
+				
+
+
 			}
 			
 			if (posTexto != null) {
@@ -36,13 +41,19 @@ package componentes
 				this._texto.y = posTexto.y;
 				this._texto.width = posTexto.width;
 				this._texto.height = posTexto.height;
+			
+				
 			}
-			
-			this._texto.text = texto;
-			
+			else{
+				this._texto.width = bmp.width;
+			}
+			this._texto.text = texto;			
 			this.addChild(this._texto);
+			this._texto.x = bmp.width / 6;
+			this._texto.y = bmp.height / 2;
 			
-		}
+			
+ 		}
 		
 		public function get texto():String {
 			return (this._texto.text);

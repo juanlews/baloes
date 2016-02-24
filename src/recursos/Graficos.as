@@ -35,6 +35,9 @@ package recursos
 		[Embed(source = "imagens/textohelp3.png")]
 		public static var ImgHelp03:Class;
 		
+		//
+		[Embed(source = "imagens/barra.png")]
+		public static var ImgBarra:Class;
 		// balao
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBalao01:Class;
