@@ -1,10 +1,12 @@
 package telas
 {
 	
+	import com.adobe.images.BitString;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.BotaoRadio;
 	import flash.automation.MouseAutomationAction;
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -40,6 +42,8 @@ package telas
 		private var _checkfalse:BotaoIcone;
 		
 		private var _marcado:Boolean;
+		
+		private var _fndprev:BotaoIcone;
 			
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
@@ -81,8 +85,8 @@ package telas
 			this._flipV = new BotaoIcone(Graficos.ImgPBFlipV);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._checkfalse = new BotaoIcone(Graficos.ImgCheck);
-			this._checktrue = new BotaoIcone(Graficos.ImgCheckT);
-			
+			this._checktrue = new BotaoIcone(Graficos.ImgCheckT); 
+			this._fndprev = new BotaoIcone(Graficos.ImgHelp);
 		
 		}
 		
@@ -124,6 +128,12 @@ package telas
 			super.desenho(evento);
 			// posicionar todo mundo
 		
+			// fundo 
+			this._fndprev.width = stage.stageWidth;
+			this._fndprev.height = stage.stageHeight / 2 - 30;
+			this._fndprev.x = 2; 
+			this._fndprev.y = stage.stageHeight/3+ 90;
+			this.addChild(this._fndprev);
 			
 			//botoes do tipo icone 
 			//flip Horizontal
@@ -150,8 +160,6 @@ package telas
 			
 			
 			// check	
-			
-			
 			this._checkfalse.width = 60;
 			this._checkfalse.scaleY = this._checkfalse.scaleX;
 			this._checkfalse.x = stage.stageWidth - this._checkfalse.width;
@@ -227,6 +235,11 @@ package telas
 			
 			this._ok.addEventListener(MouseEvent.CLICK, okclick);
 			
+			this._flipH.addEventListener(MouseEvent.CLICK,fliphclick);
+			 
+			this._flipV.addEventListener(MouseEvent.CLICK, flipvclick);
+			
+			
 			this._tipo1.addEventListener('marcado', cliqueBTipo);
 			
 			this._tipo2.addEventListener('marcado', cliqueBTipo);
@@ -248,7 +261,6 @@ package telas
 		public function marca(evento:MouseEvent):void {
 			trace('marca');
 			removeChild(this._checkfalse);
-			
 			addChild(this._checktrue);
 		}
 		public function desmarca(evento:MouseEvent):void {
@@ -256,7 +268,6 @@ package telas
 			removeChild(this._checktrue);
 			addChild(this._checkfalse);
 		}
-		
 		
 		public function fliphclick(event:MouseEvent):void
 		{
@@ -279,6 +290,8 @@ package telas
 		{
 			super.escondendo(evento);
 			// remover listeners
+			
+			
 			this._checkfalse.removeEventListener(MouseEvent.CLICK, desmarca);
 			this._checktrue.removeEventListener(MouseEvent.CLICK, marca);
 			this._flipH.removeEventListener(MouseEvent.CLICK, fliphclick);

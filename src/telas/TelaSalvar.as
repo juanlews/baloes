@@ -36,7 +36,7 @@ package telas
 		{   
 			trace('carregou');
 			addChild(_imagem);
-            desenho();		
+            desenho();
 
 		}
 		

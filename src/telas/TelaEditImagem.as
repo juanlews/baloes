@@ -9,6 +9,7 @@ package telas
 	import flash.geom.Point;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
+	import recursos.Graficos;
 	
 	/**
 	 * ...
@@ -29,6 +30,9 @@ package telas
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
+			
+			this._ok = new BotaoIcone(Graficos.ImgPBOK);
+			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		
 		}
 		
@@ -38,11 +42,49 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.GESTURE;
 			stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
-			this.stage.addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
+			this._imagem.addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 			//this._imagem.addEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 			
 			this._imagem.width = stage.stageWidth;
+			
+			this.addChild(this._ok);
+			this.addChild(this._cancelar);
+			
+			this._ok.width = stage.stageWidth / 6;
+			this._ok.scaleY = this._ok.scaleX;
+			this._ok.x = stage.stageWidth / 8;
+			this._ok.y = stage.stageHeight - this._ok.width;
+			
+			//botão cancelar
+			this._cancelar.width = stage.stageWidth / 6;
+			this._cancelar.scaleY = this._cancelar.scaleX;
+			this._cancelar.x = stage.stageWidth / 1.4;
+			this._cancelar.y = stage.stageHeight - this._cancelar.height;
+			
+			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
+			{
+				
+				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
+				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
+							
+				Multitouch.inputMode = MultitouchInputMode.GESTURE;
+				
+				stage.addEventListener(Event.RESIZE, desenho);
+				
+			}
+			
 		
+		}
+		
+		private function cliqueCancelar(evento:MouseEvent):void
+		{			
+			this.mudaTela('fotorecuperada', null);
+			
+		}
+		private function cliqueOk(evento:MouseEvent):void
+		{			
+			this.mudaTela('fotorecuperada', null);
+			
 		}
 		
 		override public function escondendo(evento:Event):void
@@ -52,9 +94,12 @@ package telas
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
 		}
-		private function dragImagemStart(evento:NativeDragEvent):void{
+		
+		private function dragImagemStart(evento:MouseEvent):void
+		{
 			trace('drag ', this._imagem.x += evento.movementX);
 		}
+		
 		//private function dragImagemStop(evento:MouseEvent):void{
 		//	trace(evento.movementX);			
 		//}
@@ -69,7 +114,7 @@ package telas
 		private function rotacaoImagem(evento:TransformGestureEvent):void
 		{
 			
-		 _imagem.rotation += evento.rotation + 1; 
+			_imagem.rotation += evento.rotation + 1;
 		}
 		
 		override public function recebeDados(dados:Object):void

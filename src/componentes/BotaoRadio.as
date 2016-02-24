@@ -53,6 +53,7 @@ package componentes
 			this.marcado = true;
 			this.removeEventListener(MouseEvent.CLICK, clique);
 			this.dispatchEvent(new Event('marcado'));
+			trace(marcado,'');
 		}
 		
 	}
