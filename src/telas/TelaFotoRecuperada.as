@@ -139,6 +139,8 @@ package telas
 		private function cliquePropB(evento:MouseEvent):void
 		{
 			trace('click propB');
+			
+			this.mudaTela('propriedadesbalao', null);
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void

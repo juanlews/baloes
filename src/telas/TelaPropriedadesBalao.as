@@ -272,6 +272,7 @@ package telas
 		public function okclick(event:MouseEvent):void
 		{
 			trace('clickok');
+			this.mudaTela('fotorecuperada', null);
 		}
 		
 		override public function escondendo(evento:Event):void
