@@ -63,7 +63,7 @@ package
 			this.addChild(this._telas['inicial']);
 			
 
-			//this.addChild(this._telas['inicial']);
+			
 			
 
 			/*

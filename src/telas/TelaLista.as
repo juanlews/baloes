@@ -32,7 +32,7 @@ package telas
 			
 			envio = new URLVariables();			
 			_urlLoader = new URLLoader();
-			_request = new URLRequest("http://192.168.25.159/appserver/listaimgs.php");
+			_request = new URLRequest("http://192.168.25.159/baloes/listar.php");
 			
 			_request.method = 'POST';
 			_urlLoader.addEventListener(Event.COMPLETE, recebeu);
