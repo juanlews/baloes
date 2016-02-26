@@ -38,6 +38,11 @@ package recursos
 		//
 		[Embed(source = "imagens/barra.png")]
 		public static var ImgBarra:Class;
+		
+		[Embed(source = "imagens/Seta.png")]
+		public static var ImgSetad:Class;
+		[Embed(source = "imagens/Seta.png")]
+		public static var ImgSetae:Class;
 		// balao
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBalao01:Class;
@@ -76,7 +81,7 @@ package recursos
 		public static var ImgPBFlipV:Class;
 		[Embed(source = "imagens/btnFlip.png")]
 		public static var ImgPBFlipH:Class;
-		[Embed(source = "imagens/btnCerto.png")]
+		[Embed(source = "imagens/btnOk.png")]
 		public static var ImgPBOK:Class;
 		[Embed(source = "imagens/btnCheckSmooth.png")]
 		public static var ImgCheck:Class;

@@ -9,6 +9,7 @@ package telas
 	import flash.net.URLVariables;
 	import com.adobe.crypto.MD5;
 	import recursos.Graficos;
+	
 	/**
 	 * ...
 	 * @author colaboa
@@ -31,6 +32,14 @@ package telas
 		public function TelaLista(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
+			
+			_voltar = new BotaoIcone(Graficos.ImgCancelar);
+			_proximo = new BotaoIcone(Graficos.ImgSetad);
+			_anterior = new BotaoIcone(Graficos.ImgSetae);
+			
+			addChild(_voltar);
+			addChild(_proximo);
+			addChild(_anterior);
 			
 			envio = new URLVariables();
 			_urlLoader = new URLLoader();
@@ -89,26 +98,54 @@ package telas
 					}
 				}
 				
-				
 			}
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			trace("na desenho: " , 	_lista[1].texto);
+			trace("na desenho: ", _lista[1].texto);
+			
+			//desenha botoes
+			
+			_voltar.width = stage.stageWidth / 5;
+			_voltar.scaleY = _voltar.scaleX;
+			_voltar.x = stage.stageWidth / 2 - _voltar.width / 2;
+			_voltar.y = stage.stageHeight - _voltar.height;
+			
+			_anterior.width = stage.stageWidth / 5;
+			_anterior.scaleY = _anterior.scaleX;
+			_anterior.y = stage.stageHeight - _voltar.height;
+			
+			_proximo.width = stage.stageWidth / 5;
+			_proximo.scaleX = -_proximo.scaleX;
+			_proximo.scaleY = _proximo.scaleX;
+			_proximo.x = stage.stageWidth;
+			_proximo.y = stage.stageHeight - _proximo.height;
+			
 			for (var i:int = 0; i < this._total; i++)
 			{
 				if (this._lista[i] != null)
 				{
-					this._lista[i].addEventListener(MouseEvent.CLICK, cliqueLista);					
+					if (!this._lista[i].hasEventListener(MouseEvent.CLICK))
+					{
+						this._lista[i].addEventListener(MouseEvent.CLICK, cliqueLista);
+					}
 					this._lista[i].width = stage.stageWidth;
 					this._lista[i].scaleY = this._lista[i].scaleX;
 					this._lista[i].y = _lista[i].height * i;
-				
+					
 				}
 			}
-		
+			
+			if (!this._anterior.hasEventListener(MouseEvent.CLICK))
+			{
+				
+				_voltar.addEventListener(MouseEvent.CLICK, cliquevoltar);
+				_proximo.addEventListener(MouseEvent.CLICK, cliqueproximo);
+				_anterior.addEventListener(MouseEvent.CLICK, cliqueanterior);
+				
+			}
 		}
 		
 		override public function escondendo(evento:Event):void
@@ -124,11 +161,29 @@ package telas
 		private function cliqueLista(evento:MouseEvent):void
 		{
 			var clicado:BotaoLista = evento.target as BotaoLista;
+			var dados:Object = new Object;
 			trace(clicado.texto);
+			dados.link = clicado.texto;			
+			this.mudaTela('visualizar', dados);
 		
 			// clicado.texto
 		}
+		
+		private function cliquevoltar(evento:MouseEvent):void
+		{
+			this.mudaTela('inicial', null);
+		}
+		
+		private function cliqueproximo(evento:MouseEvent):void
+		{
+		trace ('proximo');
+		}
+		
+		private function cliqueanterior(evento:MouseEvent):void
+		{
+		trace('anterior')
+		}
+		
 	
 	}
-
 }
