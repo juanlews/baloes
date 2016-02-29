@@ -179,7 +179,7 @@ package telas
 		
 		override public function recebeDados(dados:Object):void
 		{
-			if (dados != null)
+			if (dados.imagem != null)
 			{
 				this._imagem = dados.imagem as Imagem;
 			}
