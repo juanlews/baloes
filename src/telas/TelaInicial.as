@@ -1,8 +1,10 @@
 package telas
 {
 	import componentes.BotaoIcone;
+	import componentes.Imagem;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
+	import flash.display.Stage;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -36,7 +38,7 @@ package telas
 		private var _imgsHelp:Vector.<Class>;
 		private var _imgAtual:int;
 		private var _help:Bitmap;
-		private var _imagem:Loader;
+		private var _imagem:Imagem;
 		
 		// galeria
 		private var _roll:CameraRoll;
@@ -73,7 +75,7 @@ package telas
 			// criando acesso à galeria
 			this._roll = new CameraRoll();
 			this._file = File.documentsDirectory;
-			this._imagem = new Loader();
+			this._imagem = new Imagem();
 			
 			// criando acesso à camera
 			camera = new CameraUI();
@@ -120,34 +122,49 @@ package telas
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
 			
-			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
-			this._imagem.loadFilePromise(evento.data);
+			this._imagem.loader.loadFilePromise(evento.data);
 		}
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
-			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
-			this._imagem.load(new URLRequest(this._file.url));
+			this._imagem.loader.load(new URLRequest(this._file.url));
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
 		{
-			this._imagem.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 		
 			// tratar erro
 		}
 		
 		private function imagemCarregada(evento:Event):void
 		{
-			this._imagem.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			
+			if (this._imagem.loader.width > this._imagem.loader.height)
+			{
+				trace("largura");
+				this._imagem.width = stage.stageWidth;
+				this._imagem.scaleY = this._imagem.scaleX;
+			}
+			else
+			{
+				trace('altura');
+				this._imagem.height = stage.stageHeight;
+				this._imagem.scaleX = this._imagem.scaleY;
+			}
+			
+			this._imagem.centraliza(this.stage);
 			
 			// mudar tela
 			var dados:Object = new Object();

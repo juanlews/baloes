@@ -2,6 +2,7 @@ package telas
 {
 	import componentes.Balao;
 	import componentes.BotaoIcone;
+	import componentes.Imagem;
 	import flash.display.BitmapData;
 	import flash.display.JPEGEncoderOptions;
 	import flash.display.Loader;
@@ -35,7 +36,7 @@ package telas
 		private var _balao:Balao;
 		
 		// imagem
-		private var _imagem:Loader;
+		private var _imagem:Imagem;
 		private var _bmpData:BitmapData;
 		
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -68,6 +69,7 @@ package telas
 			
 			// posicionar e dimensionar botões			
 			
+			/*
 			if (this._imagem.width > this._imagem.height)
 			{
 				trace("largura");
@@ -84,6 +86,7 @@ package telas
 				this._imagem.y = this._cancelar.height;
 				this._imagem.x = 0;
 			}
+			*/
 			
 			//botão propiedades balão
 			this._propBalao.x = 0
@@ -178,7 +181,7 @@ package telas
 		{
 			if (dados != null)
 			{
-				this._imagem = dados.imagem as Loader;
+				this._imagem = dados.imagem as Imagem;
 			}
 			
 			// add child _image

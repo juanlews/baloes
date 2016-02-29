@@ -1,7 +1,9 @@
 package telas
 {
 	import componentes.BotaoIcone;
+	import componentes.Imagem;
 	import flash.display.Loader;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.NativeDragEvent;
@@ -17,8 +19,7 @@ package telas
 	 */
 	public class TelaEditImagem extends Tela
 	{
-		
-		private var _imagem:Loader;
+		private var _imagem:Imagem;
 		
 		private var _ok:BotaoIcone;
 		private var _cancelar:BotaoIcone;
@@ -43,9 +44,7 @@ package telas
 			stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
 			this._imagem.addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
-			//this._imagem.addEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
-			
-			this._imagem.width = stage.stageWidth;
+			stage.addEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 			
 			this.addChild(this._ok);
 			this.addChild(this._cancelar);
@@ -72,7 +71,6 @@ package telas
 				stage.addEventListener(Event.RESIZE, desenho);
 				
 			}
-			
 		
 		}
 		
@@ -93,17 +91,21 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
+			this._imagem.removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
+			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 		}
 		
 		private function dragImagemStart(evento:MouseEvent):void
 		{
 			trace('drag ', this._imagem.x += evento.movementX);
+			this._imagem.startDrag();
 		}
 		
-		//private function dragImagemStop(evento:MouseEvent):void{
-		//	trace(evento.movementX);			
-		//}
-		//
+		private function dragImagemStop(evento:MouseEvent):void{
+			trace(evento.movementX);
+			this._imagem.stopDrag();
+		}
+		
 		private function zoomImagem(evento:TransformGestureEvent):void
 		{
 			_imagem.scaleX *= evento.scaleX;
@@ -114,17 +116,18 @@ package telas
 		private function rotacaoImagem(evento:TransformGestureEvent):void
 		{
 			
-			_imagem.rotation += evento.rotation + 1;
+			_imagem.rotation += evento.rotation;
 		}
 		
 		override public function recebeDados(dados:Object):void
 		{
 			if (dados != null)
 			{
-				this._imagem = dados.imagem as Loader;
+				this._imagem = dados.imagem as Imagem;
 				this._oPosicao = new Point(this._imagem.x, this._imagem.y);
 				this._oRotacao = this._imagem.rotation;
 				this._oZoom = this._imagem.scaleX;
+				
 				addChild(this._imagem);
 			}
 			else
