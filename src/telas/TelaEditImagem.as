@@ -74,16 +74,16 @@ package telas
 		
 		}
 		
+		
+		private function cliqueOk(evento:MouseEvent):void {
+		this.mudaTela('fotorecuperada', null);	
+		}
 		private function cliqueCancelar(evento:MouseEvent):void
 		{			
 			this.mudaTela('fotorecuperada', null);
 			
 		}
-		private function cliqueOk(evento:MouseEvent):void
-		{			
-			this.mudaTela('fotorecuperada', null);
-			
-		}
+	
 		
 		override public function escondendo(evento:Event):void
 		{

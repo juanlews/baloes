@@ -80,25 +80,7 @@
 			this._balao.x = stage.stageWidth / 3;
 			this._balao.y = stage.stageHeight / 3;
 			this.addChild(_balao);
-			
-			/*
-			   if (this._imagem.width > this._imagem.height)
-			   {
-			   trace("largura");
-			   this._imagem.width = stage.stageWidth;
-			   this._imagem.scaleY = this._imagem.scaleX;
-			   this._imagem.y = this.stage.stageHeight / 2 - this._imagem.height / 2;
-			   this._imagem.x = 0;
-			   }
-			   else
-			   {
-			   trace('altura');
-			   this._imagem.width = stage.stageWidth;
-			   this._imagem.scaleX = this._imagem.scaleY;
-			   this._imagem.y = this._cancelar.height;
-			   this._imagem.x = 0;
-			   }
-			 */
+					
 			
 			//botão propiedades balão
 			this._propBalao.x = 0
@@ -156,6 +138,9 @@
 		private function cliquePropB(evento:MouseEvent):void
 		{
 			trace('click propB');
+		
+			
+			this._dados.imagem = this._imagem;
 			this._dados.tipobalao = this._balao.tipo;
 			this.mudaTela('propriedadesbalao', _dados);
 		}
@@ -163,7 +148,8 @@
 		private function cliqueAjusteB(evento:MouseEvent):void
 		{
 			trace('click ajustB');
-			//this.mudaTela('editbalao', null);
+			this._dados.balao = _balao;
+			this.mudaTela('editbalao', _dados);
 		}
 		
 		private function cliqueAjusteImg(evento:MouseEvent):void
@@ -193,7 +179,7 @@
 		override public function recebeDados(dados:Object):void
 		{
 			
-			trace('recebedados', dados.imagem, dados.tipobalao);
+		//	trace('recebedados', dados.imagem, dados.tipobalao);
 			
 			if (dados != null)
 			{
@@ -205,7 +191,9 @@
 				{
 					
 					this._balao.tipo = dados.tipobalao as int;
-					
+				}
+				if (_dados.balao != null){
+					dados.balao = _balao;
 				}
 				
 				// add child _image

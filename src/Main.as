@@ -56,7 +56,7 @@ package
 			this._telas['propriedadesbalao'] = new TelaPropriedadesBalao(this.adicionaTela);
 			this._telas['editimagem'] = new TelaEditImagem(this.adicionaTela);
 
-			//this._telas['editbalao'] = new TelaEditBalao(this.adicionaTela);
+			this._telas['editbalao'] = new TelaEditBalao(this.adicionaTela);
 			this._telas['salvar'] = new TelaSalvar(this.adicionaTela);
 			//this._telas['gravacao'] = new TelaGravacao(this.adicionaTela);
 			
