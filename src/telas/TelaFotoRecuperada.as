@@ -1,4 +1,4 @@
-	package telas
+package telas
 {
 	import componentes.Balao;
 	import componentes.BotaoIcone;
@@ -80,7 +80,6 @@
 			this._balao.x = stage.stageWidth / 3;
 			this._balao.y = stage.stageHeight / 3;
 			this.addChild(_balao);
-					
 			
 			//botão propiedades balão
 			this._propBalao.x = 0
@@ -137,29 +136,31 @@
 		
 		private function cliquePropB(evento:MouseEvent):void
 		{
+			
 			trace('click propB');
-		
 			
 			this._dados.imagem = this._imagem;
 			this._dados.tipobalao = this._balao.tipo;
 			this.mudaTela('propriedadesbalao', _dados);
+		
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
 		{
 			trace('click ajustB');
 			this._dados.balao = _balao;
+			this._dados.imagem = this._imagem;
 			this.mudaTela('editbalao', _dados);
 		}
 		
 		private function cliqueAjusteImg(evento:MouseEvent):void
 		{
 			trace('click ajusteImg');
-			//var dados:Object = new Object();
-			_dados.imagem = this._imagem;
+			
+			this._dados.balao = _balao;			
+			this._dados.imagem = this._imagem;			
 			this.mudaTela('editimagem', _dados);
 			
-			trace(evento.target);
 		
 		}
 		
@@ -179,20 +180,23 @@
 		override public function recebeDados(dados:Object):void
 		{
 			
-		//	trace('recebedados', dados.imagem, dados.tipobalao);
+			
 			
 			if (dados != null)
 			{
 				if (dados.imagem != null)
-				{
+				{   
+					trace('tem Imagem');
 					this._imagem = dados.imagem as Imagem;
 				}
 				if (dados.tipobalao != null)
 				{
-					
+					trace('tem tipo');
 					this._balao.tipo = dados.tipobalao as int;
 				}
-				if (_dados.balao != null){
+				if (_dados.balao != null)
+				{
+					trace('tem Balao');
 					dados.balao = _balao;
 				}
 				

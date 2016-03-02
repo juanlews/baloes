@@ -29,10 +29,12 @@ package telas
 		
 		private var _balao:Balao;
 		
+		private var dados:Object;
+		
 		public function TelaEditBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			
+			dados = new Object();
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		
@@ -80,6 +82,11 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomBalao);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoBalao);
+			stage.removeEventListener(MouseEvent.MOUSE_UP, dragBalaoStop);
+			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
+			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
+			this._balao.removeEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
+		
 		}
 		
 		override public function recebeDados(dados:Object):void
@@ -93,27 +100,34 @@ package telas
 					this._oRotacao = this._balao.rotation;
 					this._oZoom = this._balao.scaleX;
 					
-					addChild(this._balao);
-					
 				}
 				if (dados.imagem != null)
 				{
 					this._imagem = dados.imagem as Imagem;
-					addChild(_imagem);
+					this._oPosicao = new Point(this._imagem.x, this._imagem.y);
+					this._oRotacao = this._imagem.rotation;
+					this._oZoom = this._imagem.scaleX;
 					
 				}
 			}
+			
+			addChild(this._imagem);
+			addChild(this._balao);
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
+			
+			
 			this.mudaTela('fotorecuperada', null);
 		
 		}
 		
 		private function cliqueOk(evento:MouseEvent):void
 		{
-			this.mudaTela('fotorecuperada', null);
+			dados.imagem = _imagem;
+			dados.balao = _balao;
+			this.mudaTela('fotorecuperada', dados);
 		
 		}
 		

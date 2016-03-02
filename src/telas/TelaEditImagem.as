@@ -27,11 +27,12 @@ package telas
 		private var _oRotacao:Number;
 		private var _oPosicao:Point;
 		private var _oZoom:Number;
+		private var dados:Object;
 		
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			
+			dados = new Object();
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		
@@ -101,7 +102,8 @@ package telas
 			this._imagem.startDrag();
 		}
 		
-		private function dragImagemStop(evento:MouseEvent):void{
+		private function dragImagemStop(evento:MouseEvent):void {
+			
 			trace(evento.movementX);
 			this._imagem.stopDrag();
 		}
@@ -128,12 +130,15 @@ package telas
 				this._oRotacao = this._imagem.rotation;
 				this._oZoom = this._imagem.scaleX;
 				
-				addChild(this._imagem);
 			}
-			else
-			{
+							
+			else {
+				
 				trace('imagem nao carregada');
 			}
+			
+			addChild(this._imagem);
+
 		}
 	}
 
