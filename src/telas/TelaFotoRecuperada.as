@@ -71,14 +71,7 @@ package telas
 			this.addChild(this._ajusteBalao);
 			this.addChild(this._ajusteImagem);
 			this.addChild(this._salvar);
-			this.addChild(this._cancelar);
-			
-			// posicionar e dimensionar botões	
-			this._balao.tipo = this._balao.tipo;
-			this._balao.width = 200;
-			this._balao.scaleY = this._balao.scaleX;
-			this._balao.x = stage.stageWidth / 3;
-			this._balao.y = stage.stageHeight / 3;
+			this.addChild(this._cancelar);		
 			this.addChild(_balao);
 			
 			//botão propiedades balão
@@ -194,10 +187,10 @@ package telas
 					trace('tem tipo');
 					this._balao.tipo = dados.tipobalao as int;
 				}
-				if (_dados.balao != null)
+				if (dados.balao != null)
 				{
 					trace('tem Balao');
-					dados.balao = _balao;
+					 this._balao = dados.balao as Balao;
 				}
 				
 				// add child _image

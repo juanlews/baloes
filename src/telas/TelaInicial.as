@@ -1,5 +1,6 @@
 package telas
 {
+	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
 	import flash.display.Bitmap;
@@ -39,7 +40,8 @@ package telas
 		private var _imgAtual:int;
 		private var _help:Bitmap;
 		private var _imagem:Imagem;
-		
+		//balao
+		private var _balao:Balao;
 		// galeria
 		private var _roll:CameraRoll;
 		private var _file:File;
@@ -76,7 +78,7 @@ package telas
 			this._roll = new CameraRoll();
 			this._file = File.documentsDirectory;
 			this._imagem = new Imagem();
-			
+			this._balao = new Balao();
 			// criando acesso à camera
 			camera = new CameraUI();
 		
@@ -163,12 +165,19 @@ package telas
 				this._imagem.height = stage.stageHeight;
 				this._imagem.scaleX = this._imagem.scaleY;
 			}
+			// posicionar e dimensionar botões	
+			this._balao.tipo = this._balao.tipo;
+			this._balao.width = 200;
+			this._balao.scaleY = this._balao.scaleX;
+			this._balao.x = stage.stageWidth / 3;
+			this._balao.y = stage.stageHeight / 3;
 			
 			this._imagem.centraliza(this.stage);
 			
 			// mudar tela
 			var dados:Object = new Object();
 			dados.imagem = this._imagem;
+			dados.balao = this._balao;
 			this.mudaTela('fotorecuperada', dados);
 		
 		}

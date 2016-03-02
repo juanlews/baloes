@@ -77,7 +77,8 @@ package telas
 		
 		
 		private function cliqueOk(evento:MouseEvent):void {
-		this.mudaTela('fotorecuperada', null);	
+		    dados.imagem = _imagem;
+			this.mudaTela('fotorecuperada', dados);	
 		}
 		private function cliqueCancelar(evento:MouseEvent):void
 		{			
