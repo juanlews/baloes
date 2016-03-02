@@ -28,16 +28,15 @@ package telas
 		public function TelaSalvar(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			
 		
 		}
 		
 		private function imagemCarregada(evento:Event):void
-		{   
+		{
 			trace('carregou');
 			addChild(_imagem);
-            desenho();
-
+			desenho();
+		
 		}
 		
 		private function imagemErro(evento:IOError):void
@@ -53,27 +52,24 @@ package telas
 			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
 			this._imagem.load(new URLRequest(File.cacheDirectory.resolvePath('bmptemp.jpg').url));
-			
-			
 		
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-		    
+			
 			_imagem.x = 0;
 			_imagem.y = 0;
 			_imagem.width = stage.stageWidth / 5;
 			_imagem.scaleY = _imagem.scaleX;
-			
-			
-			
+		
 		}
 		
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
+			stage.removeEventListener(Event.RESIZE, desenho);
 		
 		}
 	

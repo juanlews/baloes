@@ -71,6 +71,22 @@ package componentes
 			this._texto.text = para;
 		}
 		
+		public function get corTexto():int {
+			return (this._texto.textColor);
+		}
+		
+		public function get vermelho():int {
+			return(this._imgsBalao[0].transform.colorTransform.redOffset);
+		}
+		
+		public function get verde():int {
+			return(this._imgsBalao[0].transform.colorTransform.greenOffset);
+		}
+		
+		public function get azul():int {
+			return(this._imgsBalao[0].transform.colorTransform.blueOffset);
+		}
+		
 		public function setCor(vermelho:int, verde:int, azul:int, ctexto:int):void {
 			if (vermelho < 0) vermelho = 0;
 			if (vermelho > 255) vermelho = 255;
@@ -83,6 +99,13 @@ package componentes
 			}
 			this._texto.textColor = ctexto;
 		}
+		
+		public function copyProp(origem:Balao):void {
+			this.tipo = origem.tipo;
+			this.setCor(origem.vermelho, origem.verde, origem.azul, origem.corTexto);
+			this.texto = origem.texto;
+		}
+		
 		
 		public function flipH():void {
 			for (var i:int = 0; i < this._imgsBalao.length; i++) {

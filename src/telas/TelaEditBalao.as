@@ -83,6 +83,8 @@ package telas
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomBalao);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoBalao);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragBalaoStop);
+			stage.removeEventListener(Event.RESIZE, desenho);
+			
 			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			this._balao.removeEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
@@ -117,7 +119,6 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
-			
 			
 			this.mudaTela('fotorecuperada', null);
 		

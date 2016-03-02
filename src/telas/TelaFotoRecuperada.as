@@ -12,6 +12,7 @@ package telas
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
@@ -61,18 +62,27 @@ package telas
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			
 			_dados = new Object();
+			
 		
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+			this.addChild(this._imagem);
+			this.addChild(this._balao);
 			this.addChild(this._propBalao);
 			this.addChild(this._ajusteBalao);
 			this.addChild(this._ajusteImagem);
 			this.addChild(this._salvar);
-			this.addChild(this._cancelar);		
-			this.addChild(_balao);
+			this.addChild(this._cancelar);
+			
+			
+			if ((evento != null) && (evento.type == Event.RESIZE))
+			{
+				// centralizar imagem
+				
+			}
 			
 			//botão propiedades balão
 			this._propBalao.x = 0
@@ -132,8 +142,7 @@ package telas
 			
 			trace('click propB');
 			
-			this._dados.imagem = this._imagem;
-			this._dados.tipobalao = this._balao.tipo;
+			this._dados.balao = this._balao;
 			this.mudaTela('propriedadesbalao', _dados);
 		
 		}
@@ -150,10 +159,9 @@ package telas
 		{
 			trace('click ajusteImg');
 			
-			this._dados.balao = _balao;			
-			this._dados.imagem = this._imagem;			
+			this._dados.balao = _balao;
+			this._dados.imagem = this._imagem;
 			this.mudaTela('editimagem', _dados);
-			
 		
 		}
 		
@@ -167,30 +175,28 @@ package telas
 			this._propBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
 			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
 			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+			stage.removeEventListener(Event.RESIZE, desenho);
 		
 		}
 		
 		override public function recebeDados(dados:Object):void
 		{
 			
-			
-			
 			if (dados != null)
 			{
 				if (dados.imagem != null)
-				{   
+				{
 					trace('tem Imagem');
 					this._imagem = dados.imagem as Imagem;
 				}
-				if (dados.tipobalao != null)
+				if (dados.balaoProp != null)
 				{
-					trace('tem tipo');
-					this._balao.tipo = dados.tipobalao as int;
+					this._balao.copyProp(dados.balaoProp as Balao);
 				}
 				if (dados.balao != null)
 				{
 					trace('tem Balao');
-					 this._balao = dados.balao as Balao;
+					this._balao = dados.balao as Balao;
 				}
 				
 				// add child _image

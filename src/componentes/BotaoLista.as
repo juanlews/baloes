@@ -28,7 +28,8 @@ package componentes
 			this._texto = new TextField();
 			if (propTexto != null) {
 				this._texto.defaultTextFormat = propTexto;
-			} else {
+			} 
+			else {
 				// define propriedades padrão do texto
 				this._texto.defaultTextFormat = new TextFormat(null, 50, null);
 				

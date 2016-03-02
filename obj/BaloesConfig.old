@@ -40,7 +40,7 @@
   <file-specs>
     <path-element>C:\Users\Microcity\Documents\GitHub\baloes\src\Main.as</path-element>
   </file-specs>
-  <default-background-color>#FFFFFF</default-background-color>
+  <default-background-color>#E8E8E8</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
     <width>480</width>

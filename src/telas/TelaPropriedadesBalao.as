@@ -47,7 +47,7 @@ package telas
 		
 		private var _balaoP:Balao;
 		
-		private var _modelobalao:int;		
+		private var _modelobalao:int;
 		
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
@@ -74,7 +74,7 @@ package telas
 			this._cor3 = new BotaoRadio(Graficos.ImgBTCor03, '3');
 			this._cor4 = new BotaoRadio(Graficos.ImgBTCor04, '4');
 			this._cor5 = new BotaoRadio(Graficos.ImgBTCor05, '5');
-
+			
 			var grupoCores:Vector.<BotaoRadio> = new Vector.<BotaoRadio>();
 			grupoCores.push(this._cor1);
 			grupoCores.push(this._cor2);
@@ -87,14 +87,14 @@ package telas
 			this._fndprev = new BotaoIcone(Graficos.ImgHelp);
 			//adicionando os baloes
 			this._balaoP = new Balao();
-		
+			
 			//adicionando os botoes do tipo icone
 			this._flipH = new BotaoIcone(Graficos.ImgPBFlipH);
 			this._flipV = new BotaoIcone(Graficos.ImgPBFlipV);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._checkfalse = new BotaoIcone(Graficos.ImgCheck);
-			this._checktrue = new BotaoIcone(Graficos.ImgCheckT); 
-			
+			this._checktrue = new BotaoIcone(Graficos.ImgCheckT);
+		
 		}
 		
 		private function cliqueCor(evento:Event):void
@@ -106,12 +106,16 @@ package telas
 				_balaoP.setCor(255, 0, 0, 0);
 				break;
 			case '2': 
+				_balaoP.setCor(63, 169, 245, 0);
 				break;
 			case '3': 
+				_balaoP.setCor(153, 153, 153, 0);
 				break;
 			case '4': 
+				_balaoP.setCor(204, 204, 204, 0);
 				break;
 			case '5': 
+				_balaoP.setCor(255, 255, 255, 0);
 				break;
 			}
 		}
@@ -121,7 +125,7 @@ package telas
 			var clicado:BotaoRadio = evento.target as BotaoRadio;
 			switch (clicado.valor)
 			{
-			case '1':
+			case '1': 
 				break;
 			case '2': 
 				break;
@@ -130,6 +134,7 @@ package telas
 			}
 		
 		}
+		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
@@ -137,15 +142,15 @@ package telas
 			// fundo 
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 - 30;
-			this._fndprev.x = 2; 
-			this._fndprev.y = stage.stageHeight/3+ 90;
+			this._fndprev.x = 2;
+			this._fndprev.y = stage.stageHeight / 3 + 90;
 			this.addChild(this._fndprev);
 			
 			// balao padrao
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + 20;
-			this._balaoP.y = this._fndprev.y ;
+			this._balaoP.y = this._fndprev.y;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
 			
@@ -236,22 +241,21 @@ package telas
 			this.addChild(this._cor5);
 			
 			// listners
-						
-			this._checkfalse.addEventListener (MouseEvent.CLICK, marca);
 			
-			this._checktrue.addEventListener (MouseEvent.CLICK, desmarca);
+			this._checkfalse.addEventListener(MouseEvent.CLICK, marca);
+			
+			this._checktrue.addEventListener(MouseEvent.CLICK, desmarca);
 			
 			this._ok.addEventListener(MouseEvent.CLICK, okclick);
 			
-			this._flipH.addEventListener(MouseEvent.CLICK,fliphclick);
-			 
-			this._flipV.addEventListener(MouseEvent.CLICK, flipvclick);
+			this._flipH.addEventListener(MouseEvent.CLICK, fliphclick);
 			
+			this._flipV.addEventListener(MouseEvent.CLICK, flipvclick);
 			
 			this._tipo1.addEventListener('marcado', cliqueBTipo1);
 			
 			this._tipo2.addEventListener('marcado', cliqueBTipo2);
-		
+			
 			this._tipo3.addEventListener('marcado', cliqueBTipo3);
 			
 			this._cor1.addEventListener('marcado', cliqueCor);
@@ -265,70 +269,85 @@ package telas
 			this._cor5.addEventListener('marcado', cliqueCor);
 		
 		}
-		public function cliqueBTipo1(evento:Event):void 
+		
+		public function cliqueBTipo1(evento:Event):void
 		{
 			
 			this._modelobalao = 0;
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + 20;
-			this._balaoP.y = this._fndprev.y ;
+			this._balaoP.y = this._fndprev.y;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
 			trace('clicoumodelobalao1');
 		}
-		public function cliqueBTipo2(evento:Event):void 
+		
+		public function cliqueBTipo2(evento:Event):void
 		{
 			
 			this._modelobalao = 1;
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + 20;
-			this._balaoP.y = this._fndprev.y ;
+			this._balaoP.y = this._fndprev.y;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
 			trace('clicoumodelobalao2');
 		}
-		public function cliqueBTipo3(evento:Event):void 
+		
+		public function cliqueBTipo3(evento:Event):void
 		{
 			this._modelobalao = 2;
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + 20;
-			this._balaoP.y = this._fndprev.y ;
+			this._balaoP.y = this._fndprev.y;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
 			trace('clicoumodelobalao3');
 		}
 		
-		public function marca(evento:MouseEvent):void {
+		public function marca(evento:MouseEvent):void
+		{
 			
 			removeChild(this._checkfalse);
 			addChild(this._checktrue);
 		}
-		public function desmarca(evento:MouseEvent):void {
+		
+		public function desmarca(evento:MouseEvent):void
+		{
 			
 			removeChild(this._checktrue);
 			addChild(this._checkfalse);
 		}
+		
 		public function fliphclick(event:MouseEvent):void
 		{
 			trace('clicoufliph');
 		}
+		
 		public function flipvclick(event:MouseEvent):void
 		{
 			trace('clicouflipv');
 		}
+		
 		public function okclick(event:MouseEvent):void
 		{
 			
 			var dados:Object = new Object();
 			
-			dados.tipobalao = this._modelobalao;
+			dados.balaoProp = this._balaoP;
 			this.mudaTela('fotorecuperada', dados);
 		}
 		
-		
+		override public function recebeDados(dados:Object):void
+		{
+			if ((dados != null) && (dados.balao != null))
+			{
+				this._balaoP.copyProp(dados.balao as Balao);
+			}
+		}
 		
 		override public function escondendo(evento:Event):void
 		{
@@ -349,6 +368,9 @@ package telas
 			this._cor3.removeEventListener('marcado', cliqueCor);
 			this._cor4.removeEventListener('marcado', cliqueCor);
 			this._cor5.removeEventListener('marcado', cliqueCor);
+			
+			stage.removeEventListener(Event.RESIZE, desenho);
+		
 		}
 	
 	}

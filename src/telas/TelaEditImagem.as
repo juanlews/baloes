@@ -95,6 +95,8 @@ package telas
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
 			this._imagem.removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
+			stage.removeEventListener(Event.RESIZE, desenho);
+
 		}
 		
 		private function dragImagemStart(evento:MouseEvent):void

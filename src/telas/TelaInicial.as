@@ -258,6 +258,8 @@ package telas
 			this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
+			stage.removeEventListener(Event.RESIZE, desenho);
+			
 		}
 		
 		private function swipeTela(evento:TransformGestureEvent):void
