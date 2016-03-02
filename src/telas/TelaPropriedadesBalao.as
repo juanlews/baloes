@@ -103,6 +103,7 @@ package telas
 			switch (clicado.valor)
 			{
 			case '1': 
+				_balaoP.setCor(255, 0, 0, 0);
 				break;
 			case '2': 
 				break;
