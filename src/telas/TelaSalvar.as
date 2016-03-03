@@ -9,13 +9,14 @@ package telas
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import componentes.BotaoIcone;
-	
+	import componentes.TxBox;
 	/**
 	 * ...
 	 * @author colaboa
 	 */
 	public class TelaSalvar extends Tela
 	{
+		private var _caixa:TxBox;
 		
 		private var _miniatura:Bitmap;
 		private var _texto:TextField;
@@ -28,7 +29,8 @@ package telas
 		public function TelaSalvar(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-		
+			
+			_caixa = new TxBox();
 		}
 		
 		private function imagemCarregada(evento:Event):void
@@ -36,6 +38,7 @@ package telas
 			trace('carregou');
 			addChild(_imagem);
 			desenho();
+			
 		
 		}
 		
@@ -47,10 +50,10 @@ package telas
 		
 		override public function recebeDados(dados:Object):void
 		{
+			
 			this._imagem = new Loader();
 			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			
+			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);			
 			this._imagem.load(new URLRequest(File.cacheDirectory.resolvePath('bmptemp.jpg').url));
 		
 		}
@@ -61,8 +64,14 @@ package telas
 			
 			_imagem.x = 0;
 			_imagem.y = 0;
-			_imagem.width = stage.stageWidth / 5;
+			_imagem.width = stage.stageWidth / 4;
 			_imagem.scaleY = _imagem.scaleX;
+			_caixa.width = stage.stageWidth / 1.5;
+			_caixa.height = stage.stageHeight / 10;
+			_caixa.x = stage.stageWidth / 2 - _caixa.width / 2;
+			_caixa.y = stage.stageHeight / 2 - _caixa.height / 2;
+			
+			addChild(_caixa);
 		
 		}
 		
