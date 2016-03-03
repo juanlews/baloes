@@ -49,6 +49,8 @@ package telas
 		
 		private var _modelobalao:int;
 		
+		private var _corbalao:int;
+		
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -147,6 +149,7 @@ package telas
 			this.addChild(this._fndprev);
 			
 			// balao padrao
+			this._balaoP
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + 20;
@@ -180,7 +183,7 @@ package telas
 			this._checkfalse.width = 60;
 			this._checkfalse.scaleY = this._checkfalse.scaleX;
 			this._checkfalse.x = stage.stageWidth - this._checkfalse.width;
-			this._checkfalse.y = stage.stageHeight / 3 + 40;
+			this._checkfalse.y = stage.stageHeight / 3 + 40;1
 			this.addChild(this._checkfalse);
 			
 			this._checktrue.width = 60;
@@ -258,15 +261,15 @@ package telas
 			
 			this._tipo3.addEventListener('marcado', cliqueBTipo3);
 			
-			this._cor1.addEventListener('marcado', cliqueCor);
+			this._cor1.addEventListener('marcado', cliqueCor1);
 			
-			this._cor2.addEventListener('marcado', cliqueCor);
+			this._cor2.addEventListener('marcado', cliqueCor2);
 			
-			this._cor3.addEventListener('marcado', cliqueCor);
+			this._cor3.addEventListener('marcado', cliqueCor3);
 			
-			this._cor4.addEventListener('marcado', cliqueCor);
+			this._cor4.addEventListener('marcado', cliqueCor4);
 			
-			this._cor5.addEventListener('marcado', cliqueCor);
+			this._cor5.addEventListener('marcado', cliqueCor5);
 		
 		}
 		
@@ -274,6 +277,7 @@ package telas
 		{
 			
 			this._modelobalao = 0;
+			this._balaoP
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + 20;
@@ -307,6 +311,7 @@ package telas
 			this.addChild(this._balaoP);
 			trace('clicoumodelobalao3');
 		}
+<<<<<<< HEAD
 		
 		public function marca(evento:MouseEvent):void
 		{
@@ -318,6 +323,28 @@ package telas
 		public function desmarca(evento:MouseEvent):void
 		{
 			
+=======
+		public function cliqueCor1 (evento:Event):void {
+			trace('vermelho');
+		}
+		public function cliqueCor2 (evento:Event):void {
+			trace('azul');
+		}
+		public function cliqueCor3 (evento:Event):void {
+			trace('cinza');
+		}
+		public function cliqueCor4 (evento:Event):void {
+			trace('cinza claro');
+		}
+		public function cliqueCor5 (evento:Event):void {
+			trace('branco');	
+		}
+		public function marca(evento:MouseEvent):void {
+			removeChild(this._checkfalse);
+			addChild(this._checktrue);
+		}
+		public function desmarca(evento:MouseEvent):void {
+>>>>>>> origin/master
 			removeChild(this._checktrue);
 			addChild(this._checkfalse);
 		}
@@ -337,6 +364,7 @@ package telas
 			
 			var dados:Object = new Object();
 			
+<<<<<<< HEAD
 			dados.balaoProp = this._balaoP;
 			this.mudaTela('fotorecuperada', dados);
 		}
@@ -349,6 +377,12 @@ package telas
 			}
 		}
 		
+=======
+			dados.tipobalao = this._modelobalao;
+			
+			this.mudaTela('fotorecuperada', dados);
+		}
+>>>>>>> origin/master
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
@@ -359,10 +393,11 @@ package telas
 			this._flipV.removeEventListener(MouseEvent.CLICK, flipvclick);
 			this._ok.removeEventListener(MouseEvent.CLICK, okclick);
 			
-			this._tipo1.removeEventListener('marcado', cliqueBTipo);
-			this._tipo2.removeEventListener('marcado', cliqueBTipo);
-			this._tipo3.removeEventListener('marcado', cliqueBTipo);
+			this._tipo1.removeEventListener('marcado', cliqueBTipo1);
+			this._tipo2.removeEventListener('marcado', cliqueBTipo2);
+			this._tipo3.removeEventListener('marcado', cliqueBTipo3);
 			
+<<<<<<< HEAD
 			this._cor1.removeEventListener('marcado', cliqueCor);
 			this._cor2.removeEventListener('marcado', cliqueCor);
 			this._cor3.removeEventListener('marcado', cliqueCor);
@@ -371,6 +406,13 @@ package telas
 			
 			stage.removeEventListener(Event.RESIZE, desenho);
 		
+=======
+			this._cor1.removeEventListener('marcado', cliqueCor1);
+			this._cor2.removeEventListener('marcado', cliqueCor2);
+			this._cor3.removeEventListener('marcado', cliqueCor3);
+			this._cor4.removeEventListener('marcado', cliqueCor4);
+			this._cor5.removeEventListener('marcado', cliqueCor5);
+>>>>>>> origin/master
 		}
 	
 	}
