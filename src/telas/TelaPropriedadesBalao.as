@@ -69,7 +69,7 @@ package telas
 			
 			// adicionando grupo de radio de cores
 			
-			this._cor1 = new BotaoRadio(Graficos.ImgBTCor01, '1', true);
+			this._cor1 = new BotaoRadio(Graficos.ImgBTCor01, '1');
 			this._cor2 = new BotaoRadio(Graficos.ImgBTCor02, '2');
 			this._cor3 = new BotaoRadio(Graficos.ImgBTCor03, '3');
 			this._cor4 = new BotaoRadio(Graficos.ImgBTCor04, '4');
