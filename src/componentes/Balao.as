@@ -95,7 +95,7 @@ package componentes
 			if (azul < 0) azul = 0;
 			if (azul > 255) azul = 255;
 			for (var i:int = 0; i < this._imgsBalao.length; i++) {
-				this._imgsBalao[i].transform.colorTransform = new ColorTransform(1, 1, 1, 1, vermelho, verde, azul);
+				this._imgsBalao[i].transform.colorTransform = new ColorTransform(255, 255, 255, 1, vermelho, verde, azul);
 			}
 			this._texto.textColor = ctexto;
 		}
