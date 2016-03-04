@@ -31,7 +31,7 @@ package componentes
 			this._texto.backgroundColor = corFundo; 
 			//this._texto.autoSize = TextFieldAutoSize.LEFT
 			this._texto.selectable = true;
-			this._texto.border = true;
+			this._texto.border = false;
 			
 			
 			addChild(_texto);

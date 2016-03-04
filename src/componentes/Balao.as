@@ -32,6 +32,13 @@ package componentes
 			this._imgsBalao.push(new Graficos.ImgBalao01() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao02() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao03() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao04() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao05() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao06() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao08() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao09() as Bitmap);
+			
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
@@ -87,7 +94,7 @@ package componentes
 			return(this._imgsBalao[0].transform.colorTransform.blueOffset);
 		}
 		
-		public function setCor(vermelho:int, verde:int, azul:int, ctexto:int):void {
+		public function setCor(vermelho:int = 255, verde:int = 255, azul:int = 255, ctexto:int = 0):void {
 			if (vermelho < 0) vermelho = 0;
 			if (vermelho > 255) vermelho = 255;
 			if (verde < 0) verde = 0;
@@ -95,7 +102,7 @@ package componentes
 			if (azul < 0) azul = 0;
 			if (azul > 255) azul = 255;
 			for (var i:int = 0; i < this._imgsBalao.length; i++) {
-				this._imgsBalao[i].transform.colorTransform = new ColorTransform(255, 255, 255, 1, vermelho, verde, azul);
+				this._imgsBalao[i].transform.colorTransform = new ColorTransform(1, 1, 1, 1, vermelho, verde, azul);
 			}
 			this._texto.textColor = ctexto;
 		}

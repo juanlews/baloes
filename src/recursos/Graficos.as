@@ -50,6 +50,20 @@ package recursos
 		public static var ImgBalao02:Class;
 		[Embed(source = "imagens/btnBalaoRect.png")]
 		public static var ImgBalao03:Class;
+		//
+		[Embed(source = "imagens/btnBalaoNuvemSemBorda.png")]
+		public static var ImgBalao04:Class;
+		[Embed(source = "imagens/btnBalaoPensamentoSemBorda.png")]
+		public static var ImgBalao05:Class;
+		[Embed(source = "imagens/btnBalaoRectSemBorda.png")]
+		public static var ImgBalao06:Class;
+		//
+		[Embed(source = "imagens/btnBalaoNuvemPreto.png")]
+		public static var ImgBalao07:Class;
+		[Embed(source = "imagens/btnBalaoPensamentoPreto.png")]
+		public static var ImgBalao08:Class;
+		[Embed(source = "imagens/btnBalaoRectPreto.png")]
+		public static var ImgBalao09:Class;
 		
 		// botoes tipo de balão
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
