@@ -4,6 +4,7 @@ package componentes
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
 	
@@ -28,13 +29,12 @@ package componentes
 			this._texto = new TextField();
 			if (propTexto != null) {
 				this._texto.defaultTextFormat = propTexto;
+				this._texto.embedFonts = true;
 			} 
 			else {
 				// define propriedades padrão do texto
-				this._texto.defaultTextFormat = new TextFormat(null, 50, null);
+				this._texto.defaultTextFormat = new TextFormat('_sans', 50);
 				
-
-
 			}
 			
 			if (posTexto != null) {
@@ -42,16 +42,17 @@ package componentes
 				this._texto.y = posTexto.y;
 				this._texto.width = posTexto.width;
 				this._texto.height = posTexto.height;
-			
+			    
 				
 			}
 			else{
-				this._texto.width = bmp.width;
+			this._texto.width = bmp.width;
 			}
 			this._texto.text = texto;			
 			this.addChild(this._texto);
-			this._texto.x = bmp.width / 6;
-			this._texto.y = bmp.height / 2;
+			//this._texto.autoSize = TextFieldAutoSize.CENTER; 
+			//this._texto.x = bmp.width / 8;
+			//this._texto.y = bmp.height / 2;
 			
 			
  		}

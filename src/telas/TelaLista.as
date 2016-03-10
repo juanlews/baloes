@@ -4,10 +4,13 @@ package telas
 	import componentes.BotaoLista;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
 	import com.adobe.crypto.MD5;
+	import flash.text.TextFormat;
+	import mx.utils.StringUtil;
 	import recursos.Graficos;
 	
 	/**
@@ -18,8 +21,8 @@ package telas
 	{
 		
 		private var _lista:Vector.<BotaoLista>;
-		private var _total:int = 5;
-		
+		private var _total:int = 100;
+		private var atual:int = 0;
 		private var _voltar:BotaoIcone;
 		private var _proximo:BotaoIcone;
 		private var _anterior:BotaoIcone;
@@ -36,6 +39,7 @@ package telas
 			_voltar = new BotaoIcone(Graficos.ImgCancelar);
 			_proximo = new BotaoIcone(Graficos.ImgSetad);
 			_anterior = new BotaoIcone(Graficos.ImgSetae);
+			this._lista = new Vector.<BotaoLista>();
 			
 			addChild(_voltar);
 			addChild(_proximo);
@@ -47,13 +51,6 @@ package telas
 			
 			_request.method = 'POST';
 			_urlLoader.addEventListener(Event.COMPLETE, recebeu);
-			
-			this._lista = new Vector.<BotaoLista>();
-			for (var i:int = 0; i < this._total; i++)
-			{
-				this._lista.push(new BotaoLista('', Graficos.ImgBarra));
-				this.addChild(this._lista[i]);
-			}
 			
 			envio['valida'] = MD5.hash('asdfg');
 			_request.data = envio;
@@ -87,15 +84,18 @@ package telas
 					var arquivos:Array = String(variaveis['lista']).split(';');
 					//	trace('arquivos encontrados:');
 					
-					//trace("fora da funçao" + arquivos);
-					
 					trace('carregando: ' + 'http://192.168.25.159/baloes/gravados', arquivos);
-					trace(arquivos[2] as String);
+					//trace(arquivos[2] as String);
+					_total = arquivos.length;
+					
 					for (var i:int = 0; i < arquivos.length; i++)
 					{
-						_lista[i].texto = arquivos[i] as String;
+						this._lista.push(new BotaoLista('', Graficos.ImgBarra, new TextFormat('Pfennig', 60, 0, false, false, false, null, null, 'center'), new Rectangle(105, 105, 1120, 140)));
+						
+						_lista[i].texto = String(arquivos[i]).split('.jpg').join('');
 						
 					}
+					
 				}
 				
 			}
@@ -104,7 +104,6 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			trace("na desenho: ", _lista[1].texto);
 			
 			//desenha botoes
 			
@@ -133,7 +132,6 @@ package telas
 					}
 					this._lista[i].width = stage.stageWidth;
 					this._lista[i].scaleY = this._lista[i].scaleX;
-					this._lista[i].y = _lista[i].height * i;
 					
 				}
 			}
@@ -145,15 +143,48 @@ package telas
 				_proximo.addEventListener(MouseEvent.CLICK, cliqueproximo);
 				_anterior.addEventListener(MouseEvent.CLICK, cliqueanterior);
 				
+				trace ('adicionou');
+				
+				
 			}
+			
+			var cont:int = 0;
+			for (var i:int = atual; i < atual + 5; i++)
+			{
+				
+				
+					trace(i);
+					if (i >= _lista.length)
+					{
+						this._proximo.removeEventListener(MouseEvent.CLICK, cliqueproximo);
+					}
+					if (i <= 0)
+					{
+						this._anterior.removeEventListener(MouseEvent.CLICK, cliqueanterior);
+					}
+
+				if (!(i >= _lista.length || i < 0))
+				{
+					this._lista[i].addEventListener(MouseEvent.CLICK, cliqueLista);
+					this._lista[i].y = _lista[i].height * cont;
+					this.addChild(this._lista[i]);
+					cont++;
+				}
+				
+			}
+			
+			
 		}
 		
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
-			for (var i:int = 0; i < this._total; i++)
+			for (var i:int = 0; i < this._lista.length; i++)
 			{
-				this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
+				if (this._lista[i].hasEventListener(MouseEvent.CLICK))
+				{
+					this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
+				}
 			}
 		
 		}
@@ -163,10 +194,10 @@ package telas
 			var clicado:BotaoLista = evento.target as BotaoLista;
 			var dados:Object = new Object;
 			trace(clicado.texto);
-			dados.link = clicado.texto;			
+			dados.link = clicado.texto + '.jpg';
 			this.mudaTela('visualizar', dados);
 		
-			// clicado.texto
+			
 		}
 		
 		private function cliquevoltar(evento:MouseEvent):void
@@ -176,14 +207,55 @@ package telas
 		
 		private function cliqueproximo(evento:MouseEvent):void
 		{
-		trace ('proximo');
+			if (!this._anterior.hasEventListener(MouseEvent.CLICK))
+			{
+				this._anterior.addEventListener(MouseEvent.CLICK, cliqueanterior)
+			}
+			for (var i:int = atual; i < atual + 5; i++)
+			{
+				if (i >= _lista.length - 1 || i < 0)
+				{
+					trace(i);
+				}
+				else
+				{
+					if (this._lista[i].hasEventListener(MouseEvent.CLICK))
+					{
+						this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
+					}
+					this.removeChild(this._lista[i]);
+				}
+			}
+			atual = atual + 5;
+			desenho();
+			trace('proximo');
 		}
 		
 		private function cliqueanterior(evento:MouseEvent):void
 		{
-		trace('anterior')
+			if (!this._proximo.hasEventListener(MouseEvent.CLICK))
+			{
+				this._proximo.addEventListener(MouseEvent.CLICK, cliqueproximo)
+			}
+			for (var i:int = atual; i < atual + 5; i++)
+			{
+				if (i > _lista.length - 1 || i < 0)
+				{
+					trace(i);
+				}
+				else
+				{
+					if (this._lista[i].hasEventListener(MouseEvent.CLICK))
+					{
+						this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
+					}
+					this.removeChild(this._lista[i]);
+				}
+			}
+			atual = atual - 5;
+			desenho();
+			trace('anterior')
 		}
-		
 	
 	}
 }

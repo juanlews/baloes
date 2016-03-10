@@ -66,19 +66,9 @@ package
 			
 			
 
-			/*
-			var classes:Vector.<Class> = new Vector.<Class>();
-			classes.push(Graficos.ImgAnimacao1);
-			classes.push(Graficos.ImgAnimacao2);
-			classes.push(Graficos.ImgAnimacao3);
-			classes.push(Graficos.ImgAnimacao4);
-			classes.push(Graficos.ImgAnimacao5);
-			classes.push(Graficos.ImgAnimacao6);
-			classes.push(Graficos.ImgAnimacao7);
-			classes.push(Graficos.ImgAnimacao8);
-			var anim:AnimacaoFrames = new AnimacaoFrames(classes, 70);
-			this.addChild(anim);
-			*/
+			
+		
+			
 		}
 		
 		private function adicionaTela(nome:String, dados:Object):void {
