@@ -1,10 +1,11 @@
-package componentes 
+package componentes
 {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.geom.ColorTransform;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import recursos.Graficos;
 	
@@ -12,7 +13,7 @@ package componentes
 	 * ...
 	 * @author colaboa
 	 */
-	public class Balao extends Sprite  
+	public class Balao extends Sprite
 	{
 		
 		// imagens balao
@@ -24,8 +25,7 @@ package componentes
 		private var _corVerde:int;
 		private var _corDoTexto:int;
 		
-		
-		public function Balao(tipo:int = 0) 
+		public function Balao(tipo:int = 0)
 		{
 			super();
 			
@@ -43,100 +43,142 @@ package componentes
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
-			this._texto = new TextField();
-			this._texto.width = 700;
-			this._texto.height = 480;
-			this._texto.x = 370;
-			this._texto.y = 350;
+			this._texto = new TextField();			
+			
 			this._texto.maxChars = 100;
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
-			this._texto.defaultTextFormat = new TextFormat('Pfennig',100, 0);
-			this.addChild(this._texto);
-			this._texto.autoSize = TextFieldAutoSize.CENTER;
+			this._texto.wordWrap = true;
+			this._texto.defaultTextFormat = new TextFormat('Pfennig', 100, 0);
+			this.addChild(this._texto);			
+			this._texto.border = true;
 			this.mouseChildren = false;
-			
+			this._texto.autoSize = TextFieldAutoSize.CENTER;
+			this._texto.type = TextFieldType.INPUT;
+			this._texto.needsSoftKeyboard = true;
+		
 		}
 		
-		public function get tipo():int {
+		public function get tipo():int
+		{
 			return (this._tipo);
 		}
-		public function set tipo(para:int):void {
-			if (para >= this._imgsBalao.length) {
+		
+		public function set tipo(para:int):void
+		{
+			if (para >= this._imgsBalao.length)
+			{
 				para = this._imgsBalao.length - 1;
-			} else if (para < 0) {
+			}
+			else if (para < 0)
+			{
 				para = 0;
+			}
+			if (para == 0){
+				this._texto.width = 700;
+			this._texto.height = 480;
+			this._texto.x = this._imgsBalao[para].x + 370;
+			this._texto.y = this._imgsBalao[para].y + 350;
+			}
+			if (para == 1)
+			{
+				this._texto.width = 850;
+				this._texto.height = 480;
+				this._texto.x = this._imgsBalao[para].x + 220;
+				this._texto.y = this._imgsBalao[para].y + 190;
+			}
+			if (para == 2)
+			{
+				this._texto.width = 1050;
+				this._texto.height = 480;
+				this._texto.x = this._imgsBalao[para].x + 120;
+				this._texto.y = this._imgsBalao[para].y + 100;
 			}
 			this.removeChildren();
 			this.addChild(this._imgsBalao[para]);
 			this._tipo = para;
+			
 			this.addChild(this._texto);
+			this._texto.autoSize = TextFieldAutoSize.CENTER;
+		
 		}
 		
-		public function get texto():String {
-			return(this._texto.text);
+		public function get texto():String
+		{
+			return (this._texto.text);
 		}
-		public function set texto(para:String):void {
+		
+		public function set texto(para:String):void
+		{
 			this._texto.text = para;
 		}
 		
-		public function get corTexto():int {
+		public function get corTexto():int
+		{
 			return (this._texto.textColor);
 		}
 		
-		public function get vermelho():int {
-			return(this._imgsBalao[0].transform.colorTransform.redOffset);
+		public function get vermelho():int
+		{
+			return (this._imgsBalao[0].transform.colorTransform.redOffset);
 		}
 		
-		public function get verde():int {
-			return(this._imgsBalao[0].transform.colorTransform.greenOffset);
+		public function get verde():int
+		{
+			return (this._imgsBalao[0].transform.colorTransform.greenOffset);
 		}
 		
-		public function get azul():int {
-			return(this._imgsBalao[0].transform.colorTransform.blueOffset);
+		public function get azul():int
+		{
+			return (this._imgsBalao[0].transform.colorTransform.blueOffset);
 		}
 		
-		public function setCor(vermelho:int = 255, verde:int = 255, azul:int = 255, ctexto:int = 0):void {
+		public function setCor(vermelho:int = 255, verde:int = 255, azul:int = 255, ctexto:int = 0):void
+		{
 			if (vermelho < 0) vermelho = 0;
 			if (vermelho > 255) vermelho = 255;
 			if (verde < 0) verde = 0;
 			if (verde > 255) verde = 255;
 			if (azul < 0) azul = 0;
 			if (azul > 255) azul = 255;
-			for (var i:int = 0; i < this._imgsBalao.length; i++) {
+			for (var i:int = 0; i < this._imgsBalao.length; i++)
+			{
 				this._imgsBalao[i].transform.colorTransform = new ColorTransform(1, 1, 1, 1, vermelho, verde, azul);
 			}
 			this._texto.textColor = ctexto;
 		}
 		
-		public function copyProp(origem:Balao):void {
+		public function copyProp(origem:Balao):void
+		{
 			this.tipo = origem.tipo;
 			this.setCor(origem.vermelho, origem.verde, origem.azul, origem.corTexto);
 			this.texto = origem.texto;
 		}
 		
-		
-		public function flipH():void {
-			for (var i:int = 0; i < this._imgsBalao.length; i++) {
+		public function flipH():void
+		{
+			for (var i:int = 0; i < this._imgsBalao.length; i++)
+			{
 				this._imgsBalao[i].scaleX = -this._imgsBalao[i].scaleX;
 			}
 		}
 		
-		public function flipV():void {
-			for (var i:int = 0; i < this._imgsBalao.length; i++) {
+		public function flipV():void
+		{
+			for (var i:int = 0; i < this._imgsBalao.length; i++)
+			{
 				this._imgsBalao[i].scaleY = -this._imgsBalao[i].scaleY;
 			}
 		
 		}
 		
-		public function get xml():String {
-		
-			return('');
-		
+		public function get xml():String
+		{
+			
+			return ('');
 		
 		}
-
-		
+	
 	}
 
 }
