@@ -4,6 +4,7 @@ package componentes
 	import flash.display.Sprite;
 	import flash.geom.ColorTransform;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import recursos.Graficos;
 	
@@ -43,17 +44,18 @@ package componentes
 			this.addChild(this._imgsBalao[tipo]);
 			
 			this._texto = new TextField();
-			this._texto.width = 100;
-			this._texto.height = 50;
-			this._texto.x = 50;
-			this._texto.y = 50;
+			this._texto.width = 700;
+			this._texto.height = 480;
+			this._texto.x = 370;
+			this._texto.y = 350;
 			this._texto.maxChars = 100;
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
-			this._texto.defaultTextFormat = new TextFormat('Pfennig', 16, 0);
+			this._texto.defaultTextFormat = new TextFormat('Pfennig',100, 0);
 			this.addChild(this._texto);
-			
+			this._texto.autoSize = TextFieldAutoSize.CENTER;
 			this.mouseChildren = false;
+			
 		}
 		
 		public function get tipo():int {

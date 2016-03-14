@@ -167,6 +167,7 @@ package telas
 			}
 			// posicionar e dimensionar botões	
 			this._balao.tipo = this._balao.tipo;
+			this._balao.texto = 'oi';
 			this._balao.width = 200;
 			this._balao.scaleY = this._balao.scaleX;
 			this._balao.x = stage.stageWidth / 3;
