@@ -42,9 +42,11 @@ package telas
 		
 		private var _tipobalao:int;
 		private var _dados:Object;
+		private var btscala:Number;
 		
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
+			btscala = 8;
 			super(funcMudaTela);
 			
 			// criar balão
@@ -86,30 +88,30 @@ package telas
 			
 			//botão propiedades balão
 			this._propBalao.x = 0
-			this._propBalao.width = stage.stageWidth / 3;
+			this._propBalao.width = stage.stageWidth / btscala;
 			this._propBalao.scaleY = this._propBalao.scaleX;
 			
 			//botão ajuste do balão
 			this._ajusteBalao.x = this._propBalao.width;
-			this._ajusteBalao.width = stage.stageWidth / 3;
+			this._ajusteBalao.width = stage.stageWidth / btscala;
 			this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
 			
 			//botão ajuste imagem
 			this._ajusteImagem.x = this._ajusteBalao.width * 2;
-			this._ajusteImagem.width = stage.stageWidth / 3;
+			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
 			
 			//botão salvar			
-			this._salvar.width = stage.stageWidth / 6;
+			this._salvar.width = stage.stageWidth / btscala;
 			this._salvar.scaleY = this._salvar.scaleX;
-			this._salvar.x = stage.stageWidth / 8;
-			this._salvar.y = stage.stageHeight - this._salvar.width;
+			this._salvar.x = stage.stageWidth / 20;
+			this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight /  40);
 			
 			//botão cancelar
-			this._cancelar.width = stage.stageWidth / 6;
+			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
-			this._cancelar.x = stage.stageWidth / 1.4;
-			this._cancelar.y = stage.stageHeight - this._cancelar.height;
+			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth/ 20;
+			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight /  40);
 			
 			//imagem recuperada
 			

@@ -165,9 +165,8 @@ package telas
 			_anterior.y = stage.stageHeight - _voltar.height - stage.stageHeight / 40 ;
 			
 			_proximo.width = stage.stageWidth / btscala;
-			_proximo.scaleX = -_proximo.scaleX;
 			_proximo.scaleY = _proximo.scaleX;
-			_proximo.x = stage.stageWidth - stage.stageHeight / 40;
+			_proximo.x = stage.stageWidth -_proximo.width - stage.stageHeight / 20;
 			_proximo.y = stage.stageHeight - _proximo.height - stage.stageHeight / 40;
 			
 			this.mostraPagina(_pagina);

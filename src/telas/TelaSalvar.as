@@ -34,17 +34,18 @@ package telas
 		
 		private var _imagem:Loader;
 		
-		private var _fileup:File;
+		private var _fileup:File = new File();
 		private var _urlLoader:URLLoader;
 		private var _request:URLRequest;
 		private var anim:AnimacaoFrames;
 		
 		private var btscala:Number;
-
 		
 		public function TelaSalvar(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
+			
+			btscala = 8;
 			_caixa = new TxBox();
 			_ok = new BotaoIcone(Graficos.ImgPBOK);
 			_cancelar = new BotaoIcone(Graficos.ImgCancelar);
@@ -176,16 +177,16 @@ package telas
 			_caixa.y = stage.stageHeight / 2 - _caixa.height / 2;
 			
 			//botão salvar			
-			this._ok.width = stage.stageWidth / 6;
+			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
-			this._ok.x = stage.stageWidth / 8;
-			this._ok.y = stage.stageHeight - this._ok.width;
+			this._ok.x = stage.stageWidth / 20;
+			this._ok.y = stage.stageHeight - this._ok.width - stage.stageHeight / 40;
 			
 			//botão cancelar
-			this._cancelar.width = stage.stageWidth / 6;
+			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
-			this._cancelar.x = stage.stageWidth / 1.4;
-			this._cancelar.y = stage.stageHeight - this._cancelar.height;
+			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
+			this._cancelar.y = stage.stageHeight - this._cancelar.height - stage.stageHeight / 40;
 			
 			addChild(_caixa);
 			addChild(_ok);
@@ -241,11 +242,14 @@ package telas
 		{
 			super.escondendo(evento);
 			
-			removeChild(anim);
+			if (_fileup.hasEventListener(Event.COMPLETE) || _fileup.hasEventListener(IOErrorEvent.IO_ERROR))
+			{
+				_fileup.removeEventListener(Event.COMPLETE, arquivoEnviado);
+				_fileup.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
+				removeChild(anim);
+			}
 			
 			stage.removeEventListener(Event.RESIZE, desenho);
-			_fileup.removeEventListener(Event.COMPLETE, arquivoEnviado);
-			_fileup.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
 			_ok.removeEventListener(MouseEvent.CLICK, salvaImg);
 			_cancelar.removeEventListener(MouseEvent.CLICK, volta);
 		

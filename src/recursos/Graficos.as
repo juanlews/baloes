@@ -38,8 +38,8 @@ package recursos
 		//
 		[Embed(source = "imagens/barra.png")]
 		public static var ImgBarra:Class;
-		
-		[Embed(source = "imagens/Seta.png")]
+		//Setas
+		[Embed(source = "imagens/setadireita.png")]
 		public static var ImgSetad:Class;
 		[Embed(source = "imagens/Seta.png")]
 		public static var ImgSetae:Class;

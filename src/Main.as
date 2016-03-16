@@ -45,7 +45,7 @@ package
 			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			this.stage.color = 0XE8E8E8;
+			
 			// preparar as telas
 			this._telas = new Array();
 			this._telas['inicial'] = new TelaInicial(this.adicionaTela);
