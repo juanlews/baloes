@@ -19,6 +19,7 @@ package telas
 		
 		private var _imagem:Loader;
 		private var _link:String;
+		private const link:String = 'http://192.168.10.159/';
 		private var _voltar:BotaoIcone;
 		
 		public function TelaVisualizar(funcMudaTela:Function)
@@ -89,7 +90,7 @@ package telas
 		override public function recebeDados(dados:Object):void
 		{
 			this._imagem.contentLoaderInfo.addEventListener(Event.INIT, imagemCarregada);
-			_link = 'http://192.168.25.159/baloes/gravados/';
+			_link = link + 'baloes/gravados/';
 			if (dados != null)
 			{
 				_link += dados.link as String;

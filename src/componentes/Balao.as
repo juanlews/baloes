@@ -45,17 +45,19 @@ package componentes
 			
 			this._texto = new TextField();			
 			
-			this._texto.maxChars = 100;
+			this._texto.maxChars = 50;
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
 			this._texto.wordWrap = true;
-			this._texto.defaultTextFormat = new TextFormat('Pfennig', 100, 0);
+			this._texto.defaultTextFormat = new TextFormat('Pfennig', 90, 0, null, null, null, null, null, null, null, null, null, -45);
 			this.addChild(this._texto);			
 			this._texto.border = true;
 			this.mouseChildren = false;
-			this._texto.autoSize = TextFieldAutoSize.CENTER;
+			this._texto.autoSize = TextFieldAutoSize.NONE;
 			this._texto.type = TextFieldType.INPUT;
 			this._texto.needsSoftKeyboard = true;
+			this._texto.width = 700;
+			this._texto.height = 500;
 		
 		}
 		
@@ -75,22 +77,17 @@ package componentes
 				para = 0;
 			}
 			if (para == 0){
-				this._texto.width = 700;
-			this._texto.height = 480;
+				
 			this._texto.x = this._imgsBalao[para].x + 370;
 			this._texto.y = this._imgsBalao[para].y + 350;
 			}
 			if (para == 1)
 			{
-				this._texto.width = 850;
-				this._texto.height = 480;
 				this._texto.x = this._imgsBalao[para].x + 220;
 				this._texto.y = this._imgsBalao[para].y + 190;
 			}
 			if (para == 2)
 			{
-				this._texto.width = 1050;
-				this._texto.height = 480;
 				this._texto.x = this._imgsBalao[para].x + 120;
 				this._texto.y = this._imgsBalao[para].y + 100;
 			}
@@ -99,7 +96,7 @@ package componentes
 			this._tipo = para;
 			
 			this.addChild(this._texto);
-			this._texto.autoSize = TextFieldAutoSize.CENTER;
+			//this._texto.autoSize = TextFieldAutoSize.CENTER;
 		
 		}
 		

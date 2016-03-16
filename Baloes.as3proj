@@ -17,6 +17,7 @@
   <classpaths>
     <class path="src" />
     <class path="..\..\libas3" />
+    <class path="..\..\libnative" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -53,7 +54,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="..\..\libnative\NativeDialogs.ane" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

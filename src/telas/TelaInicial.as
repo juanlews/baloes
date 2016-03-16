@@ -54,7 +54,7 @@ package telas
 		{
 			super(funcMudaTela);
 			
-			btscala = 6;
+			btscala = 8;
 			
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
 			this.addChild(this._galeria);
@@ -190,16 +190,16 @@ package telas
 			
 			this._galeria.width = stage.stageWidth / btscala;
 			this._galeria.scaleY = this._galeria.scaleX;
-			this._galeria.x = 0;
-			this._galeria.y = 0;
+			this._galeria.x = this.stage.stageWidth / 20;
+			this._galeria.y = this.stage.stageHeight / 40;
 			
 			this._camera.scaleX = this._camera.scaleY = this._galeria.scaleX;
 			
 			// posicionar camera
 			this._camera.width = stage.stageWidth / btscala;
 			this._camera.scaleY = this._galeria.scaleX;
-			this._camera.x = stage.stageWidth - _camera.width;
-			this._camera.y = 0;
+			this._camera.x = stage.stageWidth - _camera.width  - this.stage.stageWidth / 20;
+			this._camera.y = this.stage.stageHeight / 40;
 			
 			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
 			
@@ -208,7 +208,7 @@ package telas
 			this._carregar.scaleY = this._galeria.scaleX;
 			
 			this._carregar.x = stage.stageWidth / 2 - this._carregar.width / 2;
-			this._carregar.y = stage.stageHeight - this._carregar.height;
+			this._carregar.y = stage.stageHeight - this._carregar.height - this.stage.stageHeight / 40;
 			
 			// pocisionar e dimensionar help aqui
 			if (stage.stageWidth < stage.stageHeight)

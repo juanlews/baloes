@@ -23,10 +23,11 @@ package telas
 	 */
 	public class TelaSalvar extends Tela
 	{
+		
+		private const link:String = 'http://192.168.10.159/';
 		private var _caixa:TxBox;
 		
 		private var _miniatura:Bitmap;
-		
 		
 		private var _ok:BotaoIcone;
 		private var _cancelar:BotaoIcone;
@@ -36,7 +37,8 @@ package telas
 		private var _fileup:File;
 		private var _urlLoader:URLLoader;
 		private var _request:URLRequest;
-		private	var anim:AnimacaoFrames;
+		private var anim:AnimacaoFrames;
+		
 		public function TelaSalvar(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -53,8 +55,7 @@ package telas
 			classes.push(Graficos.ImgAnimacao6);
 			classes.push(Graficos.ImgAnimacao7);
 			classes.push(Graficos.ImgAnimacao8);
-		    anim = new AnimacaoFrames(classes, 40);
-			
+			anim = new AnimacaoFrames(classes, 40);
 		
 		}
 		
@@ -64,10 +65,10 @@ package telas
 			trace('no arquivo enviado');
 			
 			_urlLoader = new URLLoader();
-			_request = new URLRequest("http://192.168.25.159/baloes/confirmaEnvio.php");
+			_request = new URLRequest(link + "baloes/confirmaEnvio.php");
 			_request.method = 'POST';
 			var variaveis:URLVariables = new URLVariables();
-			variaveis['nome'] = _caixa.text;			
+			variaveis['nome'] = _caixa.text;
 			variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
 			_request.data = variaveis;
 			
@@ -77,22 +78,27 @@ package telas
 		
 		}
 		
-		private function arquivoConfirmado(evento:Event):void {
+		private function arquivoConfirmado(evento:Event):void
+		{
 			
-			trace ('no arquivo confirmado');
+			trace('no arquivo confirmado');
 			
 			_urlLoader.removeEventListener(Event.COMPLETE, arquivoConfirmado);
 			_urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
 			
 			var variaveis:URLVariables;
 			var varOK:Boolean = true;
-			try {
+			try
+			{
 				variaveis = new URLVariables(_urlLoader.data);
-			} catch (e:Error) {
+			}
+			catch (e:Error)
+			{
 				varOK = false;
 			}
 			
-			if (varOK) {
+			if (varOK)
+			{
 				if (variaveis['erro'] == null)
 				{
 					trace('resposta do servidor mal formatada');
@@ -105,21 +111,28 @@ package telas
 					}
 					else
 					{
-						if (variaveis['resultado'] == null) {
+						if (variaveis['resultado'] == null)
+						{
 							trace('resposta do servidor mal formatada');
 						}
 						else
 						{
-							if (variaveis['resultado'] == '0') {
-								trace ('a imagem não foi gravada');
-							} else {
-								trace ('gravação ok');
+							if (variaveis['resultado'] == '0')
+							{
+								trace('a imagem não foi gravada');
+							}
+							else
+							{
+								trace('gravação ok');
+								this.mudaTela('inicial', null);
+								
 							}
 						}
 					}
 					
 				}
 			}
+		
 		}
 		
 		private function imagemCarregada(evento:Event):void
@@ -188,11 +201,11 @@ package telas
 		private function salvaImg(evento:MouseEvent):void
 		{
 			trace(_caixa.text);
-			_request = new URLRequest("http://192.168.25.159/baloes/salvar.php");
+			_request = new URLRequest(link + "baloes/salvar.php");
 			_request.method = 'POST';
 			
 			var variaveis:URLVariables = new URLVariables();
-			variaveis['nome'] = _caixa.text;			
+			variaveis['nome'] = _caixa.text;
 			variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
 			removeChildren();
 			anim.width = stage.stageWidth / 2;
@@ -202,14 +215,12 @@ package telas
 			
 			addChild(anim);
 			
-			_request.data = variaveis;			
+			_request.data = variaveis;
 			_fileup = File.cacheDirectory.resolvePath('bmptemp.jpg');
 			
 			_fileup.addEventListener(Event.COMPLETE, arquivoEnviado);
 			_fileup.addEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
 			_fileup.upload(_request);
-			
-			
 		
 		}
 		
@@ -226,7 +237,14 @@ package telas
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
+			
+			removeChild(anim);
+			
 			stage.removeEventListener(Event.RESIZE, desenho);
+			_fileup.removeEventListener(Event.COMPLETE, arquivoEnviado);
+			_fileup.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
+			_ok.removeEventListener(MouseEvent.CLICK, salvaImg);
+			_cancelar.removeEventListener(MouseEvent.CLICK, volta);
 		
 		}
 	
