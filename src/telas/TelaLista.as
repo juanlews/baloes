@@ -37,11 +37,12 @@ package telas
 		private var _request:URLRequest;
 		private var _urlLoader:URLLoader;
 		private var envio:URLVariables;
+		private var btscala:Number;
 		
 		public function TelaLista(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			
+			btscala = 8;
 			_voltar = new BotaoIcone(Graficos.ImgCancelar);
 			_proximo = new BotaoIcone(Graficos.ImgSetad);
 			_anterior = new BotaoIcone(Graficos.ImgSetae);
@@ -104,7 +105,7 @@ package telas
 				{
 					var arquivos:Array = String(variaveis['lista']).split(';');
 					trace('arquivos encontrados:');
-					trace('carregando: ' + link +'baloes/gravados', arquivos);
+					trace('carregando: ' + link + 'baloes/gravados', arquivos);
 					_total = arquivos.length;
 					_pagina = 0;
 					for (var i:int = 0; i < arquivos.length; i++)
@@ -118,9 +119,9 @@ package telas
 		}
 		
 		private function mostraPagina(num:int):void
-		{   
+		{
 			trace('Pagina');
-			if ((num>=0) && ((num * IMAGENSPORPAGINA) < this._nomes.length))
+			if ((num >= 0) && ((num * IMAGENSPORPAGINA) < this._nomes.length))
 			{
 				this._pagina = num;
 				for (var inome:int = 0; inome < IMAGENSPORPAGINA; inome++)
@@ -143,8 +144,8 @@ package telas
 					}
 				}
 			}
-					trace('Fim da Pagina');
-
+			trace('Fim da Pagina');
+		
 		}
 		
 		override public function desenho(evento:Event = null):void
@@ -153,20 +154,21 @@ package telas
 			
 			//desenha botoes
 			
-			_voltar.width = stage.stageWidth / 5;
+			_voltar.width = stage.stageWidth / btscala;
 			_voltar.scaleY = _voltar.scaleX;
 			_voltar.x = stage.stageWidth / 2 - _voltar.width / 2;
-			_voltar.y = stage.stageHeight - _voltar.height;
+			_voltar.y = stage.stageHeight - _voltar.height - stage.stageHeight / 40;
 			
-			_anterior.width = stage.stageWidth / 5;
+			_anterior.width = stage.stageWidth / btscala;
 			_anterior.scaleY = _anterior.scaleX;
-			_anterior.y = stage.stageHeight - _voltar.height;
+			_anterior.x = stage.stageWidth / 20;
+			_anterior.y = stage.stageHeight - _voltar.height - stage.stageHeight / 40 ;
 			
-			_proximo.width = stage.stageWidth / 5;
+			_proximo.width = stage.stageWidth / btscala;
 			_proximo.scaleX = -_proximo.scaleX;
 			_proximo.scaleY = _proximo.scaleX;
-			_proximo.x = stage.stageWidth;
-			_proximo.y = stage.stageHeight - _proximo.height;
+			_proximo.x = stage.stageWidth - stage.stageHeight / 40;
+			_proximo.y = stage.stageHeight - _proximo.height - stage.stageHeight / 40;
 			
 			this.mostraPagina(_pagina);
 			

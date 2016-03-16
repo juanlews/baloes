@@ -39,6 +39,9 @@ package telas
 		private var _request:URLRequest;
 		private var anim:AnimacaoFrames;
 		
+		private var btscala:Number;
+
+		
 		public function TelaSalvar(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
