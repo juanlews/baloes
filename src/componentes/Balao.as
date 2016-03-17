@@ -5,6 +5,8 @@ package componentes
 	import flash.filters.DropShadowFilter;
 	import flash.geom.ColorTransform;
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
 	import recursos.Graficos;
 	
@@ -43,20 +45,26 @@ package componentes
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
-			this._texto = new TextField();
-			this._texto.width = 100;
-			this._texto.height = 50;
-			this._texto.x = 50;
-			this._texto.y = 50;
-			this._texto.maxChars = 100;
+						this._texto = new TextField();			
+			
+			this._texto.maxChars = 50;
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
-			this._texto.defaultTextFormat = new TextFormat('Pfennig', 16, 0);
-			this.addChild(this._texto);
+			this._texto.wordWrap = true;
+			this._texto.defaultTextFormat = new TextFormat('Pfennig', 90, 0, null, null, null, null, null, null, null, null, null, -45);
+			this.addChild(this._texto);			
+			this._texto.border = true;
+			this.mouseChildren = false;
+			this._texto.autoSize = TextFieldAutoSize.NONE;
+			this._texto.type = TextFieldType.INPUT;
+			this._texto.needsSoftKeyboard = true;
+			this._texto.width = 700;
+			this._texto.height = 500;
+
 			
 			this.setCor(255, 255, 255, 5, 0);
 			
-			this.mouseChildren = false;
+			
 		}
 		
 		public function get tipo():int
@@ -74,6 +82,31 @@ package componentes
 			{
 				para = 0;
 			}
+			if (para >= this._imgsBalao.length)
+			{
+				para = this._imgsBalao.length - 1;
+			}
+			else if (para < 0)
+			{
+				para = 0;
+			}
+			if (para == 0){
+				
+			this._texto.x = this._imgsBalao[para].x + 370;
+			this._texto.y = this._imgsBalao[para].y + 350;
+			}
+			if (para == 1)
+			{
+				this._texto.x = this._imgsBalao[para].x + 220;
+				this._texto.y = this._imgsBalao[para].y + 190;
+			}
+			if (para == 2)
+			{
+				this._texto.x = this._imgsBalao[para].x + 120;
+				this._texto.y = this._imgsBalao[para].y + 100;
+			}
+			
+
 			this.removeChildren();
 			this.addChild(this._imgsBalao[para]);
 			this._tipo = para;
