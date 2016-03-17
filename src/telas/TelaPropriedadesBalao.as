@@ -185,52 +185,52 @@ package telas
 		
 			//botoes do tipo radio
 			//balao
-			this._tipo1.x = 0;
-			this._tipo1.y = 50;
-			this._tipo1.width = stage.stageWidth / 3;
+			this._tipo1.x =stage.stageWidth/20;
+			this._tipo1.y = stage.stageHeight/40;
+			this._tipo1.width = stage.stageWidth / 3.5;
 			this._tipo1.scaleY = this._tipo1.scaleX;
 			this.addChild(this._tipo1);
 			
-			this._tipo2.x = this._tipo1.x + this._tipo1.width;
-			this._tipo2.y = 50;
-			this._tipo2.width = stage.stageWidth / 3;
+			this._tipo2.x = this._tipo1.x + this._tipo1.width + this._tipo1.width/20;
+			this._tipo2.y= stage.stageHeight/40;
+			this._tipo2.width = stage.stageWidth / 3.5;
 			this._tipo2.scaleY = this._tipo2.scaleX;
 			this.addChild(this._tipo2);
 			
-			this._tipo3.x = this._tipo2.x + this._tipo2.width;
-			this._tipo3.y = 50;
-			this._tipo3.width = stage.stageWidth / 3;
+			this._tipo3.x = this._tipo2.x + this._tipo2.width + this._tipo1.width/20;
+			this._tipo3.y = stage.stageHeight/40;
+			this._tipo3.width = stage.stageWidth / 3.5;
 			this._tipo3.scaleY = this._tipo3.scaleX;
 			this.addChild(this._tipo3);
 			
 			//cor
-			this._cor1.x = 0;
+			this._cor1.x = stage.stageWidth / 20 ;
 			this._cor1.y = stage.stageHeight / 4;
-			this._cor1.width = stage.stageWidth / 5
+			this._cor1.width = stage.stageWidth / 8
 			this._cor1.scaleY = this._cor1.scaleX;
 			this.addChild(this._cor1);
 			
-			this._cor2.x = this._cor1.x + this._cor1.width;
+			this._cor2.x = this._cor1.x + this._cor1.width *1.5;
 			this._cor2.y = stage.stageHeight / 4;
-			this._cor2.width = stage.stageWidth / 5
+			this._cor2.width = stage.stageWidth /8;
 			this._cor2.scaleY = this._cor2.scaleX;
 			this.addChild(this._cor2);
 			
-			this._cor3.x = this._cor2.x + this._cor2.width;
+			this._cor3.x = this._cor2.x + this._cor2.width *1.5;
 			this._cor3.y = stage.stageHeight / 4;
-			this._cor3.width = stage.stageWidth / 5
+			this._cor3.width = stage.stageWidth / 8
 			this._cor3.scaleY = this._cor3.scaleX;
 			this.addChild(this._cor3);
 			
-			this._cor4.x = this._cor3.x + this._cor3.width;
+			this._cor4.x = this._cor3.x + this._cor3.width * 1.5;
 			this._cor4.y = stage.stageHeight / 4;
-			this._cor4.width = stage.stageWidth / 5
+			this._cor4.width = stage.stageWidth / 8
 			this._cor4.scaleY = this._cor4.scaleX;
 			this.addChild(this._cor4);
 			
-			this._cor5.x = this._cor4.x + this._cor4.width;
+			this._cor5.x = this._cor4.x + this._cor4.width * 1.5;
 			this._cor5.y = stage.stageHeight / 4;
-			this._cor5.width = stage.stageWidth / 5
+			this._cor5.width = stage.stageWidth / 8
 			this._cor5.scaleY = this._cor5.scaleX;
 			this.addChild(this._cor5);
 			
