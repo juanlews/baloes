@@ -25,9 +25,8 @@ package componentes
 		private var _corVermelho:int;
 		private var _corVerde:int;
 		private var _corDoTexto:int;
-		
 		public var botaoCor:int;
-		
+		private var _para:int;
 		public function Balao(tipo:int = 0)
 		{
 			super();
@@ -90,22 +89,60 @@ package componentes
 			{
 				para = 0;
 			}
-			if (para == 0){
-				
-			this._texto.x = this._imgsBalao[para].x + 370;
-			this._texto.y = this._imgsBalao[para].y + 350;
-			}
-			if (para == 1)
-			{
-				this._texto.x = this._imgsBalao[para].x + 220;
-				this._texto.y = this._imgsBalao[para].y + 190;
-			}
-			if (para == 2)
-			{
-				this._texto.x = this._imgsBalao[para].x + 120;
-				this._texto.y = this._imgsBalao[para].y + 100;
+			
+			if (this._imgsBalao[0].scaleX > 0) {
+				switch (para) {
+					case 0:
+						this._texto.x = 370;
+						break;
+					case 1:
+						this._texto.x = 220;
+						break;
+					case 2:
+						this._texto.x = 120;
+						break;
+				}
+			} else {
+				switch (para) {
+					case 0:
+						this._texto.x = 370;
+						break;
+					case 1:
+						this._texto.x = 220;
+						break;
+					case 2:
+						this._texto.x = 120;
+						break;
+				}
 			}
 			
+			if (this._imgsBalao[0].scaleY > 0) {
+				switch (para) {
+					case 0:
+						this._texto.y = 350;
+						break;
+					case 1:
+						this._texto.y = 190;
+						break;
+					case 2:
+						this._texto.y = 100;
+						break;
+				}
+			} else {
+				switch (para) {
+					case 0:
+						this._texto.y = 350;
+						break;
+					case 1:
+						this._texto.y = 190;
+						break;
+					case 2:
+						this._texto.y = 100;
+						break;
+				}
+			}
+			
+			para == this._para;
 
 			this.removeChildren();
 			this.addChild(this._imgsBalao[para]);
@@ -174,12 +211,12 @@ package componentes
 				this._imgsBalao[i].scaleX = -this._imgsBalao[i].scaleX;
 				if (this._imgsBalao[i].scaleX < 0) {
 					this._imgsBalao[i].x = this._imgsBalao[i].width;
-					// mudar x da caixa de texto
 				} else {
 					this._imgsBalao[i].x = 0;
-					// mudar x da caixa de texto
+					
 				}
 			}
+			this.tipo = this.tipo;
 		}
 		
 		public function flipV():void
@@ -190,12 +227,13 @@ package componentes
 				if (this._imgsBalao[i].scaleY < 0) {
 					this._imgsBalao[i].y = this._imgsBalao[i].height;
 					// mudar y da caixa de texto
-				} else {
+					} 
+					else {
 					this._imgsBalao[i].y = 0;
-					// mudar y da caixa de texto
+					
 				}
 			}
-		
+			this.tipo = this.tipo;
 		}
 		
 		public function copyProp(origem:Balao):void
