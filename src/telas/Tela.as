@@ -39,7 +39,7 @@ package telas
 				linhacima.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10);
 				linhacima.graphics.endFill();
 				
-				linhabaixo.graphics.beginFill(0xFF0000);
+				linhabaixo.graphics.beginFill(0xDC143C);
 				linhabaixo.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10);
 				linhabaixo.graphics.endFill();
 			}

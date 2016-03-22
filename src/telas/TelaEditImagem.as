@@ -36,7 +36,8 @@ package telas
 			dados = new Object();
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			btscala =10;
+			btscala = 10;
+			this.removeChild(linhacima);
 		
 		}
 		
@@ -52,20 +53,23 @@ package telas
 			this.addChild(this._ok);
 			this.addChild(this._cancelar);
 			
-			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
 			this._ok.x = stage.stageWidth / 20;
-			this._ok.y = stage.stageHeight - _ok.height - stage.stageHeight/40 ;
+			this._ok.y = stage.stageHeight - _ok.height - stage.stageHeight / 40;
 			
 			//botão cancelar
 			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
-			this._cancelar.x = stage.stageWidth - _cancelar.width  - this.stage.stageWidth / 20;
+			this._cancelar.x = stage.stageWidth - _cancelar.width - this.stage.stageWidth / 20;
 			this._cancelar.y = stage.stageHeight - this._cancelar.height - stage.stageHeight / 40;
 			
 			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 			{
+				this.addChild(linhabaixo);
+				
+				this.addChild(this._ok);
+				this.addChild(this._cancelar);
 				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);

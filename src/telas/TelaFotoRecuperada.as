@@ -73,6 +73,8 @@ package telas
 			super.desenho(evento);			
 						
 			this.addChild(this._imagem);
+			this.addChild(linhabaixo);
+			this.addChild(linhacima);
 			this.addChild(this._balao);
 			this.addChild(this._propBalao);
 			this.addChild(this._ajusteBalao);

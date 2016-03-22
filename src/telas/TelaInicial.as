@@ -187,8 +187,6 @@ package telas
 		{
 			super.desenho(evento);
 			
-			
-			
 			// POSICIONAR BOTOES
 			
 			this._galeria.width = stage.stageWidth / btscala;
@@ -201,7 +199,7 @@ package telas
 			// posicionar camera
 			this._camera.width = stage.stageWidth / btscala;
 			this._camera.scaleY = this._galeria.scaleX;
-			this._camera.x = stage.stageWidth - _camera.width  - this.stage.stageWidth / 20;
+			this._camera.x = stage.stageWidth - _camera.width - this.stage.stageWidth / 20;
 			this._camera.y = this.stage.stageHeight / 40;
 			
 			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
@@ -214,17 +212,22 @@ package telas
 			this._carregar.y = stage.stageHeight - this._carregar.height - this.stage.stageHeight / 40;
 			
 			// pocisionar e dimensionar help aqui
-		
-				this._help.width = stage.stageWidth - stage.stageWidth / 10;
-				this._help.scaleY = _help.scaleX;
-				//this._help.x = stage.stageWidth / 20;
-				this._help.y = stage.stageHeight / 2 - this._help.height/2;
-				Tweener.addTween(_help, {x: stage.stageWidth / 20, time: 1});
 			
+			this._help.width = stage.stageWidth - stage.stageWidth / 10;
+			this._help.scaleY = _help.scaleX;
+			//this._help.x = stage.stageWidth / 20;
+			this._help.y = stage.stageHeight / 2 - this._help.height / 2;
+			Tweener.addTween(_help, {x: stage.stageWidth / 20, time: 1});
 			
 			// ADICIONAR CLIQUES NOS BOTOES
 			if (!this._galeria.hasEventListener(MouseEvent.CLICK))
 			{
+				this.addChild(linhabaixo);
+				this.addChild(linhacima);
+				this.addChild(this._carregar);
+				this.addChild(this._galeria);
+				this.addChild(this._camera);
+				
 				
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
@@ -253,7 +256,7 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);
-			
+		
 		}
 		
 		private function swipeTela(evento:TransformGestureEvent):void

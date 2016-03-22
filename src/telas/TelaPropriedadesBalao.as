@@ -92,6 +92,7 @@ package telas
 			this._flipH = new BotaoIcone(Graficos.ImgPBFlipH);
 			this._flipV = new BotaoIcone(Graficos.ImgPBFlipV);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
+			removeChild(linhacima);
 			
 		}
 		
