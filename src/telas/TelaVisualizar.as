@@ -33,7 +33,7 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			Multitouch.inputMode = MultitouchInputMode.GESTURE;
+
 			stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
 			

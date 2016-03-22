@@ -146,6 +146,7 @@ package telas
 		{
 			super.desenho(evento);
 			// posicionar todo mundo
+			
 			// fundo 
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 ;

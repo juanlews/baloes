@@ -46,7 +46,7 @@ package telas
 		
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
-			btscala = 8;
+			btscala = 10;
 			super(funcMudaTela);
 			
 			// criar balão
@@ -70,7 +70,8 @@ package telas
 		
 		override public function desenho(evento:Event = null):void
 		{
-			super.desenho(evento);
+			super.desenho(evento);			
+						
 			this.addChild(this._imagem);
 			this.addChild(this._balao);
 			this.addChild(this._propBalao);
@@ -87,17 +88,21 @@ package telas
 			}
 			
 			//botão propiedades balão
-			this._propBalao.x = 0
+			this._propBalao.x = stage.stageWidth / 20;
+			this._propBalao.y = stage.stageHeight / 40;
 			this._propBalao.width = stage.stageWidth / btscala;
 			this._propBalao.scaleY = this._propBalao.scaleX;
 			
 			//botão ajuste do balão
-			this._ajusteBalao.x = this._propBalao.width;
 			this._ajusteBalao.width = stage.stageWidth / btscala;
 			this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
+			this._ajusteBalao.x = (this._propBalao.width + this._propBalao.x) + stage.stageWidth / 20;
+			this._ajusteBalao.y = stage.stageHeight / 40;
+			
 			
 			//botão ajuste imagem
-			this._ajusteImagem.x = this._ajusteBalao.width * 2;
+			this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x ) + stage.stageWidth / 20;
+			this._ajusteImagem.y = stage.stageHeight / 40;
 			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
 			

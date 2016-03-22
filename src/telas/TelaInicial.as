@@ -54,7 +54,7 @@ package telas
 		{
 			super(funcMudaTela);
 			
-			btscala = 8;
+			btscala = 10;
 			
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
 			this.addChild(this._galeria);
@@ -186,6 +186,9 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+			
+			
+			
 			// POSICIONAR BOTOES
 			
 			this._galeria.width = stage.stageWidth / btscala;

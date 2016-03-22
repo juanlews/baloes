@@ -42,7 +42,7 @@ package telas
 		public function TelaLista(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
-			btscala = 8;
+			btscala = 10;
 			_voltar = new BotaoIcone(Graficos.ImgCancelar);
 			_proximo = new BotaoIcone(Graficos.ImgSetad);
 			_anterior = new BotaoIcone(Graficos.ImgSetae);
@@ -55,9 +55,6 @@ package telas
 			
 			this._nomes = new Vector.<String>();
 			
-			addChild(_voltar);
-			addChild(_proximo);
-			addChild(_anterior);
 			// --------------------------------------
 			envio = new URLVariables();
 			_urlLoader = new URLLoader();
@@ -69,6 +66,10 @@ package telas
 			envio['valida'] = MD5.hash('asdfg');
 			_request.data = envio;
 			_urlLoader.load(_request);
+			
+			addChild(_voltar);
+			addChild(_proximo);
+			addChild(_anterior);
 		
 		}
 		
@@ -130,13 +131,19 @@ package telas
 					{
 						this._lista[inome].addEventListener(MouseEvent.CLICK, cliqueLista);
 						this._lista[inome].texto = this._nomes[(num * IMAGENSPORPAGINA) + inome];
-						this._lista[inome].visible = true;						
+						this._lista[inome].visible = true;
 						this._lista[inome].width = stage.stageWidth;
 						this._lista[inome].scaleY = this._lista[inome].scaleX;
 						this._lista[inome].addEventListener(MouseEvent.CLICK, cliqueLista);
 						this._lista[inome].y = _lista[inome].height * inome;
 						
 						this.addChild(this._lista[inome]);
+						
+						addChild(linhacima);
+						addChild(linhabaixo);
+						addChild(_voltar);
+						addChild(_proximo);
+						addChild(_anterior);
 					}
 					else
 					{
@@ -150,6 +157,7 @@ package telas
 		
 		override public function desenho(evento:Event = null):void
 		{
+			super.desenho(evento);
 			
 			envio = new URLVariables();
 			_urlLoader = new URLLoader();
@@ -161,7 +169,8 @@ package telas
 			envio['valida'] = MD5.hash('asdfg');
 			_request.data = envio;
 			_urlLoader.load(_request);
-			super.desenho(evento);
+			
+			this.mostraPagina(_pagina);
 			
 			//desenha botoes
 			
@@ -173,16 +182,12 @@ package telas
 			_anterior.width = stage.stageWidth / btscala;
 			_anterior.scaleY = _anterior.scaleX;
 			_anterior.x = stage.stageWidth / 20;
-			_anterior.y = stage.stageHeight - _voltar.height - stage.stageHeight / 40 ;
+			_anterior.y = stage.stageHeight - _voltar.height - stage.stageHeight / 40;
 			
 			_proximo.width = stage.stageWidth / btscala;
 			_proximo.scaleY = _proximo.scaleX;
-			_proximo.x = stage.stageWidth -_proximo.width - stage.stageHeight / 20;
+			_proximo.x = stage.stageWidth - _proximo.width - stage.stageHeight / 20;
 			_proximo.y = stage.stageHeight - _proximo.height - stage.stageHeight / 40;
-			
-			this.mostraPagina(_pagina);
-			
-		
 			
 			if (!this._anterior.hasEventListener(MouseEvent.CLICK))
 			{
@@ -194,8 +199,7 @@ package telas
 				trace('adicionou');
 				
 			}
-			
-					
+		
 		}
 		
 		override public function escondendo(evento:Event):void
@@ -239,7 +243,7 @@ package telas
 		
 		private function cliqueanterior(evento:MouseEvent):void
 		{
-		
+			
 			this.mostraPagina(_pagina - 1);
 			desenho();
 			trace('anterior')

@@ -45,7 +45,7 @@ package telas
 		{
 			super(funcMudaTela);
 			
-			btscala = 8;
+			btscala = 10;
 			_caixa = new TxBox();
 			_ok = new BotaoIcone(Graficos.ImgPBOK);
 			_cancelar = new BotaoIcone(Graficos.ImgCancelar);
@@ -166,6 +166,8 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+			
+			
 			
 			_imagem.x = 0;
 			_imagem.y = 0;
