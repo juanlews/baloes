@@ -166,6 +166,7 @@ package telas
 				this._imagem.scaleX = this._imagem.scaleY;
 			}
 			// posicionar e dimensionar botões	
+			
 			this._balao.tipo = this._balao.tipo;
 			this._balao.texto = 'oi';
 			this._balao.width = 200;

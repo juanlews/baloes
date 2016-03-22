@@ -48,11 +48,13 @@ package telas
 		
 		private var _modelobalao:int;
 		
+		private var _btscala:Number;
+		
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
 			
-			// adicionar caixa de texto para input
+			
 			
 			// adicionando grupo de radio do tipo de balão
 			this._tipo1 = new BotaoRadio(Graficos.ImgBTBalao01, '1', true);
@@ -67,7 +69,6 @@ package telas
 			this._tipo1.grupo = this._tipo2.grupo = this._tipo3.grupo = grupoTipoBalao;
 			
 			// adicionando grupo de radio de cores
-			
 			this._cor1 = new BotaoRadio(Graficos.ImgBTCor01, '1', true);
 			this._cor2 = new BotaoRadio(Graficos.ImgBTCor02, '2');
 			this._cor3 = new BotaoRadio(Graficos.ImgBTCor03, '3');
@@ -93,6 +94,7 @@ package telas
 			this._flipV = new BotaoIcone(Graficos.ImgPBFlipV);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			removeChild(linhacima);
+			this._btscala = 10;
 			
 		}
 		
@@ -151,38 +153,38 @@ package telas
 			// fundo 
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 ;
-			this._fndprev.x = 2;
+			this._fndprev.x = 0;
 			this._fndprev.y = stage.stageHeight / 3 + this._fndprev.height/8;
 			this.addChild(this._fndprev);
 			
 			// balao padrao
 			this._balaoP.width = this._fndprev.width - 50;
 			this._balaoP.scaleY = this._balaoP.scaleX;
-			this._balaoP.x = this._fndprev.x+ 20;
-			this._balaoP.y = this._fndprev.y+20;
+			this._balaoP.x = this._fndprev.x + this._balaoP.width/20;
+			this._balaoP.y = this._fndprev.y + this._balaoP.height/20;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
 			
 			//botoes do tipo icone 
 			//flip Horizontal
-			this._flipH.width = 60;
+			this._flipH.width = stage.stageWidth / this._btscala;
 			this._flipH.scaleY = this._flipH.scaleX;
-			this._flipH.x = 0;
-			this._flipH.y = stage.stageHeight - this._flipH.height;
+			this._flipH.x = stage.stageWidth - this._flipH.width - stage.stageWidth/20;
+			this._flipH.y = stage.stageHeight - this._flipH.height - stage.stageHeight/40;
 			this.addChild(this._flipH);
 			
 			//flip vertical
-			this._flipV.width = 60;
+			this._flipV.width = stage.stageWidth/ this._btscala;
 			this._flipV.scaleY = this._flipV.scaleX;
 			this._flipV.x = stage.stageWidth / 2 - this._flipV.width / 2;
-			this._flipV.y = stage.stageHeight - this._flipV.height;
+			this._flipV.y = stage.stageHeight - this._flipV.height - stage.stageHeight/40;
 			this.addChild(this._flipV);
 			
 			// botao ok
-			this._ok.width = 60;
+			this._ok.width = stage.stageWidth / this._btscala;
 			this._ok.scaleY = this._ok.scaleX;
-			this._ok.x = stage.stageWidth - this._ok.width;
-			this._ok.y = stage.stageHeight - this._ok.height;
+			this._ok.x = stage.stageWidth/20;
+			this._ok.y = stage.stageHeight - this._ok.width - stage.stageHeight /  40;
 			this.addChild(this._ok);
 		
 			//botoes do tipo radio
