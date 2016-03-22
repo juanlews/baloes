@@ -58,7 +58,7 @@ package telas
 			addChild(_voltar);
 			addChild(_proximo);
 			addChild(_anterior);
-			
+			// --------------------------------------
 			envio = new URLVariables();
 			_urlLoader = new URLLoader();
 			_request = new URLRequest(link + "baloes/listar.php");
@@ -129,13 +129,13 @@ package telas
 					if (((num * IMAGENSPORPAGINA) + inome) < this._nomes.length)
 					{
 						this._lista[inome].addEventListener(MouseEvent.CLICK, cliqueLista);
-						_lista[inome].texto = this._nomes[(num * IMAGENSPORPAGINA) + inome];
-						_lista[inome].visible = true;
-						
+						this._lista[inome].texto = this._nomes[(num * IMAGENSPORPAGINA) + inome];
+						this._lista[inome].visible = true;						
 						this._lista[inome].width = stage.stageWidth;
 						this._lista[inome].scaleY = this._lista[inome].scaleX;
 						this._lista[inome].addEventListener(MouseEvent.CLICK, cliqueLista);
 						this._lista[inome].y = _lista[inome].height * inome;
+						
 						this.addChild(this._lista[inome]);
 					}
 					else
@@ -150,6 +150,17 @@ package telas
 		
 		override public function desenho(evento:Event = null):void
 		{
+			
+			envio = new URLVariables();
+			_urlLoader = new URLLoader();
+			_request = new URLRequest(link + "baloes/listar.php");
+			
+			_request.method = 'POST';
+			_urlLoader.addEventListener(Event.COMPLETE, recebeu);
+			_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, erroIO);
+			envio['valida'] = MD5.hash('asdfg');
+			_request.data = envio;
+			_urlLoader.load(_request);
 			super.desenho(evento);
 			
 			//desenha botoes
@@ -171,6 +182,8 @@ package telas
 			
 			this.mostraPagina(_pagina);
 			
+		
+			
 			if (!this._anterior.hasEventListener(MouseEvent.CLICK))
 			{
 				
@@ -182,30 +195,7 @@ package telas
 				
 			}
 			
-			var cont:int = 0;
-		/*for (var i:int = atual; i < atual + 5; i++)
-		   {
-		
-		   trace(i);
-		   if (i >= _lista.length)
-		   {
-		   this._proximo.removeEventListener(MouseEvent.CLICK, cliqueproximo);
-		   }
-		   if (i <= 0)
-		   {
-		   this._anterior.removeEventListener(MouseEvent.CLICK, cliqueanterior);
-		   }
-		
-		   if (!(i >= _lista.length || i < 0))
-		   {
-		   this._lista[i].addEventListener(MouseEvent.CLICK, cliqueLista);
-		   this._lista[i].y = _lista[i].height * cont;
-		   this.addChild(this._lista[i]);
-		   cont++;
-		   }
-		
-		   }*/
-		
+					
 		}
 		
 		override public function escondendo(evento:Event):void
@@ -241,26 +231,7 @@ package telas
 		
 		private function cliqueproximo(evento:MouseEvent):void
 		{
-			/*if (!this._anterior.hasEventListener(MouseEvent.CLICK))
-			   {
-			   this._anterior.addEventListener(MouseEvent.CLICK, cliqueanterior)
-			   }
-			   for (var i:int = atual; i < atual + 5; i++)
-			   {
-			   if (i >= _lista.length - 1 || i < 0)
-			   {
-			   trace(i);
-			   }
-			   else
-			   {
-			   if (this._lista[i].hasEventListener(MouseEvent.CLICK))
-			   {
-			   this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
-			   }
-			   this.removeChild(this._lista[i]);
-			   }
-			   }*/
-			//_pagina = _pagina + 1;
+			
 			this.mostraPagina(_pagina + 1);
 			desenho();
 			trace('proximo');
@@ -268,26 +239,7 @@ package telas
 		
 		private function cliqueanterior(evento:MouseEvent):void
 		{
-			/*
-			   if (!this._proximo.hasEventListener(MouseEvent.CLICK))
-			   {
-			   this._proximo.addEventListener(MouseEvent.CLICK, cliqueproximo)
-			   }
-			   for (var i:int = atual; i < atual + 5; i++)
-			   {
-			   if (i > _lista.length - 1 || i < 0)
-			   {
-			   trace(i);
-			   }
-			   else
-			   {
-			   if (this._lista[i].hasEventListener(MouseEvent.CLICK))
-			   {
-			   this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
-			   }
-			   this.removeChild(this._lista[i]);
-			   }
-			   }*/
+		
 			this.mostraPagina(_pagina - 1);
 			desenho();
 			trace('anterior')
