@@ -246,9 +246,12 @@ package telas
 			{
 				_fileup.removeEventListener(Event.COMPLETE, arquivoEnviado);
 				_fileup.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
-				removeChild(anim);
+				
 			}
 			
+			if (anim.stage != null){
+		        removeChild(anim);
+			}
 			stage.removeEventListener(Event.RESIZE, desenho);
 			_ok.removeEventListener(MouseEvent.CLICK, salvaImg);
 			_cancelar.removeEventListener(MouseEvent.CLICK, volta);

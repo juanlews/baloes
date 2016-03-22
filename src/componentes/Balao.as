@@ -44,7 +44,7 @@ package componentes
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
-						this._texto = new TextField();			
+			this._texto = new TextField();			
 			
 			this._texto.maxChars = 50;
 			this._texto.multiline = true;

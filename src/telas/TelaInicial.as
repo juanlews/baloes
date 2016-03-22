@@ -211,23 +211,13 @@ package telas
 			this._carregar.y = stage.stageHeight - this._carregar.height - this.stage.stageHeight / 40;
 			
 			// pocisionar e dimensionar help aqui
-			if (stage.stageWidth < stage.stageHeight)
-			{
-				this._help.width = stage.stageWidth;
+		
+				this._help.width = stage.stageWidth - stage.stageWidth / 10;
 				this._help.scaleY = _help.scaleX;
-				//this._help.x = 220;
-				this._help.y = stage.stageWidth / 2;
-				Tweener.addTween(_help, {x: 0, time: 1});
-			}
-			else
-			{
-				this._help.height = stage.stageHeight - _galeria.height - _carregar.height;
-				this._help.scaleX = _help.scaleY;
-				this._help.y = stage.stageHeight / 2 - this._help.height / 2 - stage.stageHeight / btscala;
-				//this._help.x = ;
-				Tweener.addTween(_help, {x: stage.stageWidth / 2 - this._help.width / 2, time: 1});
-				Tweener.addTween(_help, {y: _carregar.height, time: 1});
-			}
+				//this._help.x = stage.stageWidth / 20;
+				this._help.y = stage.stageHeight / 2 - this._help.height/2;
+				Tweener.addTween(_help, {x: stage.stageWidth / 20, time: 1});
+			
 			
 			// ADICIONAR CLIQUES NOS BOTOES
 			if (!this._galeria.hasEventListener(MouseEvent.CLICK))

@@ -33,7 +33,7 @@
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
       <path-element>C:\Users\Microcity\Documents\GitHub\baloes\src</path-element>
-      <path-element>C:\Users\Microcity\Documents\libas3</path-element>
+      <path-element>C:\Users\Microcity\Documents\GitHub\baloes\libas3</path-element>
       <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true" />
