@@ -148,9 +148,9 @@ package telas
 			// posicionar todo mundo
 			// fundo 
 			this._fndprev.width = stage.stageWidth;
-			this._fndprev.height = stage.stageHeight / 2 - 30;
+			this._fndprev.height = stage.stageHeight / 2 ;
 			this._fndprev.x = 2;
-			this._fndprev.y = stage.stageHeight / 3 + 90;
+			this._fndprev.y = stage.stageHeight / 3 + this._fndprev.height/8;
 			this.addChild(this._fndprev);
 			
 			// balao padrao

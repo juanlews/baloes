@@ -52,7 +52,7 @@ package componentes
 			this._texto.wordWrap = true;
 			this._texto.defaultTextFormat = new TextFormat('Pfennig', 90, 0, null, null, null, null, null, null, null, null, null, -45);
 			this.addChild(this._texto);			
-			this._texto.border = true;
+			this._texto.border = false;
 			this.mouseChildren = false;
 			this._texto.autoSize = TextFieldAutoSize.NONE;
 			this._texto.type = TextFieldType.INPUT;
@@ -96,22 +96,22 @@ package componentes
 						this._texto.x = 370;
 						break;
 					case 1:
-						this._texto.x = 220;
+						this._texto.x = 300;
 						break;
 					case 2:
-						this._texto.x = 120;
+						this._texto.x = 200;
 						break;
 				}
 			} else {
 				switch (para) {
 					case 0:
-						this._texto.x = 370;
+						this._texto.x = 200;
 						break;
 					case 1:
-						this._texto.x = 220;
+						this._texto.x = 300;
 						break;
 					case 2:
-						this._texto.x = 120;
+						this._texto.x = 200;
 						break;
 				}
 			}
@@ -131,13 +131,13 @@ package componentes
 			} else {
 				switch (para) {
 					case 0:
-						this._texto.y = 350;
+						this._texto.y = 250;
 						break;
 					case 1:
 						this._texto.y = 190;
 						break;
 					case 2:
-						this._texto.y = 100;
+						this._texto.y = 400;
 						break;
 				}
 			}
