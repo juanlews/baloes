@@ -52,7 +52,9 @@ package recursos
 		public static var ImgExcluiBalao:Class;
 		//botão info 
 		[Embed(source = "imagens/btnInformaçãoPB.png")]
+		public static var ImgBtInfo:Class;
 		
+	
 		// balao
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBalao01:Class;
