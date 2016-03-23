@@ -38,7 +38,6 @@ package telas
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			btscala = 10;
-			
 		
 		}
 		
@@ -68,16 +67,13 @@ package telas
 			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 			{
 				this.addChild(linhabaixo);
-				
 				this.addChild(this._ok);
 				this.addChild(this._cancelar);
 				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-				
-				Multitouch.inputMode = MultitouchInputMode.GESTURE;
-				
 				stage.addEventListener(Event.RESIZE, desenho);
+				Multitouch.inputMode = MultitouchInputMode.GESTURE;
 				linhacima.x = 0;
 				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
@@ -106,7 +102,8 @@ package telas
 			this._imagem.removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 			stage.removeEventListener(Event.RESIZE, desenho);
-		
+			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
+			
 		}
 		
 		private function dragImagemStart(evento:MouseEvent):void
