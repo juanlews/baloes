@@ -35,18 +35,17 @@ package telas
 		
 		private var _flipH:BotaoIcone;
 		private var _flipV:BotaoIcone;
-		
+		private var _fndprev:BotaoIcone;
 		private var _ok:BotaoIcone;
+		private var _excBalao:BotaoIcone;
 		
 		private var _preview:Balao;
-		
-		private var _marcado:Boolean;
-		
-		private var _fndprev:BotaoIcone;
 		
 		private var _balaoP:Balao;
 		
 		private var _modelobalao:int;
+		
+		private var _marcado:Boolean;
 		
 		private var _btscala:Number;
 		
@@ -93,9 +92,13 @@ package telas
 			this._flipH = new BotaoIcone(Graficos.ImgPBFlipH);
 			this._flipV = new BotaoIcone(Graficos.ImgPBFlipV);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
-			removeChild(linhacima);
+			this._excBalao = new BotaoIcone(Graficos.ImgExcluiBalao);
+			
+			// adicionando valor a variavel btnscala
 			this._btscala = 10;
 			
+			// removendo linha de cima
+			removeChild(linhacima);
 		}
 		
 		private function cliqueCor(evento:Event):void
@@ -150,6 +153,7 @@ package telas
 			super.desenho(evento);
 			// posicionar todo mundo
 			
+			
 			// fundo 
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 ;
@@ -186,7 +190,13 @@ package telas
 			this._ok.x = stage.stageWidth/20;
 			this._ok.y = stage.stageHeight - this._ok.width - stage.stageHeight /  40;
 			this.addChild(this._ok);
-		
+			
+			//botão excluir balão
+			this._excBalao.width = stage.stageWidth / this._btscala;
+			this._excBalao.scaleY = this._excBalao.scaleX;
+			this._excBalao.x = stage.stageWidth - this._excBalao.width -stage.stageWidth/20 ;
+			this._excBalao.y = this._fndprev.y - this._excBalao.height;
+			this.addChild(this._excBalao);
 			//botoes do tipo radio
 			//balao
 			this._tipo1.x =stage.stageWidth/20;
@@ -209,31 +219,31 @@ package telas
 			
 			//cor
 			this._cor1.x = stage.stageWidth / 20 ;
-			this._cor1.y = stage.stageHeight / 4;
+			this._cor1.y = stage.stageHeight / 6;
 			this._cor1.width = stage.stageWidth / 8
 			this._cor1.scaleY = this._cor1.scaleX;
 			this.addChild(this._cor1);
 			
 			this._cor2.x = this._cor1.x + this._cor1.width *1.5;
-			this._cor2.y = stage.stageHeight / 4;
+			this._cor2.y = stage.stageHeight / 6;
 			this._cor2.width = stage.stageWidth /8;
 			this._cor2.scaleY = this._cor2.scaleX;
 			this.addChild(this._cor2);
 			
 			this._cor3.x = this._cor2.x + this._cor2.width *1.5;
-			this._cor3.y = stage.stageHeight / 4;
+			this._cor3.y = stage.stageHeight /6;
 			this._cor3.width = stage.stageWidth / 8
 			this._cor3.scaleY = this._cor3.scaleX;
 			this.addChild(this._cor3);
 			
 			this._cor4.x = this._cor3.x + this._cor3.width * 1.5;
-			this._cor4.y = stage.stageHeight / 4;
+			this._cor4.y = stage.stageHeight / 6;
 			this._cor4.width = stage.stageWidth / 8
 			this._cor4.scaleY = this._cor4.scaleX;
 			this.addChild(this._cor4);
 			
 			this._cor5.x = this._cor4.x + this._cor4.width * 1.5;
-			this._cor5.y = stage.stageHeight / 4;
+			this._cor5.y = stage.stageHeight / 6;
 			this._cor5.width = stage.stageWidth / 8
 			this._cor5.scaleY = this._cor5.scaleX;
 			this.addChild(this._cor5);
@@ -266,7 +276,15 @@ package telas
 				this._flipH.addEventListener(MouseEvent.CLICK, fliphclick);
 				
 				this._flipV.addEventListener(MouseEvent.CLICK, flipvclick);
-					
+				
+				this._excBalao.addEventListener(MouseEvent.CLICK, excuirbalao);
+			}
+		}
+		public function excuirbalao(event:MouseEvent):void {
+		
+			if (event) {
+				removeChild(this._balaoP);
+				trace('excuir balão');
 			}
 		}
 		public function fliphclick(event:MouseEvent):void
@@ -274,7 +292,6 @@ package telas
 			this._balaoP.flipH();
 			
 		}
-		
 		public function flipvclick(event:MouseEvent):void
 		{
 			this._balaoP.flipV();
@@ -333,6 +350,11 @@ package telas
 			this._cor3.removeEventListener('marcado', cliqueCor);
 			this._cor4.removeEventListener('marcado', cliqueCor);
 			this._cor5.removeEventListener('marcado', cliqueCor);
+			
+			this._ok.removeEventListener(MouseEvent.CLICK, okclick);
+			this._flipH.removeEventListener(MouseEvent.CLICK, fliphclick);
+			this._flipV.removeEventListener(MouseEvent.CLICK, flipvclick);
+			this._excBalao.removeEventListener(MouseEvent.CLICK, excuirbalao);
 			
 			stage.removeEventListener(Event.RESIZE, desenho);
 		

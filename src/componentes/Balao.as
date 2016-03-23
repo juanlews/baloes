@@ -213,8 +213,7 @@ package componentes
 					this._imgsBalao[i].x = this._imgsBalao[i].width;
 				} else {
 					this._imgsBalao[i].x = 0;
-					
-				}
+					}
 			}
 			this.tipo = this.tipo;
 		}
@@ -226,7 +225,6 @@ package componentes
 				this._imgsBalao[i].scaleY = -this._imgsBalao[i].scaleY;
 				if (this._imgsBalao[i].scaleY < 0) {
 					this._imgsBalao[i].y = this._imgsBalao[i].height;
-					// mudar y da caixa de texto
 					} 
 					else {
 					this._imgsBalao[i].y = 0;
@@ -238,6 +236,7 @@ package componentes
 		
 		public function copyProp(origem:Balao):void
 		{
+			
 			this.tipo = origem.tipo;
 			this.setCor(origem.vermelho, origem.verde, origem.azul, origem.botaoCor, origem.corTexto);
 			this.texto = origem.texto;
