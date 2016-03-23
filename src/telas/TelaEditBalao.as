@@ -1,5 +1,6 @@
 package telas
 {
+	import caurina.transitions.Tweener;
 	import componentes.Balao;
 	import componentes.Imagem;
 	import flash.display.Loader;
@@ -39,7 +40,7 @@ package telas
 			dados = new Object();
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			this.removeChild(linhacima);
+			
 		
 		}
 		
@@ -60,10 +61,15 @@ package telas
 			
 			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 			{
-				this.addChild(linhabaixo);				
+				
+				this.addChild(linhabaixo);
+				this.addChild(linhabaixo);
 				this.addChild(this._ok);
 				this.addChild(this._cancelar);
-				
+				trace ('usa tween');
+				linhacima.x = 0;
+				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
+
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
 				this._balao.addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
@@ -80,7 +86,8 @@ package telas
 		
 		override public function escondendo(evento:Event):void
 		{
-			super.escondendo(evento);
+			super.escondendo(evento);this.addChild(linhabaixo);
+			
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomBalao);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoBalao);

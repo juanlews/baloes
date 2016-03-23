@@ -76,8 +76,7 @@ package
 		}
 		
 		private function adicionaTela(nome:String, dados:Object):void {
-			this.removeChildren();
-			
+			this.removeChildren();			
 			this._telas[nome].recebeDados(dados);
 			this.addChild(this._telas[nome]);
 		}

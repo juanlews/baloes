@@ -1,5 +1,6 @@
 package telas
 {
+	import caurina.transitions.Tweener;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
@@ -64,24 +65,12 @@ package telas
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			
 			_dados = new Object();
-			
 		
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
-			super.desenho(evento);			
-						
-			this.addChild(this._imagem);
-			this.addChild(linhabaixo);
-			this.addChild(linhacima);
-			this.addChild(this._balao);
-			this.addChild(this._propBalao);
-			this.addChild(this._ajusteBalao);
-			this.addChild(this._ajusteImagem);
-			this.addChild(this._salvar);
-			this.addChild(this._cancelar);
-			
+			super.desenho(evento);
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
@@ -101,9 +90,8 @@ package telas
 			this._ajusteBalao.x = (this._propBalao.width + this._propBalao.x) + stage.stageWidth / 20;
 			this._ajusteBalao.y = stage.stageHeight / 40;
 			
-			
 			//botão ajuste imagem
-			this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x ) + stage.stageWidth / 20;
+			this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x) + stage.stageWidth / 20;
 			this._ajusteImagem.y = stage.stageHeight / 40;
 			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
@@ -112,19 +100,29 @@ package telas
 			this._salvar.width = stage.stageWidth / btscala;
 			this._salvar.scaleY = this._salvar.scaleX;
 			this._salvar.x = stage.stageWidth / 20;
-			this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight /  40);
+			this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
 			
 			//botão cancelar
 			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
-			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth/ 20;
-			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight /  40);
+			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
+			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
 			
 			//imagem recuperada
 			
 			// adicionar listeners dos cliques dos botões
 			if (!this._salvar.hasEventListener(MouseEvent.CLICK))
 			{
+				
+				this.addChild(this._imagem);
+				this.addChild(linhabaixo);
+				this.addChild(linhacima);
+				this.addChild(this._balao);
+				this.addChild(this._propBalao);
+				this.addChild(this._ajusteBalao);
+				this.addChild(this._ajusteImagem);
+				this.addChild(this._salvar);
+				this.addChild(this._cancelar);
 				
 				this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
@@ -151,9 +149,8 @@ package telas
 			
 			trace('click propB');
 			
-			this._dados.balao = this._balao;
-			this.mudaTela('propriedadesbalao', _dados);
-		
+			this._dados.balao = this._balao;			
+			this.mudaTela('propriedadesbalao', _dados)
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
