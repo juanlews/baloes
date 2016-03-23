@@ -45,7 +45,7 @@ package recursos
 		public static var ImgSetae:Class;
 		
 		// add balão
-		[Embed(source = "imagens/addBalaoLaranja.png")]
+		[Embed(source = "imagens/addBalaoPreto.png")]
 		public static var ImgAddBalao:Class;
 		//excluir balão
 		[Embed(source = "imagens/btnExcluirVeP.png")]

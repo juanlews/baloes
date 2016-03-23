@@ -281,9 +281,15 @@ package telas
 			}
 		}
 		public function excuirbalao(event:MouseEvent):void {
+			
+			var dados:Object = new Object();
 		
 			if (event) {
+				
 				removeChild(this._balaoP);
+				dados.balaoProp = this._balaoP;
+				this.mudaTela('fotorecuperada', dados);
+				
 				trace('excuir balão');
 			}
 		}
