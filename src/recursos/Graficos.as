@@ -43,6 +43,16 @@ package recursos
 		public static var ImgSetad:Class;
 		[Embed(source = "imagens/Seta.png")]
 		public static var ImgSetae:Class;
+		
+		// add balão
+		[Embed(source = "imagens/addBalaoLaranja.png")]
+		public static var ImgAddBalao:Class;
+		//excluir balão
+		[Embed(source = "imagens/btnExcluirVeP.png")]
+		public static var ImgExcluiBalao:Class;
+		//botão info 
+		[Embed(source = "imagens/btnInformaçãoPB.png")]
+		
 		// balao
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBalao01:Class;
