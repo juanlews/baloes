@@ -1,5 +1,6 @@
 package telas
 {
+	import caurina.transitions.Tweener;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
 	import flash.display.Loader;
@@ -37,7 +38,7 @@ package telas
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			btscala = 10;
-			this.removeChild(linhacima);
+			
 		
 		}
 		
@@ -77,6 +78,8 @@ package telas
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
+				linhacima.x = 0;
+				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
 			}
 		

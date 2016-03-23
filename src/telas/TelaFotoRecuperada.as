@@ -33,6 +33,8 @@ package telas
 		private var _ajusteImagem:BotaoIcone;
 		private var _salvar:BotaoIcone;
 		private var _cancelar:BotaoIcone;
+		private var _galeria:BotaoIcone;
+		private var _camera:BotaoIcone;
 		
 		// balão
 		private var _balao:Balao;
@@ -54,15 +56,15 @@ package telas
 			this._balao = new Balao(0);
 			
 			// criar botões
+
+			this._camera = new BotaoIcone(Graficos.ImgCamera);			
 			this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
-			
 			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
-			
 			this._ajusteImagem = new BotaoIcone(Graficos.ImgAjusteImagem);
-			
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
-			
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
+			this._camera = new BotaoIcone(Graficos.ImgCamera);
+			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
 			
 			_dados = new Object();
 		
@@ -78,8 +80,13 @@ package telas
 				
 			}
 			
+			this._galeria.x  = stage.stageWidth / 20;
+			this._galeria.y = stage.stageHeight / 40;
+			this._galeria.width = stage.stageWidth / btscala;
+			this._galeria.scaleY = this._galeria.scaleX;
+			
 			//botão propiedades balão
-			this._propBalao.x = stage.stageWidth / 20;
+			this._propBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
 			this._propBalao.y = stage.stageHeight / 40;
 			this._propBalao.width = stage.stageWidth / btscala;
 			this._propBalao.scaleY = this._propBalao.scaleX;
@@ -96,17 +103,25 @@ package telas
 			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
 			
+			//
+			this._camera.width = stage.stageWidth / btscala;
+			this._camera.scaleY = this._camera.scaleX;
+			this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
+			this._camera.y = stage.stageHeight / 40;
 			//botão salvar			
 			this._salvar.width = stage.stageWidth / btscala;
 			this._salvar.scaleY = this._salvar.scaleX;
 			this._salvar.x = stage.stageWidth / 20;
 			this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
 			
+			
 			//botão cancelar
 			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
 			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
 			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
+			
+			
 			
 			//imagem recuperada
 			
@@ -122,7 +137,10 @@ package telas
 				this.addChild(this._ajusteBalao);
 				this.addChild(this._ajusteImagem);
 				this.addChild(this._salvar);
-				this.addChild(this._cancelar);
+				this.addChild(this._cancelar);				
+			    this.addChild(this._camera);
+				this.addChild(this._galeria);			
+			
 				
 				this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
@@ -149,8 +167,8 @@ package telas
 			
 			trace('click propB');
 			
-			this._dados.balao = this._balao;			
-			this.mudaTela('propriedadesbalao', _dados)
+			this._dados.balao = this._balao;
+			this.mudaTela('propriedadesbalao', _dados);
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
