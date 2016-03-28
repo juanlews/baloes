@@ -31,7 +31,7 @@ package componentes
 		{
 			super();
 			
-			this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false), new DropShadowFilter(4, 225, 0, 0.8, 4, 4, 1, 1, false));
+			//this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false), new DropShadowFilter(4, 225, 0, 0.8, 4, 4, 1, 1, false));
 			
 			this._imgsBalao = new Vector.<Bitmap>();
 			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap);

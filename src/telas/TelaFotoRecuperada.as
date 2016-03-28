@@ -35,6 +35,7 @@ package telas
 		private var _cancelar:BotaoIcone;
 		private var _galeria:BotaoIcone;
 		private var _camera:BotaoIcone;
+		private var _addBalao:BotaoIcone;
 		
 		// balão
 		private var _balao:Balao;
@@ -56,7 +57,7 @@ package telas
 			this._balao = new Balao(0);
 			
 			// criar botões
-
+			this._addBalao = new BotaoIcone(Graficos.ImgAddBalao);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);			
 			this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
 			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
@@ -102,8 +103,12 @@ package telas
 			this._ajusteImagem.y = stage.stageHeight / 40;
 			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
-			
-			//
+			//add Balao
+			this._addBalao..x = (this._ajusteImagem.width + this._ajusteImagem.x) + stage.stageWidth / 20;
+			this._addBalao.y = stage.stageHeight / 40;
+			this._addBalao.width = stage.stageWidth / btscala;
+			this._addBalao.scaleY = this._addBalao.scaleX;
+			//camera
 			this._camera.width = stage.stageWidth / btscala;
 			this._camera.scaleY = this._camera.scaleX;
 			this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
@@ -138,7 +143,8 @@ package telas
 				this.addChild(this._ajusteImagem);
 				this.addChild(this._salvar);
 				this.addChild(this._cancelar);				
-			    this.addChild(this._camera);
+			    this.addChild(this._addBalao);
+				this.addChild(this._camera);
 				this.addChild(this._galeria);			
 			
 				
