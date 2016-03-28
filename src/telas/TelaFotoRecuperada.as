@@ -77,8 +77,7 @@ package telas
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
-				// centralizar imagem
-				
+				// centralizar imagem	
 			}
 			
 			this._galeria.x = stage.stageWidth / 20;
@@ -206,7 +205,7 @@ package telas
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editimagem', _dados);
 		
-		}
+		}                            
 		
 		override public function escondendo(evento:Event):void
 		{
