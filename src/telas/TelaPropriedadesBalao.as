@@ -85,7 +85,7 @@ package telas
 			
 			this._fndprev = new BotaoIcone(Graficos.ImgHelp);
 			//adicionando os baloes
-			this._balaoP = new Balao();
+			this._balaoP = new Balao(0);
 			this._balaoP.mouseChildren = true;
 
 			//adicionando os botoes do tipo icone

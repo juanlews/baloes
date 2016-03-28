@@ -41,7 +41,7 @@ package telas
 		private var _help:Bitmap;
 		private var _imagem:Imagem;
 		//balao
-		private var _balao:Balao;
+		private var _balao:Vector.<Balao>;
 		// galeria
 		private var _roll:CameraRoll;
 		private var _file:File;
@@ -78,7 +78,7 @@ package telas
 			this._roll = new CameraRoll();
 			this._file = File.documentsDirectory;
 			this._imagem = new Imagem();
-			this._balao = new Balao();
+			this._balao = new Vector.<Balao>;
 			// criando acesso à camera
 			camera = new CameraUI();
 		
@@ -166,20 +166,22 @@ package telas
 				this._imagem.scaleX = this._imagem.scaleY;
 			}
 			// posicionar e dimensionar botões	
-			
-			this._balao.tipo = this._balao.tipo;
-			this._balao.texto = 'oi';
-			this._balao.width = 200;
-			this._balao.scaleY = this._balao.scaleX;
-			this._balao.x = stage.stageWidth / 3;
-			this._balao.y = stage.stageHeight / 3;
-			
+			var dados:Object = new Object();
+			dados.indice = 0;
+			this._balao[dados.indice] = new Balao(dados.indice);
+			this._balao[dados.indice].tipo = this._balao[dados.indice].tipo;
+			this._balao[dados.indice].texto = 'oi';
+			this._balao[dados.indice].width = 200;
+			this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
+			this._balao[dados.indice].x = stage.stageWidth / 3;
+			this._balao[dados.indice].y = stage.stageHeight / 3;
 			this._imagem.centraliza(this.stage);
 			
 			// mudar tela
-			var dados:Object = new Object();
+			
 			dados.imagem = this._imagem;
-			dados.balao = this._balao;
+			dados.balao = this._balao as Vector.<Balao>;
+			
 			this.mudaTela('fotorecuperada', dados);
 		
 		}

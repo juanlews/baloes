@@ -28,7 +28,7 @@ package telas
 		private var _oPosicao:Point;
 		private var _oZoom:Number;
 		
-		private var _balao:Balao;
+		private var _balao:Vector.<Balao>;
 		
 		private var dados:Object;
 		private var btscala:Number;
@@ -40,7 +40,6 @@ package telas
 			dados = new Object();
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			
 		
 		}
 		
@@ -66,12 +65,19 @@ package telas
 				this.addChild(linhabaixo);
 				this.addChild(this._ok);
 				this.addChild(this._cancelar);
-				trace ('usa tween');
+				for (var i:int = 0; i < _balao.length; i++)
+				{
+					this.addChild(this._balao[i]);
+					this._balao[i].addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
+				}
+				trace('usa tween');
 				linhacima.x = 0;
+				
 				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
+				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-				this._balao.addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
+				
 				stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomBalao);
 				stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoBalao);
 				stage.addEventListener(MouseEvent.MOUSE_UP, dragBalaoStop);
@@ -85,7 +91,8 @@ package telas
 		
 		override public function escondendo(evento:Event):void
 		{
-			super.escondendo(evento);this.addChild(linhabaixo);
+			super.escondendo(evento);
+			this.addChild(linhabaixo);
 			
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomBalao);
@@ -95,8 +102,11 @@ package telas
 			
 			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
-			this._balao.removeEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
-		
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				
+				this._balao[i].removeEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
+			}
 		}
 		
 		override public function recebeDados(dados:Object):void
@@ -105,10 +115,10 @@ package telas
 			{
 				if (dados.balao != null)
 				{
-					this._balao = dados.balao as Balao;
-					this._oPosicao = new Point(this._balao.x, this._balao.y);
-					this._oRotacao = this._balao.rotation;
-					this._oZoom = this._balao.scaleX;
+					this._balao = dados.balao as Vector.<Balao>;
+						//this._oPosicao = new Point(this._balao.x, this._balao.y);
+						//this._oRotacao = this._balao.rotation;
+						//this._oZoom = this._balao.scaleX;
 					
 				}
 				if (dados.imagem != null)
@@ -122,7 +132,7 @@ package telas
 			}
 			
 			addChild(this._imagem);
-			addChild(this._balao);
+			addChild(this._balao[0]);
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
@@ -135,32 +145,60 @@ package telas
 		private function cliqueOk(evento:MouseEvent):void
 		{
 			dados.imagem = _imagem;
-			dados.balao = _balao;
+			dados.balao = new Vector.<Balao>;
+			dados.balao = _balao as Vector.<Balao>;
 			this.mudaTela('fotorecuperada', dados);
 		
 		}
 		
 		private function dragBalaoStart(evento:MouseEvent):void
 		{
-			
-			this._balao.startDrag();
+			var indice:int;
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				if (_balao[i] == evento.target as Balao)
+				{
+					trace("o balao clicado é: ", indice = i);
+				}
+			}
+			this._balao[indice].startDrag();
 		}
 		
 		private function dragBalaoStop(evento:MouseEvent):void
 		{
 			
-			this._balao.stopDrag();
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				this._balao[i].stopDrag();
+				
+			}
 		}
 		
 		private function zoomBalao(evento:TransformGestureEvent):void
 		{
-			_balao.scaleX *= evento.scaleX;
-			_balao.scaleY = _balao.scaleX;
+			var indice:int;
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				if (_balao[i] == evento.target as Balao)
+				{
+					trace("o balao clicado é: ", indice = i);
+				}
+			}
+			_balao[indice].scaleX *= evento.scaleX;
+			_balao[indice].scaleY = _balao[indice].scaleX;
 		}
 		
 		private function rotacaoBalao(evento:TransformGestureEvent):void
 		{
-			_balao.rotation += evento.rotation;
+			var indice:int;
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				if (_balao[i] == evento.target as Balao)
+				{
+					trace("o balao clicado é: ", indice = i);
+				}
+			}
+			_balao[indice].rotation += evento.rotation;
 		
 		}
 	

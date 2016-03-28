@@ -38,7 +38,7 @@ package telas
 		private var _addBalao:BotaoIcone;
 		
 		// balão
-		private var _balao:Balao;
+		private var _balao:Vector.<Balao>;
 		
 		// imagem
 		private var _imagem:Imagem;
@@ -54,11 +54,11 @@ package telas
 			super(funcMudaTela);
 			
 			// criar balão
-			this._balao = new Balao(0);
+			this._balao = new Vector.<Balao>;
 			
 			// criar botões
 			this._addBalao = new BotaoIcone(Graficos.ImgAddBalao);
-			this._camera = new BotaoIcone(Graficos.ImgCamera);			
+			this._camera = new BotaoIcone(Graficos.ImgCamera);
 			this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
 			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
 			this._ajusteImagem = new BotaoIcone(Graficos.ImgAjusteImagem);
@@ -81,7 +81,7 @@ package telas
 				
 			}
 			
-			this._galeria.x  = stage.stageWidth / 20;
+			this._galeria.x = stage.stageWidth / 20;
 			this._galeria.y = stage.stageHeight / 40;
 			this._galeria.width = stage.stageWidth / btscala;
 			this._galeria.scaleY = this._galeria.scaleX;
@@ -119,14 +119,11 @@ package telas
 			this._salvar.x = stage.stageWidth / 20;
 			this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
 			
-			
 			//botão cancelar
 			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
 			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
 			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
-			
-			
 			
 			//imagem recuperada
 			
@@ -137,28 +134,44 @@ package telas
 				this.addChild(this._imagem);
 				this.addChild(linhabaixo);
 				this.addChild(linhacima);
-				this.addChild(this._balao);
+				
+				for (var i:int = 0; i < _balao.length; i++)
+				{
+					this.addChild(this._balao[i]);
+				}
 				this.addChild(this._propBalao);
 				this.addChild(this._ajusteBalao);
 				this.addChild(this._ajusteImagem);
 				this.addChild(this._salvar);
-				this.addChild(this._cancelar);				
-			    this.addChild(this._addBalao);
+				this.addChild(this._cancelar);
+				this.addChild(this._addBalao);
 				this.addChild(this._camera);
-				this.addChild(this._galeria);			
-			
+				this.addChild(this._galeria);
 				
 				this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
 				this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
 				
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
 				
 			}
+		
+		}
+		
+		private function addBalao(evento:MouseEvent):void
+		{
+			
+			this._balao[_balao.length] = new Balao(_balao.length);
+			this._balao[_balao.length - 1].width = 200;
+			this._balao[_balao.length - 1].scaleY = this._balao[_balao.length - 1].scaleX;
+			this._balao[_balao.length - 1].x = stage.stageWidth / 4;
+			this._balao[_balao.length - 1].y = stage.stageHeight / 4;
+			addChild(_balao[_balao.length - 1]);
 		
 		}
 		
@@ -173,14 +186,14 @@ package telas
 			
 			trace('click propB');
 			
-			this._dados.balao = this._balao;
+			this._dados.balao = this._balao as Vector.<Balao>;
 			this.mudaTela('propriedadesbalao', _dados);
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
 		{
 			trace('click ajustB');
-			this._dados.balao = _balao;
+			this._dados.balao = _balao as Vector.<Balao>;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editbalao', _dados);
 		}
@@ -189,7 +202,7 @@ package telas
 		{
 			trace('click ajusteImg');
 			
-			this._dados.balao = _balao;
+			this._dados.balao = _balao as Vector.<Balao>;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editimagem', _dados);
 		
@@ -205,6 +218,7 @@ package telas
 			this._propBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
 			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
 			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
 			stage.removeEventListener(Event.RESIZE, desenho);
 		
 		}
@@ -221,17 +235,22 @@ package telas
 				}
 				if (dados.balaoProp != null)
 				{
-					this._balao.copyProp(dados.balaoProp as Balao);
+					this._balao[dados.indice].copyProp(dados.balaoProp as Balao);
 				}
 				if (dados.balao != null)
 				{
 					trace('tem Balao');
-					this._balao = dados.balao as Balao;
+					//for (var i:int; i < dados.indice; i++)
+					
+						this._balao = dados.balao as Vector.<Balao>;
+					
+					
 				}
 				
 				// add child _image
 				addChild(this._imagem);
-				addChild(this._balao);
+				//addChild(this._balao[0]);
+				
 			}
 		}
 		
@@ -242,6 +261,9 @@ package telas
 			this.removeChild(this._ajusteImagem);
 			this.removeChild(this._cancelar);
 			this.removeChild(this._salvar);
+			this.removeChild(this._addBalao);
+			this.removeChild(this._galeria);
+			this.removeChild(this._camera);
 		
 			// remove child em todos os outros botoes
 		}

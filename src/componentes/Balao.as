@@ -27,20 +27,19 @@ package componentes
 		private var _corDoTexto:int;
 		public var botaoCor:int;
 		private var _para:int;
-		public function Balao(tipo:int = 0)
+		private var _id:int;
+		
+		public function Balao(id:int, tipo:int = 0)
 		{
 			super();
-			
-			//this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false), new DropShadowFilter(4, 225, 0, 0.8, 4, 4, 1, 1, false));
+			_id = id;
+			this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false), new DropShadowFilter(4, 225, 0, 0.8, 4, 4, 1, 1, false));
 			
 			this._imgsBalao = new Vector.<Bitmap>();
 			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao08() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao09() as Bitmap);
-			/*this._imgsBalao.push(new Graficos.ImgBalao04() as Bitmap);
-			this._imgsBalao.push(new Graficos.ImgBalao05() as Bitmap);
-			this._imgsBalao.push(new Graficos.ImgBalao06() as Bitmap);
-			*/		
+				
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
@@ -70,7 +69,9 @@ package componentes
 		{
 			return (this._tipo);
 		}
-		
+		public function get id():int{
+			return (this._id);
+		}
 		public function set tipo(para:int):void
 		{
 			if (para >= this._imgsBalao.length)
