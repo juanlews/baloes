@@ -154,6 +154,7 @@ package telas
 		private function dragBalaoStart(evento:MouseEvent):void
 		{
 			var indice:int;
+			
 			for (var i:int = 0; i < _balao.length; i++)
 			{
 				if (_balao[i] == evento.target as Balao)
@@ -181,7 +182,7 @@ package telas
 			{
 				if (_balao[i] == evento.target as Balao)
 				{
-					trace("o balao clicado é: ", indice = i);
+					
 				}
 			}
 			_balao[indice].scaleX *= evento.scaleX;

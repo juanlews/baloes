@@ -70,6 +70,7 @@ package componentes
 			return (this._tipo);
 		}
 		public function get id():int{
+		
 			return (this._id);
 		}
 		public function set tipo(para:int):void

@@ -85,11 +85,7 @@ package telas
 			this._galeria.width = stage.stageWidth / btscala;
 			this._galeria.scaleY = this._galeria.scaleX;
 			
-			//botão propiedades balão
-			this._propBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
-			this._propBalao.y = stage.stageHeight / 40;
-			this._propBalao.width = stage.stageWidth / btscala;
-			this._propBalao.scaleY = this._propBalao.scaleX;
+		
 			
 			//botão ajuste do balão
 			this._ajusteBalao.width = stage.stageWidth / btscala;
@@ -153,7 +149,9 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
-				
+				for (var j:int = 0; j < _balao.length; j++){
+					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
+				}
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
@@ -171,9 +169,9 @@ package telas
 			this._balao[_balao.length - 1].x = stage.stageWidth / 4;
 			this._balao[_balao.length - 1].y = stage.stageHeight / 4;
 			addChild(_balao[_balao.length - 1]);
-		
-		}
-		
+			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
+
+		}	
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
 			this.mudaTela('inicial', null);
@@ -182,10 +180,11 @@ package telas
 		
 		private function cliquePropB(evento:MouseEvent):void
 		{
-			
 			trace('click propB');
 			
-			this._dados.balao = this._balao as Vector.<Balao>;
+			var balaoClicado:Balao = evento.target as Balao;
+			
+			this._dados.balao = balaoClicado;
 			this.mudaTela('propriedadesbalao', _dados);
 		}
 		
@@ -195,6 +194,8 @@ package telas
 			this._dados.balao = _balao as Vector.<Balao>;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editbalao', _dados);
+			
+			this._balao[_balao.length - 1].removeEventListener(MouseEvent.CLICK, cliquePropB);
 		}
 		
 		private function cliqueAjusteImg(evento:MouseEvent):void
@@ -214,12 +215,15 @@ package telas
 			// remover listeners
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
-			this._propBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
-			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
+			this._propBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
+			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
 			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
 			stage.removeEventListener(Event.RESIZE, desenho);
-		
+			
+			for (var i:int = 0; i < _balao.length; i++){
+				this._balao[i].removeEventListener(MouseEvent.CLICK, cliquePropB);
+			}
 		}
 		
 		override public function recebeDados(dados:Object):void
@@ -232,9 +236,9 @@ package telas
 					trace('tem Imagem');
 					this._imagem = dados.imagem as Imagem;
 				}
-				if (dados.balaoProp != null)
+				if (dados.balaoO != null)
 				{
-					this._balao[dados.indice].copyProp(dados.balaoProp as Balao);
+					//this._balao[dados.indice].copyProp(dados.balaoProp as Balao);
 				}
 				if (dados.balao != null)
 				{
@@ -255,7 +259,7 @@ package telas
 		
 		private function removeBotoes():void
 		{
-			this.removeChild(this._propBalao);
+			//this.removeChild(this._propBalao);
 			this.removeChild(this._ajusteBalao);
 			this.removeChild(this._ajusteImagem);
 			this.removeChild(this._cancelar);
