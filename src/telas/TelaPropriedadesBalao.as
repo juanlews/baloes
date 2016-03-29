@@ -43,6 +43,7 @@ package telas
 		
 		private var _balaoP:Balao;
 		
+		private var _balaoO:Balao;
 		private var _modelobalao:int;
 		
 		private var _marcado:Boolean;
@@ -277,22 +278,10 @@ package telas
 				
 				this._flipV.addEventListener(MouseEvent.CLICK, flipvclick);
 				
-				this._excBalao.addEventListener(MouseEvent.CLICK, excuirbalao);
+				
 			}
 		}
-		public function excuirbalao(event:MouseEvent):void {
-			
-			var dados:Object = new Object();
-		
-			if (event) {
-				
-				removeChild(this._balaoP);
-				dados.balaoProp = this._balaoP;
-				this.mudaTela('fotorecuperada', dados);
-				
-				trace('excuir balão');
-			}
-		}
+
 		public function fliphclick(event:MouseEvent):void
 		{
 			this._balaoP.flipH();
@@ -306,8 +295,11 @@ package telas
 		public function okclick(event:MouseEvent):void
 		{
 			var dados:Object = new Object();
-			dados.balaoProp = this._balaoP;
+			
+			 this._balaoO.copyProp(this._balaoP);
+			
 			this.mudaTela('fotorecuperada', dados);
+			
 			trace(this._balaoP);
 		}
 		
@@ -315,7 +307,9 @@ package telas
 		{
 			if ((dados != null) && (dados.balao != null))
 			{
-				this._balaoP.copyProp(dados.balao as Balao);
+				this._balaoO = dados.balao as Balao;
+				
+				this._balaoP.copyProp(_balaoO);
 				
 				switch (this._balaoP.botaoCor)
 				{
@@ -356,11 +350,10 @@ package telas
 			this._cor3.removeEventListener('marcado', cliqueCor);
 			this._cor4.removeEventListener('marcado', cliqueCor);
 			this._cor5.removeEventListener('marcado', cliqueCor);
-			
+		
 			this._ok.removeEventListener(MouseEvent.CLICK, okclick);
 			this._flipH.removeEventListener(MouseEvent.CLICK, fliphclick);
 			this._flipV.removeEventListener(MouseEvent.CLICK, flipvclick);
-			this._excBalao.removeEventListener(MouseEvent.CLICK, excuirbalao);
 			
 			stage.removeEventListener(Event.RESIZE, desenho);
 		
