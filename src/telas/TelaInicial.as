@@ -254,6 +254,9 @@ package telas
 		
 		override public function escondendo(evento:Event):void
 		{
+			this.removeChild(_camera);
+			this.removeChild(_carregar);
+			this.removeChild(_galeria);
 			super.escondendo(evento);
 			this._galeria.removeEventListener(MouseEvent.CLICK, cliqueGaleria);
 			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
