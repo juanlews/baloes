@@ -113,7 +113,8 @@ package recursos
 		public static var ImgCheck:Class;
 		[Embed(source = "imagens/btnCheckSmoothTrue.png")]
 		public static var ImgCheckT:Class;
-		
+		[Embed(source = "imagens/lixeira.png")]
+		public static var ImgLixeira:Class;
 		
 		// animação salva
 		[Embed(source = "imagens/quadro1.png")]
