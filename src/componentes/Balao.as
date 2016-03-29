@@ -33,6 +33,7 @@ package componentes
 		{
 			super();
 			_id = id;
+			
 			this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false), new DropShadowFilter(4, 225, 0, 0.8, 4, 4, 1, 1, false));
 			
 			this._imgsBalao = new Vector.<Bitmap>();
@@ -72,6 +73,7 @@ package componentes
 		public function get id():int{
 		
 			return (this._id);
+			
 		}
 		public function set tipo(para:int):void
 		{
