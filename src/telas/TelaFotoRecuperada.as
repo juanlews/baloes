@@ -207,6 +207,7 @@ package telas
 			addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
 		}
+	
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
@@ -217,12 +218,15 @@ package telas
 		private function cliquePropB(evento:MouseEvent):void
 		{
 			
-			trace('click propB');
+			//trace('click propB');
 			
 			var balaoClicado:Balao = evento.target as Balao;
 			
 			this._dados.balao = balaoClicado;
+			
 			this.mudaTela('propriedadesbalao', _dados);
+			
+			
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
@@ -260,7 +264,6 @@ package telas
 			}
 		
 		}
-		
 		override public function recebeDados(dados:Object):void
 		{
 			
