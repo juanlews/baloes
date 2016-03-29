@@ -44,6 +44,7 @@ package telas
 		private var _balaoP:Balao;
 		
 		private var _balaoO:Balao;
+		
 		private var _modelobalao:int;
 		
 		private var _marcado:Boolean;
