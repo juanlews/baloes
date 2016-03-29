@@ -177,9 +177,17 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
+<<<<<<< HEAD
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 				
+=======
+				this._galeria.addEventListener(MouseEvent.CLICK, addImagem);
+				this._camera.addEventListener(MouseEvent.CLICK, addFoto);
+				for (var j:int = 0; j < _balao.length; j++){
+					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
+				}	
+>>>>>>> origin/master
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
@@ -296,7 +304,7 @@ package telas
 			this._balao[_balao.length - 1].x = stage.stageWidth / 4;
 			this._balao[_balao.length - 1].y = stage.stageHeight / 4;
 			addChild(_balao[_balao.length - 1]);
-		
+			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
@@ -310,7 +318,9 @@ package telas
 			
 			trace('click propB');
 			
-			this._dados.balao = this._balao as Vector.<Balao>;
+			var balaoClicado:Balao = evento.target as Balao;
+			
+			this._dados.balao = balaoClicado;
 			this.mudaTela('propriedadesbalao', _dados);
 		}
 		
@@ -339,11 +349,14 @@ package telas
 			// remover listeners
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
-			this._propBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
-			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
+			this._propBalao.removeEventListener(MouseEvent.CLICK,cliquePropB );
+			this._ajusteBalao.removeEventListener(MouseEvent.CLICK,cliqueAjusteB);
 			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
 			stage.removeEventListener(Event.RESIZE, desenho);
+			for (var i:int = 0; i < _balao.length; i++){
+				this._balao[i].removeEventListener(MouseEvent.CLICK, cliquePropB);
+			}
 		
 		}
 		

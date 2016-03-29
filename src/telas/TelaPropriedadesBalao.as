@@ -44,11 +44,14 @@ package telas
 		private var _balaoP:Balao;
 		
 		private var _balaoO:Balao;
+		
 		private var _modelobalao:int;
 		
 		private var _marcado:Boolean;
 		
 		private var _btscala:Number;
+		
+		private var _excluir:BotaoIcone;
 		
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
@@ -93,7 +96,7 @@ package telas
 			this._flipH = new BotaoIcone(Graficos.ImgPBFlipH);
 			this._flipV = new BotaoIcone(Graficos.ImgPBFlipV);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
-			this._excBalao = new BotaoIcone(Graficos.ImgExcluiBalao);
+			this._excluir = new BotaoIcone(Graficos.ImgLixeira);
 			
 			// adicionando valor a variavel btnscala
 			this._btscala = 10;
@@ -155,6 +158,7 @@ package telas
 			// posicionar todo mundo
 			
 			
+			
 			// fundo 
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 ;
@@ -193,11 +197,11 @@ package telas
 			this.addChild(this._ok);
 			
 			//botão excluir balão
-			this._excBalao.width = stage.stageWidth / this._btscala;
-			this._excBalao.scaleY = this._excBalao.scaleX;
-			this._excBalao.x = stage.stageWidth - this._excBalao.width -stage.stageWidth/20 ;
-			this._excBalao.y = this._fndprev.y - this._excBalao.height;
-			this.addChild(this._excBalao);
+			this._excluir.width = stage.stageWidth / this._btscala;
+			this._excluir.scaleY = this._excluir.scaleX;
+			this._excluir.x = stage.stageWidth - this._excluir.width -stage.stageWidth/20 ;
+			this._excluir.y = this._fndprev.y - this._excluir.height;
+			this.addChild(this._excluir);
 			//botoes do tipo radio
 			//balao
 			this._tipo1.x =stage.stageWidth/20;
@@ -278,10 +282,13 @@ package telas
 				
 				this._flipV.addEventListener(MouseEvent.CLICK, flipvclick);
 				
-				
+				this._excluir.addEventListener(MouseEvent.CLICK, excluirbalao);
 			}
 		}
-
+		public function excluirbalao(event:MouseEvent):void {
+		
+			trace('excluir balao');
+		}
 		public function fliphclick(event:MouseEvent):void
 		{
 			this._balaoP.flipH();
