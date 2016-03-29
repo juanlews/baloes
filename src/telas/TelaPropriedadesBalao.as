@@ -288,6 +288,10 @@ package telas
 		public function excluirbalao(event:MouseEvent):void {
 		
 			trace('excluir balao');
+			this.mudaTela('fotorecuperada',null);
+			
+			
+		
 		}
 		public function fliphclick(event:MouseEvent):void
 		{
