@@ -9,7 +9,10 @@ package telas
 	import flash.display.JPEGEncoderOptions;
 	import flash.display.Loader;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.MediaEvent;
 	import flash.events.MouseEvent;
+	import flash.events.ErrorEvent;	
 	import flash.events.TransformGestureEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -18,6 +21,8 @@ package telas
 	import flash.geom.Rectangle;
 	import flash.media.CameraRoll;
 	import flash.media.CameraUI;
+	import flash.net.FileFilter;
+	import flash.net.URLRequest;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
@@ -172,11 +177,17 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
+<<<<<<< HEAD
+				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
+				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
+				
+=======
 				this._galeria.addEventListener(MouseEvent.CLICK, addImagem);
 				this._camera.addEventListener(MouseEvent.CLICK, addFoto);
 				for (var j:int = 0; j < _balao.length; j++){
 					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
 				}	
+>>>>>>> origin/master
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
@@ -185,13 +196,101 @@ package telas
 		
 		}
 		
-		private function addImagem(evento:MouseEvent):void
+		private function cliqueCamera(evento:MouseEvent):void
 		{
+			trace ('clique camera', _imagem.length);
+			this.camera.addEventListener(MediaEvent.COMPLETE, cameracomplete);
+			this.camera.addEventListener(Event.CANCEL, cameracancel);
+			this.camera.addEventListener(ErrorEvent.ERROR, cameraerro);
 			
+			camera.launch("image");
 			
 		}
-		private function addFoto(evento:MouseEvent):void
+		
+		private function cliqueGaleria(evento:MouseEvent):void
 		{
+			trace('clique galeria', _imagem.length);
+			this._roll.addEventListener(Event.CANCEL, cameracancel);
+			this._roll.addEventListener(MediaEvent.SELECT, cameracomplete);
+			this._roll.addEventListener(ErrorEvent.ERROR, cameraerro);
+			this._roll.browseForImage();
+			
+		}
+		
+		
+		private function cameracancel(evento:Event):void
+		{   trace('camera cancel', _imagem.length);
+			this._roll.removeEventListener(Event.CANCEL, cameracancel);
+			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
+			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
+		}
+		
+		private function cameraerro(evento:ErrorEvent):void
+		{
+			trace('camera erro', _imagem.length);
+			this._roll.removeEventListener(Event.CANCEL, cameracancel);
+			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
+			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
+			
+			this._file.addEventListener(Event.SELECT, arquivoSelecionado);
+			this._file.browseForOpen('Escolha uma imagem', [new FileFilter('arquivo de imagem', '*.jpg;*.png')]);
+		}
+		
+		private function cameracomplete(evento:MediaEvent):void
+		{
+			trace('camera completa',_imagem.length);
+			this._roll.removeEventListener(Event.CANCEL, cameracancel);
+			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
+			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
+			
+			this._imagem[_imagem.length] = new Imagem(_imagem.length);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem[_imagem.length - 1].loader.loadFilePromise(evento.data);
+		}
+		
+		private function arquivoSelecionado(evento:Event):void
+		{   trace('arquivo selecionado', _imagem.length);
+			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
+			
+			this._imagem[_imagem.length] = new Imagem(_imagem.length);
+				
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);			
+			this._imagem[_imagem.length - 1].loader.load(new URLRequest(this._file.url));
+		}
+		
+		private function imagemErro(evento:IOErrorEvent):void
+		{   trace('img erro', _imagem.length);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+		
+			// tratar erro
+		}
+		
+		private function imagemCarregada(evento:Event):void
+		{
+			trace('imagem carregada', _imagem.length);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			
+			if (this._imagem[_imagem.length - 1].loader.width > this._imagem[_imagem.length - 1].loader.height)
+			{
+				trace("largura");
+				this._imagem[_imagem.length - 1].width = stage.stageWidth;
+				this._imagem[_imagem.length - 1].scaleY = this._imagem[_imagem.length - 1].scaleX;
+			}
+			else
+			{
+				trace('altura');
+				this._imagem[_imagem.length - 1].height = stage.stageHeight;
+				this._imagem[_imagem.length - 1].scaleX = this._imagem[_imagem.length - 1].scaleY;
+			}
+			// posicionar e dimensionar botões	
+			
+			this._imagem[_imagem.length - 1].centraliza(this.stage);
+			addChild(this._imagem[_imagem.length - 1]);
+			
 			
 			
 		}
