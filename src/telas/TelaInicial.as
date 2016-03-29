@@ -87,16 +87,17 @@ package telas
 		}
 		
 		private function cliqueCamera(evento:MouseEvent):void
-		{
-			
+		{			
 			this.camera.addEventListener(MediaEvent.COMPLETE, cameracomplete);
 			this.camera.addEventListener(Event.CANCEL, cameracancel);
 			this.camera.addEventListener(ErrorEvent.ERROR, cameraerro);
+
 			camera.launch("image");
 		}
 		
 		private function cliqueGaleria(evento:MouseEvent):void
 		{
+			
 			this._roll.addEventListener(Event.CANCEL, cameracancel);
 			this._roll.addEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.addEventListener(ErrorEvent.ERROR, cameraerro);

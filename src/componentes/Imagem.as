@@ -14,7 +14,7 @@ package componentes
 		public var loader:Loader;
 		private var _id:int;
 		
-		public function Imagem(id:int) {
+		public function Imagem(id:int = 0) {
 			
 			super();
 			this._id = id;
@@ -27,7 +27,7 @@ package componentes
 			return(_id);
 			
 		}
-		
+	
 		public function centraliza(refStage:Stage):void {
 			this.loader.x = -this.loader.width / 2;
 			this.loader.y = -this.loader.height / 2;

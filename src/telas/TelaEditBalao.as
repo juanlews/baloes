@@ -63,6 +63,7 @@ package telas
 				
 				this.addChild(linhabaixo);
 				this.addChild(linhabaixo);
+				
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
 					this.addChild(this._imagem[k]);
@@ -75,11 +76,10 @@ package telas
 				}
 				
 				this.addChild(this._ok);
-				this.addChild(this._cancelar);				
-				trace('usa tween');
+				this.addChild(this._cancelar);	
 				
+				trace('usa tween');				
 				linhacima.x = 0;
-				
 				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);

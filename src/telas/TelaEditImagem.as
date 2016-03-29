@@ -10,6 +10,7 @@ package telas
 	import flash.events.NativeDragEvent;
 	import flash.events.TransformGestureEvent;
 	import flash.geom.Point;
+	import flash.net.URLRequest;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import recursos.Graficos;
@@ -34,19 +35,16 @@ package telas
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
+			btscala = 10;
 			dados = new Object();
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			btscala = 10;
 		
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			
-			this.addChild(this._ok);
-			this.addChild(this._cancelar);
 			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
@@ -61,22 +59,23 @@ package telas
 			
 			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 			{
+				stage.addEventListener(Event.RESIZE, desenho);
 				stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
-				stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
+				stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);				
+				stage.addEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
+				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);				
+				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
+				
 				for (var i:int; i < _imagem.length; i++)
-				{   addChild(_imagem[i])
+				{
+					addChild(_imagem[i])
 					this._imagem[i].addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 				}
 				
-				stage.addEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
-				
 				this.addChild(linhabaixo);
-				
 				this.addChild(this._ok);
 				this.addChild(this._cancelar);
-				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
-				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-				stage.addEventListener(Event.RESIZE, desenho);
+				
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
 				linhacima.x = 0;
 				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
@@ -103,8 +102,9 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
-			for (var j:int = 0; j < _imagem.length; j++) {
-			  this._imagem[j].removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
+			for (var j:int = 0; j < _imagem.length; j++)
+			{
+				this._imagem[j].removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 			}
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 			stage.removeEventListener(Event.RESIZE, desenho);
@@ -115,24 +115,29 @@ package telas
 		private function dragImagemStart(evento:MouseEvent):void
 		{
 			var indice:int;
-			
+		    		
 			for (var i:int = 0; i < _imagem.length; i++)
-			{
-				if (_imagem[i] == evento.target as Imagem)
+			{   
+				
+				if (_imagem[i].loader  == evento.target as Loader)
 				{
+					
 					trace("o balao clicado é: ", indice = i);
 				}
 			}
 			
+			trace('fora do for', indice );
 			this._imagem[indice].startDrag();
 		}
 		
-		private function dragImagemStop(evento:MouseEvent):void	{			
-			for (var i:int = 0; i < _imagem.length; i++) {				
+		private function dragImagemStop(evento:MouseEvent):void
+		{
+			for (var i:int = 0; i < _imagem.length; i++)
+			{
 				this._imagem[i].stopDrag();
 				
 			}
-			
+		
 		}
 		
 		private function zoomImagem(evento:TransformGestureEvent):void
@@ -140,27 +145,28 @@ package telas
 			var indice:int;
 			for (var i:int = 0; i < _imagem.length; i++)
 			{
-				if (_imagem[i] == evento.target as Imagem)
+				if (_imagem[i].loader == evento.target as Loader)
 				{
 					trace("o balao clicado é: ", indice = i);
 				}
 			}
-			_imagem[i].scaleX *= evento.scaleX;
-			_imagem[i].scaleY = _imagem[i].scaleX;
+			_imagem[indice].scaleX *= evento.scaleX;
+			_imagem[indice].scaleY = _imagem[indice].scaleX;
 		
 		}
 		
 		private function rotacaoImagem(evento:TransformGestureEvent):void
-		{	var indice:int;
+		{
+			var indice:int;
 			for (var i:int = 0; i < _imagem.length; i++)
 			{
-				if (_imagem[i] == evento.target as Imagem)
+				if (_imagem[i].loader == evento.target as Loader)
 				{
 					trace("o balao clicado é: ", indice = i);
 				}
 			}
 			
-			_imagem[i].rotation += evento.rotation;
+			_imagem[indice].rotation += evento.rotation;
 		}
 		
 		override public function recebeDados(dados:Object):void
@@ -168,7 +174,7 @@ package telas
 			if (dados != null)
 			{
 				this._imagem = dados.imagem as Vector.<Imagem>;
-								
+				
 			}
 			
 			else
@@ -176,8 +182,6 @@ package telas
 				
 				trace('imagem nao carregada');
 			}
-			
-			
 		
 		}
 	}
