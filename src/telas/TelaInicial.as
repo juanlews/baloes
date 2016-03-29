@@ -39,7 +39,7 @@ package telas
 		private var _imgsHelp:Vector.<Class>;
 		private var _imgAtual:int;
 		private var _help:Bitmap;
-		private var _imagem:Imagem;
+		private var _imagem:Vector.<Imagem>;
 		//balao
 		private var _balao:Vector.<Balao>;
 		// galeria
@@ -48,6 +48,7 @@ package telas
 		
 		//camera
 		private var camera:CameraUI;
+		//
 		private var btscala:Number;
 		
 		public function TelaInicial(funcMudaTela:Function)
@@ -77,7 +78,8 @@ package telas
 			// criando acesso à galeria
 			this._roll = new CameraRoll();
 			this._file = File.documentsDirectory;
-			this._imagem = new Imagem();
+			this._imagem = new Vector.<Imagem>;
+			this._imagem[0] = new Imagem(0);
 			this._balao = new Vector.<Balao>;
 			// criando acesso à camera
 			camera = new CameraUI();
@@ -124,46 +126,46 @@ package telas
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
 			
-			this._imagem.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem[0].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[0].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
-			this._imagem.loader.loadFilePromise(evento.data);
+			this._imagem[0].loader.loadFilePromise(evento.data);
 		}
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
-			this._imagem.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem[0].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[0].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
-			this._imagem.loader.load(new URLRequest(this._file.url));
+			this._imagem[0].loader.load(new URLRequest(this._file.url));
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
 		{
-			this._imagem.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem[0].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[0].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 		
 			// tratar erro
 		}
 		
 		private function imagemCarregada(evento:Event):void
 		{
-			this._imagem.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem[0].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[0].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
-			if (this._imagem.loader.width > this._imagem.loader.height)
+			if (this._imagem[0].loader.width > this._imagem[0].loader.height)
 			{
 				trace("largura");
-				this._imagem.width = stage.stageWidth;
-				this._imagem.scaleY = this._imagem.scaleX;
+				this._imagem[0].width = stage.stageWidth;
+				this._imagem[0].scaleY = this._imagem[0].scaleX;
 			}
 			else
 			{
 				trace('altura');
-				this._imagem.height = stage.stageHeight;
-				this._imagem.scaleX = this._imagem.scaleY;
+				this._imagem[0].height = stage.stageHeight;
+				this._imagem[0].scaleX = this._imagem[0].scaleY;
 			}
 			// posicionar e dimensionar botões	
 			var dados:Object = new Object();
@@ -175,7 +177,7 @@ package telas
 			this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
 			this._balao[dados.indice].x = stage.stageWidth / 3;
 			this._balao[dados.indice].y = stage.stageHeight / 3;
-			this._imagem.centraliza(this.stage);
+			this._imagem[0].centraliza(this.stage);
 			
 			// mudar tela
 			

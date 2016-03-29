@@ -15,6 +15,7 @@ package telas
 	import flash.filesystem.FileStream;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.media.CameraUI;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
@@ -41,13 +42,21 @@ package telas
 		private var _balao:Vector.<Balao>;
 		
 		// imagem
-		private var _imagem:Imagem;
+		private var _imagem:Vector.<Imagem>;
 		private var _bmpData:BitmapData;
 		
 		private var _tipobalao:int;
 		private var _dados:Object;
 		private var btscala:Number;
 		
+		// galeria
+		private var _roll:CameraRoll;
+		private var _file:File;
+		
+		//camera
+		private var camera:CameraUI;
+		
+		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
 			btscala = 10;
@@ -68,6 +77,11 @@ package telas
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
 			
 			_dados = new Object();
+			
+			this._roll = new CameraRoll();
+			this._file = File.documentsDirectory;
+			
+			this.camera = new CameraUI();
 		
 		}
 		
@@ -130,10 +144,13 @@ package telas
 			if (!this._salvar.hasEventListener(MouseEvent.CLICK))
 			{
 				
-				this.addChild(this._imagem);
 				this.addChild(linhabaixo);
 				this.addChild(linhacima);
 				
+				for (var k:int = 0; k < _imagem.length; k++)
+				{
+					this.addChild(this._imagem[k]);
+				}
 				for (var i:int = 0; i < _balao.length; i++)
 				{
 					this.addChild(this._balao[i]);
@@ -153,6 +170,8 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
+				this._galeria.addEventListener(MouseEvent.CLICK, addImagem);
+				this._camera.addEventListener(MouseEvent.CLICK, addFoto);
 				
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
@@ -192,7 +211,7 @@ package telas
 		private function cliqueAjusteB(evento:MouseEvent):void
 		{
 			trace('click ajustB');
-			this._dados.balao = _balao as Vector.<Balao>;
+			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editbalao', _dados);
 		}
@@ -201,11 +220,11 @@ package telas
 		{
 			trace('click ajusteImg');
 			
-			this._dados.balao = _balao as Vector.<Balao>;
+			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editimagem', _dados);
 		
-		}                            
+		}
 		
 		override public function escondendo(evento:Event):void
 		{
@@ -230,7 +249,8 @@ package telas
 				if (dados.imagem != null)
 				{
 					trace('tem Imagem');
-					this._imagem = dados.imagem as Imagem;
+					this._imagem = dados.imagem as Vector.<Imagem>;
+					
 				}
 				if (dados.balaoProp != null)
 				{
@@ -239,16 +259,10 @@ package telas
 				if (dados.balao != null)
 				{
 					trace('tem Balao');
-					//for (var i:int; i < dados.indice; i++)
 					
-						this._balao = dados.balao as Vector.<Balao>;
-					
+					this._balao = dados.balao as Vector.<Balao>;
 					
 				}
-				
-				// add child _image
-				addChild(this._imagem);
-				//addChild(this._balao[0]);
 				
 			}
 		}

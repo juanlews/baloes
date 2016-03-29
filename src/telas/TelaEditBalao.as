@@ -21,7 +21,7 @@ package telas
 	public class TelaEditBalao extends Tela
 	{
 		
-		private var _imagem:Imagem;
+		private var _imagem:Vector.<Imagem>;
 		private var _ok:BotaoIcone;
 		private var _cancelar:BotaoIcone;
 		private var _oRotacao:Number;
@@ -63,14 +63,21 @@ package telas
 				
 				this.addChild(linhabaixo);
 				this.addChild(linhabaixo);
-				this.addChild(this._ok);
-				this.addChild(this._cancelar);
+				for (var k:int = 0; k < _imagem.length; k++)
+				{
+					this.addChild(this._imagem[k]);
+				}
+				
 				for (var i:int = 0; i < _balao.length; i++)
 				{
 					this.addChild(this._balao[i]);
 					this._balao[i].addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
 				}
+				
+				this.addChild(this._ok);
+				this.addChild(this._cancelar);				
 				trace('usa tween');
+				
 				linhacima.x = 0;
 				
 				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
@@ -116,23 +123,19 @@ package telas
 				if (dados.balao != null)
 				{
 					this._balao = dados.balao as Vector.<Balao>;
-						//this._oPosicao = new Point(this._balao.x, this._balao.y);
-						//this._oRotacao = this._balao.rotation;
-						//this._oZoom = this._balao.scaleX;
+						
 					
 				}
 				if (dados.imagem != null)
 				{
-					this._imagem = dados.imagem as Imagem;
-					this._oPosicao = new Point(this._imagem.x, this._imagem.y);
-					this._oRotacao = this._imagem.rotation;
-					this._oZoom = this._imagem.scaleX;
+					this._imagem = dados.imagem as Vector.<Imagem>;
+				
 					
 				}
 			}
 			
-			addChild(this._imagem);
-			addChild(this._balao[0]);
+			
+			
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void

@@ -12,12 +12,20 @@ package componentes
 	{
 		
 		public var loader:Loader;
+		private var _id:int;
 		
-		public function Imagem() 
-		{
+		public function Imagem(id:int) {
+			
 			super();
+			this._id = id;
 			this.loader = new Loader();
 			this.addChild(this.loader);
+		}
+		
+		public function get id():int {
+			
+			return(_id);
+			
 		}
 		
 		public function centraliza(refStage:Stage):void {
