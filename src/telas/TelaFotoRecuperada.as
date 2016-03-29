@@ -177,17 +177,14 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
-<<<<<<< HEAD
+
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
-				
-=======
-				this._galeria.addEventListener(MouseEvent.CLICK, addImagem);
-				this._camera.addEventListener(MouseEvent.CLICK, addFoto);
+
 				for (var j:int = 0; j < _balao.length; j++){
 					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
 				}	
->>>>>>> origin/master
+
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
