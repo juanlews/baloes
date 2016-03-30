@@ -180,9 +180,7 @@ package telas
 
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
-				
 
-				
 				for (var j:int = 0; j < _balao.length; j++){
 					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
 				}	

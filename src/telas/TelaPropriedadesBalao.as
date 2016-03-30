@@ -37,7 +37,6 @@ package telas
 		private var _flipV:BotaoIcone;
 		private var _fndprev:BotaoIcone;
 		private var _ok:BotaoIcone;
-		private var _excBalao:BotaoIcone;
 		
 		private var _preview:Balao;
 		
@@ -285,24 +284,29 @@ package telas
 				this._excluir.addEventListener(MouseEvent.CLICK, excluirbalao);
 			}
 		}
+		
 		public function excluirbalao(event:MouseEvent):void {
 		
 			trace('excluir balao');
+			var exc:int = this._balaoO.id;
 			this.mudaTela('fotorecuperada',null);
 			
 			
 		
 		}
+		
 		public function fliphclick(event:MouseEvent):void
 		{
 			this._balaoP.flipH();
 			
 		}
+		
 		public function flipvclick(event:MouseEvent):void
 		{
 			this._balaoP.flipV();
 				
 		}
+		
 		public function okclick(event:MouseEvent):void
 		{
 			var dados:Object = new Object();
@@ -310,8 +314,6 @@ package telas
 			 this._balaoO.copyProp(this._balaoP);
 			
 			this.mudaTela('fotorecuperada', dados);
-			
-			trace(this._balaoP);
 		}
 		
 		override public function recebeDados(dados:Object):void
