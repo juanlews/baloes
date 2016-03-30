@@ -12,7 +12,7 @@ package telas
 	import flash.events.IOErrorEvent;
 	import flash.events.MediaEvent;
 	import flash.events.MouseEvent;
-	import flash.events.ErrorEvent;	
+	import flash.events.ErrorEvent;
 	import flash.events.TransformGestureEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -177,14 +177,15 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
-
+				
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
-
-				for (var j:int = 0; j < _balao.length; j++){
+				
+				for (var j:int = 0; j < _balao.length; j++)
+				{
 					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
-				}	
-
+				}
+				
 				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 				
 				stage.addEventListener(Event.RESIZE, desenho);
@@ -195,13 +196,13 @@ package telas
 		
 		private function cliqueCamera(evento:MouseEvent):void
 		{
-			trace ('clique camera', _imagem.length);
+			trace('clique camera', _imagem.length);
 			this.camera.addEventListener(MediaEvent.COMPLETE, cameracomplete);
 			this.camera.addEventListener(Event.CANCEL, cameracancel);
 			this.camera.addEventListener(ErrorEvent.ERROR, cameraerro);
 			
 			camera.launch("image");
-			
+		
 		}
 		
 		private function cliqueGaleria(evento:MouseEvent):void
@@ -211,12 +212,12 @@ package telas
 			this._roll.addEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.addEventListener(ErrorEvent.ERROR, cameraerro);
 			this._roll.browseForImage();
-			
+		
 		}
 		
-		
 		private function cameracancel(evento:Event):void
-		{   trace('camera cancel', _imagem.length);
+		{
+			trace('camera cancel', _imagem.length);
 			this._roll.removeEventListener(Event.CANCEL, cameracancel);
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
@@ -235,7 +236,7 @@ package telas
 		
 		private function cameracomplete(evento:MediaEvent):void
 		{
-			trace('camera completa',_imagem.length);
+			trace('camera completa', _imagem.length);
 			this._roll.removeEventListener(Event.CANCEL, cameracancel);
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
@@ -247,18 +248,20 @@ package telas
 		}
 		
 		private function arquivoSelecionado(evento:Event):void
-		{   trace('arquivo selecionado', _imagem.length);
+		{
+			trace('arquivo selecionado', _imagem.length);
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
-				
+			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);			
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			this._imagem[_imagem.length - 1].loader.load(new URLRequest(this._file.url));
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
-		{   trace('img erro', _imagem.length);
+		{
+			trace('img erro', _imagem.length);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 		
@@ -287,9 +290,7 @@ package telas
 			
 			this._imagem[_imagem.length - 1].centraliza(this.stage);
 			addChild(this._imagem[_imagem.length - 1]);
-			
-			
-			
+		
 		}
 		
 		private function addBalao(evento:MouseEvent):void
@@ -303,7 +304,10 @@ package telas
 			addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
 		}
-	
+		private function apagarbalao(exc:int) {
+			
+			trace(exc);	
+		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
@@ -321,8 +325,7 @@ package telas
 			this._dados.balao = balaoClicado;
 			
 			this.mudaTela('propriedadesbalao', _dados);
-			
-			
+		
 		}
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
@@ -350,19 +353,19 @@ package telas
 			// remover listeners
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
-			this._propBalao.removeEventListener(MouseEvent.CLICK,cliquePropB );
-			this._ajusteBalao.removeEventListener(MouseEvent.CLICK,cliqueAjusteB);
+			this._propBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
+			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
 			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
 			stage.removeEventListener(Event.RESIZE, desenho);
-			for (var i:int = 0; i < _balao.length; i++){
+			for (var i:int = 0; i < _balao.length; i++)
+			{
 				this._balao[i].removeEventListener(MouseEvent.CLICK, cliquePropB);
 			}
-		
 		}
+	
 		override public function recebeDados(dados:Object):void
 		{
-			
 			if (dados != null)
 			{
 				if (dados.imagem != null)
@@ -418,5 +421,3 @@ package telas
 	}
 
 }
-
-  

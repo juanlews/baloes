@@ -257,7 +257,7 @@ package telas
 			if (!this._ok.hasEventListener(MouseEvent.CLICK))
 			{
 				
-				trace('criando listener');
+				//trace('criando listener');
 				
 				this._tipo1.addEventListener('marcado', cliqueBTipo);
 				
@@ -285,14 +285,15 @@ package telas
 			}
 		}
 		
+		
 		public function excluirbalao(event:MouseEvent):void {
 		
-			trace('excluir balao');
 			var exc:int = this._balaoO.id;
-			this.mudaTela('fotorecuperada',null);
 			
+			this.mudaTela('fotorecuperada',exc);
 			
-		
+			trace('excluir balão' + exc);
+			
 		}
 		
 		public function fliphclick(event:MouseEvent):void
