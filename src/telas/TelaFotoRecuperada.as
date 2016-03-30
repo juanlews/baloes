@@ -123,12 +123,13 @@ package telas
 			this._ajusteImagem.y = stage.stageHeight / 40;
 			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
-			//add Balao
+		
+			//botão add Balao
 			this._addBalao..x = (this._ajusteImagem.width + this._ajusteImagem.x) + stage.stageWidth / 20;
 			this._addBalao.y = stage.stageHeight / 40;
 			this._addBalao.width = stage.stageWidth / btscala;
 			this._addBalao.scaleY = this._addBalao.scaleX;
-			//camera
+			// botão camera
 			this._camera.width = stage.stageWidth / btscala;
 			this._camera.scaleY = this._camera.scaleX;
 			this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
@@ -304,11 +305,6 @@ package telas
 			addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
 		}
-		private function apagarbalao(exc:int) {
-			
-			trace(exc);	
-		}
-		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
 			this.mudaTela('inicial', null);
