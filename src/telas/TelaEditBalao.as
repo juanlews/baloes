@@ -185,7 +185,7 @@ package telas
 			{
 				if (_balao[i] == evento.target as Balao)
 				{
-					
+					trace("o balao scalonado é: ", indice = i);
 				}
 			}
 			_balao[indice].scaleX *= evento.scaleX;
@@ -199,7 +199,7 @@ package telas
 			{
 				if (_balao[i] == evento.target as Balao)
 				{
-					trace("o balao clicado é: ", indice = i);
+					trace("o balao rotacionado é: ", indice = i);
 				}
 			}
 			_balao[indice].rotation += evento.rotation;
