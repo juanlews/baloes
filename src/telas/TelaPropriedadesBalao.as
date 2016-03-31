@@ -166,9 +166,9 @@ package telas
 			this.addChild(this._fndprev);
 			
 			// balao padrao
-			this._balaoP.width = this._fndprev.width - 50;
+			this._balaoP.width = this._fndprev.width - this._fndprev.width / 20;
 			this._balaoP.scaleY = this._balaoP.scaleX;
-			this._balaoP.x = this._fndprev.x + this._balaoP.width/20;
+			this._balaoP.x = this._fndprev.x + this._balaoP.width/40;
 			this._balaoP.y = this._fndprev.y + this._balaoP.height/20;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
@@ -223,31 +223,31 @@ package telas
 			
 			//cor
 			this._cor1.x = stage.stageWidth / 20 ;
-			this._cor1.y = stage.stageHeight / 6;
+			this._cor1.y = stage.stageHeight / 5;
 			this._cor1.width = stage.stageWidth / 8
 			this._cor1.scaleY = this._cor1.scaleX;
 			this.addChild(this._cor1);
 			
 			this._cor2.x = this._cor1.x + this._cor1.width *1.5;
-			this._cor2.y = stage.stageHeight / 6;
+			this._cor2.y = stage.stageHeight / 5;
 			this._cor2.width = stage.stageWidth /8;
 			this._cor2.scaleY = this._cor2.scaleX;
 			this.addChild(this._cor2);
 			
 			this._cor3.x = this._cor2.x + this._cor2.width *1.5;
-			this._cor3.y = stage.stageHeight /6;
+			this._cor3.y = stage.stageHeight /5;
 			this._cor3.width = stage.stageWidth / 8
 			this._cor3.scaleY = this._cor3.scaleX;
 			this.addChild(this._cor3);
 			
 			this._cor4.x = this._cor3.x + this._cor3.width * 1.5;
-			this._cor4.y = stage.stageHeight / 6;
+			this._cor4.y = stage.stageHeight / 5;
 			this._cor4.width = stage.stageWidth / 8
 			this._cor4.scaleY = this._cor4.scaleX;
 			this.addChild(this._cor4);
 			
 			this._cor5.x = this._cor4.x + this._cor4.width * 1.5;
-			this._cor5.y = stage.stageHeight / 6;
+			this._cor5.y = stage.stageHeight / 5;
 			this._cor5.width = stage.stageWidth / 8
 			this._cor5.scaleY = this._cor5.scaleX;
 			this.addChild(this._cor5);
@@ -257,7 +257,7 @@ package telas
 			if (!this._ok.hasEventListener(MouseEvent.CLICK))
 			{
 				
-				trace('criando listener');
+				//trace('criando listener');
 				
 				this._tipo1.addEventListener('marcado', cliqueBTipo);
 				
@@ -285,14 +285,15 @@ package telas
 			}
 		}
 		
+		
 		public function excluirbalao(event:MouseEvent):void {
 		
-			trace('excluir balao');
 			var exc:int = this._balaoO.id;
+			
 			this.mudaTela('fotorecuperada',null);
 			
+			trace('excluir balão' + exc);
 			
-		
 		}
 		
 		public function fliphclick(event:MouseEvent):void
