@@ -75,6 +75,10 @@ package componentes
 			return (this._id);
 			
 		}
+		public function set id(para:int):void {
+			this._id = para;
+		}
+		
 		public function set tipo(para:int):void
 		{
 			if (para >= this._imgsBalao.length)

@@ -63,6 +63,8 @@ package telas
 		
 		//camera
 		private var camera:CameraUI;
+		//
+		private var _exc:int;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -124,7 +126,7 @@ package telas
 			this._ajusteImagem.y = stage.stageHeight / 40;
 			this._ajusteImagem.width = stage.stageWidth / btscala;
 			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
-		
+			
 			//botão add Balao
 			this._addBalao..x = (this._ajusteImagem.width + this._ajusteImagem.x) + stage.stageWidth / 20;
 			this._addBalao.y = stage.stageHeight / 40;
@@ -313,6 +315,7 @@ package telas
 			ObjetoAprendizagem.areaImagem.addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
 		}
+		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
 			this.mudaTela('inicial', null);
@@ -367,7 +370,7 @@ package telas
 				this._balao[i].removeEventListener(MouseEvent.CLICK, cliquePropB);
 			}
 		}
-	
+		
 		override public function recebeDados(dados:Object):void
 		{
 			if (dados != null)
@@ -387,6 +390,21 @@ package telas
 					trace('tem Balao');
 					
 					this._balao = dados.balao as Vector.<Balao>;
+				}
+				if (dados.balaoExclui != null)
+				{
+					this._exc = dados.balaoExclui as int;
+					
+					this.removeChild(this._balao[_exc]);
+					
+					this._balao.splice(this._exc, 1);
+					
+					trace('excluindo o balão' + this._exc);
+				
+					for (var xis:int = 0; xis < _balao.length; xis++)
+					{
+						this._balao[xis].id = xis;
+					}
 					
 				}
 				

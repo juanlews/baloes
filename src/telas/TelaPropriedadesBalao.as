@@ -57,7 +57,6 @@ package telas
 			super(funcMudaTela);
 			
 			
-			
 			// adicionando grupo de radio do tipo de balão
 			this._tipo1 = new BotaoRadio(Graficos.ImgBTBalao01, '1', true);
 			this._tipo2 = new BotaoRadio(Graficos.ImgBTBalao02, '2');
@@ -172,6 +171,7 @@ package telas
 			this._balaoP.y = this._fndprev.y + this._balaoP.height/20;
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
+			trace(this._balaoO.id);
 			
 			//botoes do tipo icone 
 			//flip Horizontal
@@ -287,12 +287,15 @@ package telas
 		
 		
 		public function excluirbalao(event:MouseEvent):void {
-		
-			var exc:int = this._balaoO.id;
 			
-			this.mudaTela('fotorecuperada',null);
+			var retorno:Object = new Object();
 			
-			trace('excluir balão' + exc);
+			retorno.balaoExclui = this._balaoO.id;
+			
+			
+			this.mudaTela('fotorecuperada', retorno);
+			
+		//trace('excluir balão' + retorno.balaoExclui);
 			
 		}
 		
