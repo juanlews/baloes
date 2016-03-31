@@ -1,9 +1,11 @@
 package telas
 {
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import caurina.transitions.Tweener;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * ...
@@ -11,7 +13,7 @@ package telas
 	 */
 	public class Tela extends Sprite
 	{
-		
+				
 		protected var mudaTela:Function;
 		protected var linhacima:Shape;
 		protected var linhabaixo:Shape;
@@ -29,12 +31,16 @@ package telas
 			linhacima = new Shape();
 			addChild(linhacima);
 			addChild(linhabaixo);
+			
+			
+			 
 		}
 		
 		public function desenho(evento:Event = null):void
 		{
 			// desenhar a tela
-			if (linhacima.width == 0) {
+			if (linhacima.width == 0)
+			{
 				linhacima.graphics.beginFill(0xFF9900);
 				linhacima.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10);
 				linhacima.graphics.endFill();
@@ -44,10 +50,13 @@ package telas
 				linhabaixo.graphics.endFill();
 			}
 			
-			
 			linhabaixo.y = stage.stageHeight - stage.stageHeight / 10;
 			linhabaixo.x = 0;
-		
+			
+			var area:Rectangle = new Rectangle(0, (linhacima.x + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
+			ObjetoAprendizagem.areaImagem.fitOnArea(area);
+			this.addChild(ObjetoAprendizagem.areaImagem);
+		    
 		}
 		
 		public function escondendo(evento:Event):void

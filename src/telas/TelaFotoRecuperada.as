@@ -2,6 +2,7 @@
 package telas
 {
 	import caurina.transitions.Tweener;
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
@@ -156,11 +157,11 @@ package telas
 				
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
-					this.addChild(this._imagem[k]);
+					ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
 				}
 				for (var i:int = 0; i < _balao.length; i++)
 				{
-					this.addChild(this._balao[i]);
+					ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
 				}
 				this.addChild(this._propBalao);
 				this.addChild(this._ajusteBalao);
@@ -274,19 +275,19 @@ package telas
 			if (this._imagem[_imagem.length - 1].loader.width > this._imagem[_imagem.length - 1].loader.height)
 			{
 				trace("largura");
-				this._imagem[_imagem.length - 1].width = stage.stageWidth;
+				this._imagem[_imagem.length - 1].width = ObjetoAprendizagem.areaImagem.width;
 				this._imagem[_imagem.length - 1].scaleY = this._imagem[_imagem.length - 1].scaleX;
 			}
 			else
 			{
 				trace('altura');
-				this._imagem[_imagem.length - 1].height = stage.stageHeight;
+				this._imagem[_imagem.length - 1].height = ObjetoAprendizagem.areaImagem.height;
 				this._imagem[_imagem.length - 1].scaleX = this._imagem[_imagem.length - 1].scaleY;
 			}
 			// posicionar e dimensionar botões	
 			
 			this._imagem[_imagem.length - 1].centraliza(this.stage);
-			addChild(this._imagem[_imagem.length - 1]);
+			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
 			
 			
 			
@@ -298,9 +299,9 @@ package telas
 			this._balao[_balao.length] = new Balao(_balao.length);
 			this._balao[_balao.length - 1].width = 200;
 			this._balao[_balao.length - 1].scaleY = this._balao[_balao.length - 1].scaleX;
-			this._balao[_balao.length - 1].x = stage.stageWidth / 4;
-			this._balao[_balao.length - 1].y = stage.stageHeight / 4;
-			addChild(_balao[_balao.length - 1]);
+			this._balao[_balao.length - 1].x = ObjetoAprendizagem.areaImagem.width / 4;
+			this._balao[_balao.length - 1].y = ObjetoAprendizagem.areaImagem.height / 4;
+			ObjetoAprendizagem.areaImagem.addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
 		}
 	
@@ -384,6 +385,8 @@ package telas
 				}
 				
 			}
+			
+			
 		}
 		
 		private function removeBotoes():void
@@ -403,10 +406,8 @@ package telas
 		private function cliqueSalvar(evento:MouseEvent):void
 		{
 			this.removeBotoes();
-			this._bmpData = new BitmapData(stage.stageWidth, stage.stageHeight);
-			this._bmpData.draw(stage);
 			
-			var bmpArray:ByteArray = this._bmpData.encode(new Rectangle(0, 0, this._bmpData.width, this._bmpData.height), new JPEGEncoderOptions(100));
+			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg' , 100);
 			var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
 			var fstream:FileStream = new FileStream();
 			fstream.open(bmpCache, FileMode.WRITE);
@@ -414,6 +415,7 @@ package telas
 			fstream.close();
 			
 			this.mudaTela('salvar', null);
+			
 		}
 	}
 

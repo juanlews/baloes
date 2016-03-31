@@ -1,6 +1,7 @@
 package telas
 {
 	import caurina.transitions.Tweener;
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.Balao;
 	import componentes.Imagem;
 	import flash.display.Loader;
@@ -66,12 +67,12 @@ package telas
 				
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
-					this.addChild(this._imagem[k]);
+					ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
 				}
 				
 				for (var i:int = 0; i < _balao.length; i++)
 				{
-					this.addChild(this._balao[i]);
+					ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
 					this._balao[i].addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
 				}
 				
@@ -166,6 +167,17 @@ package telas
 				}
 			}
 			this._balao[indice].startDrag();
+			
+			if (this._balao[indice].x >= stage.stageWidth - this._balao[indice].width){
+				this._balao[indice].x =  stage.stageWidth - this._balao[indice].width;
+			}
+			 if(this._balao[indice].y >= stage.stageHeight- this._balao[indice].height){
+				this._balao[indice].y = stage.stageHeight- this._balao[indice].height
+			}
+			
+			 if (this._balao[indice].x <= 0) { this._balao[indice].x = 0 }
+			 if (this._balao[indice].y <= 0) { this._balao[indice].y = 0 }
+		  	
 		}
 		
 		private function dragBalaoStop(evento:MouseEvent):void

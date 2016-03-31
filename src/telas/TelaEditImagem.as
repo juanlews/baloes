@@ -1,6 +1,7 @@
 package telas
 {
 	import caurina.transitions.Tweener;
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
 	import flash.display.Loader;
@@ -24,11 +25,7 @@ package telas
 		private var _imagem:Vector.<Imagem>;
 		
 		private var _ok:BotaoIcone;
-		private var _cancelar:BotaoIcone;
-		
-		private var _oRotacao:Number;
-		private var _oPosicao:Point;
-		private var _oZoom:Number;
+		private var _cancelar:BotaoIcone;		
 		private var dados:Object;
 		private var btscala:Number;
 		
@@ -68,7 +65,7 @@ package telas
 				
 				for (var i:int; i < _imagem.length; i++)
 				{
-					addChild(_imagem[i])
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i])
 					this._imagem[i].addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 				}
 				
@@ -128,6 +125,16 @@ package telas
 			
 			trace('fora do for', indice );
 			this._imagem[indice].startDrag();
+			
+			if (this._imagem[indice].x >= stage.stageWidth - this._imagem[indice].width/2){
+				this._imagem[indice].x =  stage.stageWidth - this._imagem[indice].width/2;
+			}
+			 if(this._imagem[indice].y >= stage.stageHeight- this._imagem[indice].height/2){
+				this._imagem[indice].y = stage.stageHeight- this._imagem[indice].height/2
+			}
+			
+			 if (this._imagem[indice].x <= _imagem[indice].width / 2) { this._imagem[indice].x = _imagem[indice].width / 2 }
+			 if (this._imagem[indice].y <= _imagem[indice].height / 2) { this._imagem[indice].y = _imagem[indice].height / 2 }
 		}
 		
 		private function dragImagemStop(evento:MouseEvent):void

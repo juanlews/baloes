@@ -1,8 +1,13 @@
 package
 {
+	import colabora.display.AreaImagens;
+	import colabora.oaprendizagem.servidor.Servidor;
+	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
 	import componentes.BotaoIcone;
+	import dados.ProjetoDados;
 	import flash.desktop.NativeApplication;
+	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -19,6 +24,7 @@ package
 	import telas.TelaSalvar;
 	import telas.TelaVisualizar;
 	
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	
 	import recursos.Graficos;
 	
@@ -31,10 +37,13 @@ package
 	
 	public class Main extends Sprite 
 	{
+		
+		
+		
 	    private const link:String = 'http://192.168.10.159/';	
 		[Embed(source='./fontes/Pfennig.ttf', fontFamily='Pfennig', fontStyle='normal', fontWeight='normal', unicodeRange='U+0020-002F,U+0030-0039,U+003A-0040,U+0041-005A,U+005B-0060,U+0061-007A,U+007B-007E,U+0020,U+00A1-00FF,U+2000-206F,U+20A0-20CF,U+2100-2183', embedAsCFF='false', advancedAntiAliasing='false', mimeType="application/x-font")]
 		private var PfennigRegular:Class;
-		
+		public static var projeto:ProjetoDados;
 		private var _telas:Array;
 		
 		public function Main() 
@@ -45,6 +54,25 @@ package
 			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+			
+			// condigurando app
+			ObjetoAprendizagem.nome = 'Narrativas visuais';
+			ObjetoAprendizagem.codigo = 'narvisuais';
+			ObjetoAprendizagem.urlServidor = 'http://localhost/oaprendizagem/web/';
+			// preparando servidor
+			ObjetoAprendizagem.servidor = new Servidor();
+			// verificando o usuário
+			ObjetoAprendizagem.usuario = new Usuario(stage.stageWidth, stage.stageHeight);
+			// criando área de imagem
+			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920);
+			
+			//
+			Main.projeto = new ProjetoDados();
+			Main.projeto.titulo = 'primeiro projeto';
+			Main.projeto.tags.push('primeiro');
+			Main.projeto.tags.push('projeto');
+			
+			Main.projeto.salvarDados();
 			
 			// preparar as telas
 			this._telas = new Array();
@@ -66,14 +94,9 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
-
-			
-			
-
-			
-		
-			
+					
 		}
+		
 		
 		private function adicionaTela(nome:String, dados:Object):void {
 			this.removeChildren();			
