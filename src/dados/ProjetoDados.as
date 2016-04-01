@@ -103,8 +103,8 @@ package dados
 					
 					while (this.paginas.length > 0) this.paginas.shift().dispose();
 					var pagArray:Array = String(objetoCarregar.paginas).split(':|:');
-					for (var i:int = 0; i < pagArray.length; i++) {
-						this.paginas.push(new PaginaDados(pagArray[i]));
+					for (var iv:int = 0; iv < pagArray.length; iv++) {
+						this.paginas.push(new PaginaDados(pagArray[iv]));
 					}
 					
 					

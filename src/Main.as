@@ -54,7 +54,7 @@ package
 			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-<<<<<<< HEAD
+
 			
 			// condigurando app
 			ObjetoAprendizagem.nome = 'Narrativas visuais';
@@ -74,10 +74,8 @@ package
 			Main.projeto.tags.push('projeto');
 			
 			Main.projeto.salvarDados();
-			
-=======
-		
->>>>>>> origin/master
+
+
 			// preparar as telas
 			this._telas = new Array();
 			this._telas['inicial'] = new TelaInicial(this.adicionaTela);
