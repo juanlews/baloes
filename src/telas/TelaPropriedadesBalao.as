@@ -7,6 +7,7 @@ package telas
 	import componentes.BotaoRadio;
 	import flash.automation.MouseAutomationAction;
 	import flash.display.Bitmap;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -53,13 +54,15 @@ package telas
 		
 		private var _excluir:BotaoIcone;
 		
-	
+		private var _bg:Shape;
 		
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
 			
 			
+			// background
+			this._bg = new Shape();
 			
 			// adicionando grupo de radio do tipo de balão
 			this._tipo1 = new BotaoRadio(Graficos.ImgBTBalao01, '1', true);
@@ -160,8 +163,12 @@ package telas
 			// posicionar todo mundo
 			
 			
-			
-			// fundo 
+			//background
+			this._bg.graphics.beginFill(0xe5e5e5);
+			this._bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+			this._bg.graphics.endFill();
+			this.addChild(this._bg);
+			// fundo preview
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 ;
 			this._fndprev.x = 0;
