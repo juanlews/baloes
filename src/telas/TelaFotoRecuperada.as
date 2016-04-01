@@ -110,15 +110,15 @@ package telas
 			this._galeria.scaleY = this._galeria.scaleX;
 			
 			//botão propiedades balão
-			this._propBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
-			this._propBalao.y = stage.stageHeight / 40;
-			this._propBalao.width = stage.stageWidth / btscala;
-			this._propBalao.scaleY = this._propBalao.scaleX;
+			//this._propBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
+			//this._propBalao.y = stage.stageHeight / 40;
+			//this._propBalao.width = stage.stageWidth / btscala;
+			//this._propBalao.scaleY = this._propBalao.scaleX;
 			
 			//botão ajuste do balão
 			this._ajusteBalao.width = stage.stageWidth / btscala;
 			this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
-			this._ajusteBalao.x = (this._propBalao.width + this._propBalao.x) + stage.stageWidth / 20;
+			this._ajusteBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
 			this._ajusteBalao.y = stage.stageHeight / 40;
 			
 			//botão ajuste imagem
@@ -166,7 +166,7 @@ package telas
 				{
 					ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
 				}
-				this.addChild(this._propBalao);
+				//this.addChild(this._propBalao);
 				this.addChild(this._ajusteBalao);
 				this.addChild(this._ajusteImagem);
 				this.addChild(this._salvar);

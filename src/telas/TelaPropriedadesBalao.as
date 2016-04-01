@@ -20,6 +20,7 @@ package telas
 	public class TelaPropriedadesBalao extends Tela
 	{
 		
+		
 		private var _texto:TextField;
 		
 		// tipos de balão
@@ -52,9 +53,12 @@ package telas
 		
 		private var _excluir:BotaoIcone;
 		
+	
+		
 		public function TelaPropriedadesBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
+			
 			
 			
 			// adicionando grupo de radio do tipo de balão

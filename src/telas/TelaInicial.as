@@ -51,6 +51,7 @@ package telas
 		//
 		private var btscala:Number;
 		
+	
 		public function TelaInicial(funcMudaTela:Function)
 		{
 			super(funcMudaTela);

@@ -8,6 +8,7 @@ package
 	import dados.ProjetoDados;
 	import flash.desktop.NativeApplication;
 	import flash.display.Loader;
+	import flash.display.Shape;
 	import flash.events.Event;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -65,7 +66,7 @@ package
 			// verificando o usuário
 			ObjetoAprendizagem.usuario = new Usuario(stage.stageWidth, stage.stageHeight);
 			// criando área de imagem
-			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920);
+			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920, 0x808080);
 			
 			//
 			Main.projeto = new ProjetoDados();
