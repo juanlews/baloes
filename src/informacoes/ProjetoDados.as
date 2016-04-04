@@ -117,6 +117,26 @@ package informacoes
 			var pastaImagens:File = this.pasta.resolvePath('imagens');
 			if (!pastaImagens.isDirectory) pastaImagens.createDirectory();
 		}
+		
+		/**
+		 * Guarda informações sobre uma página.
+		 * @param	pagina	informações sobre a página
+		 * @return	TRUE se os dados enviados estiverem de acordo com a estrutura de página
+		 */
+		public function guardaPagina(pagina:PaginaDados):Boolean
+		{
+			if (pagina.numero >= 0) { // somente guardar páginas com número maior ou igual a zero
+				// verificar a lista de páginas
+				for (var i:int = 0; i <= pagina.numero; i++) {
+					// percorrer o vetor de páginas e criar as páginas inexistentes até o número da recebida
+					if (this.paginas[i] == null) this.paginas[i] = new PaginaDados();
+				}
+				// guardar as informações da página no local certo
+				return(this.paginas[pagina.numero].processar(pagina));
+			} else {
+				return (false);
+			}
+		}
 	
 	}
 

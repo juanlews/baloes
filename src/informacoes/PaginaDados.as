@@ -8,30 +8,71 @@ package informacoes
 	 */
 	public class PaginaDados 
 	{
+		/**
+		 * Número da página, começando em 0 (números negativos indicam que a página não contém dados).
+		 */
+		public var numero:int = -1;
 		
+		/**
+		 * Informações sobre as imagens da página.
+		 */
 		public var imagens:Vector.<ImagemDados> = new Vector.<ImagemDados>();
 		
+		/**
+		 * Informações sobre os balões da página.
+		 */
 		public var baloes:Vector.<BalaoDados> = new Vector.<BalaoDados>();
+		
 		
 		public function PaginaDados(objeto:Object = null) 
 		{
-			if (objeto != null) {
-				for (var i:int = 0; i < objeto.imagens.length; i++) {
-					this.imagens.push(new ImagemDados(objeto.imagens[i]));
-				}
-				for (i = 0; i < objeto.baloes.length; i++) {
-					this.baloes.push(new BalaoDados(objeto.baloes[i]));
-				}
+			if (objeto != null) this.processar(objeto);
+		}
+		
+		/**
+		 * Processa um objeto com dados de uma página, recriando as informações na estrutura comum.
+		 * @param	dados	objeto com informações sobre a página
+		 * @return	TRUE se o objeto trouxer informações que possam ser usadas
+		 */
+		public function processar(dados:Object):Boolean
+		{
+			// verificando se o objeto de dados traz todos os campos necessários
+			if ((dados.numero != null) && (dados.imagens != null) && (dados.baloes != null)) {
+				// limpando quaisquer dados anteriores
+				this.clear();
+				// número da página
+				this.numero = dados.numero;
+				// imagens
+				for (var i:int = 0; i < dados.imagens.length; i++) this.imagens.push(new ImagemDados(dados.imagens[i]));
+				// balões
+				for (i = 0; i < dados.baloes.length; i++) this.baloes.push(new BalaoDados(dados.baloes[i]));
+				// página recriada
+				return (true);
+			} else {
+				// o objeto de dados não traz informações de uma página
+				return (false);
 			}
 		}
+		
+		/**
+		 * Limpando informações deste objeto.
+		 */
+		public function clear():void
+		{
+			this.numero = -1; // número de página = -1 indica que não há informações carregadas
+			while (this.imagens.length > 0) this.imagens.shift().dipose();
+			while (this.baloes.length > 0) this.baloes.shift().dipose();
+		}
+		
+		/**
+		 * Liberando recursos usado por este objeto.
+		 */
 		public function dispose():void{
 			while (this.imagens.length > 0) {
-			  this.imagens.shift();	
-				 
+			  this.imagens.shift().dispose();	
 			}
 			while (this.baloes.length > 0 ) {
-				
-				this.baloes.shift();
+				this.baloes.shift().dispose();
 				
 			}
 			this.imagens = null;

@@ -8,6 +8,7 @@ package componentes
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	import informacoes.BalaoDados;
 	import recursos.Graficos;
 	
 	/**
@@ -254,6 +255,30 @@ package componentes
 			
 		}
 		
+		/**
+		 * Recuperando informações do balão na forma de um objeto BalaoDados.
+		 * @return	objeto BalaoDados com informações sobre este balão
+		 */
+		public function recuperaDados():BalaoDados
+		{
+			var dados:BalaoDados = new BalaoDados();
+			dados.x = this.x;
+			dados.y = this.y;
+			dados.width = this.width;
+			dados.height = this.height;
+			dados.rotation = this.rotation;
+			dados.zoom = this.scaleX;
+			dados.tipo = this._tipo;
+			dados.texto = this._texto.text;
+			dados.corAzul = this._corAzul;
+			dados.corVerde = this._corVerde;
+			dados.corVermelho = this._corVermelho;
+			dados.corTexto = this._corDoTexto;
+			dados.id = this._id;
+			return (dados);
+		}
+		
+		// não vamos mais precisar de um xml do balão já que estamos trabalhando agora com objetos e JSON
 		public function get xml():String
 		{
 			
