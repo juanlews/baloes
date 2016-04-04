@@ -5,7 +5,7 @@ package
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
 	import componentes.BotaoIcone;
-	import dados.ProjetoDados;
+	import informacoes.ProjetoDados;
 	import flash.desktop.NativeApplication;
 	import flash.display.Loader;
 	import flash.events.Event;
@@ -54,7 +54,7 @@ package
 			
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-<<<<<<< HEAD
+
 			
 			// condigurando app
 			ObjetoAprendizagem.nome = 'Narrativas visuais';
@@ -73,11 +73,9 @@ package
 			Main.projeto.tags.push('primeiro');
 			Main.projeto.tags.push('projeto');
 			
-			Main.projeto.salvarDados();
-			
-=======
-		
->>>>>>> origin/master
+			//Main.projeto.salvarDados();
+
+
 			// preparar as telas
 			this._telas = new Array();
 			this._telas['inicial'] = new TelaInicial(this.adicionaTela);

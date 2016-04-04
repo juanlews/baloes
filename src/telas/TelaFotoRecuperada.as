@@ -293,15 +293,15 @@ package telas
 			// posicionar e dimensionar botões	
 			
 			this._imagem[_imagem.length - 1].centraliza(this.stage);
-<<<<<<< HEAD
+
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
 			
 			
 			
-=======
+
 			addChild(this._imagem[_imagem.length - 1]);
 		
->>>>>>> origin/master
+
 		}
 		
 		private function addBalao(evento:MouseEvent):void
