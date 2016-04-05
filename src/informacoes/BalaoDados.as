@@ -29,6 +29,10 @@ package informacoes
 		
 		public var corVerde:int = 0;
 		
+		public var flipV:Boolean = false;
+		
+		public var flipH:Boolean = false;
+		
 		public var corTexto:int = 0;
 		
 		public var id:int = 0;

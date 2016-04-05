@@ -430,26 +430,19 @@ package telas
 		
 		private function cliqueSalvar(evento:MouseEvent):void
 		{
-			this.removeBotoes();
-			trace(extraiDados());
-			//var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg' , 100);
-		//	var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
-		//	var fstream:FileStream = new FileStream();
-		//	fstream.open(bmpCache, FileMode.WRITE);
-		//	fstream.writeBytes(bmpArray);
-		//	fstream.close();
+			//this.removeBotoes();
+			salvarPagina();
+			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg' , 100);
+		 	var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
+			var fstream:FileStream = new FileStream();
+			fstream.open(bmpCache, FileMode.WRITE);
+			fstream.writeBytes(bmpArray);
+			fstream.close();
 			
-		//	this.mudaTela('salvar', null);
-			
-		}
-		private function extraiDados():String{
-			var dados:Object = new Object();
-			dados.imagens = _imagem;
-			dados.baloes = _balao;
-			
-			return (JSON.stringify(dados));
+			this.mudaTela('salvar', null);
 			
 		}
+		
 		
 		/**
 		 * Salva as informações da página atual nos objetos de dados.

@@ -70,15 +70,14 @@ package
 			
 			//
 			Main.projeto = new ProjetoDados();
-			Main.projeto.titulo = 'primeiro projeto';
-			Main.projeto.tags.push('primeiro');
-			Main.projeto.tags.push('projeto');
-<<<<<<< HEAD
+		//	Main.projeto.titulo = 'primeiro projeto';
+		//	Main.projeto.tags.push('primeiro');
+		//	Main.projeto.tags.push('projeto');
+
 			
 
 			//Main.projeto.salvarDados();
-=======
->>>>>>> origin/master
+
 
 		    //Main.projeto.salvarDados();
 

@@ -274,6 +274,8 @@ package componentes
 			dados.corVerde = this._corVerde;
 			dados.corVermelho = this._corVermelho;
 			dados.corTexto = this._corDoTexto;
+			dados.flipV = this.flipV;
+			dados.flipH = this.flipH;
 			dados.id = this._id;
 			return (dados);
 		}

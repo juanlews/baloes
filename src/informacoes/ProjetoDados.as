@@ -101,7 +101,7 @@ package informacoes
 				
 			}
 			
-			var stringSave:String = JSON.stringify(this);			
+			var stringSave:String = JSON.stringify(this);
 			var arquivo:File = this.pasta.resolvePath('projeto.json');
 			var stream:FileStream = new FileStream();
 			
@@ -118,15 +118,23 @@ package informacoes
 		 */
 		public function guardaPagina(pagina:PaginaDados):Boolean
 		{
-			if (pagina.numero >= 0) { // somente guardar páginas com número maior ou igual a zero
+			if (pagina.numero >= 0)
+			{ // somente guardar páginas com número maior ou igual a zero
 				// verificar a lista de páginas
-				for (var i:int = 0; i <= pagina.numero; i++) {
+				for (var i:int = 0; i <= pagina.numero; i++)
+				{
 					// percorrer o vetor de páginas e criar as páginas inexistentes até o número da recebida
-					if (this.paginas[i] == null) this.paginas[i] = new PaginaDados();
+					//if (this.paginas[i] == null)
+				//	{
+					//	this.paginas[i] = new PaginaDados();
+						
+					//}
 				}
 				// guardar as informações da página no local certo
-				return(this.paginas[pagina.numero].processar(pagina));
-			} else {
+				return (this.paginas[pagina.numero].processar(pagina));
+			}
+			else
+			{
 				return (false);
 			}
 		}
