@@ -213,13 +213,13 @@ package telas
 		
 		}
 		private function salvaProjeto(evento:MouseEvent):void{
-			var projeto:ProjetoDados = new ProjetoDados();
 			
-			projeto.titulo = this._caixaTitulo.text;
-			projeto.tags = this._caixaTags.text.split('#');
 			
-			trace(projeto.titulo, projeto.tags);
-			projeto.salvarDados();
+			Main.projeto.titulo = this._caixaTitulo.text;
+			Main.projeto.tags = this._caixaTags.text.split('#');
+			
+			trace(Main.projeto.titulo, Main.projeto.tags);
+			Main.projeto.salvarDados();
 		}
 		private function salvaImg(evento:MouseEvent):void
 		{

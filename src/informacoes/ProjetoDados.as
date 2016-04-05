@@ -82,17 +82,18 @@ package informacoes
 		public function salvarDados():Boolean
 		{
 			
+			
 			if (!this.pasta.isDirectory)
 			{
 				this.pasta.createDirectory();
 			}
 			
-			var pastaImagens:File = this.pasta.resolvePath('imagens');
-			
+		var pastaImagens:File = this.pasta.resolvePath('imagens');
+		
 			if (!pastaImagens.isDirectory)
 			{
 				pastaImagens.createDirectory();
-				return (true);
+				
 			}
 			else
 			{
@@ -104,10 +105,11 @@ package informacoes
 			var stringSave:String = JSON.stringify(this);
 			var arquivo:File = this.pasta.resolvePath('projeto.json');
 			var stream:FileStream = new FileStream();
-			
-			stream.open(arquivo, FileMode.WRITE);
+				stream.open(arquivo, FileMode.WRITE);
 			stream.writeUTFBytes(stringSave);
 			stream.close();
+			
+			return(true);
 		
 		}
 		
