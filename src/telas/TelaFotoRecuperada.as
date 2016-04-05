@@ -431,7 +431,8 @@ package telas
 			ObjetoAprendizagem.areaImagem.visible = false;
 			salvarPagina();
 			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
-			var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
+			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/capa.jpg');
+			trace(Main.projeto.pasta.toString());
 			var fstream:FileStream = new FileStream();
 			fstream.open(bmpCache, FileMode.WRITE);
 			fstream.writeBytes(bmpArray);
