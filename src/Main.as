@@ -73,9 +73,12 @@ package
 			Main.projeto.titulo = 'primeiro projeto';
 			Main.projeto.tags.push('primeiro');
 			Main.projeto.tags.push('projeto');
+<<<<<<< HEAD
 			
 
 			//Main.projeto.salvarDados();
+=======
+>>>>>>> origin/master
 
 		    //Main.projeto.salvarDados();
 

@@ -27,6 +27,7 @@ package telas
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
+	import informacoes.PaginaDados;
 	import recursos.Graficos;
 	
 	/**
@@ -449,6 +450,37 @@ package telas
 			return (JSON.stringify(dados));
 			
 		}
+		
+		/**
+		 * Salva as informações da página atual nos objetos de dados.
+		 */
+		private function salvarPagina():void
+		{
+			// criando objeto de informação de página
+			var pagina:PaginaDados = new PaginaDados();
+			
+			// número igual a zero por enquanto - depois será preciso fazer um contador para saber em qual página estamos
+			pagina.numero = 0;
+			
+			// conferindo todos os balões
+			for (var i:int = 0; i < this._balao.length; i++) {
+				// a função "recuperaDados" do balão retorna um objeto "BalaoDados" para incorporar aos dados da página
+				// adicionamos um objeto de dados para cada balão
+				pagina.baloes.push(this._balao[i].recuperaDados());
+			}
+			
+			// conferindo todas as imagens
+			for (i = 0; i < this._imagem.length; i++) {
+				// o funcionamento é o mesmo dos balões
+				pagina.imagens.push(this._imagem[i].recuperaDados());
+			}
+			
+			// gravando a página no projeto
+			Main.projeto.guardaPagina(pagina);
+			
+			// salvar o projeto aqui???
+		}
+		
 	}
 
 }

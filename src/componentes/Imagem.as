@@ -3,6 +3,7 @@ package componentes
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import informacoes.ImagemDados;
 	
 	/**
 	 * ...
@@ -34,6 +35,21 @@ package componentes
 			
 			this.x = refStage.stageWidth / 2;
 			this.y = refStage.stageHeight / 2;
+		}
+		
+		/**
+		 * Recuperando informações da imagem na forma de um objeto ImagemDados.
+		 * @return	objeto ImagemDados com informações sobre esta imagem
+		 */
+		public function recuperaDados():ImagemDados
+		{
+			var dados:ImagemDados = new ImagemDados();
+			dados.x = this.x;
+			dados.y = this.y;
+			
+			// acrescentar aqui todas as outras propriedades a salvar
+			
+			return(dados);
 		}
 		
 	}
