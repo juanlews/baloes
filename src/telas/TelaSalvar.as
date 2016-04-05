@@ -212,8 +212,9 @@ package telas
 			}
 		
 		}
-		private function salvaProjeto(evento:MouseEvent):void{
-			
+		
+		private function salvaProjeto(evento:MouseEvent):void
+		{
 			
 			Main.projeto.titulo = this._caixaTitulo.text;
 			Main.projeto.tags = this._caixaTags.text.split('#');
@@ -221,6 +222,7 @@ package telas
 			trace(Main.projeto.titulo, Main.projeto.tags);
 			Main.projeto.salvarDados();
 		}
+		
 		private function salvaImg(evento:MouseEvent):void
 		{
 			trace(_caixaTitulo.text);

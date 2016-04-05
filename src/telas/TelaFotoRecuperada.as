@@ -295,6 +295,12 @@ package telas
 			
 			//this._imagem[_imagem.length - 1].centraliza(this.ObjetoAprendizagem.areaImagem);
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
+			var bmpArray:ByteArray = this._imagem[_imagem.length - 1];
+			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/');			
+			var fstream:FileStream = new FileStream();
+			fstream.open(bmpCache, FileMode.WRITE);
+			fstream.writeBytes(bmpArray);
+			fstream.close();
 			
 			for (var i:int = 0; i < _balao.length; i++)
 			{
@@ -313,6 +319,7 @@ package telas
 			this._balao[_balao.length - 1].y = ObjetoAprendizagem.areaImagem.height / 4;
 			ObjetoAprendizagem.areaImagem.addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
+			
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
