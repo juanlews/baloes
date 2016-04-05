@@ -43,6 +43,7 @@ package telas
 		{
 			super.desenho(evento);
 			
+			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
 			this._ok.x = stage.stageWidth / 20;
@@ -56,6 +57,7 @@ package telas
 			
 			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 			{
+				ObjetoAprendizagem.areaImagem.y = linhacima.height;
 				stage.addEventListener(Event.RESIZE, desenho);
 				stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 				stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);				

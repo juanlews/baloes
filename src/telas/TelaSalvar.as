@@ -15,6 +15,8 @@ package telas
 	import flash.text.TextField;
 	import componentes.BotaoIcone;
 	import componentes.TxBox;
+	import flash.ui.Mouse;
+	import informacoes.ProjetoDados;
 	import recursos.Graficos;
 	
 	/**
@@ -25,7 +27,8 @@ package telas
 	{
 		
 		private const link:String = 'http://192.168.10.159/';
-		private var _caixa:TxBox;
+		private var _caixaTitulo:TxBox;
+		private var _caixaTags:TxBox;
 		
 		private var _miniatura:Bitmap;
 		
@@ -46,7 +49,9 @@ package telas
 			super(funcMudaTela);
 			
 			btscala = 10;
-			_caixa = new TxBox();
+			_caixaTitulo = new TxBox();
+			_caixaTags = new TxBox();
+			
 			_ok = new BotaoIcone(Graficos.ImgPBOK);
 			_cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			
@@ -72,7 +77,7 @@ package telas
 			_request = new URLRequest(link + "baloes/confirmaEnvio.php");
 			_request.method = 'POST';
 			var variaveis:URLVariables = new URLVariables();
-			variaveis['nome'] = _caixa.text;
+			variaveis['nome'] = _caixaTitulo.text;
 			variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
 			_request.data = variaveis;
 			
@@ -167,16 +172,20 @@ package telas
 		{
 			super.desenho(evento);
 			
-			
-			
-			_imagem.x = 0;
-			_imagem.y = 0;
+			_imagem.x = stage.stageWidth / 20;
+			_imagem.y = linhacima.height + linhacima.height / 10;
 			_imagem.width = stage.stageWidth / 4;
 			_imagem.scaleY = _imagem.scaleX;
-			_caixa.width = stage.stageWidth / 1.5;
-			_caixa.height = stage.stageHeight / 10;
-			_caixa.x = stage.stageWidth / 2 - _caixa.width / 2;
-			_caixa.y = stage.stageHeight / 2 - _caixa.height / 2;
+			//titulo
+			_caixaTitulo.width = stage.stageWidth / 1.5;
+			_caixaTitulo.height = stage.stageHeight / 20;
+			_caixaTitulo.x = stage.stageWidth / 2 - _caixaTitulo.width / 2;
+			_caixaTitulo.y = stage.stageHeight / 2 - _caixaTitulo.height / 2;
+			//tags
+			_caixaTags.width = stage.stageWidth / 1.5;
+			_caixaTags.height = stage.stageHeight / 20;
+			_caixaTags.x = _caixaTitulo.x
+			_caixaTags.y = _caixaTitulo.y + _caixaTitulo.height + stage.stageWidth / 10;
 			
 			//botão salvar			
 			this._ok.width = stage.stageWidth / btscala;
@@ -190,28 +199,37 @@ package telas
 			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
 			this._cancelar.y = stage.stageHeight - this._cancelar.height - stage.stageHeight / 40;
 			
-			addChild(_caixa);
-			addChild(_ok);
-			addChild(_cancelar);
-			
 			if (!_ok.hasEventListener(MouseEvent.CLICK))
 			{
+				addChild(_caixaTags);
+				addChild(_caixaTitulo);
+				addChild(_ok);
+				addChild(_cancelar);
 				
-				_ok.addEventListener(MouseEvent.CLICK, salvaImg);
+				_ok.addEventListener(MouseEvent.CLICK, salvaProjeto);
 				_cancelar.addEventListener(MouseEvent.CLICK, volta);
 				
 			}
 		
 		}
-		
+		private function salvaProjeto(evento:MouseEvent):void{
+			var projeto:ProjetoDados = new ProjetoDados();
+			
+			projeto.titulo = this._caixaTitulo.text;
+			projeto.tags = this._caixaTags.text.split('#');
+			
+			trace(projeto.titulo, projeto.tags);
+			projeto.salvarDados();
+		}
 		private function salvaImg(evento:MouseEvent):void
 		{
-			trace(_caixa.text);
+			trace(_caixaTitulo.text);
+			
 			_request = new URLRequest(link + "baloes/salvar.php");
 			_request.method = 'POST';
 			
 			var variaveis:URLVariables = new URLVariables();
-			variaveis['nome'] = _caixa.text;
+			variaveis['nome'] = _caixaTitulo.text;
 			variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
 			removeChildren();
 			anim.width = stage.stageWidth / 2;
@@ -251,8 +269,9 @@ package telas
 				
 			}
 			
-			if (anim.stage != null){
-		        removeChild(anim);
+			if (anim.stage != null)
+			{
+				removeChild(anim);
 			}
 			stage.removeEventListener(Event.RESIZE, desenho);
 			_ok.removeEventListener(MouseEvent.CLICK, salvaImg);

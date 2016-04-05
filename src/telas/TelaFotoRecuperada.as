@@ -428,6 +428,7 @@ package telas
 		private function cliqueSalvar(evento:MouseEvent):void
 		{
 			//this.removeBotoes();
+			ObjetoAprendizagem.areaImagem.visible = false;
 			salvarPagina();
 			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
 			var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
