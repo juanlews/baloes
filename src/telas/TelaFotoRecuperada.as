@@ -300,7 +300,7 @@ package telas
 			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/pagina/' + (_imagem.length - 1) + '.jpg');			
 			var fstream:FileStream = new FileStream();
 			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(_imagem[_imagem.length-1].loader.loaderInfo as ByteArray);
+			fstream.writeBytes(_imagem[_imagem.length-1].loaderInfo as ByteArray);
 			fstream.close();
 			
 			for (var i:int = 0; i < _balao.length; i++)

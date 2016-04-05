@@ -14,11 +14,14 @@ package telas
 	import flash.events.MouseEvent;
 	import flash.events.TransformGestureEvent;
 	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import flash.media.CameraRoll;
 	import flash.media.CameraUI;
 	import flash.net.FileFilter;
 	import flash.net.URLRequest;
 	import flash.sampler.NewObjectSample;
+	import flash.utils.ByteArray;
 	import recursos.Graficos;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
@@ -186,6 +189,13 @@ package telas
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
 			
+			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
+			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/pagina/' + (_imagem.length - 1) + '.jpg');			
+			var fstream:FileStream = new FileStream();
+			fstream.open(bmpCache, FileMode.WRITE);
+			fstream.writeBytes(_imagem[_imagem.length-1].loaderInfo as ByteArray);
+			fstream.close();
+			
 			this.mudaTela('fotorecuperada', dados);
 		
 		}
@@ -251,6 +261,8 @@ package telas
 		private function cliqueCarregar(evento:MouseEvent):void
 		{
 			trace('server');
+			
+			
 			this.mudaTela('lista', null);
 		}
 		
