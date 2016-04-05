@@ -292,7 +292,7 @@ package telas
 			}
 			// posicionar e dimensionar botões	
 			
-			this._imagem[_imagem.length - 1].centraliza(this.stage);
+			//this._imagem[_imagem.length - 1].centraliza(this.ObjetoAprendizagem.areaImagem);
 
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
 			
@@ -430,15 +430,23 @@ package telas
 		private function cliqueSalvar(evento:MouseEvent):void
 		{
 			this.removeBotoes();
+			trace(extraiDados());
+			//var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg' , 100);
+		//	var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
+		//	var fstream:FileStream = new FileStream();
+		//	fstream.open(bmpCache, FileMode.WRITE);
+		//	fstream.writeBytes(bmpArray);
+		//	fstream.close();
 			
-			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg' , 100);
-			var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
-			var fstream:FileStream = new FileStream();
-			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(bmpArray);
-			fstream.close();
+		//	this.mudaTela('salvar', null);
 			
-			this.mudaTela('salvar', null);
+		}
+		private function extraiDados():String{
+			var dados:Object = new Object();
+			dados.imagens = _imagem;
+			dados.baloes = _balao;
+			
+			return (JSON.stringify(dados));
 			
 		}
 	}

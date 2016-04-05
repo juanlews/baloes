@@ -125,17 +125,19 @@ package telas
 			
 			trace('fora do for', indice );
 			this._imagem[indice].startDrag();
-			
-			if (this._imagem[indice].x >= stage.stageWidth - this._imagem[indice].width/2){
-				this._imagem[indice].x =  stage.stageWidth - this._imagem[indice].width/2;
+			/*
+			if (this._imagem[indice].x >= ObjetoAprendizagem.areaImagem.width - this._imagem[indice].width/2){
+				this._imagem[indice].x =  ObjetoAprendizagem.areaImagem.width - this._imagem[indice].width/2;
 			}
-			 if(this._imagem[indice].y >= stage.stageHeight- this._imagem[indice].height/2){
-				this._imagem[indice].y = stage.stageHeight- this._imagem[indice].height/2
+			 if(this._imagem[indice].y >= ObjetoAprendizagem.areaImagem.height- this._imagem[indice].height/2){
+				this._imagem[indice].y = ObjetoAprendizagem.areaImagem.height- this._imagem[indice].height/2
 			}
 			
 			 if (this._imagem[indice].x <= _imagem[indice].width / 2) { this._imagem[indice].x = _imagem[indice].width / 2 }
-			 if (this._imagem[indice].y <= _imagem[indice].height / 2) { this._imagem[indice].y = _imagem[indice].height / 2 }
-		}
+			 if (this._imagem[indice].y <= _imagem[indice].height / 2) { this._imagem[indice].y = _imagem[indice].height / 2 }*/
+			 
+			 
+		 }
 		
 		private function dragImagemStop(evento:MouseEvent):void
 		{

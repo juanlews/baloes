@@ -13,7 +13,6 @@ package informacoes
 	public class ProjetoDados
 	{
 		
-		
 		public var titulo:String = '';
 		
 		public var tags:Array;
@@ -24,13 +23,11 @@ package informacoes
 		
 		public var paginas:Vector.<PaginaDados> = new Vector.<PaginaDados>();
 		
-		
 		public function ProjetoDados()
 		{
 			
 			this.clear();
-			//this.paginas.push(new PaginaDados());
-			//this.paginas.push(new PaginaDados());
+		
 		}
 		
 		public function parse(strdados:String):Boolean
@@ -60,7 +57,8 @@ package informacoes
 				}
 			}
 			
-			return (retorno);
+			return (this.salvarDados());
+			//return (retorno);
 		}
 		
 		public function clear():void
@@ -77,16 +75,11 @@ package informacoes
 				this.paginas.shift().dispose();
 			}
 			
-			this.paginas.push(new PaginaDados());
-			
-			this.paginas.push(new PaginaDados());
-			this.paginas.push(new PaginaDados());
-			
 			this.pasta = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + this.id);
 		
 		}
 		
-		public function salvarDados():void
+		public function salvarDados():Boolean
 		{
 			
 			if (!this.pasta.isDirectory)
@@ -94,28 +87,28 @@ package informacoes
 				this.pasta.createDirectory();
 			}
 			
-			var objetoSalvar:Object = new Object();
-			objetoSalvar.id = this.id;
-			objetoSalvar.titulo = this.titulo;
-			objetoSalvar.tags = this.tags.join(',');
+			var pastaImagens:File = this.pasta.resolvePath('imagens');
 			
-			var paginasTXT:Vector.<String> = new Vector.<String>();
-			for (var i:int = 0; i < this.paginas.length; i++)
+			if (!pastaImagens.isDirectory)
 			{
-				paginasTXT.push(this.paginas[i]);
+				pastaImagens.createDirectory();
+				return (true);
 			}
-			objetoSalvar.paginas = paginasTXT.join(':|:');
+			else
+			{
+				
+				return (false);
+				
+			}
 			
-			var stringSave:String = JSON.stringify(objetoSalvar);
-			
+			var stringSave:String = JSON.stringify(this);			
 			var arquivo:File = this.pasta.resolvePath('projeto.json');
 			var stream:FileStream = new FileStream();
+			
 			stream.open(arquivo, FileMode.WRITE);
 			stream.writeUTFBytes(stringSave);
 			stream.close();
-			
-			var pastaImagens:File = this.pasta.resolvePath('imagens');
-			if (!pastaImagens.isDirectory) pastaImagens.createDirectory();
+		
 		}
 	
 	}

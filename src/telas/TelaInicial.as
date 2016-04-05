@@ -1,5 +1,6 @@
 package telas
 {
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
@@ -159,14 +160,13 @@ package telas
 			
 			if (this._imagem[0].loader.width > this._imagem[0].loader.height)
 			{
-				trace("largura");
-				this._imagem[0].width = stage.stageWidth;
+				trace("largura", this._imagem[0].width = ObjetoAprendizagem.areaImagem.width / ObjetoAprendizagem.areaImagem.scaleX);
 				this._imagem[0].scaleY = this._imagem[0].scaleX;
 			}
 			else
 			{
 				trace('altura');
-				this._imagem[0].height = stage.stageHeight;
+				this._imagem[0].height = ObjetoAprendizagem.areaImagem.height;
 				this._imagem[0].scaleX = this._imagem[0].scaleY;
 			}
 			// posicionar e dimensionar botões	
@@ -175,11 +175,11 @@ package telas
 			this._balao[dados.indice] = new Balao(dados.indice);
 			this._balao[dados.indice].tipo = this._balao[dados.indice].tipo;
 			this._balao[dados.indice].texto = 'oi';
-			this._balao[dados.indice].width = 200;
+			this._balao[dados.indice].width = 300;
 			this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
-			this._balao[dados.indice].x = stage.stageWidth / 3;
-			this._balao[dados.indice].y = stage.stageHeight / 3;
-			this._imagem[0].centraliza(this.stage);
+			this._balao[dados.indice].x = ObjetoAprendizagem.areaImagem.width / 3;
+			this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
+			//this._imagem[0].centraliza(ObjetoAprendizagem.areaImagem.width, ObjetoAprendizagem.areaImagem.height);
 			
 			// mudar tela
 			

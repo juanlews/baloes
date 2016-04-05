@@ -74,12 +74,10 @@ package
 			Main.projeto.tags.push('primeiro');
 			Main.projeto.tags.push('projeto');
 			
-<<<<<<< HEAD
-			//Main.projeto.salvarDados();
-=======
-			Main.projeto.salvarDados();
->>>>>>> origin/master
 
+			//Main.projeto.salvarDados();
+
+		    //Main.projeto.salvarDados();
 
 			// preparar as telas
 			this._telas = new Array();
