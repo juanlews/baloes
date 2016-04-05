@@ -282,34 +282,32 @@ package telas
 			if (this._imagem[_imagem.length - 1].loader.width > this._imagem[_imagem.length - 1].loader.height)
 			{
 				trace("largura");
-				this._imagem[_imagem.length - 1].width = ObjetoAprendizagem.areaImagem.width;
+				this._imagem[_imagem.length - 1].width = ObjetoAprendizagem.areaImagem.width / ObjetoAprendizagem.areaImagem.scaleX;
 				this._imagem[_imagem.length - 1].scaleY = this._imagem[_imagem.length - 1].scaleX;
 			}
 			else
 			{
 				trace('altura');
-				this._imagem[_imagem.length - 1].height = ObjetoAprendizagem.areaImagem.height;
+				this._imagem[_imagem.length - 1].height = ObjetoAprendizagem.areaImagem.height / ObjetoAprendizagem.areaImagem.scaleY;
 				this._imagem[_imagem.length - 1].scaleX = this._imagem[_imagem.length - 1].scaleY;
 			}
 			// posicionar e dimensionar botões	
 			
 			//this._imagem[_imagem.length - 1].centraliza(this.ObjetoAprendizagem.areaImagem);
-
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
 			
-			
-			
-
-			addChild(this._imagem[_imagem.length - 1]);
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
+			}
 		
-
 		}
 		
 		private function addBalao(evento:MouseEvent):void
 		{
 			
 			this._balao[_balao.length] = new Balao(_balao.length);
-			this._balao[_balao.length - 1].width = 200;
+			this._balao[_balao.length - 1].width = 300;
 			this._balao[_balao.length - 1].scaleY = this._balao[_balao.length - 1].scaleX;
 			this._balao[_balao.length - 1].x = ObjetoAprendizagem.areaImagem.width / 4;
 			this._balao[_balao.length - 1].y = ObjetoAprendizagem.areaImagem.height / 4;
@@ -401,7 +399,7 @@ package telas
 					this._balao.splice(this._exc, 1);
 					
 					trace('excluindo o balão' + this._exc);
-				
+					
 					for (var xis:int = 0; xis < _balao.length; xis++)
 					{
 						this._balao[xis].id = xis;
@@ -410,8 +408,7 @@ package telas
 				}
 				
 			}
-			
-			
+		
 		}
 		
 		private function removeBotoes():void
@@ -432,17 +429,16 @@ package telas
 		{
 			//this.removeBotoes();
 			salvarPagina();
-			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg' , 100);
-		 	var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
+			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
+			var bmpCache:File = File.cacheDirectory.resolvePath('bmptemp.jpg');
 			var fstream:FileStream = new FileStream();
 			fstream.open(bmpCache, FileMode.WRITE);
 			fstream.writeBytes(bmpArray);
 			fstream.close();
 			
 			this.mudaTela('salvar', null);
-			
-		}
 		
+		}
 		
 		/**
 		 * Salva as informações da página atual nos objetos de dados.
@@ -456,24 +452,26 @@ package telas
 			pagina.numero = 0;
 			
 			// conferindo todos os balões
-			for (var i:int = 0; i < this._balao.length; i++) {
+			for (var i:int = 0; i < this._balao.length; i++)
+			{
 				// a função "recuperaDados" do balão retorna um objeto "BalaoDados" para incorporar aos dados da página
 				// adicionamos um objeto de dados para cada balão
 				pagina.baloes.push(this._balao[i].recuperaDados());
 			}
 			
 			// conferindo todas as imagens
-			for (i = 0; i < this._imagem.length; i++) {
+			for (i = 0; i < this._imagem.length; i++)
+			{
 				// o funcionamento é o mesmo dos balões
 				pagina.imagens.push(this._imagem[i].recuperaDados());
 			}
 			
 			// gravando a página no projeto
 			Main.projeto.guardaPagina(pagina);
-			
+		
 			// salvar o projeto aqui???
 		}
-		
+	
 	}
 
 }

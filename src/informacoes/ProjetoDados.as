@@ -124,11 +124,11 @@ package informacoes
 				for (var i:int = 0; i <= pagina.numero; i++)
 				{
 					// percorrer o vetor de páginas e criar as páginas inexistentes até o número da recebida
-					//if (this.paginas[i] == null)
-				//	{
-					//	this.paginas[i] = new PaginaDados();
+					if (this.paginas[i] == null)
+					{
+						this.paginas[i] = new PaginaDados();
 						
-					//}
+					}
 				}
 				// guardar as informações da página no local certo
 				return (this.paginas[pagina.numero].processar(pagina));
