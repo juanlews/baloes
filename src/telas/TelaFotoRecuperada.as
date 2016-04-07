@@ -249,7 +249,24 @@ package telas
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			this._imagem[_imagem.length - 1].loader.loadFilePromise(evento.data);
+			
+			// COPIANDO O ARQUIVO
+			
+			// primeiro, recuperando a referência do arquivo original a partir do evento recebido
+			var arquivoOrigem:File = evento.data.file;
+			
+			// segundo, criando a referência para o arquivo de destino
+			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
+			var arquivoDestino:File = File.documentsDirectory.resolvePath('arquivo.jpg');
+			
+			// copiando o arquivo de imagem original para o destino
+			arquivoOrigem.copyTo(arquivoDestino);
+			
+			// carregando a imagem do loader a partir do arquivo de destino
+			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
+			
+			
+			//this._imagem[_imagem.length - 1].loader.loadFilePromise(evento.data);
 		}
 		
 		private function arquivoSelecionado(evento:Event):void
