@@ -195,7 +195,7 @@ package telas
 			
 			var bmpArray:ByteArray = _imagem[0].loader.contentLoaderInfo.bytes;
 			
-			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/pagina/' + (_imagem.length - 1) + '.jpg');			
+			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/imagens/pagina/' + (_imagem.length - 1) + '.jpg');			
 			var fstream:FileStream = new FileStream();			
 			fstream.open(bmpCache, FileMode.WRITE);
 			fstream.writeBytes(bmpArray);

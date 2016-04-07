@@ -296,11 +296,11 @@ package telas
 			//this._imagem[_imagem.length - 1].centraliza(this.ObjetoAprendizagem.areaImagem);
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
 			
-			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
-			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/pagina/' + (_imagem.length - 1) + '.jpg');			
+			var bmpArray:ByteArray = _imagem[_imagem.length - 1].loader.contentLoaderInfo.bytes;
+			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/imagens/pagina/' + (_imagem.length - 1) + '.jpg');			
 			var fstream:FileStream = new FileStream();
 			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(_imagem[_imagem.length-1].loaderInfo as ByteArray);
+			fstream.writeBytes(bmpArray);
 			fstream.close();
 			
 			for (var i:int = 0; i < _balao.length; i++)
@@ -380,6 +380,8 @@ package telas
 		
 		override public function recebeDados(dados:Object):void
 		{
+			
+			ObjetoAprendizagem.areaImagem.visible = true;
 			if (dados != null)
 			{
 				if (dados.imagem != null)
