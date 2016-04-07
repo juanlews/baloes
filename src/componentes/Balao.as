@@ -27,6 +27,8 @@ package componentes
 		private var _corVerde:int;
 		private var _corDoTexto:int;
 		public var botaoCor:int;
+		private var flipVB:Boolean;
+		private var flipHB:Boolean;
 		private var _para:int;
 		private var _id:int;
 		
@@ -190,11 +192,11 @@ package componentes
 		}
 		
 		public function get flipadaH():Boolean {
-			return (this._imgsBalao[0].scaleX < 0);
+			 return ( this._imgsBalao[0].scaleX < 0);
 		}
 		
 		public function get flipadaV():Boolean {
-			return (this._imgsBalao[0].scaleY < 0);
+			 return ( this._imgsBalao[0].scaleY < 0);
 		}
 		
 		public function setCor(vermelho:int = 255, verde:int = 255, azul:int = 255, idCor:int = 1, ctexto:int = 0):void
@@ -261,6 +263,8 @@ package componentes
 		 */
 		public function recuperaDados():BalaoDados
 		{
+			flipHB = this.flipadaH;
+			flipVB = this.flipadaV;
 			var dados:BalaoDados = new BalaoDados();
 			dados.x = this.x;
 			dados.y = this.y;
@@ -274,8 +278,8 @@ package componentes
 			dados.corVerde = this._corVerde;
 			dados.corVermelho = this._corVermelho;
 			dados.corTexto = this._corDoTexto;
-			dados.flipV = this.flipV;
-			dados.flipH = this.flipH;
+			dados.flipV = this.flipVB;
+			dados.flipH = this.flipHB;
 			dados.id = this._id;
 			return (dados);
 		}

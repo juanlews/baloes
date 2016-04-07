@@ -6,6 +6,7 @@ package telas
 	import componentes.Imagem;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.display.Stage;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
@@ -18,6 +19,7 @@ package telas
 	import flash.filesystem.FileStream;
 	import flash.media.CameraRoll;
 	import flash.media.CameraUI;
+	import flash.media.MediaPromise;
 	import flash.net.FileFilter;
 	import flash.net.URLRequest;
 	import flash.sampler.NewObjectSample;
@@ -54,8 +56,8 @@ package telas
 		private var camera:CameraUI;
 		//
 		private var btscala:Number;
-		
 	
+	    
 		public function TelaInicial(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -88,6 +90,7 @@ package telas
 			this._balao = new Vector.<Balao>;
 			// criando acesso à camera
 			camera = new CameraUI();
+			//this.imgFile = new File();
 		
 		}
 		
@@ -189,11 +192,13 @@ package telas
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
 			
-			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
+			
+			var bmpArray:ByteArray = _imagem[0].loader.contentLoaderInfo.bytes;
+			
 			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/pagina/' + (_imagem.length - 1) + '.jpg');			
-			var fstream:FileStream = new FileStream();
+			var fstream:FileStream = new FileStream();			
 			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(_imagem[_imagem.length-1].loaderInfo as ByteArray);
+			fstream.writeBytes(bmpArray);
 			fstream.close();
 			
 			this.mudaTela('fotorecuperada', dados);
