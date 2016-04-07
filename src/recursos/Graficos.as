@@ -101,6 +101,9 @@ package recursos
 		[Embed(source = "imagens/Help.png")]
 		public static var ImgHelp:Class;
 		
+		//Botão abrir projeto
+		[Embed(source = "imagens/Open.png")]
+		public static var ImgOpenFile:Class;
 		
 		// botoes propriedades do balão
 		[Embed(source = "imagens/btnFlipVertical.png")]

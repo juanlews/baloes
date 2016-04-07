@@ -22,6 +22,7 @@ package informacoes
 		public var pasta:File;
 		
 		public var paginas:Vector.<PaginaDados> = new Vector.<PaginaDados>();
+		//public var pagina:PaginaDados;
 		
 		public function ProjetoDados()
 		{
@@ -30,6 +31,12 @@ package informacoes
 		
 		}
 		
+		public function arquivoImagem(length:int):File
+		{
+			return (this.pasta.resolvePath('imagens/pagina/' +  (length - 1) + '.jpg'));
+		}
+		
+				
 		public function parse(strdados:String):Boolean
 		{
 			
@@ -47,6 +54,9 @@ package informacoes
 			
 			if (retorno)
 			{
+				
+				this.clear(dados.id);
+				
 				this.titulo = dados.titulo;
 				this.tags = dados.tags;
 				this.id = dados.id;
@@ -61,10 +71,14 @@ package informacoes
 			//return (retorno);
 		}
 		
-		public function clear():void
+		public function clear(id:String = null):void
 		{
 			this.tags = new Array();
-			this.id = String(new Date().getTime());
+			if (id == null) {
+				this.id = String(new Date().getTime());
+			} else {
+				this.id = id;
+			}
 			this.titulo = '';
 			while (this.tags.length > 0)
 			{
@@ -75,7 +89,11 @@ package informacoes
 				this.paginas.shift().dispose();
 			}
 			
+			
+			
 			this.pasta = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + this.id);
+			
+			trace ('pasta', this.pasta.url);
 		
 		}
 		
@@ -95,17 +113,12 @@ package informacoes
 				pastaImagens.createDirectory();
 				
 			}
-			else
-			{
-				
-				return (false);
-				
-			}
+			
 			
 			var stringSave:String = JSON.stringify(this);
 			var arquivo:File = this.pasta.resolvePath('projeto.json');
 			var stream:FileStream = new FileStream();
-				stream.open(arquivo, FileMode.WRITE);
+		    stream.open(arquivo, FileMode.WRITE);
 			stream.writeUTFBytes(stringSave);
 			stream.close();
 			
@@ -134,6 +147,20 @@ package informacoes
                 return (false);
             }
         }
+		
+		public function carregaProjeto(id:String):Boolean
+		{
+			var json:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + id + '/projeto.json');
+			if (json.exists) {
+				var stream:FileStream = new FileStream();
+				stream.open(json, FileMode.READ);
+				var jsonText:String = stream.readUTFBytes(stream.bytesAvailable);
+				stream.close();
+				return (this.parse(jsonText));
+			} else {
+				return (false);
+			}
+		}
 	
 	}
 

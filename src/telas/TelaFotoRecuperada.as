@@ -6,6 +6,7 @@ package telas
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.JPEGEncoderOptions;
 	import flash.display.Loader;
@@ -257,16 +258,19 @@ package telas
 			
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
-			var arquivoDestino:File = File.documentsDirectory.resolvePath('arquivo.jpg');
 			
+			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina/');
+			if (!arquivoDestino.isDirectory)
+			{
+				arquivoDestino.createDirectory();
+				
+			}
 			// copiando o arquivo de imagem original para o destino
-			arquivoOrigem.copyTo(arquivoDestino);
+			arquivoOrigem.copyTo(arquivoDestino, true);
 			
 			// carregando a imagem do loader a partir do arquivo de destino
 			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
-			
-			
-			//this._imagem[_imagem.length - 1].loader.loadFilePromise(evento.data);
+		
 		}
 		
 		private function arquivoSelecionado(evento:Event):void
@@ -276,9 +280,19 @@ package telas
 			
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
 			
+			// segundo, criando a referência para o arquivo de destino
+			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
+			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length);
+			
+			// copiando o arquivo de imagem original para o destino
+			this._file.copyTo(arquivoDestino);
+			
+			// carregando a imagem do loader a partir do arquivo de destino
+			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
+			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			this._imagem[_imagem.length - 1].loader.load(new URLRequest(this._file.url));
+		
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
@@ -296,6 +310,11 @@ package telas
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
+			if (this._imagem[_imagem.length - 1].loader.content is Bitmap)
+			{
+				(this._imagem[_imagem.length - 1].loader.content as Bitmap).smoothing = true;
+			}
+			
 			if (this._imagem[_imagem.length - 1].loader.width > this._imagem[_imagem.length - 1].loader.height)
 			{
 				trace("largura");
@@ -308,17 +327,8 @@ package telas
 				this._imagem[_imagem.length - 1].height = ObjetoAprendizagem.areaImagem.height / ObjetoAprendizagem.areaImagem.scaleY;
 				this._imagem[_imagem.length - 1].scaleX = this._imagem[_imagem.length - 1].scaleY;
 			}
-			// posicionar e dimensionar botões	
 			
-			//this._imagem[_imagem.length - 1].centraliza(this.ObjetoAprendizagem.areaImagem);
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
-			
-			var bmpArray:ByteArray = _imagem[_imagem.length - 1].loader.contentLoaderInfo.bytes;
-			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/imagens/pagina/' + (_imagem.length - 1) + '.jpg');			
-			var fstream:FileStream = new FileStream();
-			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(bmpArray);
-			fstream.close();
 			
 			for (var i:int = 0; i < _balao.length; i++)
 			{
@@ -337,13 +347,12 @@ package telas
 			this._balao[_balao.length - 1].y = ObjetoAprendizagem.areaImagem.height / 4;
 			ObjetoAprendizagem.areaImagem.addChild(_balao[_balao.length - 1]);
 			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
-			
+		
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
-			this.mudaTela('inicial', null);
-		
+			this.mudaTela('inicial', null);		
 		}
 		
 		private function cliquePropB(evento:MouseEvent):void
@@ -458,7 +467,7 @@ package telas
 			ObjetoAprendizagem.areaImagem.visible = false;
 			salvarPagina();
 			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
-			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/capa.jpg');			
+			var bmpCache:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/capa.jpg');
 			var fstream:FileStream = new FileStream();
 			fstream.open(bmpCache, FileMode.WRITE);
 			fstream.writeBytes(bmpArray);

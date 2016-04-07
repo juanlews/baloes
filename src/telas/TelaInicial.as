@@ -54,10 +54,13 @@ package telas
 		
 		//camera
 		private var camera:CameraUI;
-		//
+		
+		//scale dos botões
 		private var btscala:Number;
-	
-	    
+		
+		//abrir file
+		private var _btOpen:BotaoIcone;		
+		
 		public function TelaInicial(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -65,8 +68,9 @@ package telas
 			btscala = 10;
 			
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
+			this._btOpen = new BotaoIcone(Graficos.ImgOpenFile);
 			this.addChild(this._galeria);
-			
+			this.addChild(this._btOpen);
 			this._imgsHelp = new Vector.<Class>();
 			this._imgsHelp.push(Graficos.ImgHelp01);
 			this._imgsHelp.push(Graficos.ImgHelp02);
@@ -90,16 +94,16 @@ package telas
 			this._balao = new Vector.<Balao>;
 			// criando acesso à camera
 			camera = new CameraUI();
-			//this.imgFile = new File();
+			
 		
 		}
 		
 		private function cliqueCamera(evento:MouseEvent):void
-		{			
+		{
 			this.camera.addEventListener(MediaEvent.COMPLETE, cameracomplete);
 			this.camera.addEventListener(Event.CANCEL, cameracancel);
 			this.camera.addEventListener(ErrorEvent.ERROR, cameraerro);
-
+			
 			camera.launch("image");
 		}
 		
@@ -138,17 +142,43 @@ package telas
 			this._imagem[0].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[0].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
-			this._imagem[0].loader.loadFilePromise(evento.data);
+			// COPIANDO O ARQUIVO
+			
+			// primeiro, recuperando a referência do arquivo original a partir do evento recebido
+			var arquivoOrigem:File = evento.data.file;
+			
+			// segundo, criando a referência para o arquivo de destino
+			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
+			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina/' +  (_imagem.length - 1) + '.jpg');
+
+			// copiando o arquivo de imagem original para o destino
+			arquivoOrigem.copyTo(arquivoDestino);
+			
+			// carregando a imagem do loader a partir do arquivo de destino
+			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
+		
 		}
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
-			this._imagem[0].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem[0].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			// segundo, criando a referência para o arquivo de destino
+			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
+			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length);
+
+			// copiando o arquivo de imagem original para o destino
+			this._file.copyTo(arquivoDestino);
 			
-			this._imagem[0].loader.load(new URLRequest(this._file.url));
+			// carregando a imagem do loader a partir do arquivo de destino
+			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
+			
+			
+			
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			
+			//this._imagem[0].loader.load(new URLRequest(this._file.url));
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
@@ -185,21 +215,12 @@ package telas
 			this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
 			this._balao[dados.indice].x = ObjetoAprendizagem.areaImagem.width / 3;
 			this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
-			//this._imagem[0].centraliza(ObjetoAprendizagem.areaImagem.width, ObjetoAprendizagem.areaImagem.height);
+			
 			
 			// mudar tela
 			
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
-			
-			
-			var bmpArray:ByteArray = _imagem[0].loader.contentLoaderInfo.bytes;
-			
-			var bmpCache:File = File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/imagens/pagina/' + (_imagem.length - 1) + '.jpg');			
-			var fstream:FileStream = new FileStream();			
-			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(bmpArray);
-			fstream.close();
 			
 			this.mudaTela('fotorecuperada', dados);
 		
@@ -224,9 +245,17 @@ package telas
 			this._camera.x = stage.stageWidth - _camera.width - this.stage.stageWidth / 20;
 			this._camera.y = this.stage.stageHeight / 40;
 			
-			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
+			 this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
+			
+			//open
+			
+			this._btOpen.width = stage.width / btscala;		
+			this._btOpen.scaleY = _btOpen.scaleX; 
+			this._btOpen.x = stage.stageWidth / 2 - _btOpen.width / 2;
+			this._btOpen.y = stage.stageHeight / 40;
 			
 			// posicionar carregar
+			
 			this._carregar.width = stage.stageWidth / btscala;
 			this._carregar.scaleY = this._galeria.scaleX;
 			
@@ -239,6 +268,7 @@ package telas
 			this._help.scaleY = _help.scaleX;
 			//this._help.x = stage.stageWidth / 20;
 			this._help.y = stage.stageHeight / 2 - this._help.height / 2;
+			
 			Tweener.addTween(_help, {x: stage.stageWidth / 20, time: 1});
 			
 			// ADICIONAR CLIQUES NOS BOTOES
@@ -249,11 +279,12 @@ package telas
 				this.addChild(this._carregar);
 				this.addChild(this._galeria);
 				this.addChild(this._camera);
-				
+				this.addChild(this._btOpen);
 				
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 				this._carregar.addEventListener(MouseEvent.CLICK, cliqueCarregar);
+				this._btOpen..addEventListener(MouseEvent.CLICK, cliqueAbreProjeto);
 				
 				// TROCA DO HELP
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
@@ -263,10 +294,77 @@ package telas
 			}
 		}
 		
+		private function cliqueAbreProjeto(evento:MouseEvent):void {
+		 	/*var pasta:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/1460057565561/'); 
+			var arquivo:File = pasta.resolvePath('projeto.json');
+			var stream:FileStream = new FileStream();
+		    stream.open(arquivo, FileMode.READ);
+			if(trace(Main.projeto.parse(stream.readUTFBytes(stream.bytesAvailable))) == true){
+				ObjetoAprendizagem.areaImagem.removeChildren();
+				while(_imagem.length > 0){
+					_imagem.shift();
+				}
+				while(_balao.length > 0){
+					_balao.shift();
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++){
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i]);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[0].baloes.length; i++){
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+				}
+				
+				
+			}
+			stream.close();
+			*/
+			
+			if (Main.projeto.carregaProjeto('1460057565561')) {
+				
+				ObjetoAprendizagem.areaImagem.removeChildren();
+				
+				while(_imagem.length > 0){
+					_imagem.shift();
+				}
+				
+				while(_balao.length > 0){
+					_balao.shift();
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++) {
+				
+					trace ('acrescentando imagem', i);
+					
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i]);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				}
+				
+			
+				for (i = 0; i < Main.projeto.paginas[0].baloes.length; i++) {
+				
+					
+					trace ('acrescentando balao', i);
+					
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+				}
+				
+			}
+						
+			
+		}
+		
 		private function cliqueCarregar(evento:MouseEvent):void
 		{
 			trace('server');
-			
 			
 			this.mudaTela('lista', null);
 		}

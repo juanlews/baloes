@@ -1,5 +1,6 @@
 package telas
 {
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import com.adobe.crypto.MD5;
 	import componentes.AnimacaoFrames;
 	import flash.display.Bitmap;
@@ -164,7 +165,7 @@ package telas
 			this._imagem = new Loader();
 			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			this._imagem.load(new URLRequest(File.cacheDirectory.resolvePath('bmptemp.jpg').url));
+			this._imagem.load(new URLRequest(File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/capa.jpg').url));
 		
 		}
 		
@@ -220,7 +221,7 @@ package telas
 			Main.projeto.tags = this._caixaTags.text.split('#');
 			
 			trace(Main.projeto.titulo, Main.projeto.tags);
-			Main.projeto.salvarDados();
+			trace('projeto salvo=',Main.projeto.salvarDados());
 		}
 		
 		private function salvaImg(evento:MouseEvent):void
@@ -242,7 +243,8 @@ package telas
 			addChild(anim);
 			
 			_request.data = variaveis;
-			_fileup = File.cacheDirectory.resolvePath('bmptemp.jpg');
+			
+			_fileup = File.cacheDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id);
 			
 			_fileup.addEventListener(Event.COMPLETE, arquivoEnviado);
 			_fileup.addEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);

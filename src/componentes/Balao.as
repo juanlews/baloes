@@ -43,18 +43,18 @@ package componentes
 			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao08() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao09() as Bitmap);
-				
+			
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
-			this._texto = new TextField();			
+			this._texto = new TextField();
 			
 			this._texto.maxChars = 50;
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
 			this._texto.wordWrap = true;
 			this._texto.defaultTextFormat = new TextFormat('Pfennig', 90, 0, null, null, null, null, null, null, null, null, null, -45);
-			this.addChild(this._texto);			
+			this.addChild(this._texto);
 			this._texto.border = false;
 			this.mouseChildren = false;
 			this._texto.autoSize = TextFieldAutoSize.NONE;
@@ -62,23 +62,25 @@ package componentes
 			this._texto.needsSoftKeyboard = true;
 			this._texto.width = 700;
 			this._texto.height = 500;
-
 			
 			this.setCor(255, 255, 255, 5, 0);
-			
-			
+		
 		}
 		
 		public function get tipo():int
 		{
 			return (this._tipo);
 		}
-		public function get id():int{
 		
-			return (this._id);
+		public function get id():int
+		{
 			
+			return (this._id);
+		
 		}
-		public function set id(para:int):void {
+		
+		public function set id(para:int):void
+		{
 			this._id = para;
 		}
 		
@@ -101,60 +103,70 @@ package componentes
 				para = 0;
 			}
 			
-			if (this._imgsBalao[0].scaleX > 0) {
-				switch (para) {
-					case 0:
-						this._texto.x = 370;
-						break;
-					case 1:
-						this._texto.x = 300;
-						break;
-					case 2:
-						this._texto.x = 200;
-						break;
+			if (this._imgsBalao[0].scaleX > 0)
+			{
+				switch (para)
+				{
+				case 0: 
+					this._texto.x = 370;
+					break;
+				case 1: 
+					this._texto.x = 300;
+					break;
+				case 2: 
+					this._texto.x = 200;
+					break;
 				}
-			} else {
-				switch (para) {
-					case 0:
-						this._texto.x = 200;
-						break;
-					case 1:
-						this._texto.x = 300;
-						break;
-					case 2:
-						this._texto.x = 200;
-						break;
+			}
+			else
+			{
+				switch (para)
+				{
+				case 0: 
+					this._texto.x = 200;
+					break;
+				case 1: 
+					this._texto.x = 300;
+					break;
+				case 2: 
+					this._texto.x = 200;
+					break;
 				}
 			}
 			
-			if (this._imgsBalao[0].scaleY > 0) {
-				switch (para) {
-					case 0:
-						this._texto.y = 350;
-						break;
-					case 1:
-						this._texto.y = 190;
-						break;
-					case 2:
-						this._texto.y = 100;
-						break;
+			if (this._imgsBalao[0].scaleY > 0)
+			{
+				switch (para)
+				{
+				case 0: 
+					this._texto.y = 350;
+					break;
+				case 1: 
+					this._texto.y = 190;
+					break;
+				case 2: 
+					this._texto.y = 100;
+					break;
 				}
-			} else {
-				switch (para) {
-					case 0:
-						this._texto.y = 250;
-						break;
-					case 1:
-						this._texto.y = 190;
-						break;
-					case 2:
-						this._texto.y = 400;
-						break;
+			}
+			else
+			{
+				switch (para)
+				{
+				case 0: 
+					this._texto.y = 250;
+					break;
+				case 1: 
+					this._texto.y = 190;
+					break;
+				case 2: 
+					this._texto.y = 400;
+					break;
 				}
 			}
 			
 			para == this._para;
-
+			
 			this.removeChildren();
 			this.addChild(this._imgsBalao[para]);
 			this._tipo = para;
@@ -191,12 +203,31 @@ package componentes
 			return (this._imgsBalao[0].transform.colorTransform.blueOffset);
 		}
 		
-		public function get flipadaH():Boolean {
-			 return ( this._imgsBalao[0].scaleX < 0);
+		public function get flipadaH():Boolean
+		{
+			return (this._imgsBalao[0].scaleX < 0);
 		}
 		
-		public function get flipadaV():Boolean {
-			 return ( this._imgsBalao[0].scaleY < 0);
+		public function get flipadaV():Boolean
+		{
+			return (this._imgsBalao[0].scaleY < 0);
+		}
+		
+		public function set flipadaV(para:Boolean):void
+		{
+			if (para == true)
+			{
+				flipV();
+			}
+		
+		}
+		
+		public function set flipadaH(para:Boolean):void
+		{
+			if (para == true)
+			{
+				flipH();
+			}
 		}
 		
 		public function setCor(vermelho:int = 255, verde:int = 255, azul:int = 255, idCor:int = 1, ctexto:int = 0):void
@@ -220,11 +251,14 @@ package componentes
 			for (var i:int = 0; i < this._imgsBalao.length; i++)
 			{
 				this._imgsBalao[i].scaleX = -this._imgsBalao[i].scaleX;
-				if (this._imgsBalao[i].scaleX < 0) {
+				if (this._imgsBalao[i].scaleX < 0)
+				{
 					this._imgsBalao[i].x = this._imgsBalao[i].width;
-				} else {
+				}
+				else
+				{
 					this._imgsBalao[i].x = 0;
-					}
+				}
 			}
 			this.tipo = this.tipo;
 		}
@@ -234,10 +268,12 @@ package componentes
 			for (var i:int = 0; i < this._imgsBalao.length; i++)
 			{
 				this._imgsBalao[i].scaleY = -this._imgsBalao[i].scaleY;
-				if (this._imgsBalao[i].scaleY < 0) {
+				if (this._imgsBalao[i].scaleY < 0)
+				{
 					this._imgsBalao[i].y = this._imgsBalao[i].height;
-					} 
-					else {
+				}
+				else
+				{
 					this._imgsBalao[i].y = 0;
 					
 				}
@@ -253,7 +289,15 @@ package componentes
 			this.texto = origem.texto;
 			if (origem.flipadaH != this.flipadaH) this.flipH();
 			if (origem.flipadaV != this.flipadaV) this.flipV();
-			
+		
+		}
+		
+		public function dispose():void{
+			removeChildren();
+			while(_imgsBalao.length > 0){
+				_imgsBalao.shift().bitmapData.dispose();
+			}
+			_texto = null;
 			
 		}
 		
@@ -263,8 +307,7 @@ package componentes
 		 */
 		public function recuperaDados():BalaoDados
 		{
-			flipHB = this.flipadaH;
-			flipVB = this.flipadaV;
+			
 			var dados:BalaoDados = new BalaoDados();
 			dados.x = this.x;
 			dados.y = this.y;
@@ -278,17 +321,31 @@ package componentes
 			dados.corVerde = this._corVerde;
 			dados.corVermelho = this._corVermelho;
 			dados.corTexto = this._corDoTexto;
-			dados.flipV = this.flipVB;
-			dados.flipH = this.flipHB;
+			dados.flipV = this.flipadaV;
+			dados.flipH = this.flipadaH;
 			dados.id = this._id;
 			return (dados);
 		}
 		
-		// não vamos mais precisar de um xml do balão já que estamos trabalhando agora com objetos e JSON
-		public function get xml():String
+		public function recebeDados(dados:BalaoDados):void
 		{
 			
-			return ('');
+			this.x = dados.x;
+			this.y = dados.y;
+			this.width = dados.width;
+			this.height = this.width;
+			this.rotation = dados.rotation;
+			this.scaleX = dados.zoom;
+			this._tipo = dados.tipo;
+			this._texto.text = dados.texto;
+			this._corAzul = dados.corAzul;
+			this._corVerde = dados.corVerde;
+			this._corVermelho = dados.corVermelho;
+			this._corDoTexto = dados.corTexto;
+			this.flipadaH = dados.flipH;
+			this.flipadaV = dados.flipV;
+			
+			this._id = dados.id;
 		
 		}
 	

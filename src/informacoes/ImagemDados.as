@@ -6,6 +6,7 @@ package informacoes
 	 */
 	public class ImagemDados 
 	{
+		public var id:int;
 		
 		public var x:Number = 0;
 		
@@ -23,6 +24,7 @@ package informacoes
 		public function processar(dados:Object):void
 		{
 			this.clear();
+			this.id = dados.id
 			this.x = dados.x;
 			this.y = dados.y;
 			// outras propriedades aqui
