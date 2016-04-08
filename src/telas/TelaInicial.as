@@ -325,7 +325,7 @@ package telas
 			stream.close();
 			*/
 			
-			if (Main.projeto.carregaProjeto('1460057565561')) {
+			if (Main.projeto.carregaProjeto('1460139175442')) {
 				
 				ObjetoAprendizagem.areaImagem.removeChildren();
 				

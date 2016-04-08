@@ -335,18 +335,17 @@ package componentes
 			this.width = dados.width;
 			this.height = this.width;
 			this.rotation = dados.rotation;
-			this.scaleX = dados.zoom;
-			this._tipo = dados.tipo;
+			this.scaleX = dados.zoom;			
 			this._texto.text = dados.texto;
 			this._corAzul = dados.corAzul;
 			this._corVerde = dados.corVerde;
 			this._corVermelho = dados.corVermelho;
 			this._corDoTexto = dados.corTexto;
 			this.flipadaH = dados.flipH;
-			this.flipadaV = dados.flipV;
-			
+			this.flipadaV = dados.flipV;	
+			this._tipo = dados.tipo;
 			this._id = dados.id;
-		
+		   
 		}
 	
 	}

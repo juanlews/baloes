@@ -12,6 +12,12 @@ package informacoes
 		
 		public var y:Number = 0;
 		
+		public var rotation:Number = 0;
+		
+		public var scaleX:Number = 0;
+		
+		public var scaleY:Number = 0;
+		
 		public function ImagemDados(objeto:Object = null) 
 		{
 			if (objeto != null) this.processar(objeto);
@@ -27,6 +33,10 @@ package informacoes
 			this.id = dados.id
 			this.x = dados.x;
 			this.y = dados.y;
+			this.rotation = dados.rotation;
+			this.scaleX = dados.scaleX;
+			this.scaleY = dados.scaleY;
+			
 			// outras propriedades aqui
 		}
 		

@@ -53,6 +53,10 @@ package componentes
 			dados.id = this._id;
 			dados.x = this.x;
 			dados.y = this.y;
+			dados.rotation = this.rotation;
+			dados.scaleX = this.scaleX;
+			dados.scaleY = this.scaleY;
+			
 			
 			// acrescentar aqui todas as outras propriedades a salvar
 			
@@ -72,6 +76,9 @@ package componentes
 			this._id = dados.id;
 			this.x = dados.x;
 			this.y = dados.y;
+			this.rotation = dados.rotation;
+			this.scaleX = dados.scaleX;
+			this.scaleY = dados.scaleY;
 			
 			trace ('carregando', Main.projeto.pasta.resolvePath('imagens/pagina/' + _id + '.jpg').url);
 			
