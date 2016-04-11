@@ -45,8 +45,12 @@ package informacoes
 		 */
 		public function clear():void
 		{
+			this.id = 0;
 			this.x = 0;
 			this.y = 0;
+			this.rotation = 0;
+			this.scaleX = 0;
+			this.scaleY = 0;
 			// outras propriedades aqui
 		}
 		

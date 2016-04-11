@@ -35,7 +35,7 @@ package telas
 	 */
 	public class TelaInicial extends Tela
 	{
-		
+		private var _id:String = '1460376827556';
 		// botões
 		private var _galeria:BotaoIcone;
 		private var _camera:BotaoIcone;
@@ -59,7 +59,7 @@ package telas
 		private var btscala:Number;
 		
 		//abrir file
-		private var _btOpen:BotaoIcone;		
+		private var _btOpen:BotaoIcone;
 		
 		public function TelaInicial(funcMudaTela:Function)
 		{
@@ -94,7 +94,6 @@ package telas
 			this._balao = new Vector.<Balao>;
 			// criando acesso à camera
 			camera = new CameraUI();
-			
 		
 		}
 		
@@ -149,8 +148,8 @@ package telas
 			
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
-			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina/' +  (_imagem.length - 1) + '.jpg');
-
+			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina/' + (_imagem.length - 1) + '.jpg');
+			
 			// copiando o arquivo de imagem original para o destino
 			arquivoOrigem.copyTo(arquivoDestino);
 			
@@ -166,18 +165,16 @@ package telas
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
 			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length);
-
+			
 			// copiando o arquivo de imagem original para o destino
 			this._file.copyTo(arquivoDestino);
 			
 			// carregando a imagem do loader a partir do arquivo de destino
 			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
 			
-			
-			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			
+		
 			//this._imagem[0].loader.load(new URLRequest(this._file.url));
 		}
 		
@@ -216,13 +213,61 @@ package telas
 			this._balao[dados.indice].x = ObjetoAprendizagem.areaImagem.width / 3;
 			this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
 			
-			
 			// mudar tela
 			
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
 			
 			this.mudaTela('fotorecuperada', dados);
+		
+		}
+		
+		override public function recebeDados(dados:Object):void
+		{
+			
+			ObjetoAprendizagem.areaImagem.visible = true;
+			if (dados != null)
+			{
+				if (dados.id != null)
+				{
+					_id = dados.id;
+					
+					while (_imagem.length > 0)
+					{
+						_imagem.shift().dispose();
+					}
+					
+					while (_balao.length > 0)
+					{
+						_balao.shift().dispose();
+					}
+					
+				}else {
+				_id = '1460376827556';
+				}
+				if (dados.imagem != null)
+				{
+					trace('tem Imagem');
+					this._imagem = dados.imagem as Vector.<Imagem>;
+					
+				}
+				if (dados.balaoProp != null)
+				{
+					this._balao[dados.indice].copyProp(dados.balaoProp as Balao);
+				}
+				if (dados.balao != null)
+				{
+					trace('tem Balao');
+					
+					this._balao = dados.balao as Vector.<Balao>;
+				}
+				
+				for (var xis:int = 0; xis < _balao.length; xis++)
+				{
+					this._balao[xis].id = xis;
+				}
+				
+			}
 		
 		}
 		
@@ -245,12 +290,12 @@ package telas
 			this._camera.x = stage.stageWidth - _camera.width - this.stage.stageWidth / 20;
 			this._camera.y = this.stage.stageHeight / 40;
 			
-			 this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
+			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
 			
 			//open
 			
-			this._btOpen.width = stage.width / btscala;		
-			this._btOpen.scaleY = _btOpen.scaleX; 
+			this._btOpen.width = stage.width / btscala;
+			this._btOpen.scaleY = _btOpen.scaleX;
 			this._btOpen.x = stage.stageWidth / 2 - _btOpen.width / 2;
 			this._btOpen.y = stage.stageHeight / 40;
 			
@@ -294,72 +339,54 @@ package telas
 			}
 		}
 		
-		private function cliqueAbreProjeto(evento:MouseEvent):void {
-		 	/*var pasta:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/1460057565561/'); 
-			var arquivo:File = pasta.resolvePath('projeto.json');
-			var stream:FileStream = new FileStream();
-		    stream.open(arquivo, FileMode.READ);
-			if(trace(Main.projeto.parse(stream.readUTFBytes(stream.bytesAvailable))) == true){
-				ObjetoAprendizagem.areaImagem.removeChildren();
-				while(_imagem.length > 0){
-					_imagem.shift();
-				}
-				while(_balao.length > 0){
-					_balao.shift();
-				}
-				
-				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++){
-					_imagem[i] = new Imagem(i);
-					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i]);
-					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
-				}
-				
-				for (var i:int = 0; i < Main.projeto.paginas[0].baloes.length; i++){
-					_balao[i] = new Balao(i);
-					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
-					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
-				}
-				
-				
-			}
-			stream.close();
-			*/
+		private function cliqueAbreProjeto(evento:MouseEvent):void
+		{
+	
 			
-			if (Main.projeto.carregaProjeto('1460139175442')) {
+			if (Main.projeto.carregaProjeto(_id))
+			{
 				
 				ObjetoAprendizagem.areaImagem.removeChildren();
 				
-				while(_imagem.length > 0){
+				while (_imagem.length > 0)
+				{
 					_imagem.shift();
 				}
 				
-				while(_balao.length > 0){
+				while (_balao.length > 0)
+				{
 					_balao.shift();
 				}
 				
-				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++) {
-				
-					trace ('acrescentando imagem', i);
+				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++)
+				{
+					
+					trace('acrescentando imagem', i);
 					
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i]);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
-			
-				for (i = 0; i < Main.projeto.paginas[0].baloes.length; i++) {
-				
+				for (i = 0; i < Main.projeto.paginas[0].baloes.length; i++)
+				{
 					
-					trace ('acrescentando balao', i);
+					trace('acrescentando balao', i);
 					
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
+					_balao[i].tipo = Main.projeto.paginas[0].baloes[i].tipo;
+					
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
 				}
+				var dados:Object = new Object();
+				dados.imagem = this._imagem;
+			    dados.balao = this._balao;
+				mudaTela('fotorecuperada', dados);
 				
 			}
-						
-			
+		
 		}
 		
 		private function cliqueCarregar(evento:MouseEvent):void

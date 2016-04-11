@@ -17,11 +17,15 @@ package informacoes
 		
 		public var rotation:Number = 0;
 		
-		public var zoom:Number = 0;
+		public var scaleX:Number = 0;
+		
+		public var scaleY:Number = 0;
 		
 		public var tipo:int = 0;
 		
 		public var texto:String = '';
+		
+		public var idCor:int;
 		
 		public var corAzul:int = 0;
 		
@@ -56,9 +60,11 @@ package informacoes
 			this.width = dados.width;
 			this.height = dados.height;
 			this.rotation = dados.rotation;
-			this.zoom = dados.zoom;
+			this.scaleX = dados.scaleX;
+			this.scaleY = dados.scaleY;
 			this.tipo = dados.tipo;
 			this.texto = dados.texto;
+			this.idCor = dados.idCor;
 			this.corAzul = dados.corAzul;
 			this.corVermelho = dados.corVermelho;
 			this.corVerde = dados.corVerde;
@@ -76,7 +82,8 @@ package informacoes
 			this.width = 0;
 			this.height = 0;
 			this.rotation = 0;
-			this.zoom = 0;
+			this.scaleX = 0;
+			this.scaleY = 0;
 			this.tipo = 0;
 			this.texto = '';
 			this.corAzul = 0;

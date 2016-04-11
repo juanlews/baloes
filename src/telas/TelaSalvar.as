@@ -216,12 +216,17 @@ package telas
 		
 		private function salvaProjeto(evento:MouseEvent):void
 		{
-			
+			addChild(anim);
 			Main.projeto.titulo = this._caixaTitulo.text;
 			Main.projeto.tags = this._caixaTags.text.split('#');
 			
 			trace(Main.projeto.titulo, Main.projeto.tags);
-			trace('projeto salvo=',Main.projeto.salvarDados());
+			if (Main.projeto.salvarDados()) {
+			var dados:Object = new Object;
+			dados.id = Main.projeto.id;	
+			trace('projeto salvo');
+			mudaTela('inicial', dados);
+			}
 		}
 		
 		private function salvaImg(evento:MouseEvent):void

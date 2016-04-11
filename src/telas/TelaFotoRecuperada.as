@@ -159,6 +159,7 @@ package telas
 				
 				this.addChild(linhabaixo);
 				this.addChild(linhacima);
+				ObjetoAprendizagem.areaImagem.y = linhacima.height;
 				
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
@@ -391,6 +392,7 @@ package telas
 			super.escondendo(evento);
 			
 			// remover listeners
+			
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			this._propBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);

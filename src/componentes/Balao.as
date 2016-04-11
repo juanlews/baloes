@@ -213,25 +213,14 @@ package componentes
 			return (this._imgsBalao[0].scaleY < 0);
 		}
 		
-		public function set flipadaV(para:Boolean):void
-		{
-			if (para == true)
-			{
-				flipV();
-			}
-		
-		}
-		
-		public function set flipadaH(para:Boolean):void
-		{
-			if (para == true)
-			{
-				flipH();
-			}
-		}
-		
 		public function setCor(vermelho:int = 255, verde:int = 255, azul:int = 255, idCor:int = 1, ctexto:int = 0):void
 		{
+			this._corVermelho = vermelho;
+			this._corVerde = verde;
+			this._corAzul = azul;
+			this.botaoCor = idCor;
+			this._corDoTexto = ctexto;
+			
 			if (vermelho < 0) vermelho = 0;
 			if (vermelho > 255) vermelho = 255;
 			if (verde < 0) verde = 0;
@@ -292,13 +281,15 @@ package componentes
 		
 		}
 		
-		public function dispose():void{
+		public function dispose():void
+		{
 			removeChildren();
-			while(_imgsBalao.length > 0){
+			while (_imgsBalao.length > 0)
+			{
 				_imgsBalao.shift().bitmapData.dispose();
 			}
 			_texto = null;
-			
+		
 		}
 		
 		/**
@@ -314,9 +305,11 @@ package componentes
 			dados.width = this.width;
 			dados.height = this.height;
 			dados.rotation = this.rotation;
-			dados.zoom = this.scaleX;
+			dados.scaleX = this.scaleX;
+			dados.scaleY = this.scaleY;
 			dados.tipo = this._tipo;
 			dados.texto = this._texto.text;
+			dados.idCor = this.botaoCor;
 			dados.corAzul = this._corAzul;
 			dados.corVerde = this._corVerde;
 			dados.corVermelho = this._corVermelho;
@@ -325,6 +318,7 @@ package componentes
 			dados.flipH = this.flipadaH;
 			dados.id = this._id;
 			return (dados);
+		
 		}
 		
 		public function recebeDados(dados:BalaoDados):void
@@ -335,17 +329,27 @@ package componentes
 			this.width = dados.width;
 			this.height = this.width;
 			this.rotation = dados.rotation;
-			this.scaleX = dados.zoom;			
+			this.scaleX = dados.scaleX;
+			this.scaleY = dados.scaleY;
 			this._texto.text = dados.texto;
+			this.botaoCor = dados.idCor;
 			this._corAzul = dados.corAzul;
 			this._corVerde = dados.corVerde;
 			this._corVermelho = dados.corVermelho;
 			this._corDoTexto = dados.corTexto;
-			this.flipadaH = dados.flipH;
-			this.flipadaV = dados.flipV;	
 			this._tipo = dados.tipo;
 			this._id = dados.id;
-		   
+			if (dados.flipH != this.flipH)
+			{
+				this.flipH();
+			}
+			if (dados.flipV != this.flipV)
+			{
+				this.flipV();
+			}
+			trace('cores', _corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
+			this.setCor(_corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
+		
 		}
 	
 	}
