@@ -168,6 +168,7 @@ package telas
 			this._bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
 			this._bg.graphics.endFill();
 			this.addChild(this._bg);
+			
 			// fundo preview
 			this._fndprev.width = stage.stageWidth;
 			this._fndprev.height = stage.stageHeight / 2 ;
@@ -176,10 +177,10 @@ package telas
 			this.addChild(this._fndprev);
 			
 			// balao padrao
-			this._balaoP.width = this._fndprev.width - this._fndprev.width / 20;
+			this._balaoP.width = this._fndprev.width - this._fndprev.width/5;
 			this._balaoP.scaleY = this._balaoP.scaleX;
-			this._balaoP.x = this._fndprev.x + this._balaoP.width/40;
-			this._balaoP.y = this._fndprev.y + this._balaoP.height/20;
+			this._balaoP.x = this._fndprev.x + ((this._fndprev.width - this._balaoP.width) / 2);
+			this._balaoP.y = this._fndprev.y + ((this._fndprev.height - this._balaoP.height) / 2);
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
 			trace(this._balaoO.id);
@@ -207,12 +208,13 @@ package telas
 			this.addChild(this._ok);
 			
 			//botão excluir balão
-			this._excluir.width = stage.stageWidth / this._btscala;
+			this._excluir.width = stage.stageWidth / 13;
 			this._excluir.scaleY = this._excluir.scaleX;
 			this._excluir.x = stage.stageWidth - this._excluir.width -stage.stageWidth/20 ;
 			this._excluir.y = this._fndprev.y - this._excluir.height;
 			this.addChild(this._excluir);
 			//botoes do tipo radio
+			
 			//balao
 			this._tipo1.x =stage.stageWidth/20;
 			this._tipo1.y = stage.stageHeight/40;

@@ -20,6 +20,8 @@ set INTERPRETER=-interpreter
 
 set SCREEN_SIZE=NexusOne
 ::set SCREEN_SIZE=iPhoneRetina
+::set SCREEN_SIZE=320x240:240x320
+::set SCREEN_SIZE=480x320:320x480
 
 :desktop-run
 echo.
