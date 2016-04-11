@@ -29,6 +29,7 @@ package telas
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
 	import informacoes.PaginaDados;
+	import informacoes.ProjetoDados;
 	import recursos.Graficos;
 	
 	/**
@@ -47,6 +48,9 @@ package telas
 		private var _galeria:BotaoIcone;
 		private var _camera:BotaoIcone;
 		private var _addBalao:BotaoIcone;
+		private var _addPagina:BotaoIcone;
+		private var _proxPagina:BotaoIcone;
+		private var _antPagina:BotaoIcone;
 		
 		// balão
 		private var _balao:Vector.<Balao>;
@@ -68,6 +72,8 @@ package telas
 		//
 		private var _exc:int;
 		
+		private var paginaAtual:int = 0;
+		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
@@ -87,7 +93,9 @@ package telas
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
-			
+			this._addPagina = new BotaoIcone(Graficos.ImgNovaPagina);
+			this._proxPagina = new BotaoIcone(Graficos.ImgSetaDir);
+			this._antPagina = new BotaoIcone(Graficos.ImgSetaEsq)
 			_dados = new Object();
 			
 			this._roll = new CameraRoll();
@@ -111,12 +119,6 @@ package telas
 			this._galeria.width = stage.stageWidth / btscala;
 			this._galeria.scaleY = this._galeria.scaleX;
 			
-			//botão propiedades balão
-			//this._propBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
-			//this._propBalao.y = stage.stageHeight / 40;
-			//this._propBalao.width = stage.stageWidth / btscala;
-			//this._propBalao.scaleY = this._propBalao.scaleX;
-			
 			//botão ajuste do balão
 			this._ajusteBalao.width = stage.stageWidth / btscala;
 			this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
@@ -134,11 +136,31 @@ package telas
 			this._addBalao.y = stage.stageHeight / 40;
 			this._addBalao.width = stage.stageWidth / btscala;
 			this._addBalao.scaleY = this._addBalao.scaleX;
+			
+			//botão add Balao
+			this._addPagina.x = (this._addBalao.width + this._addBalao.x) + stage.stageWidth / 20;
+			this._addPagina.y = stage.stageHeight / 40;
+			this._addPagina.width = stage.stageWidth / btscala;
+			this._addPagina.scaleY = this._addPagina.scaleX;
+			
 			// botão camera
 			this._camera.width = stage.stageWidth / btscala;
 			this._camera.scaleY = this._camera.scaleX;
 			this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
 			this._camera.y = stage.stageHeight / 40;
+			
+			//Proxima Pagina
+			this._proxPagina.width = stage.stageWidth / btscala;
+			this._proxPagina.scaleY = this._proxPagina.scaleX;
+			this._proxPagina.x = stage.stageWidth - this._proxPagina.width - stage.stageWidth / 20;
+			;
+			this._proxPagina.y = stage.stageHeight / 2;
+			
+			this._antPagina.width = stage.stageWidth / btscala;
+			this._antPagina.scaleY = this._antPagina.scaleX;
+			this._antPagina.x = 0 + stage.stageWidth / 20;
+			this._antPagina.y = stage.stageHeight / 2;
+			
 			//botão salvar			
 			this._salvar.width = stage.stageWidth / btscala;
 			this._salvar.scaleY = this._salvar.scaleX;
@@ -169,12 +191,15 @@ package telas
 				{
 					ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
 				}
-				//this.addChild(this._propBalao);
+				
 				this.addChild(this._ajusteBalao);
 				this.addChild(this._ajusteImagem);
 				this.addChild(this._salvar);
 				this.addChild(this._cancelar);
 				this.addChild(this._addBalao);
+				this.addChild(this._addPagina);
+				this.addChild(this._proxPagina);
+				this.addChild(this._antPagina);
 				this.addChild(this._camera);
 				this.addChild(this._galeria);
 				
@@ -184,7 +209,9 @@ package telas
 				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
-				
+				this._addPagina.addEventListener(MouseEvent.CLICK, addPagina);
+				this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
+				this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnterior);
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 				
@@ -198,6 +225,124 @@ package telas
 				stage.addEventListener(Event.RESIZE, desenho);
 				
 			}
+		
+		}
+		
+		private function proximaPagina(evento:MouseEvent):void
+		{
+			trace(paginaAtual);
+			salvarPagina(paginaAtual);
+			if (Main.projeto.paginas.length > paginaAtual + 1)
+			{
+				paginaAtual++;
+				while (_imagem.length > 0)
+				{
+					_imagem.shift().dispose();
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[paginaAtual].imagens.length; i++)
+				{
+					
+					trace('acrescentando imagem', i);
+					
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
+					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				}
+				
+				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
+				{
+					
+					trace('acrescentando balao', i);
+					
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
+					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
+					
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
+				}
+			}
+		
+		}
+		
+		//
+		private function paginaAnterior(evento:MouseEvent):void
+		{
+			trace(paginaAtual);
+			salvarPagina(paginaAtual);
+			if (paginaAtual - 1 >= 0)
+			{
+				trace(paginaAtual);
+				
+				paginaAtual--;
+				trace(paginaAtual);
+				while (_imagem.length > 0)
+				{
+					_imagem.shift().dispose();
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[paginaAtual].imagens.length; i++)
+				{
+					
+					trace('acrescentando imagem', i);
+					
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
+					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				}
+				
+				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
+				{
+					
+					trace('acrescentando balao', i);
+					
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
+					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
+					
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
+				}
+			}
+		}
+		
+		//
+		
+		private function addPagina(evento:MouseEvent):void
+		{
+			
+			this.salvarPagina(paginaAtual);
+			Main.projeto.salvarDados();
+			
+			while (_imagem.length > 0)
+			{
+				_imagem.shift().dispose();
+			}
+			
+			while (_balao.length > 0)
+			{
+				_balao.shift().dispose();
+			}
+			
+			paginaAtual++;
+			
+			trace(Main.projeto.paginas.length);
+			
+			Main.projeto.paginas[paginaAtual] = new PaginaDados();
+			Main.projeto.paginas[paginaAtual].numero = paginaAtual;
 		
 		}
 		
@@ -260,7 +405,7 @@ package telas
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
 			
-			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina/');
+			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina' + paginaAtual + '/');
 			if (!arquivoDestino.isDirectory)
 			{
 				arquivoDestino.createDirectory();
@@ -283,7 +428,7 @@ package telas
 			
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
-			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length);
+			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
 			
 			// copiando o arquivo de imagem original para o destino
 			this._file.copyTo(arquivoDestino);
@@ -353,7 +498,7 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
-			this.mudaTela('inicial', null);		
+			this.mudaTela('inicial', null);
 		}
 		
 		private function cliquePropB(evento:MouseEvent):void
@@ -432,7 +577,7 @@ package telas
 				{
 					this._exc = dados.balaoExclui as int;
 					
-					this.removeChild(this._balao[_exc]);
+					ObjetoAprendizagem.areaImagem.removeChild(this._balao[_exc]);
 					
 					this._balao.splice(this._exc, 1);
 					
@@ -467,7 +612,7 @@ package telas
 		{
 			//this.removeBotoes();
 			ObjetoAprendizagem.areaImagem.visible = false;
-			salvarPagina();
+			salvarPagina(paginaAtual);
 			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
 			var bmpCache:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/capa.jpg');
 			var fstream:FileStream = new FileStream();
@@ -482,13 +627,13 @@ package telas
 		/**
 		 * Salva as informações da página atual nos objetos de dados.
 		 */
-		private function salvarPagina():void
+		private function salvarPagina(Npagina:int):void
 		{
 			// criando objeto de informação de página
 			var pagina:PaginaDados = new PaginaDados();
 			
 			// número igual a zero por enquanto - depois será preciso fazer um contador para saber em qual página estamos
-			pagina.numero = 0;
+			pagina.numero = Npagina;
 			
 			// conferindo todos os balões
 			for (var i:int = 0; i < this._balao.length; i++)

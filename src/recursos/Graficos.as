@@ -105,6 +105,16 @@ package recursos
 		[Embed(source = "imagens/Open.png")]
 		public static var ImgOpenFile:Class;
 		
+		//Botão nova pagina
+		[Embed(source = "imagens/novaPagina.jpg")]
+		public static var ImgNovaPagina:Class;
+		
+		//Setas
+		[Embed(source = "imagens/SetaEsq.png")]
+		public static var ImgSetaEsq:Class;
+		[Embed(source = "imagens/SetaDir.png")]
+		public static var ImgSetaDir:Class;
+		
 		// botoes propriedades do balão
 		[Embed(source = "imagens/btnFlipVertical.png")]
 		public static var ImgPBFlipV:Class;

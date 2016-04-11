@@ -36,6 +36,7 @@ package telas
 	public class TelaInicial extends Tela
 	{
 		private var _id:String = '1460376827556';
+		private var paginaAtual:int = 0;
 		// botões
 		private var _galeria:BotaoIcone;
 		private var _camera:BotaoIcone;
@@ -148,7 +149,7 @@ package telas
 			
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
-			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina/' + (_imagem.length - 1) + '.jpg');
+			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina'+paginaAtual+'/' + (_imagem.length - 1) + '.jpg');
 			
 			// copiando o arquivo de imagem original para o destino
 			arquivoOrigem.copyTo(arquivoDestino);
@@ -164,7 +165,7 @@ package telas
 			
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
-			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length);
+			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
 			
 			// copiando o arquivo de imagem original para o destino
 			this._file.copyTo(arquivoDestino);
@@ -217,6 +218,7 @@ package telas
 			
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
+			
 			
 			this.mudaTela('fotorecuperada', dados);
 		
@@ -364,7 +366,7 @@ package telas
 					trace('acrescentando imagem', i);
 					
 					_imagem[i] = new Imagem(i);
-					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i]);
+					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i], paginaAtual);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
@@ -381,6 +383,7 @@ package telas
 					
 				}
 				var dados:Object = new Object();
+				
 				dados.imagem = this._imagem;
 			    dados.balao = this._balao;
 				mudaTela('fotorecuperada', dados);

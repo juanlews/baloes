@@ -60,8 +60,8 @@ package informacoes
 		public function clear():void
 		{
 			this.numero = -1; // número de página = -1 indica que não há informações carregadas
-			while (this.imagens.length > 0) this.imagens.shift().dipose();
-			while (this.baloes.length > 0) this.baloes.shift().dipose();
+			while (this.imagens.length > 0) this.imagens.shift().dispose();
+			while (this.baloes.length > 0) this.baloes.shift().dispose();
 		}
 		
 		/**

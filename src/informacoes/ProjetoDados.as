@@ -31,9 +31,9 @@ package informacoes
 		
 		}
 		
-		public function arquivoImagem(length:int):File
+		public function arquivoImagem(length:int, numero:int):File
 		{
-			return (this.pasta.resolvePath('imagens/pagina/' +  (length - 1) + '.jpg'));
+			return (this.pasta.resolvePath('imagens/pagina' + numero + '/' +  (length - 1) + '.jpg'));
 		}
 		
 				

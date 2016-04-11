@@ -70,7 +70,7 @@ package componentes
 			this.loader = null;
 		}
 		
-		public function recebeDados(dados:ImagemDados):void
+		public function recebeDados(dados:ImagemDados, pagina:int):void
 		{
 			
 			this._id = dados.id;
@@ -80,9 +80,9 @@ package componentes
 			this.scaleX = dados.scaleX;
 			this.scaleY = dados.scaleY;
 			
-			trace ('carregando', Main.projeto.pasta.resolvePath('imagens/pagina/' + _id + '.jpg').url);
+			trace ('carregando', Main.projeto.pasta.resolvePath('imagens/pagina'+pagina+'/' + _id + '.jpg').url);
 			
-			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina/' + _id + '.jpg').url));
+			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina'+ pagina +'/' + _id + '.jpg').url));
 			
 			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, complete);
 			// acrescentar aqui todas as outras propriedades a salvar
