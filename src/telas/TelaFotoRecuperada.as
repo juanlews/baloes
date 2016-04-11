@@ -190,6 +190,7 @@ package telas
 				for (var i:int = 0; i < _balao.length; i++)
 				{
 					ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
+					this._balao[i].smooth();
 				}
 				
 				this.addChild(this._ajusteBalao);

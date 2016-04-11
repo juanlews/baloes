@@ -25,6 +25,7 @@ package componentes
 			this._id = id;
 			this.loader = new Loader();
 			this.addChild(this.loader);
+			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, complete);
 		}
 		
 		public function get id():int

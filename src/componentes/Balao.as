@@ -37,13 +37,14 @@ package componentes
 			super();
 			_id = id;
 			
-			this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false), new DropShadowFilter(4, 225, 0, 0.8, 4, 4, 1, 1, false));
+			this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false));
 			
 			this._imgsBalao = new Vector.<Bitmap>();
-			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap)
 			this._imgsBalao.push(new Graficos.ImgBalao08() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao09() as Bitmap);
-			
+			smooth();
+	
 			this._tipo = tipo;
 			this.addChild(this._imgsBalao[tipo]);
 			
@@ -269,7 +270,11 @@ package componentes
 			}
 			this.tipo = this.tipo;
 		}
-		
+		public function smooth():void{
+			for (var i:int = 0; i < _imgsBalao.length; i++) {
+				this._imgsBalao[i].smoothing = true; 
+			}
+		}
 		public function copyProp(origem:Balao):void
 		{
 			
@@ -347,10 +352,12 @@ package componentes
 			{
 				this.flipV();
 			}
+			
 			trace('cores', _corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
 			this.setCor(_corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
 		
 		}
+		
 	
 	}
 
