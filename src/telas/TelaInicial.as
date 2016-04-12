@@ -135,6 +135,7 @@ package telas
 		
 		private function cameracomplete(evento:MediaEvent):void
 		{
+			this._imagem[0] = new Imagem(0);
 			this._roll.removeEventListener(Event.CANCEL, cameracancel);
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
@@ -244,6 +245,8 @@ package telas
 						_balao.shift().dispose();
 					}
 					
+					
+			       
 				}else {
 				_id = '1460376827556';
 				}
