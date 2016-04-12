@@ -556,6 +556,7 @@ package telas
 		{
 			
 			ObjetoAprendizagem.areaImagem.visible = true;
+			paginaAtual = 0;
 			if (dados != null)
 			{
 				if (dados.imagem != null)
