@@ -324,7 +324,7 @@ package telas
 		
 		private function addPagina(evento:MouseEvent):void
 		{
-			
+			var criaPagina:int = Main.projeto.paginas.length - 1;
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
 			
@@ -338,12 +338,12 @@ package telas
 				_balao.shift().dispose();
 			}
 			
-			paginaAtual++;
 			
-			trace(Main.projeto.paginas.length);
 			
-			Main.projeto.paginas[paginaAtual] = new PaginaDados();
-			Main.projeto.paginas[paginaAtual].numero = paginaAtual;
+			trace('cria Pagina:', criaPagina);
+			
+			Main.projeto.paginas[criaPagina] = new PaginaDados();
+			paginaAtual = Main.projeto.paginas[criaPagina].numero = criaPagina;
 		
 		}
 		
