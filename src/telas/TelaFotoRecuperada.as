@@ -324,7 +324,8 @@ package telas
 		
 		private function addPagina(evento:MouseEvent):void
 		{
-			var criaPagina:int = Main.projeto.paginas.length - 1;
+			var criaPagina:int = Main.projeto.paginas.length;
+			Main.projeto.paginas[criaPagina] = new PaginaDados();
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
 			
