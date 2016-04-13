@@ -39,7 +39,7 @@
     <!--<depthAndStencil>true</depthAndStencil>-->
     <!-- required for 3D -->
     <systemChrome>standard</systemChrome>
-    <aspectRatio>any</aspectRatio>
+    <aspectRatio>portrait</aspectRatio>
     <autoOrients>true</autoOrients>
   </initialWindow>
   <icon>

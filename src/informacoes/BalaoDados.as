@@ -63,6 +63,8 @@ package informacoes
 			this.scaleX = dados.scaleX;
 			this.scaleY = dados.scaleY;
 			this.tipo = dados.tipo;
+			this.flipH = dados.flipH;
+			this.flipV = dados.flipV;
 			this.texto = dados.texto;
 			this.idCor = dados.idCor;
 			this.corAzul = dados.corAzul;

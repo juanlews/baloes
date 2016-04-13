@@ -28,6 +28,7 @@ package telas
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
+	import informacoes.BalaoDados;
 	import informacoes.PaginaDados;
 	import informacoes.ProjetoDados;
 	import recursos.Graficos;
@@ -231,7 +232,6 @@ package telas
 		
 		private function proximaPagina(evento:MouseEvent):void
 		{
-			trace('pagina anterior',paginaAtual);
 			salvarPagina(paginaAtual);
 			if (Main.projeto.paginas.length > paginaAtual + 1)
 			{
@@ -248,20 +248,14 @@ package telas
 				
 				for (var i:int = 0; i < Main.projeto.paginas[paginaAtual].imagens.length; i++)
 				{
-					
-					trace('acrescentando imagem', i);
-					
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
-					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					// trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
 				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
 				{
-					
-					trace('acrescentando balao', i);
-					
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
@@ -269,7 +263,6 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
-				trace('pagina atual:',paginaAtual);
 			}
 		
 		}
@@ -277,14 +270,10 @@ package telas
 		//
 		private function paginaAnterior(evento:MouseEvent):void
 		{
-			trace('pagina anterior',paginaAtual);
 			salvarPagina(paginaAtual);
 			if (paginaAtual - 1 >= 0)
 			{
-				trace(paginaAtual);
-				
 				paginaAtual--;
-				trace(paginaAtual);
 				while (_imagem.length > 0)
 				{
 					_imagem.shift().dispose();
@@ -297,9 +286,6 @@ package telas
 				
 				for (var i:int = 0; i < Main.projeto.paginas[paginaAtual].imagens.length; i++)
 				{
-					
-					trace('acrescentando imagem', i);
-					
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
@@ -308,9 +294,6 @@ package telas
 				
 				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
 				{
-					
-					trace('acrescentando balao', i);
-					
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
@@ -318,7 +301,6 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
-				trace('pagina atual:',paginaAtual);
 			}
 		}
 		
@@ -328,10 +310,8 @@ package telas
 		{
 			if (Main.projeto.paginas.length == 0){
 			var criaPagina:int = Main.projeto.paginas.length;
-			trace('cria Pagina:', criaPagina);
 			Main.projeto.paginas[criaPagina] = new PaginaDados();
 			}
-			trace('salva Pagina:', paginaAtual)
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
 			
@@ -348,16 +328,12 @@ package telas
 			
 			
 			criaPagina = Main.projeto.paginas.length;
-			trace('cria Pagina:', criaPagina);
 			Main.projeto.paginas[criaPagina] = new PaginaDados();			
 			paginaAtual = Main.projeto.paginas[criaPagina].numero = criaPagina;
-		    trace('pagina atual é:',paginaAtual)
-			trace('foi para Pagina:', criaPagina);
 		}
 		
 		private function cliqueCamera(evento:MouseEvent):void
 		{
-			trace('clique camera', _imagem.length);
 			this.camera.addEventListener(MediaEvent.COMPLETE, cameracomplete);
 			this.camera.addEventListener(Event.CANCEL, cameracancel);
 			this.camera.addEventListener(ErrorEvent.ERROR, cameraerro);
@@ -368,7 +344,6 @@ package telas
 		
 		private function cliqueGaleria(evento:MouseEvent):void
 		{
-			trace('clique galeria', _imagem.length);
 			this._roll.addEventListener(Event.CANCEL, cameracancel);
 			this._roll.addEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.addEventListener(ErrorEvent.ERROR, cameraerro);
@@ -378,7 +353,6 @@ package telas
 		
 		private function cameracancel(evento:Event):void
 		{
-			trace('camera cancel', _imagem.length);
 			this._roll.removeEventListener(Event.CANCEL, cameracancel);
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
@@ -386,7 +360,6 @@ package telas
 		
 		private function cameraerro(evento:ErrorEvent):void
 		{
-			trace('camera erro', _imagem.length);
 			this._roll.removeEventListener(Event.CANCEL, cameracancel);
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
@@ -397,7 +370,6 @@ package telas
 		
 		private function cameracomplete(evento:MediaEvent):void
 		{
-			trace('camera completa', _imagem.length);
 			this._roll.removeEventListener(Event.CANCEL, cameracancel);
 			this._roll.removeEventListener(MediaEvent.SELECT, cameracomplete);
 			this._roll.removeEventListener(ErrorEvent.ERROR, cameraerro);
@@ -430,7 +402,6 @@ package telas
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
-			trace('arquivo selecionado', _imagem.length);
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
@@ -452,7 +423,6 @@ package telas
 		
 		private function imagemErro(evento:IOErrorEvent):void
 		{
-			trace('img erro', _imagem.length);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 		
@@ -461,9 +431,11 @@ package telas
 		
 		private function imagemCarregada(evento:Event):void
 		{
-			trace('imagem carregada', _imagem.length);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			
+			this._imagem[_imagem.length - 1].x = ObjetoAprendizagem.areaImagem.oWidth / 2;
+			this._imagem[_imagem.length - 1].y = ObjetoAprendizagem.areaImagem.oHeight / 2;
 			
 			if (this._imagem[_imagem.length - 1].loader.content is Bitmap)
 			{
@@ -472,13 +444,11 @@ package telas
 			
 			if (this._imagem[_imagem.length - 1].loader.width > this._imagem[_imagem.length - 1].loader.height)
 			{
-				trace("largura");
 				this._imagem[_imagem.length - 1].width = ObjetoAprendizagem.areaImagem.width / ObjetoAprendizagem.areaImagem.scaleX;
 				this._imagem[_imagem.length - 1].scaleY = this._imagem[_imagem.length - 1].scaleX;
 			}
 			else
 			{
-				trace('altura');
 				this._imagem[_imagem.length - 1].height = ObjetoAprendizagem.areaImagem.height / ObjetoAprendizagem.areaImagem.scaleY;
 				this._imagem[_imagem.length - 1].scaleX = this._imagem[_imagem.length - 1].scaleY;
 			}
@@ -512,9 +482,6 @@ package telas
 		
 		private function cliquePropB(evento:MouseEvent):void
 		{
-			
-			//trace('click propB');
-			
 			var balaoClicado:Balao = evento.target as Balao;
 			
 			this._dados.balao = balaoClicado;
@@ -525,7 +492,6 @@ package telas
 		
 		private function cliqueAjusteB(evento:MouseEvent):void
 		{
-			trace('click ajustB');
 			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editbalao', _dados);
@@ -533,8 +499,7 @@ package telas
 		
 		private function cliqueAjusteImg(evento:MouseEvent):void
 		{
-			trace('click ajusteImg');
-			
+
 			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
 			this.mudaTela('editimagem', _dados);
@@ -569,9 +534,7 @@ package telas
 			{
 				if (dados.imagem != null)
 				{
-					trace('tem Imagem');
 					this._imagem = dados.imagem as Vector.<Imagem>;
-					
 				}
 				if (dados.balaoProp != null)
 				{
@@ -579,9 +542,10 @@ package telas
 				}
 				if (dados.balao != null)
 				{
-					trace('tem Balao');
-					
 					this._balao = dados.balao as Vector.<Balao>;
+				}
+				if (dados.paginaAtual != null) {
+					this.paginaAtual = dados.paginaAtual;
 				}
 				if (dados.balaoExclui != null)
 				{
@@ -590,8 +554,6 @@ package telas
 					ObjetoAprendizagem.areaImagem.removeChild(this._balao[_exc]);
 					
 					this._balao.splice(this._exc, 1);
-					
-					trace('excluindo o balão' + this._exc);
 					
 					for (var xis:int = 0; xis < _balao.length; xis++)
 					{
@@ -650,7 +612,12 @@ package telas
 			{
 				// a função "recuperaDados" do balão retorna um objeto "BalaoDados" para incorporar aos dados da página
 				// adicionamos um objeto de dados para cada balão
-				pagina.baloes.push(this._balao[i].recuperaDados());
+				
+				var dados:BalaoDados = this._balao[i].recuperaDados();
+				
+				trace ('balao dados', JSON.stringify(dados));
+				
+				pagina.baloes.push(dados);
 			}
 			
 			// conferindo todas as imagens

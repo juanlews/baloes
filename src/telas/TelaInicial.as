@@ -35,7 +35,7 @@ package telas
 	 */
 	public class TelaInicial extends Tela
 	{
-		private var _id:String = '1460376827556';
+		private var _id:String = '1460570646533';
 		private var paginaAtual:int = 0;
 		// botões
 		private var _galeria:BotaoIcone;
@@ -193,6 +193,9 @@ package telas
 			this._imagem[0].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[0].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
+			this._imagem[0].x = ObjetoAprendizagem.areaImagem.oWidth / 2;
+			this._imagem[0].y = ObjetoAprendizagem.areaImagem.oHeight / 2;
+			
 			if (this._imagem[0].loader.width > this._imagem[0].loader.height)
 			{
 				trace("largura", this._imagem[0].width = ObjetoAprendizagem.areaImagem.width / ObjetoAprendizagem.areaImagem.scaleX);
@@ -227,8 +230,11 @@ package telas
 		
 		override public function recebeDados(dados:Object):void
 		{
+			paginaAtual = 0;
+			Main.projeto.clear();
 			
-			ObjetoAprendizagem.areaImagem.visible = true;
+			ObjetoAprendizagem.areaImagem.visible = false;
+			
 			if (dados != null)
 			{
 				if (dados.id != null)
@@ -244,11 +250,10 @@ package telas
 					{
 						_balao.shift().dispose();
 					}
-					
-					
 			       
-				}else {
-				_id = '1460376827556';
+				}
+				else {
+				_id = '1460570646533';
 				}
 				if (dados.imagem != null)
 				{
@@ -341,6 +346,7 @@ package telas
 				stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 				stage.addEventListener(Event.RESIZE, desenho);
 				
+				ObjetoAprendizagem.areaImagem.visible = false;
 			}
 		}
 		
@@ -348,19 +354,21 @@ package telas
 		{
 	
 			
-			if (Main.projeto.carregaProjeto(_id))
+			if (Main.projeto.carregaProjeto('1460571455684'))
 			{
+				
+				paginaAtual = 0;
 				
 				ObjetoAprendizagem.areaImagem.removeChildren();
 				
 				while (_imagem.length > 0)
 				{
-					_imagem.shift();
+					_imagem.shift().dispose();
 				}
 				
 				while (_balao.length > 0)
 				{
-					_balao.shift();
+					_balao.shift().dispose();
 				}
 				
 				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++)
@@ -389,6 +397,7 @@ package telas
 				
 				dados.imagem = this._imagem;
 			    dados.balao = this._balao;
+				dados.paginaAtual = 0;
 				mudaTela('fotorecuperada', dados);
 				
 			}

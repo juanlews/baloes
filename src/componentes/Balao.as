@@ -254,7 +254,6 @@ package componentes
 				}
 			}
 			this.tipo = this.tipo;
-			trace(flipHB);
 		}
 		
 		public function flipV():void
@@ -274,7 +273,6 @@ package componentes
 					
 				}
 			}
-			trace(flipVB);
 			this.tipo = this.tipo;
 		}
 		public function smooth():void{
@@ -328,7 +326,6 @@ package componentes
 			dados.corTexto = this._corDoTexto;
 			dados.flipV = this.flipVB;
 			dados.flipH = this.flipHB;
-			trace('D Flip', dados.flipV, 'flipVB', this.flipVB);
 			dados.id = this._id;
 			return (dados);
 		
@@ -336,6 +333,8 @@ package componentes
 		
 		public function recebeDados(dados:BalaoDados):void
 		{
+			
+			trace ('recebendo', JSON.stringify(dados));
 			
 			this.x = dados.x;
 			this.y = dados.y;
@@ -353,13 +352,9 @@ package componentes
 			this._tipo = dados.tipo;
 			this._id = dados.id;
 			if (dados.flipH == true) { 
-				trace('Flip do Balao H',dados.flipH);
 				this.flipH(); }
 			if (dados.flipV == true ) { 
-				trace('Flip do Balao V',dados.flipV);
 				this.flipV(); }
-			
-			trace('cores', _corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
 			this.setCor(_corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
 		
 		}

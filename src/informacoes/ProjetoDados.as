@@ -26,7 +26,7 @@ package informacoes
 		
 		public function ProjetoDados()
 		{
-			
+			this.tags = new Array();
 			this.clear();
 		
 		}
@@ -73,7 +73,6 @@ package informacoes
 		
 		public function clear(id:String = null):void
 		{
-			this.tags = new Array();
 			if (id == null) {
 				this.id = String(new Date().getTime());
 			} else {

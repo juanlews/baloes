@@ -68,6 +68,11 @@ package componentes
 		{
 			this.removeChildren();
 			this.loader.unload();
+			if (this.loader.hasEventListener(Event.COMPLETE)) {
+				try {
+					this.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, complete);
+				} catch (e:Error) { }
+			}
 			this.loader = null;
 		}
 		
@@ -85,14 +90,15 @@ package componentes
 			
 			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina'+ pagina +'/' + _id + '.jpg').url));
 			
-			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, complete);
+			
 			// acrescentar aqui todas as outras propriedades a salvar
 		
 		}
 		
 		private function complete(evt:Event):void {
-			this.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, complete);
 			(this.loader.content as Bitmap).smoothing = true;
+			this.loader.x = -this.loader.width / 2;
+			this.loader.y = -this.loader.height / 2;
 		}
 	
 	}
