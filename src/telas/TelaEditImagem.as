@@ -34,6 +34,7 @@ package telas
 			super(funcMudaTela);
 			btscala = 10;
 			dados = new Object();
+		   
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		
@@ -67,7 +68,10 @@ package telas
 				
 				for (var i:int; i < _imagem.length; i++)
 				{
-					ObjetoAprendizagem.areaImagem.addChild(_imagem[i])
+					
+					
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				
 					this._imagem[i].addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 				}
 				
@@ -178,6 +182,10 @@ package telas
 			}
 			
 			_imagem[indice].rotation += evento.rotation;
+		}
+		private function removeImagem(evento:MouseEvent):String{
+			
+			
 		}
 		
 		override public function recebeDados(dados:Object):void

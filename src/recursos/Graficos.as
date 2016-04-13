@@ -54,7 +54,10 @@ package recursos
 		[Embed(source = "imagens/btnInformaçãoPB.png")]
 		public static var ImgBtInfo:Class;
 		
-	
+		//
+		[Embed(source = "imagens/btnCancelarLaranjacomdetalhe.png")]
+		public static var excImagem:Class;
+		
 		// balao
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
 		public static var ImgBalao01:Class;

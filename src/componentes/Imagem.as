@@ -17,10 +17,10 @@ package componentes
 		
 		public var loader:Loader;
 		private var _id:int;
+		private var btExcluiImg:BotaoIcone;
 		
 		public function Imagem(id:int = 0)
-		{
-			
+		{			
 			super();
 			this._id = id;
 			this.loader = new Loader();
@@ -29,10 +29,8 @@ package componentes
 		}
 		
 		public function get id():int
-		{
-			
+		{			
 			return (_id);
-		
 		}
 		
 		public function centraliza(refStage:Stage):void
@@ -95,6 +93,11 @@ package componentes
 		
 		}
 		
+		private function exclui(ativo:Boolean):String{
+			if (ativo){
+				
+			}
+		}
 		private function complete(evt:Event):void {
 			(this.loader.content as Bitmap).smoothing = true;
 			this.loader.x = -this.loader.width / 2;
