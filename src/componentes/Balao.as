@@ -241,16 +241,20 @@ package componentes
 			for (var i:int = 0; i < this._imgsBalao.length; i++)
 			{
 				this._imgsBalao[i].scaleX = -this._imgsBalao[i].scaleX;
+				
 				if (this._imgsBalao[i].scaleX < 0)
 				{
+				    this.flipHB = true;
 					this._imgsBalao[i].x = this._imgsBalao[i].width;
 				}
 				else
 				{
+					this.flipHB = false;
 					this._imgsBalao[i].x = 0;
 				}
 			}
 			this.tipo = this.tipo;
+			trace(flipHB);
 		}
 		
 		public function flipV():void
@@ -260,14 +264,17 @@ package componentes
 				this._imgsBalao[i].scaleY = -this._imgsBalao[i].scaleY;
 				if (this._imgsBalao[i].scaleY < 0)
 				{
+					this.flipVB = true;
 					this._imgsBalao[i].y = this._imgsBalao[i].height;
 				}
 				else
 				{
+					this.flipVB = false;
 					this._imgsBalao[i].y = 0;
 					
 				}
 			}
+			trace(flipVB);
 			this.tipo = this.tipo;
 		}
 		public function smooth():void{
@@ -319,8 +326,9 @@ package componentes
 			dados.corVerde = this._corVerde;
 			dados.corVermelho = this._corVermelho;
 			dados.corTexto = this._corDoTexto;
-			dados.flipV = this.flipadaV;
-			dados.flipH = this.flipadaH;
+			dados.flipV = this.flipVB;
+			dados.flipH = this.flipHB;
+			trace('D Flip', dados.flipV, 'flipVB', this.flipVB);
 			dados.id = this._id;
 			return (dados);
 		
@@ -344,14 +352,12 @@ package componentes
 			this._corDoTexto = dados.corTexto;
 			this._tipo = dados.tipo;
 			this._id = dados.id;
-			if (dados.flipH != this.flipH)
-			{
-				this.flipH();
-			}
-			if (dados.flipV != this.flipV)
-			{
-				this.flipV();
-			}
+			if (dados.flipH == true) { 
+				trace('Flip do Balao H',dados.flipH);
+				this.flipH(); }
+			if (dados.flipV == true ) { 
+				trace('Flip do Balao V',dados.flipV);
+				this.flipV(); }
 			
 			trace('cores', _corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);
 			this.setCor(_corVermelho, _corVerde, _corAzul, botaoCor, _corDoTexto);

@@ -231,7 +231,7 @@ package telas
 		
 		private function proximaPagina(evento:MouseEvent):void
 		{
-			trace(paginaAtual);
+			trace('pagina anterior',paginaAtual);
 			salvarPagina(paginaAtual);
 			if (Main.projeto.paginas.length > paginaAtual + 1)
 			{
@@ -269,6 +269,7 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				trace('pagina atual:',paginaAtual);
 			}
 		
 		}
@@ -276,7 +277,7 @@ package telas
 		//
 		private function paginaAnterior(evento:MouseEvent):void
 		{
-			trace(paginaAtual);
+			trace('pagina anterior',paginaAtual);
 			salvarPagina(paginaAtual);
 			if (paginaAtual - 1 >= 0)
 			{
@@ -317,6 +318,7 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				trace('pagina atual:',paginaAtual);
 			}
 		}
 		
@@ -324,8 +326,12 @@ package telas
 		
 		private function addPagina(evento:MouseEvent):void
 		{
+			if (Main.projeto.paginas.length == 0){
 			var criaPagina:int = Main.projeto.paginas.length;
+			trace('cria Pagina:', criaPagina);
 			Main.projeto.paginas[criaPagina] = new PaginaDados();
+			}
+			trace('salva Pagina:', paginaAtual)
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
 			
@@ -341,11 +347,12 @@ package telas
 			
 			
 			
+			criaPagina = Main.projeto.paginas.length;
 			trace('cria Pagina:', criaPagina);
-			
-			Main.projeto.paginas[criaPagina] = new PaginaDados();
+			Main.projeto.paginas[criaPagina] = new PaginaDados();			
 			paginaAtual = Main.projeto.paginas[criaPagina].numero = criaPagina;
-		
+		    trace('pagina atual é:',paginaAtual)
+			trace('foi para Pagina:', criaPagina);
 		}
 		
 		private function cliqueCamera(evento:MouseEvent):void
@@ -557,7 +564,7 @@ package telas
 		{
 			
 			ObjetoAprendizagem.areaImagem.visible = true;
-			paginaAtual = 0;
+			
 			if (dados != null)
 			{
 				if (dados.imagem != null)
