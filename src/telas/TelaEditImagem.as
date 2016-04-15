@@ -29,6 +29,7 @@ package telas
 		private var dados:Object;
 		private var btscala:Number;
 		
+		
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -37,7 +38,7 @@ package telas
 		   
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-		
+		   
 		}
 		
 		override public function desenho(evento:Event = null):void
@@ -72,7 +73,12 @@ package telas
 					
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				
+					this._imagem[i].exclui(true);
 					this._imagem[i].addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
+					this._imagem[i].addEventListener(String(i), excluiImagem);
+					
+					
+					
 				}
 				
 				this.addChild(linhabaixo);
@@ -86,7 +92,10 @@ package telas
 			}
 		
 		}
-		
+		private function excluiImagem(evento:Event):void {
+		    this._imagem[int(evento.type)]	
+			trace(evento.type);
+		}
 		private function cliqueOk(evento:MouseEvent):void
 		{
 			dados.imagem = _imagem;
@@ -125,23 +134,12 @@ package telas
 				if (_imagem[i].loader  == evento.target as Loader)
 				{
 					
-					trace("o balao clicado é: ", indice = i);
+					trace("Imagem clicada é: ", indice = i);
 				}
 			}
 			
-			trace('fora do for', indice );
 			this._imagem[indice].startDrag();
-			/*
-			if (this._imagem[indice].x >= ObjetoAprendizagem.areaImagem.width - this._imagem[indice].width/2){
-				this._imagem[indice].x =  ObjetoAprendizagem.areaImagem.width - this._imagem[indice].width/2;
-			}
-			 if(this._imagem[indice].y >= ObjetoAprendizagem.areaImagem.height- this._imagem[indice].height/2){
-				this._imagem[indice].y = ObjetoAprendizagem.areaImagem.height- this._imagem[indice].height/2
-			}
 			
-			 if (this._imagem[indice].x <= _imagem[indice].width / 2) { this._imagem[indice].x = _imagem[indice].width / 2 }
-			 if (this._imagem[indice].y <= _imagem[indice].height / 2) { this._imagem[indice].y = _imagem[indice].height / 2 }*/
-			 
 			 
 		 }
 		
@@ -183,7 +181,7 @@ package telas
 			
 			_imagem[indice].rotation += evento.rotation;
 		}
-		private function removeImagem(evento:MouseEvent):String{
+		private function removeImagem(evento:MouseEvent):void{
 			
 			
 		}

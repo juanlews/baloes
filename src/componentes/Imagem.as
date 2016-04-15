@@ -5,8 +5,10 @@ package componentes
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import informacoes.ImagemDados;
+	import recursos.Graficos;
 	
 	/**
 	 * ...
@@ -17,19 +19,23 @@ package componentes
 		
 		public var loader:Loader;
 		private var _id:int;
-		private var btExcluiImg:BotaoIcone;
+		private var btExcImagem:BotaoIcone;
 		
 		public function Imagem(id:int = 0)
-		{			
+		{
 			super();
 			this._id = id;
 			this.loader = new Loader();
+			this.btExcImagem = new BotaoIcone(Graficos.excImagem);
 			this.addChild(this.loader);
+			addChild(this.btExcImagem);
 			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, complete);
+			this.btExcImagem.visible = false;
+		
 		}
 		
 		public function get id():int
-		{			
+		{
 			return (_id);
 		}
 		
@@ -56,9 +62,8 @@ package componentes
 			dados.scaleX = this.scaleX;
 			dados.scaleY = this.scaleY;
 			
-			
 			// acrescentar aqui todas as outras propriedades a salvar
-			
+			mouseChildren = true;
 			return (dados);
 		}
 		
@@ -66,10 +71,15 @@ package componentes
 		{
 			this.removeChildren();
 			this.loader.unload();
-			if (this.loader.hasEventListener(Event.COMPLETE)) {
-				try {
+			if (this.loader.hasEventListener(Event.COMPLETE))
+			{
+				try
+				{
 					this.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, complete);
-				} catch (e:Error) { }
+				}
+				catch (e:Error)
+				{
+				}
 			}
 			this.loader = null;
 		}
@@ -84,21 +94,41 @@ package componentes
 			this.scaleX = dados.scaleX;
 			this.scaleY = dados.scaleY;
 			
-			trace ('carregando', Main.projeto.pasta.resolvePath('imagens/pagina'+pagina+'/' + _id + '.jpg').url);
+			trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
 			
-			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina'+ pagina +'/' + _id + '.jpg').url));
-			
-			
+			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url));
+		
 			// acrescentar aqui todas as outras propriedades a salvar
 		
 		}
 		
-		private function exclui(ativo:Boolean):String{
-			if (ativo){
+		public function exclui(ativo:Boolean = false):void
+		{
+			if (ativo == true)
+			{
+				this.btExcImagem.visible = true;
+				this.btExcImagem.x = loader.x;
+				this.btExcImagem.y = loader.y;
+				this.btExcImagem.addEventListener(MouseEvent.CLICK, excluiImagem);
 				
 			}
+			else
+			{
+				this.btExcImagem.visible = false
+				
+			}
+		
 		}
-		private function complete(evt:Event):void {
+		
+		private function excluiImagem(evento:MouseEvent):void
+		{
+			dispatchEvent(new Event(String(_id), true));
+			this.dispose();
+		
+		}
+		
+		private function complete(evt:Event):void
+		{
 			(this.loader.content as Bitmap).smoothing = true;
 			this.loader.x = -this.loader.width / 2;
 			this.loader.y = -this.loader.height / 2;

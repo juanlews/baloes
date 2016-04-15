@@ -187,6 +187,7 @@ package telas
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
 					ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
+					this._imagem[k].exclui(false);
 				}
 				for (var i:int = 0; i < _balao.length; i++)
 				{

@@ -305,8 +305,8 @@ package telas
 			//open
 			
 			this._btOpen.width = stage.width / btscala;
-			this._btOpen.scaleY = _btOpen.scaleX;
-			this._btOpen.x = stage.stageWidth / 2 - _btOpen.width / 2;
+			this._btOpen.scaleY = this._btOpen.scaleX;
+			this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
 			this._btOpen.y = stage.stageHeight / 40;
 			
 			// posicionar carregar
@@ -339,7 +339,7 @@ package telas
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 				this._carregar.addEventListener(MouseEvent.CLICK, cliqueCarregar);
-				this._btOpen..addEventListener(MouseEvent.CLICK, cliqueAbreProjeto);
+				this._btOpen.addEventListener(MouseEvent.CLICK, cliqueAbreProjeto);
 				
 				// TROCA DO HELP
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
