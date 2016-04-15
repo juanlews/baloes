@@ -38,7 +38,10 @@ package componentes
 		{
 			return (_id);
 		}
-		
+		public function set id(para:int):void
+		{
+			this._id = para;
+		}
 		public function centraliza(refStage:Stage):void
 		{
 			this.loader.x = -this.loader.width / 2;

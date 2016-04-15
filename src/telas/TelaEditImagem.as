@@ -93,7 +93,11 @@ package telas
 		
 		}
 		private function excluiImagem(evento:Event):void {
-		    this._imagem[int(evento.type)]	
+		    this._imagem.splice(int(evento.type), 1);	
+			for (var i:int = 0; i < _imagem.length; i++)
+					{
+						this._imagem[i].id = i;
+					}
 			trace(evento.type);
 		}
 		private function cliqueOk(evento:MouseEvent):void
@@ -181,10 +185,7 @@ package telas
 			
 			_imagem[indice].rotation += evento.rotation;
 		}
-		private function removeImagem(evento:MouseEvent):void{
-			
-			
-		}
+	
 		
 		override public function recebeDados(dados:Object):void
 		{
