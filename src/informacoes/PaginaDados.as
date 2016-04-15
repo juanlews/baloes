@@ -48,7 +48,8 @@ package informacoes
 				for (i = 0; i < dados.baloes.length; i++) this.baloes.push(new BalaoDados(dados.baloes[i]));
 				// página recriada
 				return (true);
-			} else {
+			} 
+			else {
 				// o objeto de dados não traz informações de uma página
 				return (false);
 			}

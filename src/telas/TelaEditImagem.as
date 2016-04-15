@@ -23,7 +23,7 @@ package telas
 	public class TelaEditImagem extends Tela
 	{
 		private var _imagem:Vector.<Imagem>;
-		
+		private var _editavel:Boolean;
 		private var _ok:BotaoIcone;
 		private var _cancelar:BotaoIcone;		
 		private var dados:Object;
@@ -35,7 +35,7 @@ package telas
 			super(funcMudaTela);
 			btscala = 10;
 			dados = new Object();
-		   
+		    
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		   
@@ -95,7 +95,7 @@ package telas
 		private function excluiImagem(evento:Event):void {
 			
 		    this._imagem[int(evento.type)].removeEventListener(evento.type, excluiImagem);
-			this._imagem[int(evento.type)].apagarArquivo();
+			//this._imagem[int(evento.type)].apagarArquivo();
 			this._imagem.splice(int(evento.type), 1);	
 			for (var i:int = 0; i < _imagem.length; i++)
 					{

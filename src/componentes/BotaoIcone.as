@@ -9,15 +9,20 @@ package componentes
 	 */
 	public class BotaoIcone extends Sprite 
 	{
+		private var bmp:Bitmap;
 		
 		public function BotaoIcone(imagem:Class) 
 		{
 			super();
-			var bmp:Bitmap = new imagem() as Bitmap;
+			bmp = new imagem() as Bitmap;
 			this.addChild(bmp);
 			
 		}
-		
+		public function dispose():void{
+			removeChildren();
+			bmp.bitmapData.dispose();
+			bmp = null;
+		}
 	}
 
 }

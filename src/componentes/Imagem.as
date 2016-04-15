@@ -128,12 +128,10 @@ package componentes
 		{
 			dispatchEvent(new Event(String(_id), true));
 			this.dispose();
+			this.btExcImagem.dispose();
 		
 		}
-		public function apagarArquivo():void{
-			
-			
-		}
+		
 		public function redefineId(id:int, nPag:int):void{
 			
 			var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');
