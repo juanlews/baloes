@@ -5,6 +5,10 @@ package informacoes
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
+	import deng.fzip.FZip;
+	import deng.fzip.FZipEvent;
+	import deng.fzip.FZipFile;
+	import flash.utils.ByteArray;
 	
 	/**
 	 * ...
@@ -158,6 +162,96 @@ package informacoes
 				return (this.parse(jsonText));
 			} else {
 				return (false);
+			}
+		}
+		
+		/**
+		 * Exporta o conteúdo do projeto atual na forma de um arquivo binário único compactado.
+		 */
+		public function exportar():void
+		{
+			// salvando o projeto atual
+			this.salvar();
+			// exportando
+			this.exportarID(this.id);
+		}
+		
+		/**
+		 * Exporta o conteúdo do projeto com o ID indicado na forma de um arquivo binário único compactado.
+		 * @param	prID	id do projeto a exportar
+		 * @return	TRUE se o projeto existir e puder ser exportado
+		 */
+		public function exportarID(prID:String):Boolean
+		{
+			// o projeto existe?
+			var pastaProj:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + prID);
+			if (!pastaProj.isDirectory) {
+				// a pasta do projeto indicado não foi encontrada
+				return (false);
+			} else {
+				// verificando se existe o arquivo de informações do projeto
+				var arqProj:File = pastaProj.resolvePath('projeto.json');
+				if (!arqProj.exists) {
+					// o arquivo de projeto não existe
+					return (false);
+				} else {
+					// o arquivo de projeto está completo?
+					var ok:Boolean = false;
+					var json:Object;
+					var stream:FileStream = new FileStream();
+					stream.open(arqProj, FileMode.READ);
+					var fileData:String = stream.readUTFBytes(stream.bytesAvailable);
+					stream.close();
+					// recuperando o json
+					try {
+						json = JSON.parse(fileData);
+						ok = true;
+					} catch (e:Error) { }
+					// json carregado
+					if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null)) {
+						// não há informações suficientes
+						return (false);
+					} else {
+						// criando zip e arquivos para exportação
+						var zip:FZip = new FZip();
+						var fileBytes:ByteArray = new ByteArray();
+						// adicionando arquivo de projeto
+						stream.open(pastaProj.resolvePath('projeto.json'), FileMode.READ);
+						fileBytes.clear();
+						stream.readBytes(fileBytes);
+						stream.close();
+						zip.addFile((prID + '/projeto.json'), fileBytes);
+						// adicionando arquivo de capa
+						if (pastaProj.resolvePath('capa.jpg').exists) {
+							stream.open(pastaProj.resolvePath('capa.jpg'), FileMode.READ);
+							fileBytes.clear();
+							stream.readBytes(fileBytes);
+							stream.close();
+							zip.addFile((prID + '/capa.jpg'), fileBytes);
+						}
+						// adicionando arquivos de imagem
+						var pastaImagem:Array = pastaProj.resolvePath('imagens').getDirectoryListing();
+						for (var indice:int = 0; indice < pastaImagem.length; indice++) {
+							var pastaPagina:File = pastaImagem[indice] as File;
+							if (pastaPagina.isDirectory) {
+								var paginaLista:Array = pastaPagina.getDirectoryListing();
+								for (var indiceLista:int = 0; indiceLista < paginaLista.length; indiceLista++) {
+									var arqImagem:File = paginaLista[indiceLista] as File;
+									stream.open(arqImagem, FileMode.READ);
+									fileBytes.clear();
+									stream.readBytes(fileBytes);
+									stream.close();
+									zip.addFile((prID + '/imagens/pagina' + indice + '/' + arqImagem.name), fileBytes);
+								}
+							}
+						}
+						// finalizando o arquivo zip
+						stream.open(File.documentsDirectory.resolvePath(json.titulo + '.narrvisual'), FileMode.WRITE);
+						zip.serialize(stream);
+						stream.close();
+						return (true);
+					}
+				}
 			}
 		}
 	
