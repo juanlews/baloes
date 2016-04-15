@@ -309,9 +309,10 @@ package telas
 		
 		private function addPagina(evento:MouseEvent):void
 		{
-			if (Main.projeto.paginas.length == 0){
-			var criaPagina:int = Main.projeto.paginas.length;
-			Main.projeto.paginas[criaPagina] = new PaginaDados();
+			if (Main.projeto.paginas.length == 0)
+			{
+				var criaPagina:int = Main.projeto.paginas.length;
+				Main.projeto.paginas[criaPagina] = new PaginaDados();
 			}
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
@@ -326,10 +327,8 @@ package telas
 				_balao.shift().dispose();
 			}
 			
-			
-			
 			criaPagina = Main.projeto.paginas.length;
-			Main.projeto.paginas[criaPagina] = new PaginaDados();			
+			Main.projeto.paginas[criaPagina] = new PaginaDados();
 			paginaAtual = Main.projeto.paginas[criaPagina].numero = criaPagina;
 		}
 		
@@ -403,23 +402,24 @@ package telas
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
+			trace('inicio');
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
-			
+			trace('depois');
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
 			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
 			
 			// copiando o arquivo de imagem original para o destino
-			this._file.copyTo(arquivoDestino);
+			this._file.copyTo(arquivoDestino, true);
 			
 			// carregando a imagem do loader a partir do arquivo de destino
 			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-		
+			trace('fim');
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
@@ -432,6 +432,7 @@ package telas
 		
 		private function imagemCarregada(evento:Event):void
 		{
+			trace('inicio imgC');
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
@@ -460,7 +461,7 @@ package telas
 			{
 				ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
 			}
-		
+			trace('fim imgC');
 		}
 		
 		private function addBalao(evento:MouseEvent):void
@@ -500,9 +501,10 @@ package telas
 		
 		private function cliqueAjusteImg(evento:MouseEvent):void
 		{
-
+			
 			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
+			this._dados.paginaAtual = this.paginaAtual;
 			this.mudaTela('editimagem', _dados);
 		
 		}
@@ -545,7 +547,8 @@ package telas
 				{
 					this._balao = dados.balao as Vector.<Balao>;
 				}
-				if (dados.paginaAtual != null) {
+				if (dados.paginaAtual != null)
+				{
 					this.paginaAtual = dados.paginaAtual;
 				}
 				if (dados.balaoExclui != null)
@@ -616,7 +619,7 @@ package telas
 				
 				var dados:BalaoDados = this._balao[i].recuperaDados();
 				
-				trace ('balao dados', JSON.stringify(dados));
+				trace('balao dados', JSON.stringify(dados));
 				
 				pagina.baloes.push(dados);
 			}

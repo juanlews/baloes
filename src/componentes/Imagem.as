@@ -6,6 +6,7 @@ package componentes
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filesystem.File;
 	import flash.net.URLRequest;
 	import informacoes.ImagemDados;
 	import recursos.Graficos;
@@ -128,6 +129,18 @@ package componentes
 			dispatchEvent(new Event(String(_id), true));
 			this.dispose();
 		
+		}
+		public function apagarArquivo():void{
+			
+			
+		}
+		public function redefineId(id:int, nPag:int):void{
+			
+			var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');
+			var arquivoFinal:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + id + '.jpg');
+			arquivoAtual.moveTo(arquivoFinal, true);
+			this._id = id;
+			
 		}
 		
 		private function complete(evt:Event):void

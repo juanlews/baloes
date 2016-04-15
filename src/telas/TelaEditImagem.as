@@ -28,7 +28,7 @@ package telas
 		private var _cancelar:BotaoIcone;		
 		private var dados:Object;
 		private var btscala:Number;
-		
+		private var paginaAtual:int;
 		
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
@@ -93,10 +93,13 @@ package telas
 		
 		}
 		private function excluiImagem(evento:Event):void {
-		    this._imagem.splice(int(evento.type), 1);	
+			
+		    this._imagem[int(evento.type)].removeEventListener(evento.type, excluiImagem);
+			this._imagem[int(evento.type)].apagarArquivo();
+			this._imagem.splice(int(evento.type), 1);	
 			for (var i:int = 0; i < _imagem.length; i++)
 					{
-						this._imagem[i].id = i;
+						this._imagem[i].redefineId(i, paginaAtual);
 					}
 			trace(evento.type);
 		}
@@ -192,7 +195,7 @@ package telas
 			if (dados != null)
 			{
 				this._imagem = dados.imagem as Vector.<Imagem>;
-				
+				this.paginaAtual = dados.paginaAtual;
 			}
 			
 			else
