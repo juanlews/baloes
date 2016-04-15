@@ -171,7 +171,7 @@ package informacoes
 		public function exportar():void
 		{
 			// salvando o projeto atual
-			this.salvar();
+			this.salvarDados();
 			// exportando
 			this.exportarID(this.id);
 		}
@@ -253,6 +253,112 @@ package informacoes
 					}
 				}
 			}
+		}
+		
+		/**
+		 * Importa o conteúdo de um projeto binário compactado.
+		 * @param	origem	link para o local do arquivo binário
+		 * @return	TRUE se o arquivo existir e puder ser aberto
+		 */
+		public function importar(origem:File):Boolean
+		{
+			// abrindo arquivo de origem
+			if (origem.exists) {
+				// criando pasta temporária de importação
+				this._pastaTemp = File.createTempDirectory();
+				// recuperando informações do arquivo
+				var stream:FileStream = new FileStream();
+				var fileBytes:ByteArray = new ByteArray();
+				stream.open(origem, FileMode.READ);
+				fileBytes.clear();
+				stream.readBytes(fileBytes);
+				stream.close();
+				// abrindo zip
+				var zip:FZip = new FZip();
+				zip.addEventListener(FZipEvent.FILE_LOADED, onZipLoaded);
+				zip.addEventListener(Event.COMPLETE, onUnzipComplete);
+				zip.loadBytes(fileBytes);
+				// começando importação
+				return (true);
+			} else {
+				// o arquivo indicado não foi encontrado
+				return (false);
+			}
+		}
+		
+		/**
+		 * Um arquivo dentro do zip de importação foi retirado.
+		 */
+		private function onZipLoaded(evt:FZipEvent):void
+		{
+			var zipfile:FZipFile = evt.file;
+			if (zipfile.sizeUncompressed == 0) {
+				// arquivo sem dados: não recriar
+			} else {
+				// descompactando o arquivo em disco
+				var stream:FileStream = new FileStream();
+				stream.open(this._pastaTemp.resolvePath(zipfile.filename), FileMode.WRITE);
+				stream.writeBytes(zipfile.content);
+				stream.close();
+			}
+		}
+		
+		/**
+		 * Todos os arquivos dentro do zip de importação foram extraídos.
+		 */
+		private function onUnzipComplete(evt:Event):void
+		{
+			// liberando arquivo zip
+			var zip:FZip = evt.target as FZip;
+			zip.removeEventListener(FZipEvent.FILE_LOADED, onZipLoaded);
+			zip.removeEventListener(Event.COMPLETE, onUnzipComplete);
+			// verificando integridade do projeto
+			var pastas:Array = this._pastaTemp.getDirectoryListing();
+			if (pastas.length != 1) {
+				// o arquivo descompactado não contém uma única pasta: não é uma exportação válida
+				this.dispatchEvent(new Event(Event.CANCEL));
+			} else {
+				// verificando a pasta de projeto encontrada
+				var pastaProjeto:File = pastas[0] as File;
+				if (!pastaProjeto.isDirectory) {
+					// não há uma pasta recuperada de projeto
+					this.dispatchEvent(new Event(Event.CANCEL));
+				} else {
+					// verificando se há um arquivo de projeto
+					var arquivoProjeto:File = pastaProjeto.resolvePath('projeto.json');
+					if (!arquivoProjeto.exists) {
+						// não há um arquivo de projeto
+						this.dispatchEvent(new Event(Event.CANCEL));
+					} else {
+						// o arquivo é um json válido?
+						var stream:FileStream = new FileStream();
+						stream.open(arquivoProjeto, FileMode.READ);
+						var fdata:String = stream.readUTFBytes(stream.bytesAvailable);
+						stream.close();
+						var ok:Boolean = false;
+						var json:Object;
+						try {
+							json = JSON.parse(fdata);
+							ok = true;
+						} catch (e:Error) { }
+						if (!ok) {
+							// o arquivo não traz um json válido
+							this.dispatchEvent(new Event(Event.CANCEL));
+						} else {
+							if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null)) {
+								// o arquivo json não traz as informações necessárias
+								this.dispatchEvent(new Event(Event.CANCEL));
+							} else {
+								// projeto ok: copiar para a pasta de documentos
+								pastaProjeto.moveTo(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + json.id), true);
+								this.dispatchEvent(new Event(Event.COMPLETE));
+							}
+						}
+					}
+				}
+			}
+			// apagando pasta temporária
+			this._pastaTemp.deleteDirectory(true);
 		}
 	
 	}
