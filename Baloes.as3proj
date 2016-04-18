@@ -54,6 +54,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="..\..\libnative\NativeDialogs.ane" />
+    <element path="..\OAprendizagemLibs\compilados\fzip.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

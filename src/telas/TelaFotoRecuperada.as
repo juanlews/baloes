@@ -76,6 +76,9 @@ package telas
 		private var paginaAtual:int = 0;
 		
 		//
+		private var editavel:Boolean = false;
+		
+		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
 			btscala = 10;
@@ -115,46 +118,9 @@ package telas
 				// centralizar imagem	
 			}
 			
-			this._galeria.x = stage.stageWidth / 20;
-			this._galeria.y = stage.stageHeight / 40;
-			this._galeria.width = stage.stageWidth / btscala;
-			this._galeria.scaleY = this._galeria.scaleX;
-			
-			//botão ajuste do balão
-			this._ajusteBalao.width = stage.stageWidth / btscala;
-			this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
-			this._ajusteBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
-			this._ajusteBalao.y = stage.stageHeight / 40;
-			
-			//botão ajuste imagem
-			this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x) + stage.stageWidth / 20;
-			this._ajusteImagem.y = stage.stageHeight / 40;
-			this._ajusteImagem.width = stage.stageWidth / btscala;
-			this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
-			
-			//botão add Balao
-			this._addBalao..x = (this._ajusteImagem.width + this._ajusteImagem.x) + stage.stageWidth / 20;
-			this._addBalao.y = stage.stageHeight / 40;
-			this._addBalao.width = stage.stageWidth / btscala;
-			this._addBalao.scaleY = this._addBalao.scaleX;
-			
-			//botão add Balao
-			this._addPagina.x = (this._addBalao.width + this._addBalao.x) + stage.stageWidth / 20;
-			this._addPagina.y = stage.stageHeight / 40;
-			this._addPagina.width = stage.stageWidth / btscala;
-			this._addPagina.scaleY = this._addPagina.scaleX;
-			
-			// botão camera
-			this._camera.width = stage.stageWidth / btscala;
-			this._camera.scaleY = this._camera.scaleX;
-			this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
-			this._camera.y = stage.stageHeight / 40;
-			
-			//Proxima Pagina
 			this._proxPagina.width = stage.stageWidth / btscala;
 			this._proxPagina.scaleY = this._proxPagina.scaleX;
 			this._proxPagina.x = stage.stageWidth - this._proxPagina.width - stage.stageWidth / 20;
-			;
 			this._proxPagina.y = stage.stageHeight / 2;
 			
 			this._antPagina.width = stage.stageWidth / btscala;
@@ -162,70 +128,153 @@ package telas
 			this._antPagina.x = 0 + stage.stageWidth / 20;
 			this._antPagina.y = stage.stageHeight / 2;
 			
-			//botão salvar			
-			this._salvar.width = stage.stageWidth / btscala;
-			this._salvar.scaleY = this._salvar.scaleX;
-			this._salvar.x = stage.stageWidth / 20;
-			this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
-			
-			//botão cancelar
-			this._cancelar.width = stage.stageWidth / btscala;
-			this._cancelar.scaleY = this._cancelar.scaleX;
-			this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
-			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
-			
-			//imagem recuperada
-			
-			// adicionar listeners dos cliques dos botões
-			if (!this._salvar.hasEventListener(MouseEvent.CLICK))
+			if (editavel == true)
 			{
 				
-				this.addChild(linhabaixo);
-				this.addChild(linhacima);
-				ObjetoAprendizagem.areaImagem.y = linhacima.height;
+				this._galeria.x = stage.stageWidth / 20;
+				this._galeria.y = stage.stageHeight / 40;
+				this._galeria.width = stage.stageWidth / btscala;
+				this._galeria.scaleY = this._galeria.scaleX;
 				
-				for (var k:int = 0; k < _imagem.length; k++)
+				//botão ajuste do balão
+				this._ajusteBalao.width = stage.stageWidth / btscala;
+				this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
+				this._ajusteBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
+				this._ajusteBalao.y = stage.stageHeight / 40;
+				
+				//botão ajuste imagem
+				this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x) + stage.stageWidth / 20;
+				this._ajusteImagem.y = stage.stageHeight / 40;
+				this._ajusteImagem.width = stage.stageWidth / btscala;
+				this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
+				
+				//botão add Balao
+				this._addBalao..x = (this._ajusteImagem.width + this._ajusteImagem.x) + stage.stageWidth / 20;
+				this._addBalao.y = stage.stageHeight / 40;
+				this._addBalao.width = stage.stageWidth / btscala;
+				this._addBalao.scaleY = this._addBalao.scaleX;
+				
+				//botão add Balao
+				this._addPagina.x = (this._addBalao.width + this._addBalao.x) + stage.stageWidth / 20;
+				this._addPagina.y = stage.stageHeight / 40;
+				this._addPagina.width = stage.stageWidth / btscala;
+				this._addPagina.scaleY = this._addPagina.scaleX;
+				
+				// botão camera
+				this._camera.width = stage.stageWidth / btscala;
+				this._camera.scaleY = this._camera.scaleX;
+				this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
+				this._camera.y = stage.stageHeight / 40;
+				
+				//botão salvar			
+				this._salvar.width = stage.stageWidth / btscala;
+				this._salvar.scaleY = this._salvar.scaleX;
+				this._salvar.x = stage.stageWidth / 20;
+				this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
+				//
+				//botão cancelar
+				this._cancelar.width = stage.stageWidth / btscala;
+				this._cancelar.scaleY = this._cancelar.scaleX;
+				this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
+				this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
+				//imagem recuperada
+				
+				//Proxima Pagina
+				
+				// adicionar listeners dos cliques dos botões
+				if (!this._salvar.hasEventListener(MouseEvent.CLICK))
 				{
-					ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
-					this._imagem[k].exclui(false);
+					
+					this.addChild(linhabaixo);
+					this.addChild(linhacima);
+					ObjetoAprendizagem.areaImagem.y = linhacima.height;
+					
+					for (var k:int = 0; k < _imagem.length; k++)
+					{
+						ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
+						this._imagem[k].exclui(false);
+					}
+					for (var i:int = 0; i < _balao.length; i++)
+					{
+						ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
+						this._balao[i].smooth();
+					}
+					
+					this.addChild(this._ajusteBalao);
+					this.addChild(this._ajusteImagem);
+					this.addChild(this._salvar);
+					this.addChild(this._cancelar);
+					this.addChild(this._addBalao);
+					this.addChild(this._addPagina);
+					this.addChild(this._proxPagina);
+					this.addChild(this._antPagina);
+					this.addChild(this._camera);
+					this.addChild(this._galeria);
+					
+					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
+					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
+					this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
+					this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
+					this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+					this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
+					this._addPagina.addEventListener(MouseEvent.CLICK, addPagina);
+					this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
+					this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnterior);
+					this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
+					this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
+					
+					for (var j:int = 0; j < _balao.length; j++)
+					{
+						this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
+					}
+					
+					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+					
+					stage.addEventListener(Event.RESIZE, desenho);
+					
 				}
-				for (var i:int = 0; i < _balao.length; i++)
+			}
+			else
+			{
+				//botão cancelar
+			this._cancelar.width = stage.stageWidth / btscala;
+			this._cancelar.scaleY = this._cancelar.scaleX;
+			this._cancelar.x = stage.stageWidth / 2 -  _cancelar.width /2;
+			this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
+				
+				if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 				{
-					ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
-					this._balao[i].smooth();
+					
+					this.addChild(linhabaixo);
+					this.addChild(linhacima);
+					ObjetoAprendizagem.areaImagem.y = linhacima.height;
+					
+					for (k = 0; k < _imagem.length; k++)
+					{
+						ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
+						this._imagem[k].exclui(false);
+					}
+					for (i = 0; i < _balao.length; i++)
+					{
+						ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
+						this._balao[i].smooth();
+					}
+					
+					this.addChild(this._cancelar);
+					this.addChild(this._proxPagina);
+					this.addChild(this._antPagina);
+					
+					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
+					
+					this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
+					this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnterior);
+					
+					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+					
+					stage.addEventListener(Event.RESIZE, desenho);
+					
 				}
-				
-				this.addChild(this._ajusteBalao);
-				this.addChild(this._ajusteImagem);
-				this.addChild(this._salvar);
-				this.addChild(this._cancelar);
-				this.addChild(this._addBalao);
-				this.addChild(this._addPagina);
-				this.addChild(this._proxPagina);
-				this.addChild(this._antPagina);
-				this.addChild(this._camera);
-				this.addChild(this._galeria);
-				
-				this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
-				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-				this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
-				this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
-				this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
-				this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
-				this._addPagina.addEventListener(MouseEvent.CLICK, addPagina);
-				this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
-				this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnterior);
-				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
-				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
-				
-				for (var j:int = 0; j < _balao.length; j++)
-				{
-					this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
-				}
-				
-				Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-				
-				stage.addEventListener(Event.RESIZE, desenho);
+					//
 				
 			}
 		
@@ -479,7 +528,10 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
-			this.mudaTela('inicial', null);
+			editavel = false;
+			var dados:Object = new Object;
+			dados.editavel = editavel;
+			this.mudaTela('inicial', dados);
 		}
 		
 		private function cliquePropB(evento:MouseEvent):void
@@ -550,6 +602,10 @@ package telas
 				if (dados.paginaAtual != null)
 				{
 					this.paginaAtual = dados.paginaAtual;
+				}
+				if (dados.editavel != null)
+				{
+					this.editavel = dados.editavel;
 				}
 				if (dados.balaoExclui != null)
 				{

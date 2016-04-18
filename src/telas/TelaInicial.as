@@ -35,7 +35,7 @@ package telas
 	 */
 	public class TelaInicial extends Tela
 	{
-		private var _id:String = '1460570646533';
+		private var _id:String = '1460985335175';
 		private var paginaAtual:int = 0;
 		// botões
 		private var _galeria:BotaoIcone;
@@ -61,6 +61,9 @@ package telas
 		
 		//abrir file
 		private var _btOpen:BotaoIcone;
+		
+		//
+		private var editavel:Boolean = false;
 		
 		public function TelaInicial(funcMudaTela:Function)
 		{
@@ -150,7 +153,7 @@ package telas
 			
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
-			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina'+paginaAtual+'/' + (_imagem.length - 1) + '.jpg');
+			var arquivoDestino:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/imagens/pagina' + paginaAtual + '/' + (_imagem.length - 1) + '.jpg');
 			
 			// copiando o arquivo de imagem original para o destino
 			arquivoOrigem.copyTo(arquivoDestino);
@@ -164,6 +167,7 @@ package telas
 		{
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
+			this._imagem[0] = new Imagem(0);
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
 			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
@@ -172,10 +176,10 @@ package telas
 			this._file.copyTo(arquivoDestino);
 			
 			// carregando a imagem do loader a partir do arquivo de destino
-			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
+			this._imagem[0].loader.load(new URLRequest(arquivoDestino.url));
 			
-			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			this._imagem[0].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+			this._imagem[0].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 		
 			//this._imagem[0].loader.load(new URLRequest(this._file.url));
 		}
@@ -219,10 +223,10 @@ package telas
 			this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
 			
 			// mudar tela
-			
+			this.editavel = true;
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
-			
+			dados.editavel = this.editavel;
 			
 			this.mudaTela('fotorecuperada', dados);
 		
@@ -231,6 +235,7 @@ package telas
 		override public function recebeDados(dados:Object):void
 		{
 			paginaAtual = 0;
+			editavel = false;
 			Main.projeto.clear();
 			
 			ObjetoAprendizagem.areaImagem.visible = false;
@@ -241,19 +246,11 @@ package telas
 				{
 					_id = dados.id;
 					
-					while (_imagem.length > 0)
-					{
-						_imagem.shift().dispose();
-					}
-					
-					while (_balao.length > 0)
-					{
-						_balao.shift().dispose();
-					}
-			       
 				}
-				else {
-				_id = '1460570646533';
+				
+				else
+				{
+					_id = '1460985335175';
 				}
 				if (dados.imagem != null)
 				{
@@ -275,6 +272,15 @@ package telas
 				for (var xis:int = 0; xis < _balao.length; xis++)
 				{
 					this._balao[xis].id = xis;
+				}
+				while (_imagem.length > 0)
+				{
+					_imagem.shift().dispose();
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
 				}
 				
 			}
@@ -352,12 +358,12 @@ package telas
 		
 		private function cliqueAbreProjeto(evento:MouseEvent):void
 		{
-	
 			
-			if (Main.projeto.carregaProjeto('1460571455684'))
+			if (Main.projeto.carregaProjeto(_id))
 			{
 				
 				paginaAtual = 0;
+				editavel = false;
 				
 				ObjetoAprendizagem.areaImagem.removeChildren();
 				
@@ -396,8 +402,9 @@ package telas
 				var dados:Object = new Object();
 				
 				dados.imagem = this._imagem;
-			    dados.balao = this._balao;
+				dados.balao = this._balao;
 				dados.paginaAtual = 0;
+				dados.editavel = false;
 				mudaTela('fotorecuperada', dados);
 				
 			}

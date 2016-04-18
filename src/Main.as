@@ -70,6 +70,7 @@ package
 			
 			//
 			Main.projeto = new ProjetoDados();
+			Main.projeto.exportarID('1460571455684');
 		//	Main.projeto.titulo = 'primeiro projeto';
 		//	Main.projeto.tags.push('primeiro');
 		//	Main.projeto.tags.push('projeto');
