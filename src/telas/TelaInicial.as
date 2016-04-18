@@ -309,7 +309,7 @@ package telas
 			
 			//open
 			
-			this._btOpen.width = stage.width / btscala;
+			this._btOpen.width = stage.stageWidth/btscala;
 			this._btOpen.scaleY = this._btOpen.scaleX;
 			this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
 			this._btOpen.y = stage.stageHeight / 40;
