@@ -226,8 +226,7 @@ package telas
 			this.editavel = true;
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
-			dados.editavel = this.editavel;
-			
+			dados.editavel = this.editavel;						
 			this.mudaTela('fotorecuperada', dados);
 		
 		}
@@ -399,12 +398,13 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				editavel = Main.projeto.editavel;
 				var dados:Object = new Object();
 				
 				dados.imagem = this._imagem;
 				dados.balao = this._balao;
 				dados.paginaAtual = 0;
-				dados.editavel = false;
+				dados.editavel = editavel;
 				mudaTela('fotorecuperada', dados);
 				
 			}

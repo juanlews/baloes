@@ -23,7 +23,9 @@ package componentes
 			mouseChildren = false;
 			if (imagem != null) {
 				var bmp:Bitmap = new imagem() as Bitmap;
+				bmp.smoothing = true;
 				this.addChild(bmp);
+				
 			}
 			
 			this._texto = new TextField();

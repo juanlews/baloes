@@ -47,8 +47,7 @@ package
 		public static var projeto:ProjetoDados;
 		private var _telas:Array;
 		
-		public function Main() 
-		{
+		public function Main() {
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.addEventListener(Event.DEACTIVATE, deactivate);

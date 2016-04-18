@@ -1,6 +1,7 @@
 package informacoes
 {
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import informacoes.PaginaDados;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -15,7 +16,7 @@ package informacoes
 	 * ...
 	 * @author Lucas S. Junqueira
 	 */
-	public class ProjetoDados
+	public class ProjetoDados extends EventDispatcher
 	{
 		
 		public var titulo:String = '';
@@ -31,7 +32,9 @@ package informacoes
 		public var paginas:Vector.<PaginaDados> = new Vector.<PaginaDados>();
 		//public var pagina:PaginaDados;
 		
-		public function ProjetoDados()
+		private var _pastaTemp:File;
+		
+		public function ProjetoDados ()
 		{
 			this.tags = new Array();
 			this.clear();
@@ -67,6 +70,7 @@ package informacoes
 				this.titulo = dados.titulo;
 				this.tags = dados.tags;
 				this.id = dados.id;
+				this.editavel = dados.editavel;
 				for (var i:int = 0; i < dados.paginas.length; i++)
 				{
 					
@@ -265,6 +269,7 @@ package informacoes
 		 */
 		public function importar(origem:File):Boolean
 		{
+			
 			// abrindo arquivo de origem
 			if (origem.exists) {
 				// criando pasta temporária de importação

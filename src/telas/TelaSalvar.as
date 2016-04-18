@@ -16,6 +16,7 @@ package telas
 	import flash.text.TextField;
 	import componentes.BotaoIcone;
 	import componentes.TxBox;
+	import flash.text.TextFormat;
 	import flash.ui.Mouse;
 	import informacoes.ProjetoDados;
 	import recursos.Graficos;
@@ -42,12 +43,14 @@ package telas
 		private var _urlLoader:URLLoader;
 		private var _request:URLRequest;
 		private var anim:AnimacaoFrames;
-	
+		
 		private var btscala:Number;
 		
 		//
 		private var _btEditT:BotaoIcone;
 		private var _btEditF:BotaoIcone;
+		private var texto:TextField;
+		private var editavel:Boolean = true;
 		
 		public function TelaSalvar(funcMudaTela:Function)
 		{
@@ -59,8 +62,8 @@ package telas
 			
 			_ok = new BotaoIcone(Graficos.ImgPBOK);
 			_cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			_btEditT = new BotaoIcone (Graficos.ImgCheckT);
-			_btEditF = new BotaoIcone (Graficos.ImgCheck);
+			_btEditT = new BotaoIcone(Graficos.ImgCheckT);
+			_btEditF = new BotaoIcone(Graficos.ImgCheck);
 			
 			var classes:Vector.<Class> = new Vector.<Class>();
 			classes.push(Graficos.ImgAnimacao1);
@@ -73,6 +76,10 @@ package telas
 			classes.push(Graficos.ImgAnimacao8);
 			anim = new AnimacaoFrames(classes, 40);
 			
+			this.texto = new TextField();
+			this.texto.embedFonts = true;
+			this.texto.defaultTextFormat = new TextFormat('Pfennig', 25, 0X000000);
+			this.texto.text = 'Editavel';
 		
 		}
 		
@@ -179,17 +186,29 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-					
+			
 			_imagem.x = stage.stageWidth / 20;
 			_imagem.y = linhacima.height + linhacima.height / 10;
 			_imagem.width = stage.stageWidth / 4;
 			_imagem.scaleY = _imagem.scaleX;
 			
 			//
-			_btEditF.x = _imagem.x + stage.stageWidth / 20;
-			_btEditF.y = _imagem.y + linhacima.height + linhacima.height / 10;
-			//titulo
 			
+			_btEditF.x = (_imagem.x * 6) + stage.stageWidth / 20;
+			_btEditF.y = _imagem.y + linhacima.height + linhacima.height / 10;
+			_btEditF.width = stage.stageWidth / 12;
+			_btEditF.scaleY = _btEditF.scaleX;
+			
+			_btEditT.x = (_imagem.x * 6) + stage.stageWidth / 20;
+			_btEditT.y = _imagem.y + linhacima.height + linhacima.height / 10;
+			_btEditT.width = stage.stageWidth / 12;
+			_btEditT.scaleY = _btEditT.scaleX;
+			
+			texto.x = _btEditF.x + _btEditF.width;
+			texto.y = _btEditF.y;// + (_btEditF.height) ;
+			texto.height = _btEditF.height;
+			
+			//titulo
 			
 			_caixaTitulo.width = stage.stageWidth / 1.5;
 			_caixaTitulo.height = stage.stageHeight / 20;
@@ -215,11 +234,19 @@ package telas
 			
 			if (!_ok.hasEventListener(MouseEvent.CLICK))
 			{
+							
 				addChild(_caixaTags);
 				addChild(_caixaTitulo);
 				addChild(_ok);
 				addChild(_cancelar);
 				addChild(_btEditF);
+				addChild(_btEditT);
+				
+				addChild(texto);
+				
+				_btEditT.addEventListener(MouseEvent.CLICK, checkEditF);
+				_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
+				
 				_ok.addEventListener(MouseEvent.CLICK, salvaProjeto);
 				_cancelar.addEventListener(MouseEvent.CLICK, volta);
 				
@@ -227,17 +254,39 @@ package telas
 		
 		}
 		
+		private function checkEditF(evento:MouseEvent):void
+		{
+			editavel = false;
+			_btEditT.removeEventListener(MouseEvent.CLICK, checkEditT);
+			_btEditT.addEventListener(MouseEvent.CLICK, checkEditF);
+			_btEditT.visible = false;
+			_btEditF.visible = true;
+			
+			trace(editavel);
+		}
+		
+		private function checkEditT(evento:MouseEvent):void
+		{
+			editavel = true;
+			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
+			_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
+			_btEditF.visible = false;
+			_btEditT.visible = true;
+			trace(editavel);
+		}
+		
 		private function salvaProjeto(evento:MouseEvent):void
 		{
 			addChild(anim);
 			Main.projeto.titulo = this._caixaTitulo.text;
 			Main.projeto.tags = this._caixaTags.text.split('#');
-			
+			Main.projeto.editavel = editavel;
 			trace(Main.projeto.titulo, Main.projeto.tags);
 			
 			if (Main.projeto.salvarDados())
 			{
 				var dados:Object = new Object;
+				
 				dados.id = Main.projeto.id;
 				trace('projeto salvo');
 				mudaTela('inicial', dados);
@@ -297,6 +346,8 @@ package telas
 			{
 				removeChild(anim);
 			}
+			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
+			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditT);
 			stage.removeEventListener(Event.RESIZE, desenho);
 			_ok.removeEventListener(MouseEvent.CLICK, salvaImg);
 			_cancelar.removeEventListener(MouseEvent.CLICK, volta);

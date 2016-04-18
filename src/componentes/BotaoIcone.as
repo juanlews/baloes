@@ -15,6 +15,7 @@ package componentes
 		{
 			super();
 			bmp = new imagem() as Bitmap;
+			bmp.smoothing = true;
 			this.addChild(bmp);
 			
 		}
