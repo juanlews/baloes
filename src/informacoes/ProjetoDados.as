@@ -1,5 +1,6 @@
 package informacoes
 {
+	import flash.events.Event;
 	import informacoes.PaginaDados;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
@@ -24,6 +25,8 @@ package informacoes
 		public var id:String = '';
 		
 		public var pasta:File;
+		
+		public var editavel:Boolean;
 		
 		public var paginas:Vector.<PaginaDados> = new Vector.<PaginaDados>();
 		//public var pagina:PaginaDados;

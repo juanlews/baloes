@@ -42,8 +42,12 @@ package telas
 		private var _urlLoader:URLLoader;
 		private var _request:URLRequest;
 		private var anim:AnimacaoFrames;
-		
+	
 		private var btscala:Number;
+		
+		//
+		private var _btEditT:BotaoIcone;
+		private var _btEditF:BotaoIcone;
 		
 		public function TelaSalvar(funcMudaTela:Function)
 		{
@@ -55,6 +59,8 @@ package telas
 			
 			_ok = new BotaoIcone(Graficos.ImgPBOK);
 			_cancelar = new BotaoIcone(Graficos.ImgCancelar);
+			_btEditT = new BotaoIcone (Graficos.ImgCheckT);
+			_btEditF = new BotaoIcone (Graficos.ImgCheck);
 			
 			var classes:Vector.<Class> = new Vector.<Class>();
 			classes.push(Graficos.ImgAnimacao1);
@@ -66,6 +72,7 @@ package telas
 			classes.push(Graficos.ImgAnimacao7);
 			classes.push(Graficos.ImgAnimacao8);
 			anim = new AnimacaoFrames(classes, 40);
+			
 		
 		}
 		
@@ -165,19 +172,25 @@ package telas
 			this._imagem = new Loader();
 			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			this._imagem.load(new URLRequest(File.documentsDirectory.resolvePath( ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id +'/capa.jpg').url));
+			this._imagem.load(new URLRequest(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/capa.jpg').url));
 		
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			
+					
 			_imagem.x = stage.stageWidth / 20;
 			_imagem.y = linhacima.height + linhacima.height / 10;
 			_imagem.width = stage.stageWidth / 4;
 			_imagem.scaleY = _imagem.scaleX;
+			
+			//
+			_btEditF.x = _imagem.x + stage.stageWidth / 20;
+			_btEditF.y = _imagem.y + linhacima.height + linhacima.height / 10;
 			//titulo
+			
+			
 			_caixaTitulo.width = stage.stageWidth / 1.5;
 			_caixaTitulo.height = stage.stageHeight / 20;
 			_caixaTitulo.x = stage.stageWidth / 2 - _caixaTitulo.width / 2;
@@ -206,7 +219,7 @@ package telas
 				addChild(_caixaTitulo);
 				addChild(_ok);
 				addChild(_cancelar);
-				
+				addChild(_btEditF);
 				_ok.addEventListener(MouseEvent.CLICK, salvaProjeto);
 				_cancelar.addEventListener(MouseEvent.CLICK, volta);
 				
@@ -221,11 +234,13 @@ package telas
 			Main.projeto.tags = this._caixaTags.text.split('#');
 			
 			trace(Main.projeto.titulo, Main.projeto.tags);
-			if (Main.projeto.salvarDados()) {
-			var dados:Object = new Object;
-			dados.id = Main.projeto.id;	
-			trace('projeto salvo');
-			mudaTela('inicial', dados);
+			
+			if (Main.projeto.salvarDados())
+			{
+				var dados:Object = new Object;
+				dados.id = Main.projeto.id;
+				trace('projeto salvo');
+				mudaTela('inicial', dados);
 			}
 		}
 		
