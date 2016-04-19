@@ -319,8 +319,9 @@ package telas
 					_balao.shift().dispose();
 				}
 				Main.projeto.paginas[paginaAtual].clear();
-				Main.projeto.paginas[paginaAtual].dispose()
+				Main.projeto.paginas[paginaAtual].dispose();				
 				Main.projeto.paginas.splice(paginaAtual, 1);
+				
 				paginaAnterior(evento);
 			
 		}
