@@ -112,7 +112,8 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			
+			ObjetoAprendizagem.areaImagem.y = linhacima.height;
+			ObjetoAprendizagem.areaImagem.x = stage.stageWidth / 2 - ObjetoAprendizagem.areaImagem.width / 2;
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
 				// centralizar imagem	
@@ -138,9 +139,9 @@ package telas
 				
 				//botão ajuste do balão
 				this._ajusteBalao.width = stage.stageWidth / btscala;
-				this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
+				var numeroAjB:Number = this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
 				this._ajusteBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
-				var numeroAjB:Number = this._ajusteBalao.y = stage.stageHeight / 40;
+				this._ajusteBalao.y = stage.stageHeight / 40;
 				
 				//botão ajuste imagem
 				this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x) + stage.stageWidth / 20;
@@ -154,7 +155,7 @@ package telas
 				this._addBalao.width = stage.stageWidth / btscala;
 				var numeroAddB:Number = this._addBalao.scaleY = this._addBalao.scaleX;
 				
-				//botão add Balao
+				//botão add Pagina
 				this._addPagina.x = (this._addBalao.width + this._addBalao.x) + stage.stageWidth / 20;
 				this._addPagina.y = stage.stageHeight / 40;
 				this._addPagina.width = stage.stageWidth / btscala;
@@ -162,36 +163,41 @@ package telas
 				
 				// botão camera
 				this._camera.width = stage.stageWidth / btscala;
-				this._camera.scaleY = this._camera.scaleX;
+				var numeroCam:Number = this._camera.scaleY = this._camera.scaleX;
 				this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
-				var numeroCam:Number = this._camera.y = stage.stageHeight / 40;
+				this._camera.y = stage.stageHeight / 40;
 				
 				//botão salvar			
 				this._salvar.width = stage.stageWidth / btscala;
-				this._salvar.scaleY = this._salvar.scaleX;
+				var numeroSalv:Number = this._salvar.scaleY = this._salvar.scaleX;
 				this._salvar.x = stage.stageWidth / 20;
-				var numeroSalv:Number = this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
+				this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
 				//
 				//botão cancelar
 				this._cancelar.width = stage.stageWidth / btscala;
-				this._cancelar.scaleY = this._cancelar.scaleX;
+				var numeroCanc:Number = this._cancelar.scaleY = this._cancelar.scaleX;
 				this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
-				var numeroCanc:Number = this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
+				this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
 				//imagem recuperada
 				
 				//Proxima Pagina
 				
 				//tween nos botoes
 				
-				_galeria.scaleX = galeria.scaleY = 0;
+				_galeria.scaleX = _galeria.scaleY = 0;
 				_ajusteBalao.scaleX = _ajusteBalao.scaleY = 0;
+				_ajusteImagem.scaleX = _ajusteImagem.scaleY = 0;
+				_addBalao.scaleX = _addBalao.scaleY = 0;
+				_addPagina.scaleX = _addPagina.scaleX = 0;
+				_camera.scaleX = _camera.scaleY = 0;
 				
-				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 1});
-				Tweener.addTween(_ajusteBalao, { scaleX: numeroAjB, scaleY: numeroAjB, time: 1 } );
-				Tweener.addTween(_ajusteImagem, { scaleX: numeroAjI, scaleY: numeroAjI, time: 1 } );
-				Tweener.addTween(_ajusteBalao, { scaleX: numeroAjB, scaleY: numeroAddB, time: 1 } );
 				
-				
+				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.8});
+				Tweener.addTween(_ajusteBalao, {scaleX: numeroAjB, scaleY: numeroAjB, time: 0.8});
+				Tweener.addTween(_ajusteImagem, {scaleX: numeroAjI, scaleY: numeroAjI, time: 0.8});
+				Tweener.addTween(_addBalao, { scaleX: numeroAddB, scaleY: numeroAddB, time: 0.8 } );
+				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.8});
+				Tweener.addTween(_camera, { scaleX: numeroCam, scaleY: numeroCam, time: 0.8 } );
 				
 				
 				// adicionar listeners dos cliques dos botões
@@ -200,7 +206,7 @@ package telas
 					
 					this.addChild(linhabaixo);
 					this.addChild(linhacima);
-					ObjetoAprendizagem.areaImagem.y = linhacima.height;
+					
 					
 					for (var k:int = 0; k < _imagem.length; k++)
 					{
@@ -260,7 +266,8 @@ package telas
 					
 					this.addChild(linhabaixo);
 					this.addChild(linhacima);
-					ObjetoAprendizagem.areaImagem.y = linhacima.height;
+					
+					
 					
 					for (k = 0; k < _imagem.length; k++)
 					{

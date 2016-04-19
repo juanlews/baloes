@@ -57,9 +57,12 @@ package telas
 			this._cancelar.x = stage.stageWidth - _cancelar.width - this.stage.stageWidth / 20;
 			this._cancelar.y = stage.stageHeight - this._cancelar.height - stage.stageHeight / 40;
 			
+			ObjetoAprendizagem.areaImagem.y = linhacima.height;
+			
+			
 			if (!this._cancelar.hasEventListener(MouseEvent.CLICK))
 			{
-				ObjetoAprendizagem.areaImagem.y = linhacima.height;
+				
 				stage.addEventListener(Event.RESIZE, desenho);
 				stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 				stage.addEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);				
