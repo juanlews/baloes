@@ -113,8 +113,10 @@ package telas
 		{
 			super.desenho(evento);
 			
+			/*
 			ObjetoAprendizagem.areaImagem.y = linhacima.height;
 			ObjetoAprendizagem.areaImagem.x = stage.stageWidth / 2 - ObjetoAprendizagem.areaImagem.width / 2;
+			*/
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{

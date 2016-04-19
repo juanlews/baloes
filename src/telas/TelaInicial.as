@@ -358,7 +358,7 @@ package telas
 			
 			if (!definido){				
 				definido = true;
-				const area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
+				var area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
 				ObjetoAprendizagem.areaImagem.fitOnArea(area);
 				
 				trace('fiton', definido);
