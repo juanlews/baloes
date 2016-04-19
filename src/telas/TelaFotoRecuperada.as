@@ -117,15 +117,8 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-<<<<<<< HEAD
-			addChild(_btExcluiPagina);
-=======
-			
-			/*
-			ObjetoAprendizagem.areaImagem.y = linhacima.height;
-			ObjetoAprendizagem.areaImagem.x = stage.stageWidth / 2 - ObjetoAprendizagem.areaImagem.width / 2;
-			*/
->>>>>>> origin/master
+            addChild(_btExcluiPagina);
+
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
@@ -255,6 +248,7 @@ package telas
 					this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnterior);
 					this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 					this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
+					this._btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
 					
 					for (var j:int = 0; j < _balao.length; j++)
 					{
@@ -310,6 +304,22 @@ package telas
 				
 			}
 		
+		}
+		
+		private function excluiPagina(evento:MouseEvent):void {
+			
+			while (_imagem.length > 0)
+				{
+					_imagem.shift().dispose();
+					
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				Main.projeto.paginas.splice(paginaAtual, 1);	
+			
 		}
 		
 		private function proximaPagina(evento:MouseEvent):void
