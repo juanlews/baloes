@@ -13,11 +13,11 @@ package telas
 	 */
 	public class Tela extends Sprite
 	{
-				
+		
 		protected var mudaTela:Function;
 		protected var linhacima:Shape;
 		protected var linhabaixo:Shape;
-	    private var define:int = 0;
+		
 		
 		public function Tela(funcMudaTela:Function)
 		{
@@ -32,9 +32,7 @@ package telas
 			linhacima = new Shape();
 			addChild(linhacima);
 			addChild(linhabaixo);
-			
-			
-			 
+		
 		}
 		
 		public function desenho(evento:Event = null):void
@@ -52,17 +50,10 @@ package telas
 			}
 			
 			linhabaixo.y = stage.stageHeight - stage.stageHeight / 10;
-			linhabaixo.x = 0;
+			linhabaixo.x = 0;		
 			
-			if(this.define == 0){
-			const area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
-			ObjetoAprendizagem.areaImagem.fitOnArea(area);
-			this.define = 100;
-			trace('fiton');
-			
-			}
 			this.addChild(ObjetoAprendizagem.areaImagem);
-		    
+		
 		}
 		
 		public function escondendo(evento:Event):void

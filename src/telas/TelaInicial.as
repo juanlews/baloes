@@ -17,6 +17,7 @@ package telas
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.geom.Rectangle;
 	import flash.media.CameraRoll;
 	import flash.media.CameraUI;
 	import flash.media.MediaPromise;
@@ -64,6 +65,7 @@ package telas
 		
 		//
 		private var editavel:Boolean = false;
+		private var definido:Boolean = false;
 		
 		public function TelaInicial(funcMudaTela:Function)
 		{
@@ -353,6 +355,15 @@ package telas
 				
 				ObjetoAprendizagem.areaImagem.visible = false;
 			}
+			
+			if (!definido){				
+				definido = true;
+				const area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
+				ObjetoAprendizagem.areaImagem.fitOnArea(area);
+				
+				trace('fiton', definido);
+			}
+			
 		}
 		
 		private function cliqueAbreProjeto(evento:MouseEvent):void
