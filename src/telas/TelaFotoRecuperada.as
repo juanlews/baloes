@@ -307,7 +307,8 @@ package telas
 		
 		private function excluiPagina(evento:MouseEvent):void
 		{
-			while (_imagem.length > 0)
+			
+				while (_imagem.length > 0)
 			{
 				_imagem.shift().dispose();
 				
@@ -321,6 +322,7 @@ package telas
 			if (paginaAtual == 0)
 			{
 				trace('apagou');
+			
 			}
 			
 			else
