@@ -117,8 +117,7 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-            addChild(_btExcluiPagina);
-
+			addChild(_btExcluiPagina);
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
@@ -306,24 +305,35 @@ package telas
 		
 		}
 		
-		private function excluiPagina(evento:MouseEvent):void {
-			
+		private function excluiPagina(evento:MouseEvent):void
+		{
 			while (_imagem.length > 0)
-				{
-					_imagem.shift().dispose();
-					
-				}
+			{
+				_imagem.shift().dispose();
 				
-				while (_balao.length > 0)
-				{
-					_balao.shift().dispose();
-				}
-				Main.projeto.paginas[paginaAtual].clear();
-				Main.projeto.paginas[paginaAtual].dispose();				
-				Main.projeto.paginas.splice(paginaAtual, 1);
+			}
+			
+			while (_balao.length > 0)
+			{
+				_balao.shift().dispose();
+			}
+			
+			if (paginaAtual == 0)
+			{
+				trace('apagou');
+			}
+			
+			else
+			{
 				
 				paginaAnterior(evento);
-			
+				
+				Main.projeto.salvarDados();
+				Main.projeto.paginas.splice(Main.projeto.paginas.length - 1, 1);
+				salvarPagina(paginaAtual);
+				Main.projeto.salvarDados();
+			}
+		
 		}
 		
 		private function proximaPagina(evento:MouseEvent):void
