@@ -98,7 +98,7 @@ package telas
 		private function excluiImagem(evento:Event):void {
 			
 		    this._imagem[int(evento.type)].removeEventListener(evento.type, excluiImagem);
-			//this._imagem[int(evento.type)].apagarArquivo();
+		
 			this._imagem.splice(int(evento.type), 1);	
 			for (var i:int = 0; i < _imagem.length; i++)
 					{
