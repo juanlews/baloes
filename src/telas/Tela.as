@@ -17,7 +17,7 @@ package telas
 		protected var mudaTela:Function;
 		protected var linhacima:Shape;
 		protected var linhabaixo:Shape;
-	
+	    private var define:int = 0;
 		public function Tela(funcMudaTela:Function)
 		{
 			super();
@@ -52,7 +52,7 @@ package telas
 			
 			linhabaixo.y = stage.stageHeight - stage.stageHeight / 10;
 			linhabaixo.x = 0;
-			var define:int = 0;
+			
 			if(define == 0){
 			const area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
 			ObjetoAprendizagem.areaImagem.fitOnArea(area);
