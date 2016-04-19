@@ -191,14 +191,12 @@ package telas
 				_addPagina.scaleX = _addPagina.scaleX = 0;
 				_camera.scaleX = _camera.scaleY = 0;
 				
-				
 				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.8});
 				Tweener.addTween(_ajusteBalao, {scaleX: numeroAjB, scaleY: numeroAjB, time: 0.8});
 				Tweener.addTween(_ajusteImagem, {scaleX: numeroAjI, scaleY: numeroAjI, time: 0.8});
-				Tweener.addTween(_addBalao, { scaleX: numeroAddB, scaleY: numeroAddB, time: 0.8 } );
+				Tweener.addTween(_addBalao, {scaleX: numeroAddB, scaleY: numeroAddB, time: 0.8});
 				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.8});
-				Tweener.addTween(_camera, { scaleX: numeroCam, scaleY: numeroCam, time: 0.8 } );
-				
+				Tweener.addTween(_camera, {scaleX: numeroCam, scaleY: numeroCam, time: 0.8});
 				
 				// adicionar listeners dos cliques dos botões
 				if (!this._salvar.hasEventListener(MouseEvent.CLICK))
@@ -206,7 +204,6 @@ package telas
 					
 					this.addChild(linhabaixo);
 					this.addChild(linhacima);
-					
 					
 					for (var k:int = 0; k < _imagem.length; k++)
 					{
@@ -266,8 +263,6 @@ package telas
 					
 					this.addChild(linhabaixo);
 					this.addChild(linhacima);
-					
-					
 					
 					for (k = 0; k < _imagem.length; k++)
 					{
