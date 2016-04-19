@@ -70,6 +70,7 @@ package telas
 		
 		//camera
 		private var camera:CameraUI;
+		
 		//
 		private var _exc:int;
 		
@@ -77,6 +78,8 @@ package telas
 		
 		//
 		private var editavel:Boolean = false;
+		
+		private var _btExcluiPagina:BotaoIcone;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -100,6 +103,8 @@ package telas
 			this._addPagina = new BotaoIcone(Graficos.ImgNovaPagina);
 			this._proxPagina = new BotaoIcone(Graficos.ImgSetaDir);
 			this._antPagina = new BotaoIcone(Graficos.ImgSetaEsq)
+			this._btExcluiPagina = new BotaoIcone(Graficos.excImagem);
+			
 			_dados = new Object();
 			
 			this._roll = new CameraRoll();
@@ -112,9 +117,7 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
-			
-			ObjetoAprendizagem.areaImagem.y = linhacima.height;
-			ObjetoAprendizagem.areaImagem.x = stage.stageWidth / 2 - ObjetoAprendizagem.areaImagem.width / 2;
+			addChild(_btExcluiPagina);
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
@@ -133,6 +136,10 @@ package telas
 			
 			if (editavel == true)
 			{
+				this._btExcluiPagina.width = stage.stageWidth / 20;
+				this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
+				this._btExcluiPagina.x = ObjetoAprendizagem.areaImagem.x - this._btExcluiPagina.width;
+				this._btExcluiPagina.y = ObjetoAprendizagem.areaImagem.y;
 				
 				this._galeria.x = stage.stageWidth / 20;
 				this._galeria.y = stage.stageHeight / 40;
