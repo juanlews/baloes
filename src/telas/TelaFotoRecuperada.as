@@ -117,7 +117,15 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+<<<<<<< HEAD
 			addChild(_btExcluiPagina);
+=======
+			
+			/*
+			ObjetoAprendizagem.areaImagem.y = linhacima.height;
+			ObjetoAprendizagem.areaImagem.x = stage.stageWidth / 2 - ObjetoAprendizagem.areaImagem.width / 2;
+			*/
+>>>>>>> origin/master
 			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
