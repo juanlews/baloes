@@ -112,8 +112,10 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+			
 			ObjetoAprendizagem.areaImagem.y = linhacima.height;
 			ObjetoAprendizagem.areaImagem.x = stage.stageWidth / 2 - ObjetoAprendizagem.areaImagem.width / 2;
+			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
 				// centralizar imagem	
@@ -598,7 +600,10 @@ package telas
 		override public function recebeDados(dados:Object):void
 		{
 			
-			ObjetoAprendizagem.areaImagem.visible = true;
+			if (!ObjetoAprendizagem.areaImagem.visible)
+			{
+				ObjetoAprendizagem.areaImagem.visible = true;
+			}
 			
 			if (dados != null)
 			{
