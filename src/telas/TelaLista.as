@@ -110,6 +110,7 @@ package telas
 			dados.id = String(this._listaProj.escolhido.id);
 			dados.tela = 'carregar'; 
 			this.stage.removeChild(_listaProj);
+			
 			mudaTela('inicial', dados);
 			// carregar projeto this._listaProj.escolhido.id
 			// abrir tela de visualização
@@ -308,6 +309,7 @@ package telas
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
+			removeChildren();
 		/*	for (var i:int = 0; i < this._lista.length; i++)
 			{
 				if (this._lista[i].hasEventListener(MouseEvent.CLICK))

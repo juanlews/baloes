@@ -144,10 +144,10 @@ package componentes
 		private function complete(evt:Event):void
 		{
 			
-		    (this.loader.content as Bitmap).smoothing = true;
+		   /* (this.loader.content as Bitmap).smoothing = true;
 			this.loader.x = -this.loader.width / 2;
 			this.loader.y = -this.loader.height / 2;
-		}
+	*/	}
 	
 	}
 

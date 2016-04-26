@@ -654,7 +654,7 @@ package telas
 		{
 			
 			if (!ObjetoAprendizagem.areaImagem.visible)
-			{
+			{   addChild(ObjetoAprendizagem.areaImagem);
 				ObjetoAprendizagem.areaImagem.visible = true;
 			}
 			

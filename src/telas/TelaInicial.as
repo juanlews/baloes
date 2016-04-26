@@ -380,7 +380,7 @@ package telas
 			
 			if (Main.projeto.carregaProjeto(id))
 			{
-				_id = id;
+				trace(_id = id);
 				
 				paginaAtual = 0;
 				editavel = false;
@@ -419,6 +419,7 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				trace('carregou');
 				editavel = Main.projeto.editavel;
 				var dados:Object = new Object();
 				
@@ -435,7 +436,6 @@ package telas
 		private function cliqueCarregar(evento:MouseEvent):void
 		{
 			trace('server');
-			
 			this.mudaTela('lista', null);
 		}
 		
@@ -451,7 +451,9 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);
-		
+	
+			this.removeChildren();
+
 		}
 		
 		private function swipeTela(evento:TransformGestureEvent):void
