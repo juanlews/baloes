@@ -85,7 +85,7 @@ package telas
 			addChild(_proximo);
 			addChild(_anterior);
 			
-			_listaProj = new EscolhaProjeto('Escolha um projeto',_btOk ,_btCancelar , _btAbrir, File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/'));
+			_listaProj = new EscolhaProjeto('Escolha um projeto',_btOk ,_btCancelar , _btAbrir, new BotaoIcone(Graficos.ImgLixeira), File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/'));
 		
 			this._listaProj.addEventListener(Event.COMPLETE, onEscolhaOK);
 			this._listaProj.addEventListener(Event.CANCEL, onEscolhaCancel);
@@ -109,7 +109,7 @@ package telas
 			
 			dados.id = String(this._listaProj.escolhido.id);
 			dados.tela = 'carregar'; 
-			
+			this.stage.removeChild(_listaProj);
 			mudaTela('inicial', dados);
 			// carregar projeto this._listaProj.escolhido.id
 			// abrir tela de visualização
