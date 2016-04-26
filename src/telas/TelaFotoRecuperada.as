@@ -308,29 +308,42 @@ package telas
 		private function excluiPagina(evento:MouseEvent):void
 		{
 			
-				while (_imagem.length > 0)
-			{
-				_imagem.shift().dispose();
-				
-			}
+			// 1. verificar se tem mais de uma página - se tiver, limpar a página atual, apagar a pasta "pagina0" e criar pasta "pagina0" novamente
+			// 2. se tiver mais de 1 página, conferir se a atual é a última => se for a última, mudar para a penúltima
+			// 3. apagar pasta de arquivos da última página "pagina#"
+			// 4. apagar dados da última página
+			// Main.projeto.paginas[Main.projeto.paginas.length - 1].dispose();
+			// Main.projeto.paginas.splice(Main.projeto.paginas.length - 1, 1);
 			
-			while (_balao.length > 0)
-			{
-				_balao.shift().dispose();
-			}
+			// se só existir uma página
 			
 			if (paginaAtual == 0)
 			{
+				while (_imagem.length > 0)
+				{
+					_imagem.shift().dispose();
+					
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				
 				trace('apagou');
-			
+				
+				Main.projeto.excluiPastaPagina(0);
+				
 			}
 			
 			else
 			{
-				
+				if(paginaAtual == Main.projeto.paginas.length - 1)
+			{
 				paginaAnterior(evento);
-				
+			}	
 				Main.projeto.salvarDados();
+				Main.projeto.excluiPastaPagina(Main.projeto.paginas.length - 1);
 				Main.projeto.paginas.splice(Main.projeto.paginas.length - 1, 1);
 				salvarPagina(paginaAtual);
 				Main.projeto.salvarDados();

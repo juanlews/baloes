@@ -17,7 +17,6 @@
   <classpaths>
     <class path="src" />
     <class path="..\OAprendizagemLibs" />
-    <class path="..\..\OAprendizagem\LibColabora\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -57,6 +56,9 @@
     <element path="..\..\libnative\NativeDialogs.ane" />
     <element path="..\OAprendizagemLibs\compilados\fzip.swc" />
     <element path="..\..\OAprendizagem\LibColabora\src\compilados\fzip.swc" />
+    <element path="..\OAprendizagemLibs\compilados\shineMP3_alchemy.swc" />
+    <element path="..\OAprendizagemLibs\compilados\ZXing.swc" />
+    <element path="..\OAprendizagemLibs\extensoes\ZXing.ane" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

@@ -1,11 +1,16 @@
 package telas
 {
+	import colabora.display.EscolhaProjeto;
+	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.BotaoIcone;
 	import componentes.BotaoLista;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
+	import flash.filesystem.File;
 	import flash.geom.Rectangle;
+	import flash.net.FileFilter;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
@@ -21,6 +26,8 @@ package telas
 	public class TelaLista extends Tela
 	{
 		
+		private var _listaProj:EscolhaProjeto;
+		
 		private const IMAGENSPORPAGINA:int = 5;
 		private const link:String = 'http://192.168.10.159/';
 		private var _lista:Vector.<BotaoLista>;
@@ -32,6 +39,9 @@ package telas
 		private var _voltar:BotaoIcone;
 		private var _proximo:BotaoIcone;
 		private var _anterior:BotaoIcone;
+		private var _btOk:BotaoIcone;
+		private var _btCancelar:BotaoIcone;
+		private var _btAbrir:BotaoIcone;
 		
 		//Conexão com server
 		private var _request:URLRequest;
@@ -46,7 +56,11 @@ package telas
 			_voltar = new BotaoIcone(Graficos.ImgCancelar);
 			_proximo = new BotaoIcone(Graficos.ImgSetad);
 			_anterior = new BotaoIcone(Graficos.ImgSetae);
+			_btOk = new BotaoIcone(Graficos.ImgPBOK);
+			_btCancelar = new BotaoIcone(Graficos.ImgCancelar);
+			_btAbrir = new BotaoIcone(Graficos.ImgOpenFile);
 			
+			/*
 			this._lista = new Vector.<BotaoLista>();
 			for (var ilista:int = 0; ilista < IMAGENSPORPAGINA; ilista++)
 			{
@@ -55,7 +69,7 @@ package telas
 			
 			this._nomes = new Vector.<String>();
 			
-			// --------------------------------------
+			/* / --------------------------------------
 			envio = new URLVariables();
 			_urlLoader = new URLLoader();
 			_request = new URLRequest(link + "baloes/listar.php");
@@ -66,13 +80,96 @@ package telas
 			envio['valida'] = MD5.hash('asdfg');
 			_request.data = envio;
 			_urlLoader.load(_request);
-			
+			*/
 			addChild(_voltar);
 			addChild(_proximo);
 			addChild(_anterior);
+			
+			_listaProj = new EscolhaProjeto('Escolha um projeto',_btOk ,_btCancelar , _btAbrir, File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/'));
 		
+			this._listaProj.addEventListener(Event.COMPLETE, onEscolhaOK);
+			this._listaProj.addEventListener(Event.CANCEL, onEscolhaCancel);
+			// this._listaProj.addEventListener(Event.OPEN, onEscolhaOpen);
+			
+			
 		}
-		
+		//
+		private function onEscolhaCancel(evt:Event):void
+		{
+			this.stage.removeChild(this._listaProj);
+			// voltar pra outra tela
+		}
+
+		//
+		private function onEscolhaOK(evt:Event):void
+		{
+			
+			trace ('projeto selecionado', JSON.stringify(this._listaProj.escolhido));
+			var dados:Object = new Object;
+			dados.id = this._listaProj.escolhido.id;
+			dados.tela = 'carregar'; 
+			mudaTela('inicial', dados);
+			// carregar projeto this._listaProj.escolhido.id
+			// abrir tela de visualização
+			
+			/*var acOK:Boolean = false;
+			switch (this._acAtual) {
+				case 'abrir projeto':
+					if (this._listaProj.escolhido != null) {
+						if (this._listaProj.escolhido.id != null) {
+							// salvar projeto atual
+							Main.projeto.salvar();
+							// carregar o projeto selecionado
+							if (Main.projeto.carregaProjeto(this._listaProj.escolhido.id)) Main.projeto.tempoAtual = 0;
+							this.desenhaTrilhas();
+							// ação ok
+							acOK = true;
+						}
+					}
+					if (!acOK) {
+						// avisar sobre problema ao abrir projeto
+						this.stage.removeChild(this._listaProj);
+						//this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível abrir o projeto escolhido. Por favor tente novamente.');
+						//this.stage.addChild(this._telaMensagem);
+					} else {
+						// mostrar projeto aberto
+						this.stage.removeChild(this._listaProj);
+						//this.addChild(this._telaPrincipal);
+					}
+					break;
+				case 'exportar projeto':
+					if (this._listaProj.escolhido != null) {
+						if (this._listaProj.escolhido.id != null) {
+							// recuperando nome de arquivo
+							var exportado:String = Main.projeto.exportarID(this._listaProj.escolhido.id as String);
+							if (exportado != '') {
+								// ação ok
+								acOK = true;
+							}
+						}
+					}
+					if (!acOK) {
+						// avisar sobre problema ao exportar projeto
+						this.stage.removeChild(this._listaProj);
+						//this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido. Por favor tente novamente.');
+						//this.stage.addChild(this._telaMensagem);
+					} else {
+						// avisar sobre o projeto exportado
+						this.stage.removeChild(this._listaProj);
+						//this._telaMensagem.defineMensagem('<b>Exportação concluída</b><br />&nbsp;<br />O projeto selecionado foi exportado e está gravado com o nome <br />&nbsp;<br /><b>' + exportado + '</b><br />&nbsp;<br />na pasta <br />&nbsp;<br /><b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados').nativePath + '</b><br />&nbsp;<br />de seu aparelho.');
+						//this.stage.addChild(this._telaMensagem);
+					}
+					break;
+				default:
+					this.stage.removeChild(this._listaProj);
+					//this.addChild(this._telaPrincipal);
+					break;
+			}*/
+			
+		}
+		//
+			
+		//
 		private function erroIO(evento:IOErrorEvent):void
 		{
 			
@@ -158,6 +255,10 @@ package telas
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+						
+			this.stage.addChild(_listaProj);
+			_listaProj.listar();
+			/*
 			
 			envio = new URLVariables();
 			_urlLoader = new URLLoader();
@@ -198,21 +299,21 @@ package telas
 				
 				trace('adicionou');
 				
-			}
+			}*/
 		
 		}
 		
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
-			for (var i:int = 0; i < this._lista.length; i++)
+		/*	for (var i:int = 0; i < this._lista.length; i++)
 			{
 				if (this._lista[i].hasEventListener(MouseEvent.CLICK))
 				{
 					this._lista[i].removeEventListener(MouseEvent.CLICK, cliqueLista);
 				}
 			}
-		
+		*/
 		}
 		
 		private function cliqueLista(evento:MouseEvent):void

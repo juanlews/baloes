@@ -228,7 +228,7 @@ package telas
 			this.editavel = true;
 			dados.imagem = this._imagem;
 			dados.balao = this._balao as Vector.<Balao>;
-			dados.editavel = this.editavel;						
+			dados.editavel = this.editavel;
 			this.mudaTela('fotorecuperada', dados);
 		
 		}
@@ -246,7 +246,10 @@ package telas
 				if (dados.id != null)
 				{
 					_id = dados.id;
-					
+					if (dados.tela != null && dados.tela == 'carregar')
+					{
+						carregaProjeto(_id);
+					}
 				}
 				
 				else
@@ -311,7 +314,7 @@ package telas
 			
 			//open
 			
-			this._btOpen.width = stage.stageWidth/btscala;
+			this._btOpen.width = stage.stageWidth / btscala;
 			this._btOpen.scaleY = this._btOpen.scaleX;
 			this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
 			this._btOpen.y = stage.stageHeight / 40;
@@ -356,21 +359,28 @@ package telas
 				ObjetoAprendizagem.areaImagem.visible = false;
 			}
 			
-			if (!definido){				
+			if (!definido)
+			{
 				definido = true;
 				var area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
 				ObjetoAprendizagem.areaImagem.fitOnArea(area);
 				
 				trace('fiton', definido);
 			}
-			
+		
 		}
 		
 		private function cliqueAbreProjeto(evento:MouseEvent):void
 		{
+			this.carregaProjeto(_id);
+		}
+		
+		public function carregaProjeto(id):void
+		{
 			
-			if (Main.projeto.carregaProjeto(_id))
+			if (Main.projeto.carregaProjeto(id))
 			{
+				_id = id;
 				
 				paginaAtual = 0;
 				editavel = false;

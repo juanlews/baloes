@@ -262,6 +262,13 @@ package informacoes
 			}
 		}
 		
+		public function excluiPastaPagina(nPaginaPasta:int):void{
+			Main.projeto.pasta.resolvePath('imagens/pagina' + nPaginaPasta).deleteDirectory(true);
+			if (nPaginaPasta == 0 ){
+				Main.projeto.pasta.resolvePath('imagens/pagina' + nPaginaPasta).createDirectory();
+			}
+		}
+		
 		/**
 		 * Importa o conteúdo de um projeto binário compactado.
 		 * @param	origem	link para o local do arquivo binário
@@ -311,6 +318,7 @@ package informacoes
 			}
 		}
 		
+			
 		/**
 		 * Todos os arquivos dentro do zip de importação foram extraídos.
 		 */
