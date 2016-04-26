@@ -102,12 +102,14 @@ package telas
 
 		//
 		private function onEscolhaOK(evt:Event):void
-		{
-			
-			trace ('projeto selecionado', JSON.stringify(this._listaProj.escolhido));
+		{   trace('escolhidoOk ');
 			var dados:Object = new Object;
-			dados.id = this._listaProj.escolhido.id;
+			trace('escolhido é', this._listaProj.escolhido.id);
+			trace ('projeto selecionado', JSON.stringify(this._listaProj.escolhido));
+			
+			dados.id = String(this._listaProj.escolhido.id);
 			dados.tela = 'carregar'; 
+			
 			mudaTela('inicial', dados);
 			// carregar projeto this._listaProj.escolhido.id
 			// abrir tela de visualização
@@ -216,7 +218,7 @@ package telas
 			}
 		}
 		
-		private function mostraPagina(num:int):void
+	/*	private function mostraPagina(num:int):void
 		{
 			trace('Pagina');
 			if ((num >= 0) && ((num * IMAGENSPORPAGINA) < this._nomes.length))
@@ -250,7 +252,7 @@ package telas
 			}
 			trace('Fim da Pagina');
 		
-		}
+		}*/
 		
 		override public function desenho(evento:Event = null):void
 		{
@@ -316,7 +318,7 @@ package telas
 		*/
 		}
 		
-		private function cliqueLista(evento:MouseEvent):void
+		/*private function cliqueLista(evento:MouseEvent):void
 		{
 			
 			var clicado:BotaoLista = evento.target as BotaoLista;
@@ -326,14 +328,14 @@ package telas
 			this.mudaTela('visualizar', dados);
 		
 		}
-		
+		//* /
 		private function cliquevoltar(evento:MouseEvent):void
 		{
 			
 			this.mudaTela('inicial', null);
 		
 		}
-		
+	    //* /
 		private function cliqueproximo(evento:MouseEvent):void
 		{
 			
@@ -348,7 +350,7 @@ package telas
 			this.mostraPagina(_pagina - 1);
 			desenho();
 			trace('anterior')
-		}
+		}//*/
 	
 	}
 }

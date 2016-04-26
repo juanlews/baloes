@@ -98,7 +98,7 @@ package componentes
 			this.scaleX = dados.scaleX;
 			this.scaleY = dados.scaleY;
 			
-			trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
+			//('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
 			
 			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url));
 		

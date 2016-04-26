@@ -330,7 +330,7 @@ package telas
 					_balao.shift().dispose();
 				}
 				
-				trace('apagou');
+				
 				
 				Main.projeto.excluiPastaPagina(0);
 				
@@ -409,7 +409,7 @@ package telas
 				{
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
-					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					//trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
@@ -522,11 +522,10 @@ package telas
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
-			trace('inicio');
+		
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
-			trace('depois');
 			// segundo, criando a referência para o arquivo de destino
 			// aqui, coloquei um local de exemplo - é preciso definir no caminho/nome do arquivo de acordo com o projeto
 			var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
@@ -539,7 +538,7 @@ package telas
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			trace('fim');
+			
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
@@ -552,7 +551,7 @@ package telas
 		
 		private function imagemCarregada(evento:Event):void
 		{
-			trace('inicio imgC');
+			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			
@@ -581,7 +580,7 @@ package telas
 			{
 				ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
 			}
-			trace('fim imgC');
+		
 		}
 		
 		private function addBalao(evento:MouseEvent):void
@@ -749,8 +748,7 @@ package telas
 				
 				var dados:BalaoDados = this._balao[i].recuperaDados();
 				
-				trace('balao dados', JSON.stringify(dados));
-				
+								
 				pagina.baloes.push(dados);
 			}
 			

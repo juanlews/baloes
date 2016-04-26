@@ -375,7 +375,7 @@ package telas
 			this.carregaProjeto(_id);
 		}
 		
-		public function carregaProjeto(id):void
+		public function carregaProjeto(id:String):void
 		{
 			
 			if (Main.projeto.carregaProjeto(id))

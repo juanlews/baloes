@@ -334,7 +334,7 @@ package componentes
 		public function recebeDados(dados:BalaoDados):void
 		{
 			
-			trace ('recebendo', JSON.stringify(dados));
+			trace ('recebendo classe Balao', JSON.stringify(dados));
 			
 			this.x = dados.x;
 			this.y = dados.y;

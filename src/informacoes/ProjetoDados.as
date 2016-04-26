@@ -103,7 +103,7 @@ package informacoes
 			
 			this.pasta = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + this.id);
 			
-			trace ('pasta 1', this.pasta.url);
+			//trace ('pasta 1', this.pasta.url);
 		
 		}
 		
