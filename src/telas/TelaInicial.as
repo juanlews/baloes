@@ -66,6 +66,7 @@ package telas
 		//
 		private var editavel:Boolean = false;
 		private var definido:Boolean = false;
+		private var redesenha:Boolean;
 		
 		public function TelaInicial(funcMudaTela:Function)
 		{
@@ -227,8 +228,9 @@ package telas
 			// mudar tela
 			this.editavel = true;
 			dados.imagem = this._imagem;
-			dados.balao = this._balao as Vector.<Balao>;
 			dados.editavel = this.editavel;
+			dados.balao = this._balao as Vector.<Balao>;
+		
 			this.mudaTela('fotorecuperada', dados);
 		
 		}
@@ -243,6 +245,10 @@ package telas
 			
 			if (dados != null)
 			{
+				if (dados.redesenha != null);
+				{
+					this.redesenha = dados.redesenha;
+				}
 				if (dados.id != null)
 				{
 					_id = dados.id;
@@ -261,6 +267,10 @@ package telas
 					trace('tem Imagem');
 					this._imagem = dados.imagem as Vector.<Imagem>;
 					
+				}
+				if (dados.editavel != null) {
+					
+					editavel = dados.editavel; 
 				}
 				if (dados.balaoProp != null)
 				{
@@ -426,7 +436,8 @@ package telas
 				dados.imagem = this._imagem;
 				dados.balao = this._balao;
 				dados.paginaAtual = 0;
-				dados.editavel = editavel;
+				dados.editavel = this.editavel;
+				dados.redesenha = this.redesenha;
 				mudaTela('fotorecuperada', dados);
 				
 			}
@@ -441,6 +452,7 @@ package telas
 		
 		override public function escondendo(evento:Event):void
 		{
+			trace('escondendo');
 			this.removeChild(_camera);
 			this.removeChild(_carregar);
 			this.removeChild(_galeria);
@@ -449,10 +461,11 @@ package telas
 			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
 			this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
+			
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);
 	
-			this.removeChildren();
+			
 
 		}
 		

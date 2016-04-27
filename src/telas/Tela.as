@@ -40,11 +40,11 @@ package telas
 			// desenhar a tela
 			if (linhacima.width == 0)
 			{
-				linhacima.graphics.beginFill(0xFF9900);
+				linhacima.graphics.beginFill(0x404040);
 				linhacima.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10);
 				linhacima.graphics.endFill();
 				
-				linhabaixo.graphics.beginFill(0xDC143C);
+				linhabaixo.graphics.beginFill(0x404040);
 				linhabaixo.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10);
 				linhabaixo.graphics.endFill();
 			}

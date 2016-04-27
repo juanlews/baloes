@@ -41,7 +41,7 @@ package telas
 	{
 		
 		// botoes
-		private var _propBalao:BotaoIcone;
+		//private var _propBalao:BotaoIcone;
 		private var _ajusteBalao:BotaoIcone;
 		private var _ajusteImagem:BotaoIcone;
 		private var _salvar:BotaoIcone;
@@ -93,7 +93,7 @@ package telas
 			// criar botões
 			this._addBalao = new BotaoIcone(Graficos.ImgAddBalao);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
-			this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
+			//this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
 			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
 			this._ajusteImagem = new BotaoIcone(Graficos.ImgAjusteImagem);
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
@@ -233,12 +233,13 @@ package telas
 					this.addChild(this._addPagina);
 					this.addChild(this._proxPagina);
 					this.addChild(this._antPagina);
+					this.addChild(this._btExcluiPagina);
 					this.addChild(this._camera);
 					this.addChild(this._galeria);
 					
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-					this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
+				//	this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
 					this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 					this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 					this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
@@ -263,6 +264,7 @@ package telas
 			else
 			{
 				//botão cancelar
+				removeChild(_btExcluiPagina);
 				this._cancelar.width = stage.stageWidth / btscala;
 				this._cancelar.scaleY = this._cancelar.scaleX;
 				this._cancelar.x = stage.stageWidth / 2 - _cancelar.width / 2;
@@ -639,7 +641,7 @@ package telas
 			
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
-			this._propBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
+			//this._propBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
 			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
 			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
@@ -652,6 +654,7 @@ package telas
 		
 		override public function recebeDados(dados:Object):void
 		{
+			trace('telafotorecu recebeDados');
 			
 			if (!ObjetoAprendizagem.areaImagem.visible)
 			{   
@@ -696,13 +699,16 @@ package telas
 					
 				}
 				
+				
 			}
+			
+		
 		
 		}
 		
 		private function removeBotoes():void
 		{
-			this.removeChild(this._propBalao);
+		//	this.removeChild(this._propBalao);
 			this.removeChild(this._ajusteBalao);
 			this.removeChild(this._ajusteImagem);
 			this.removeChild(this._cancelar);

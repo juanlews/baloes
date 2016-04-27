@@ -16,8 +16,8 @@ package recursos
 		public static var ImgCarregar:Class;
 		
 		// tela foto recuperada
-		[Embed(source = "imagens/btnConfigBalao.png")]
-		public static var ImgPropBalao:Class;
+		//[Embed(source = "imagens/btnConfigBalao.png")]
+		//public static var ImgPropBalao:Class;
 		[Embed(source = "imagens/btnExpandir.png")]
 		public static var ImgAjusteBalao:Class;
 		[Embed(source = "imagens/btnEditImagem.png")]
@@ -38,24 +38,18 @@ package recursos
 		//
 		[Embed(source = "imagens/barra.png")]
 		public static var ImgBarra:Class;
-		//Setas
-		[Embed(source = "imagens/setadireita.png")]
-		public static var ImgSetad:Class;
-		[Embed(source = "imagens/Seta.png")]
-		public static var ImgSetae:Class;
-		
 		// add balão
-		[Embed(source = "imagens/addBalaoPreto.png")]
+		[Embed(source = "imagens/addBalao.png")]
 		public static var ImgAddBalao:Class;
 		//excluir balão
-		[Embed(source = "imagens/btnExcluirVeP.png")]
+		[Embed(source = "imagens/btnExcluir.png")]
 		public static var ImgExcluiBalao:Class;
 		//botão info 
-		[Embed(source = "imagens/btnInformaçãoPB.png")]
+		[Embed(source = "imagens/btnInformacao.png")]
 		public static var ImgBtInfo:Class;
 		
 		//
-		[Embed(source = "imagens/btnCancelarLaranjacomdetalhe.png")]
+		[Embed(source = "imagens/btnCancelarVermelho.png")]
 		public static var excImagem:Class;
 		
 		// balao
@@ -109,21 +103,30 @@ package recursos
 		public static var ImgOpenFile:Class;
 		
 		//Botão nova pagina
-		[Embed(source = "imagens/novaPagina.jpg")]
+		[Embed(source = "imagens/novaPagina.png")]
 		public static var ImgNovaPagina:Class;
 		
 		//Setas
 		[Embed(source = "imagens/SetaEsq.png")]
 		public static var ImgSetaEsq:Class;
+		
 		[Embed(source = "imagens/SetaDir.png")]
 		public static var ImgSetaDir:Class;
+		
+		[Embed(source = "imagens/SetaEsq.png")]
+		public static var ImgSetae:Class;
+		
+		[Embed(source = "imagens/SetaDir.png")]
+		public static var ImgSetad:Class;
+		
+		
 		
 		// botoes propriedades do balão
 		[Embed(source = "imagens/btnFlipVertical.png")]
 		public static var ImgPBFlipV:Class;
 		[Embed(source = "imagens/btnFlip.png")]
 		public static var ImgPBFlipH:Class;
-		[Embed(source = "imagens/btnOk.png")]
+		[Embed(source = "imagens/btnCerto.png")]
 		public static var ImgPBOK:Class;
 		[Embed(source = "imagens/btnCheckSmooth.png")]
 		public static var ImgCheck:Class;

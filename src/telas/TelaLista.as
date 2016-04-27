@@ -53,9 +53,9 @@ package telas
 		{
 			super(funcMudaTela);
 			btscala = 10;
-			_voltar = new BotaoIcone(Graficos.ImgCancelar);
-			_proximo = new BotaoIcone(Graficos.ImgSetad);
-			_anterior = new BotaoIcone(Graficos.ImgSetae);
+            /* _voltar = new BotaoIcone(Graficos.ImgCancelar);
+		//_proximo = new BotaoIcone(Graficos.ImgSetad);
+		//	_anterior = new BotaoIcone(Graficos.ImgSetae); */
 			_btOk = new BotaoIcone(Graficos.ImgPBOK);
 			_btCancelar = new BotaoIcone(Graficos.ImgCancelar);
 			_btAbrir = new BotaoIcone(Graficos.ImgOpenFile);
@@ -80,10 +80,11 @@ package telas
 			envio['valida'] = MD5.hash('asdfg');
 			_request.data = envio;
 			_urlLoader.load(_request);
-			*/
+			
 			addChild(_voltar);
 			addChild(_proximo);
 			addChild(_anterior);
+			*/
 			
 			_listaProj = new EscolhaProjeto('Escolha um projeto',_btOk ,_btCancelar , _btAbrir, new BotaoIcone(Graficos.ImgLixeira), File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/'));
 		
@@ -109,8 +110,9 @@ package telas
 			
 			dados.id = String(this._listaProj.escolhido.id);
 			dados.tela = 'carregar'; 
+			dados.redesenha = true;
 			this.stage.removeChild(_listaProj);
-			
+					
 			mudaTela('inicial', dados);
 			// carregar projeto this._listaProj.escolhido.id
 			// abrir tela de visualização
@@ -178,8 +180,7 @@ package telas
 			
 			trace(evento.text);
 		}
-		
-		private function recebeu(evento:Event):void
+		/*	private function recebeu(evento:Event):void
 		{
 			
 			while (this._nomes.length > 0) this._nomes.shift();
@@ -218,8 +219,8 @@ package telas
 				
 			}
 		}
-		
-	/*	private function mostraPagina(num:int):void
+		*/
+	    /*	private function mostraPagina(num:int):void
 		{
 			trace('Pagina');
 			if ((num >= 0) && ((num * IMAGENSPORPAGINA) < this._nomes.length))
@@ -309,7 +310,7 @@ package telas
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
-			removeChildren();
+			
 		/*	for (var i:int = 0; i < this._lista.length; i++)
 			{
 				if (this._lista[i].hasEventListener(MouseEvent.CLICK))
