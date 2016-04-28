@@ -181,6 +181,7 @@ package telas
 			
 			trace(evento.text);
 		}
+		
 		/*	private function recebeu(evento:Event):void
 		{
 			
@@ -263,6 +264,7 @@ package telas
 						
 			this.stage.addChild(_listaProj);
 			_listaProj.listar();
+			
 			/*
 			
 			envio = new URLVariables();
@@ -320,6 +322,7 @@ package telas
 				}
 			}
 		*/
+		
 		}
 		
 		/*private function cliqueLista(evento:MouseEvent):void

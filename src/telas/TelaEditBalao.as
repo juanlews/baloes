@@ -80,8 +80,8 @@ package telas
 				this.addChild(this._cancelar);	
 				
 				trace('usa tween');				
-				linhacima.x = 0;
-				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
+			//	linhacima.x = 0;
+			//	Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);

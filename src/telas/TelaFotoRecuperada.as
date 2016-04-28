@@ -321,7 +321,6 @@ package telas
 				if (_imagem != null)
 				{
 					
-					
 					while (_imagem.length > 0)
 					{
 						trace('dispose lista carrega projeto');
@@ -339,7 +338,7 @@ package telas
 				{
 					
 					trace('acrescentando imagem', i);
-				
+					
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i], paginaAtual);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
@@ -670,11 +669,14 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
+		
 			editavel = false;
 			var dados:Object = new Object;
 			dados.editavel = editavel;
 			dados.qualTela = null;
+			
 			this.mudaTela('inicial', dados);
+			
 		}
 		
 		private function cliquePropB(evento:MouseEvent):void
