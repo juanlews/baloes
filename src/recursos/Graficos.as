@@ -32,7 +32,7 @@ package recursos
 		public static var ImgHelp01:Class;
 		[Embed(source = "imagens/textohelp2.png")]
 		public static var ImgHelp02:Class;
-		[Embed(source = "imagens/textohelp3.png")]
+		[Embed(source = "imagens/textohelp3.1.png")]
 		public static var ImgHelp03:Class;
 		
 		//

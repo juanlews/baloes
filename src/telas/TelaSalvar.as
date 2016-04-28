@@ -83,81 +83,82 @@ package telas
 		
 		}
 		
-		private function arquivoEnviado(evento:Event):void
-		{
-			
-			trace('no arquivo enviado');
-			
-			_urlLoader = new URLLoader();
-			_request = new URLRequest(link + "baloes/confirmaEnvio.php");
-			_request.method = 'POST';
-			var variaveis:URLVariables = new URLVariables();
-			variaveis['nome'] = _caixaTitulo.text;
-			variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
-			_request.data = variaveis;
-			
-			_urlLoader.addEventListener(Event.COMPLETE, arquivoConfirmado);
-			_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
-			_urlLoader.load(_request);
+		/*	private function arquivoEnviado(evento:Event):void
+		   {
 		
-		}
+		   trace('no arquivo enviado');
 		
-		private function arquivoConfirmado(evento:Event):void
-		{
-			
-			trace('no arquivo confirmado');
-			
-			_urlLoader.removeEventListener(Event.COMPLETE, arquivoConfirmado);
-			_urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
-			
-			var variaveis:URLVariables;
-			var varOK:Boolean = true;
-			try
-			{
-				variaveis = new URLVariables(_urlLoader.data);
-			}
-			catch (e:Error)
-			{
-				varOK = false;
-			}
-			
-			if (varOK)
-			{
-				if (variaveis['erro'] == null)
-				{
-					trace('resposta do servidor mal formatada');
-				}
-				else
-				{
-					if (variaveis['erro'] == '-1')
-					{
-						trace('erro de validação no servidor');
-					}
-					else
-					{
-						if (variaveis['resultado'] == null)
-						{
-							trace('resposta do servidor mal formatada');
-						}
-						else
-						{
-							if (variaveis['resultado'] == '0')
-							{
-								trace('a imagem não foi gravada');
-							}
-							else
-							{
-								trace('gravação ok');
-								this.mudaTela('inicial', null);
-								
-							}
-						}
-					}
-					
-				}
-			}
+		   _urlLoader = new URLLoader();
+		   _request = new URLRequest(link + "baloes/confirmaEnvio.php");
+		   _request.method = 'POST';
+		   var variaveis:URLVariables = new URLVariables();
+		   variaveis['nome'] = _caixaTitulo.text;
+		   variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
+		   _request.data = variaveis;
 		
-		}
+		   _urlLoader.addEventListener(Event.COMPLETE, arquivoConfirmado);
+		   _urlLoader.addEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
+		   _urlLoader.load(_request);
+		
+		   }
+		 */
+		
+		/*  private function arquivoConfirmado(evento:Event):void
+		   {
+		
+		   trace('no arquivo confirmado');
+		
+		   _urlLoader.removeEventListener(Event.COMPLETE, arquivoConfirmado);
+		   _urlLoader.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
+		
+		   var variaveis:URLVariables;
+		   var varOK:Boolean = true;
+		   try
+		   {
+		   variaveis = new URLVariables(_urlLoader.data);
+		   }
+		   catch (e:Error)
+		   {
+		   varOK = false;
+		   }
+		
+		   if (varOK)
+		   {
+		   if (variaveis['erro'] == null)
+		   {
+		   trace('resposta do servidor mal formatada');
+		   }
+		   else
+		   {
+		   if (variaveis['erro'] == '-1')
+		   {
+		   trace('erro de validação no servidor');
+		   }
+		   else
+		   {
+		   if (variaveis['resultado'] == null)
+		   {
+		   trace('resposta do servidor mal formatada');
+		   }
+		   else
+		   {
+		   if (variaveis['resultado'] == '0')
+		   {
+		   trace('a imagem não foi gravada');
+		   }
+		   else
+		   {
+		   trace('gravação ok');
+		   this.mudaTela('inicial', null);
+		
+		   }
+		   }
+		   }
+		
+		   }
+		   }
+		
+		   }*/
 		
 		private function imagemCarregada(evento:Event):void
 		{
@@ -168,13 +169,14 @@ package telas
 		}
 		
 		private function imagemErro(evento:IOError):void
-		{
-			
+		{			
 			trace('Erro');
 		}
 		
 		override public function recebeDados(dados:Object):void
 		{
+			this._caixaTitulo.text = Main.projeto.titulo;
+			this._caixaTags.text = Main.projeto.tags.join(' #');
 			
 			this._imagem = new Loader();
 			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
@@ -234,7 +236,7 @@ package telas
 			
 			if (!_ok.hasEventListener(MouseEvent.CLICK))
 			{
-							
+				
 				addChild(_caixaTags);
 				addChild(_caixaTitulo);
 				addChild(_ok);
@@ -272,6 +274,7 @@ package telas
 			_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
 			_btEditF.visible = false;
 			_btEditT.visible = true;
+			
 			trace(editavel);
 		}
 		
@@ -293,33 +296,34 @@ package telas
 			}
 		}
 		
-		private function salvaImg(evento:MouseEvent):void
-		{
-			trace(_caixaTitulo.text);
-			
-			_request = new URLRequest(link + "baloes/salvar.php");
-			_request.method = 'POST';
-			
-			var variaveis:URLVariables = new URLVariables();
-			variaveis['nome'] = _caixaTitulo.text;
-			variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
-			removeChildren();
-			anim.width = stage.stageWidth / 2;
-			anim.scaleY = anim.scaleX;
-			anim.x = stage.stageWidth / 2 - anim.width / 2;
-			anim.y = stage.stageHeight / 2 - anim.height / 2;
-			
-			addChild(anim);
-			
-			_request.data = variaveis;
-			
-			_fileup = File.cacheDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id);
-			
-			_fileup.addEventListener(Event.COMPLETE, arquivoEnviado);
-			_fileup.addEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
-			_fileup.upload(_request);
+		/*	private function salvaImg(evento:MouseEvent):void
+		   {
+		   trace(_caixaTitulo.text);
 		
-		}
+		   //	_request = new URLRequest(link + "baloes/salvar.php");
+		   //	_request.method = 'POST';
+		
+		   //	var variaveis:URLVariables = new URLVariables();
+		   //	variaveis['nome'] = _caixaTitulo.text;
+		   //	variaveis['valida'] = MD5.hash('asdfg' + variaveis['nome']);
+		   removeChildren();
+		   anim.width = stage.stageWidth / 2;
+		   anim.scaleY = anim.scaleX;
+		   anim.x = stage.stageWidth / 2 - anim.width / 2;
+		   anim.y = stage.stageHeight / 2 - anim.height / 2;
+		
+		   addChild(anim);
+		
+		   //_request.data = variaveis;
+		
+		   //_fileup = File.cacheDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id);
+		
+		   //_fileup.addEventListener(Event.COMPLETE, arquivoEnviado);
+		   //_fileup.addEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
+		   //_fileup.upload(_request);
+		
+		   }
+		 */
 		
 		private function erroNoEnvio(evento:IOErrorEvent):void
 		{
@@ -335,21 +339,22 @@ package telas
 		{
 			super.escondendo(evento);
 			
-			if (_fileup.hasEventListener(Event.COMPLETE) || _fileup.hasEventListener(IOErrorEvent.IO_ERROR))
-			{
-				_fileup.removeEventListener(Event.COMPLETE, arquivoEnviado);
-				_fileup.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
-				
-			}
+			/*	if (_fileup.hasEventListener(Event.COMPLETE) || _fileup.hasEventListener(IOErrorEvent.IO_ERROR))
+			   //	{
+			   //	_fileup.removeEventListener(Event.COMPLETE, arquivoEnviado);
+			   //_fileup.removeEventListener(IOErrorEvent.IO_ERROR, erroNoEnvio);
+			
+			   }*/
 			
 			if (anim.stage != null)
 			{
 				removeChild(anim);
 			}
+			
 			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
-			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditT);
+			_btEditT.removeEventListener(MouseEvent.CLICK, checkEditT);
 			stage.removeEventListener(Event.RESIZE, desenho);
-			_ok.removeEventListener(MouseEvent.CLICK, salvaImg);
+			_ok.removeEventListener(MouseEvent.CLICK, salvaProjeto);
 			_cancelar.removeEventListener(MouseEvent.CLICK, volta);
 		
 		}

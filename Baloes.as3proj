@@ -59,6 +59,7 @@
     <element path="..\OAprendizagemLibs\compilados\shineMP3_alchemy.swc" />
     <element path="..\OAprendizagemLibs\compilados\ZXing.swc" />
     <element path="..\OAprendizagemLibs\extensoes\ZXing.ane" />
+    <element path="bin\NativeDialogs.ane" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

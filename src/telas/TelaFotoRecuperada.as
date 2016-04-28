@@ -104,7 +104,7 @@ package telas
 			this._proxPagina = new BotaoIcone(Graficos.ImgSetaDir);
 			this._antPagina = new BotaoIcone(Graficos.ImgSetaEsq)
 			this._btExcluiPagina = new BotaoIcone(Graficos.excImagem);
-			
+			this._imagem = new Vector.<Imagem>;
 			_dados = new Object();
 			
 			this._roll = new CameraRoll();
@@ -239,7 +239,7 @@ package telas
 					
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-				//	this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
+					//	this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
 					this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
 					this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
 					this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
@@ -301,7 +301,75 @@ package telas
 					stage.addEventListener(Event.RESIZE, desenho);
 					
 				}
-					//
+				
+			}
+		
+		}
+		
+		public function carregaProjeto(id:String):void
+		{
+			trace('carrega P');
+			
+			if (Main.projeto.carregaProjeto(id))
+			{
+				trace(id);
+				
+				paginaAtual = 0;
+				editavel = false;
+				
+				ObjetoAprendizagem.areaImagem.removeChildren();
+				if (_imagem != null)
+				{
+					
+					
+					while (_imagem.length > 0)
+					{
+						trace('dispose lista carrega projeto');
+						_imagem.shift().dispose();
+					}
+				}
+				if (_balao != null)
+				{
+					while (_balao.length > 0)
+					{
+						_balao.shift().dispose();
+					}
+				}
+				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++)
+				{
+					
+					trace('acrescentando imagem', i);
+				
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i], paginaAtual);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				}
+				
+				for (i = 0; i < Main.projeto.paginas[0].baloes.length; i++)
+				{
+					
+					trace('acrescentando balao', i);
+					
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
+					_balao[i].tipo = Main.projeto.paginas[0].baloes[i].tipo;
+					
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
+				}
+				trace('carregou');
+				editavel = Main.projeto.editavel;
+				var dados:Object = new Object();
+				
+				dados.imagem = this._imagem;
+				dados.balao = this._balao;
+				dados.paginaAtual = 0;
+				dados.editavel = this.editavel;
+				// dados.redesenha = this.redesenha;
+				
+				trace('dados ok');
+					//escondendo(null);
+					//	mudaTela('fotorecuperada', dados);
 				
 			}
 		
@@ -323,6 +391,7 @@ package telas
 			{
 				while (_imagem.length > 0)
 				{
+					trace('dispose exclui pagina');
 					_imagem.shift().dispose();
 					
 				}
@@ -332,18 +401,16 @@ package telas
 					_balao.shift().dispose();
 				}
 				
-				
-				
 				Main.projeto.excluiPastaPagina(0);
 				
 			}
 			
 			else
 			{
-				if(paginaAtual == Main.projeto.paginas.length - 1)
-			{
-				paginaAnterior(evento);
-			}	
+				if (paginaAtual == Main.projeto.paginas.length - 1)
+				{
+					paginaAnterior(evento);
+				}
 				Main.projeto.salvarDados();
 				Main.projeto.excluiPastaPagina(Main.projeto.paginas.length - 1);
 				Main.projeto.paginas.splice(Main.projeto.paginas.length - 1, 1);
@@ -361,6 +428,7 @@ package telas
 				paginaAtual++;
 				while (_imagem.length > 0)
 				{
+					trace('dispose proxima pagina');
 					_imagem.shift().dispose();
 				}
 				
@@ -399,6 +467,7 @@ package telas
 				paginaAtual--;
 				while (_imagem.length > 0)
 				{
+					trace('dispose anterior pagina');
 					_imagem.shift().dispose();
 				}
 				
@@ -441,6 +510,7 @@ package telas
 			
 			while (_imagem.length > 0)
 			{
+				trace('dispose add pagina');
 				_imagem.shift().dispose();
 			}
 			
@@ -524,7 +594,7 @@ package telas
 		
 		private function arquivoSelecionado(evento:Event):void
 		{
-		
+			
 			this._file.removeEventListener(Event.SELECT, arquivoSelecionado);
 			
 			this._imagem[_imagem.length] = new Imagem(_imagem.length);
@@ -540,7 +610,7 @@ package telas
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
-			
+		
 		}
 		
 		private function imagemErro(evento:IOErrorEvent):void
@@ -603,6 +673,7 @@ package telas
 			editavel = false;
 			var dados:Object = new Object;
 			dados.editavel = editavel;
+			dados.qualTela = null;
 			this.mudaTela('inicial', dados);
 		}
 		
@@ -657,13 +728,17 @@ package telas
 			trace('telafotorecu recebeDados');
 			
 			if (!ObjetoAprendizagem.areaImagem.visible)
-			{   
+			{
 				addChild(ObjetoAprendizagem.areaImagem);
 				ObjetoAprendizagem.areaImagem.visible = true;
 			}
 			
 			if (dados != null)
 			{
+				if (dados.id != null)
+				{
+					carregaProjeto(dados.id)
+				}
 				if (dados.imagem != null)
 				{
 					this._imagem = dados.imagem as Vector.<Imagem>;
@@ -699,16 +774,15 @@ package telas
 					
 				}
 				
-				
 			}
 			
-		
+			trace('em recebe dados', this.stage);
 		
 		}
 		
 		private function removeBotoes():void
 		{
-		//	this.removeChild(this._propBalao);
+			//	this.removeChild(this._propBalao);
 			this.removeChild(this._ajusteBalao);
 			this.removeChild(this._ajusteImagem);
 			this.removeChild(this._cancelar);
@@ -755,7 +829,6 @@ package telas
 				
 				var dados:BalaoDados = this._balao[i].recuperaDados();
 				
-								
 				pagina.baloes.push(dados);
 			}
 			

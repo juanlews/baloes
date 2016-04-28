@@ -99,6 +99,7 @@ package telas
 		{
 			this.stage.removeChild(this._listaProj);
 			// voltar pra outra tela
+			this.mudaTela('inicial', null);
 		}
 
 		//
@@ -110,10 +111,10 @@ package telas
 			
 			dados.id = String(this._listaProj.escolhido.id);
 			dados.tela = 'carregar'; 
-			dados.redesenha = true;
+			dados.qualTela = 'lista';
 			this.stage.removeChild(_listaProj);
 					
-			mudaTela('inicial', dados);
+			mudaTela('fotorecuperada', dados);
 			// carregar projeto this._listaProj.escolhido.id
 			// abrir tela de visualização
 			

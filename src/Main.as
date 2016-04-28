@@ -107,8 +107,13 @@ package
 		
 		private function adicionaTela(nome:String, dados:Object):void {
 			this.removeChildren();			
+			
 			this._telas[nome].recebeDados(dados);
+			
+			trace('adicionando tela', nome);
+			
 			this.addChild(this._telas[nome]);
+			
 		}
 		
 		private function deactivate(e:Event):void 

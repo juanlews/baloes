@@ -22,6 +22,8 @@ package componentes
 		private var _id:int;
 		private var btExcImagem:BotaoIcone;
 		
+		private var _url:String;
+		
 		public function Imagem(id:int = 0)
 		{
 			super();
@@ -73,6 +75,9 @@ package componentes
 		
 		public function dispose():void
 		{
+			
+			trace ("dispose imagem", this._url);
+			
 			this.removeChildren();
 			this.loader.unload();
 			if (this.loader.hasEventListener(Event.COMPLETE))
@@ -91,6 +96,8 @@ package componentes
 		public function recebeDados(dados:ImagemDados, pagina:int):void
 		{
 			
+			trace ('recebe dados', JSON.stringify(dados), pagina);
+			
 			this._id = dados.id;
 			this.x = dados.x;
 			this.y = dados.y;
@@ -98,7 +105,9 @@ package componentes
 			this.scaleX = dados.scaleX;
 			this.scaleY = dados.scaleY;
 			
-			//('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
+			trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
+			
+			this._url = Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url;
 			
 			this.loader.load(new URLRequest(Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url));
 		
@@ -144,9 +153,9 @@ package componentes
 		private function complete(evt:Event):void
 		{
 			
-		  //  (this.loader.content as Bitmap).smoothing = true;
-			//this.loader.x = -this.loader.width / 2;
-		//	this.loader.y = -this.loader.height / 2;
+		  (this.loader.content as Bitmap).smoothing = true;
+			this.loader.x = -this.loader.width / 2;
+			this.loader.y = -this.loader.height / 2;
 		}
 	
 	}

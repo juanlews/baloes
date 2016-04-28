@@ -36,7 +36,7 @@ package telas
 	 */
 	public class TelaInicial extends Tela
 	{
-		private var _id:String = '1460985335175';
+		private var _id:String = '1461675961087';
 		private var paginaAtual:int = 0;
 		// botões
 		private var _galeria:BotaoIcone;
@@ -84,6 +84,7 @@ package telas
 			this._imgsHelp.push(Graficos.ImgHelp03);
 			this._imgAtual = 0;
 			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;
+			
 			this.addChild(this._help);
 			
 			// criar outros botões
@@ -230,7 +231,7 @@ package telas
 			dados.imagem = this._imagem;
 			dados.editavel = this.editavel;
 			dados.balao = this._balao as Vector.<Balao>;
-		
+			dados.qualTela = null;
 			this.mudaTela('fotorecuperada', dados);
 		
 		}
@@ -245,58 +246,69 @@ package telas
 			
 			if (dados != null)
 			{
-				if (dados.redesenha != null);
+				if (dados.qualTela != null)
 				{
-					this.redesenha = dados.redesenha;
-				}
-				if (dados.id != null)
-				{
-					_id = dados.id;
-					if (dados.tela != null && dados.tela == 'carregar')
+					
+					if (dados.redesenha != null)
 					{
-						carregaProjeto(_id);
+						this.redesenha = dados.redesenha;
+					}
+					if (dados.id != null)
+					{
+						_id = dados.id;
+						if (dados.tela != null && dados.tela == 'carregar')
+						{
+							carregaProjeto(_id);
+						}
 					}
 				}
-				
 				else
 				{
 					_id = '1460985335175';
 				}
-				if (dados.imagem != null)
+				if (dados.qualTela != null)
 				{
-					trace('tem Imagem');
-					this._imagem = dados.imagem as Vector.<Imagem>;
+					trace('dados recebidos');
+				}
+				else
+				{
+					if (dados.imagem != null)
+					{
+						trace('tem Imagem');
+						this._imagem = dados.imagem as Vector.<Imagem>;
+						
+					}
+					if (dados.editavel != null)
+					{
+						
+						editavel = dados.editavel;
+					}
+					if (dados.balaoProp != null)
+					{
+						this._balao[dados.indice].copyProp(dados.balaoProp as Balao);
+					}
+					if (dados.balao != null)
+					{
+						trace('tem Balao');
+						
+						this._balao = dados.balao as Vector.<Balao>;
+					}
 					
-				}
-				if (dados.editavel != null) {
+					for (var xis:int = 0; xis < _balao.length; xis++)
+					{
+						this._balao[xis].id = xis;
+					}
+					while (_imagem.length > 0)
+					{
+						trace('dispose lista recebe dados');
+						_imagem.shift().dispose();
+					}
 					
-					editavel = dados.editavel; 
+					while (_balao.length > 0)
+					{
+						_balao.shift().dispose();
+					}
 				}
-				if (dados.balaoProp != null)
-				{
-					this._balao[dados.indice].copyProp(dados.balaoProp as Balao);
-				}
-				if (dados.balao != null)
-				{
-					trace('tem Balao');
-					
-					this._balao = dados.balao as Vector.<Balao>;
-				}
-				
-				for (var xis:int = 0; xis < _balao.length; xis++)
-				{
-					this._balao[xis].id = xis;
-				}
-				while (_imagem.length > 0)
-				{
-					_imagem.shift().dispose();
-				}
-				
-				while (_balao.length > 0)
-				{
-					_balao.shift().dispose();
-				}
-				
 			}
 		
 		}
@@ -387,6 +399,7 @@ package telas
 		
 		public function carregaProjeto(id:String):void
 		{
+			trace('carrega P');
 			
 			if (Main.projeto.carregaProjeto(id))
 			{
@@ -399,6 +412,7 @@ package telas
 				
 				while (_imagem.length > 0)
 				{
+					trace('dispose lista carrega projeto');
 					_imagem.shift().dispose();
 				}
 				
@@ -433,11 +447,13 @@ package telas
 				editavel = Main.projeto.editavel;
 				var dados:Object = new Object();
 				
+				
+				
 				dados.imagem = this._imagem;
 				dados.balao = this._balao;
 				dados.paginaAtual = 0;
 				dados.editavel = this.editavel;
-				dados.redesenha = this.redesenha;
+				trace('dados ok');
 				mudaTela('fotorecuperada', dados);
 				
 			}
@@ -453,6 +469,7 @@ package telas
 		override public function escondendo(evento:Event):void
 		{
 			trace('escondendo');
+			
 			this.removeChild(_camera);
 			this.removeChild(_carregar);
 			this.removeChild(_galeria);
@@ -460,13 +477,10 @@ package telas
 			this._galeria.removeEventListener(MouseEvent.CLICK, cliqueGaleria);
 			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
 			this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
-			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			
+			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;			
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);
-	
-			
-
+		
 		}
 		
 		private function swipeTela(evento:TransformGestureEvent):void
