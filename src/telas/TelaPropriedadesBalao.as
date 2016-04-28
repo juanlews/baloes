@@ -242,32 +242,32 @@ package telas
 			
 			//cor
 			this._cor1.x = stage.stageWidth / 20 ;
-			this._cor1.y = this.linhabaixo.y - this.linhabaixo.height - this._tipo1.height/2;
+			this._cor1.y = this._tipo1.y - this._cor1.height/2;
 			this._cor1.width = stage.stageWidth / 8
 			this._cor1.scaleY = this._cor1.scaleX;
 			this.addChild(this._cor1);
 			
 			this._cor2.x = this._cor1.x + this._cor1.width *1.5;
-			this._cor2.y = this.linhabaixo.y - this.linhabaixo.height - this._tipo1.height/2;
+			this._cor2.y = this._tipo1.y - this._cor2.height/2; 	
 			this._cor2.width = stage.stageWidth /8;
 			this._cor2.scaleY = this._cor2.scaleX;
 			this.addChild(this._cor2);
 			
 			this._cor3.x = this._cor2.x + this._cor2.width *1.5;
-			this._cor3.y = this.linhabaixo.y - this.linhabaixo.height - this._tipo1.height/2;
+			this._cor3.y = this._tipo1.y - this._cor3.height/2;
 			this._cor3.width = stage.stageWidth / 8
 			this._cor3.scaleY = this._cor3.scaleX;
 			this.addChild(this._cor3);
 			
 			this._cor4.x = this._cor3.x + this._cor3.width * 1.5;
-			this._cor4.y = this.linhabaixo.y - this.linhabaixo.height - this._cor4.height/2;
+			this._cor4.y = this._tipo1.y - this._cor4.height/2;
 			this._cor4.width = stage.stageWidth / 8
 			this._cor4.scaleY = this._cor4.scaleX;
 			this.addChild(this._cor4);
 			
 			this._cor5.x = this._cor4.x + this._cor4.width * 1.5;
-			this._cor5.y = this.linhabaixo.y - this.linhabaixo.height - this._cor5.height/2;
-			this._cor5.width = stage.stageWidth / 8
+			this._cor5.y = this._tipo1.y - this._cor5.height/2;
+			this._cor5.width = stage.stageWidth / 8;
 			this._cor5.scaleY = this._cor5.scaleX;
 			this.addChild(this._cor5);
 			
