@@ -334,20 +334,20 @@ package telas
 			
 			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
 			
-			//open
-			
-			this._btOpen.width = stage.stageWidth / btscala;
-			this._btOpen.scaleY = this._btOpen.scaleX;
-			this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
-			this._btOpen.y = stage.stageHeight / 40;
-			
-			// posicionar carregar
+			//posicionar carregar
 			
 			this._carregar.width = stage.stageWidth / btscala;
-			this._carregar.scaleY = this._galeria.scaleX;
-			
+			this._carregar.scaleY = this._carregar.scaleX;
 			this._carregar.x = stage.stageWidth / 2 - this._carregar.width / 2;
-			this._carregar.y = stage.stageHeight - this._carregar.height - this.stage.stageHeight / 40;
+			this._carregar.y = stage.stageHeight / 40;
+			
+			// open
+			
+			this._btOpen.width = stage.stageWidth / btscala;
+			this._btOpen.scaleY = this._galeria.scaleX;
+			
+			this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
+			this._btOpen.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
 			
 			// pocisionar e dimensionar help aqui
 			
