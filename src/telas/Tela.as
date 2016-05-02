@@ -45,7 +45,7 @@ package telas
 				linhacima.graphics.endFill();
 				
 				linhabaixo.graphics.beginFill(0x404040);
-				linhabaixo.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10 + stage.stageHeight / 40);
+				linhabaixo.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight / 10); 
 				linhabaixo.graphics.endFill();
 			}
 			
