@@ -231,7 +231,7 @@ package telas
 			dados.imagem = this._imagem;
 			dados.editavel = this.editavel;
 			dados.balao = this._balao as Vector.<Balao>;
-			dados.qualTela = null;
+			dados.qualTela = 'inicial';
 			this.mudaTela('fotorecuperada', dados);
 		
 		}

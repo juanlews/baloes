@@ -41,6 +41,9 @@
     <systemChrome>standard</systemChrome>
     <aspectRatio>any</aspectRatio>
     <autoOrients>true</autoOrients>
+	<resizable>false</resizable>
+    <minimizable>true</minimizable>
+    <maximizable>false</maximizable>
   </initialWindow>
   <icon>
     <image48x48>icons/icon_48.png</image48x48>

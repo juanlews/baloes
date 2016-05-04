@@ -669,14 +669,14 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
-		
+			
 			editavel = false;
 			var dados:Object = new Object;
 			dados.editavel = editavel;
 			dados.qualTela = null;
 			
 			this.mudaTela('inicial', dados);
-			
+		
 		}
 		
 		private function cliquePropB(evento:MouseEvent):void
@@ -737,6 +737,7 @@ package telas
 			
 			if (dados != null)
 			{
+		
 				if (dados.id != null)
 				{
 					carregaProjeto(dados.id)
