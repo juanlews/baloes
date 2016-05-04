@@ -8,15 +8,17 @@
     <movie fps="30" />
     <movie width="480" />
     <movie height="800" />
-    <movie version="18" />
+    <movie version="21" />
     <movie minorVersion="0" />
     <movie platform="AIR Mobile" />
     <movie background="#EFEFEF" />
+    <movie preferredSDK="Apache Flex 4.15.0 FP21.0 AIR21.0 en_US;4.15.0;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
     <class path="..\OAprendizagemLibs" />
+    <class path="..\..\OAprendizagem\LibColabora\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -60,6 +62,7 @@
     <element path="..\OAprendizagemLibs\compilados\ZXing.swc" />
     <element path="..\OAprendizagemLibs\extensoes\ZXing.ane" />
     <element path="bin\NativeDialogs.ane" />
+    <element path="..\..\OAprendizagem\LibColabora\src\extensoes\ZXing.ane" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

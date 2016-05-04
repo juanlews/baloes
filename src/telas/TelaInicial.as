@@ -41,7 +41,7 @@ package telas
 		// botões
 		private var _galeria:BotaoIcone;
 		private var _camera:BotaoIcone;
-		private var _carregar:BotaoIcone;
+		//private var _carregar:BotaoIcone;
 		
 		// imagem
 		private var _imgsHelp:Vector.<Class>;
@@ -60,8 +60,10 @@ package telas
 		//scale dos botões
 		private var btscala:Number;
 		
-		//abrir file
+		// gerenciar arquivos de projeto
 		private var _btOpen:BotaoIcone;
+		private var _btArquivos:BotaoIcone;
+		private var _btReceber:BotaoIcone;
 		
 		//
 		private var editavel:Boolean = false;
@@ -76,8 +78,14 @@ package telas
 			
 			this._galeria = new BotaoIcone(Graficos.ImgGaleria);
 			this._btOpen = new BotaoIcone(Graficos.ImgOpenFile);
+			this._btArquivos = new BotaoIcone(Graficos.ImgArquivos);
+			this._btReceber = new BotaoIcone(Graficos.ImgReceber);
+			
 			this.addChild(this._galeria);
 			this.addChild(this._btOpen);
+			this.addChild(this._btArquivos);
+			this.addChild(this._btReceber);
+			
 			this._imgsHelp = new Vector.<Class>();
 			this._imgsHelp.push(Graficos.ImgHelp01);
 			this._imgsHelp.push(Graficos.ImgHelp02);
@@ -91,8 +99,8 @@ package telas
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
 			addChild(this._camera);
 			
-			this._carregar = new BotaoIcone(Graficos.ImgCarregar);
-			addChild(this._carregar);
+			//this._carregar = new BotaoIcone(Graficos.ImgCarregar);
+			//addChild(this._carregar);
 			
 			// criando acesso à galeria
 			this._roll = new CameraRoll();
@@ -332,22 +340,37 @@ package telas
 			this._camera.x = stage.stageWidth - _camera.width - this.stage.stageWidth / 20;
 			this._camera.y = this.stage.stageHeight / 40;
 			
-			this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
+			//this._carregar.scaleX = this._carregar.scaleY = this._galeria.scaleX;
 			
 			//posicionar carregar
 			
-			this._carregar.width = stage.stageWidth / btscala;
-			this._carregar.scaleY = this._carregar.scaleX;
-			this._carregar.x = stage.stageWidth / 2 - this._carregar.width / 2;
-			this._carregar.y = stage.stageHeight / 40;
+			//this._carregar.width = stage.stageWidth / btscala;
+			//this._carregar.scaleY = this._carregar.scaleX;
+			//this._carregar.x = stage.stageWidth / 2 - this._carregar.width / 2;
+			//this._carregar.y = stage.stageHeight / 40;
 			
-			// open
-			
+			// abrir projeto
 			this._btOpen.width = stage.stageWidth / btscala;
 			this._btOpen.scaleY = this._galeria.scaleX;
 			
-			this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
-			this._btOpen.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
+			// this._btOpen.x = stage.stageWidth / 2 - this._btOpen.width / 2;
+			// this._btOpen.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
+			
+			// arquivos
+			this._btArquivos.height = this._btOpen.height;
+			this._btArquivos.scaleX = this._btArquivos.scaleY;
+			
+			// receber
+			this._btReceber.height = this._btOpen.height;
+			this._btReceber.scaleX = this._btReceber.scaleY;
+			
+			// posicionando botões inferiores
+			var intervaloX:Number = (this.stage.stageWidth - this._btOpen.width - this._btArquivos.width - this._btReceber.width) / 4;
+			this._btArquivos.x = intervaloX;
+			this._btOpen.x = this._btArquivos.x + this._btArquivos.width + intervaloX;
+			this._btReceber.x = this._btOpen.x + this._btOpen.width + intervaloX;
+			this._btArquivos.y = this._btReceber.y = this._btOpen.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
+			
 			
 			// pocisionar e dimensionar help aqui
 			
@@ -363,15 +386,19 @@ package telas
 			{
 				this.addChild(linhabaixo);
 				this.addChild(linhacima);
-				this.addChild(this._carregar);
+				//this.addChild(this._carregar);
 				this.addChild(this._galeria);
 				this.addChild(this._camera);
 				this.addChild(this._btOpen);
+				this.addChild(this._btArquivos);
+				this.addChild(this._btReceber);
 				
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
-				this._carregar.addEventListener(MouseEvent.CLICK, cliqueCarregar);
-				this._btOpen.addEventListener(MouseEvent.CLICK, cliqueAbreProjeto);
+				//this._carregar.addEventListener(MouseEvent.CLICK, cliqueCarregar);
+				this._btOpen.addEventListener(MouseEvent.CLICK, cliqueCarregar);
+				this._btArquivos.addEventListener(MouseEvent.CLICK, cliqueArquivos);
+				this._btReceber.addEventListener(MouseEvent.CLICK, cliqueReceber);
 				
 				// TROCA DO HELP
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
@@ -392,10 +419,12 @@ package telas
 		
 		}
 		
+		/*
 		private function cliqueAbreProjeto(evento:MouseEvent):void
 		{
 			this.carregaProjeto(_id);
 		}
+		*/
 		
 		public function carregaProjeto(id:String):void
 		{
@@ -466,17 +495,27 @@ package telas
 			this.mudaTela('lista', null);
 		}
 		
+		private function cliqueArquivos(evento:MouseEvent):void
+		{
+			trace ('arquivos');
+		}
+		
+		private function cliqueReceber(evento:MouseEvent):void
+		{
+			trace('receber');
+		}
+		
 		override public function escondendo(evento:Event):void
 		{
 			trace('escondendo');
 			
 			this.removeChild(_camera);
-			this.removeChild(_carregar);
+			//this.removeChild(_carregar);
 			this.removeChild(_galeria);
 			super.escondendo(evento);
 			this._galeria.removeEventListener(MouseEvent.CLICK, cliqueGaleria);
 			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
-			this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
+			//this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;			
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);

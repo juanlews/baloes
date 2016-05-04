@@ -53,6 +53,8 @@ package telas
 		private var _proxPagina:BotaoIcone;
 		private var _antPagina:BotaoIcone;
 		
+		private var _btBiblioteca:BotaoIcone;
+		
 		// balão
 		private var _balao:Vector.<Balao>;
 		
@@ -104,6 +106,9 @@ package telas
 			this._proxPagina = new BotaoIcone(Graficos.ImgSetaDir);
 			this._antPagina = new BotaoIcone(Graficos.ImgSetaEsq)
 			this._btExcluiPagina = new BotaoIcone(Graficos.excImagem);
+			
+			this._btBiblioteca = new BotaoIcone(Graficos.ImgBiblioteca);
+			
 			this._imagem = new Vector.<Imagem>;
 			_dados = new Object();
 			
@@ -187,6 +192,14 @@ package telas
 				var numeroCanc:Number = this._cancelar.scaleY = this._cancelar.scaleX;
 				this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
 				this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
+				
+				
+				// biblioteca
+				this._btBiblioteca.height = this._cancelar.height;
+				this._btBiblioteca.scaleX = this._btBiblioteca.scaleY;
+				this._btBiblioteca.x = (this.stage.stageWidth / 2) - (this._btBiblioteca.width / 2);
+				this._btBiblioteca.y = this._cancelar.y;
+				
 				//imagem recuperada
 				
 				//Proxima Pagina
@@ -236,6 +249,7 @@ package telas
 					this.addChild(this._btExcluiPagina);
 					this.addChild(this._camera);
 					this.addChild(this._galeria);
+					this.addChild(this._btBiblioteca);
 					
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);

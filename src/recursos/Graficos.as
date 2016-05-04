@@ -14,6 +14,15 @@ package recursos
 		public static var ImgCamera:Class;
 		[Embed(source = "imagens/btnCarregar.png")]
 		public static var ImgCarregar:Class;
+		[Embed(source = "imagens/Open.png")]
+		public static var ImgOpenFile:Class;
+		[Embed(source = "imagens/BTArquivos.png")]
+		public static var ImgArquivos:Class;
+		[Embed(source = "imagens/BTReceber.png")]
+		public static var ImgReceber:Class;
+		
+		[Embed(source = "imagens/BTBiblioteca.png")]
+		public static var ImgBiblioteca:Class;
 		
 		// tela foto recuperada
 		//[Embed(source = "imagens/btnConfigBalao.png")]
@@ -97,11 +106,7 @@ package recursos
 		// fundo preview propriedades
 		[Embed(source = "imagens/Help.png")]
 		public static var ImgHelp:Class;
-		
-		//Botão abrir projeto
-		[Embed(source = "imagens/Open.png")]
-		public static var ImgOpenFile:Class;
-		
+
 		//Botão nova pagina
 		[Embed(source = "imagens/novaPagina.png")]
 		public static var ImgNovaPagina:Class;
