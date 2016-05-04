@@ -22,7 +22,7 @@ package telas
 	 */
 	public class TelaEditImagem extends Tela
 	{
-		private var _imagem:Vector.<Imagem>;
+		private var _imagem:Imagem;
 		private var _editavel:Boolean;
 		private var _ok:BotaoIcone;
 		private var _cancelar:BotaoIcone;		
@@ -70,6 +70,7 @@ package telas
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				
+				/*
 				for (var i:int; i < _imagem.length; i++)
 				{
 					
@@ -83,7 +84,11 @@ package telas
 					
 					
 				}
-				
+				*/
+//				this._imagem.exclui(true);
+				this._imagem.addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
+				this._imagem.addEventListener(String(_imagem.id), excluiImagem);
+					
 				this.addChild(linhabaixo);
 				this.addChild(this._ok);
 				this.addChild(this._cancelar);
@@ -96,20 +101,20 @@ package telas
 		
 		}
 		private function excluiImagem(evento:Event):void {
-			
+			/*
 		    this._imagem[int(evento.type)].removeEventListener(evento.type, excluiImagem);
 		
 			this._imagem.splice(int(evento.type), 1);	
 			for (var i:int = 0; i < _imagem.length; i++)
 					{
 						this._imagem[i].redefineId(i, paginaAtual);
-					}
+					}*/
 			trace(evento.type);
 		}
 		private function cliqueOk(evento:MouseEvent):void
 		{
-			dados.imagem = _imagem;
-			this.mudaTela('fotorecuperada', dados);
+			//dados.imagem = _imagem;
+			this.mudaTela('fotorecuperada', null);
 		}
 		
 		private function cliqueCancelar(evento:MouseEvent):void
@@ -124,10 +129,9 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
-			for (var j:int = 0; j < _imagem.length; j++)
-			{
-				this._imagem[j].removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
-			}
+			
+			this._imagem.removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
+			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 			stage.removeEventListener(Event.RESIZE, desenho);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
@@ -136,7 +140,8 @@ package telas
 		
 		private function dragImagemStart(evento:MouseEvent):void
 		{
-			var indice:int;
+			this._imagem.startDrag();
+			/*var indice:int;
 		    		
 			for (var i:int = 0; i < _imagem.length; i++)
 			{   
@@ -149,37 +154,36 @@ package telas
 			}
 			
 			this._imagem[indice].startDrag();
-			
+			*/
 			 
 		 }
 		
 		private function dragImagemStop(evento:MouseEvent):void
 		{
-			for (var i:int = 0; i < _imagem.length; i++)
-			{
-				this._imagem[i].stopDrag();
+				this._imagem.stopDrag();
 				
-			}
+		
 		
 		}
 		
 		private function zoomImagem(evento:TransformGestureEvent):void
 		{
-			var indice:int;
+			/*var indice:int;
 			for (var i:int = 0; i < _imagem.length; i++)
 			{
 				if (_imagem[i].loader == evento.target as Loader)
 				{
 					trace("o balao clicado é: ", indice = i);
 				}
-			}
-			_imagem[indice].scaleX *= evento.scaleX;
-			_imagem[indice].scaleY = _imagem[indice].scaleX;
+			}*/
+			_imagem.scaleX *= evento.scaleX;
+			_imagem.scaleY = _imagem.scaleX;
 		
 		}
 		
 		private function rotacaoImagem(evento:TransformGestureEvent):void
 		{
+			/*
 			var indice:int;
 			for (var i:int = 0; i < _imagem.length; i++)
 			{
@@ -188,8 +192,8 @@ package telas
 					trace("o balao clicado é: ", indice = i);
 				}
 			}
-			
-			_imagem[indice].rotation += evento.rotation;
+			*/
+			_imagem.rotation += evento.rotation;
 		}
 	
 		
@@ -197,7 +201,7 @@ package telas
 		{
 			if (dados != null)
 			{
-				this._imagem = dados.imagem as Vector.<Imagem>;
+				this._imagem = dados.imagem as Imagem;
 				this.paginaAtual = dados.paginaAtual;
 			}
 			

@@ -291,6 +291,16 @@ package componentes
 		
 		}
 		
+		public function copyAllProp(origem:Balao):void
+		{
+			this.copyProp(origem);
+			this.x = origem.x;
+			this.y = origem.y;
+			this.scaleX = origem.scaleX;
+			this.scaleY = origem.scaleY;
+			this.rotation = origem.rotation;
+		}
+		
 		public function dispose():void
 		{
 			removeChildren();
