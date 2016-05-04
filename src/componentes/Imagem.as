@@ -123,12 +123,13 @@ package componentes
 				this.btExcImagem.x = loader.x;
 				this.btExcImagem.y = loader.y;
 				this.btExcImagem.addEventListener(MouseEvent.CLICK, excluiImagem);
+				this.mouseChildren = true;
 				
 			}
 			else
 			{
 				this.btExcImagem.visible = false
-				
+				this.mouseChildren = false;
 			}
 		
 		}

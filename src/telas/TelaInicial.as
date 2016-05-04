@@ -226,19 +226,19 @@ package telas
 			// posicionar e dimensionar botões	
 			var dados:Object = new Object();
 			dados.indice = 0;
-			this._balao[dados.indice] = new Balao(dados.indice);
+			/*this._balao[dados.indice] = new Balao(dados.indice);
 			this._balao[dados.indice].tipo = this._balao[dados.indice].tipo;
 			this._balao[dados.indice].texto = 'oi';
 			this._balao[dados.indice].width = 300;
 			this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
 			this._balao[dados.indice].x = ObjetoAprendizagem.areaImagem.width / 3;
 			this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
-			
+			*/
 			// mudar tela
 			this.editavel = true;
 			dados.imagem = this._imagem;
 			dados.editavel = this.editavel;
-			dados.balao = this._balao as Vector.<Balao>;
+			//dados.balao = this._balao as Vector.<Balao>;
 			dados.qualTela = 'inicial';
 			this.mudaTela('fotorecuperada', dados);
 		

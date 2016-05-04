@@ -185,7 +185,7 @@ package telas
 				this._salvar.width = stage.stageWidth / btscala;
 				var numeroSalv:Number = this._salvar.scaleY = this._salvar.scaleX;
 				this._salvar.x = stage.stageWidth / 20;
-				this._salvar.y = stage.stageHeight - this._salvar.width - (stage.stageHeight / 40);
+				this._salvar.y = stage.stageHeight - this._salvar.height - (stage.stageHeight / 40);
 				//
 				//botão cancelar
 				this._cancelar.width = stage.stageWidth / btscala;
@@ -230,11 +230,17 @@ package telas
 					for (var k:int = 0; k < _imagem.length; k++)
 					{
 						ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
+						this._imagem[k].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+						this._imagem[k].alpha = 1;
+						this._imagem[k].mouseEnabled = true;
 						this._imagem[k].exclui(false);
 					}
 					for (var i:int = 0; i < _balao.length; i++)
 					{
 						ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
+						this._balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+						this._balao[i].mouseEnabled = true;
+						this._balao[i].alpha = 1;
 						this._balao[i].smooth();
 					}
 					
@@ -263,11 +269,6 @@ package telas
 					this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 					this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 					this._btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
-					
-					for (var j:int = 0; j < _balao.length; j++)
-					{
-						this._balao[j].addEventListener(MouseEvent.CLICK, cliquePropB);
-					}
 					
 					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 					
@@ -619,6 +620,7 @@ package telas
 			this._file.copyTo(arquivoDestino, true);
 			
 			// carregando a imagem do loader a partir do arquivo de destino
+			
 			this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
@@ -642,6 +644,7 @@ package telas
 			
 			this._imagem[_imagem.length - 1].x = ObjetoAprendizagem.areaImagem.oWidth / 2;
 			this._imagem[_imagem.length - 1].y = ObjetoAprendizagem.areaImagem.oHeight / 2;
+			this._imagem[_imagem.length - 1].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 			
 			if (this._imagem[_imagem.length - 1].loader.content is Bitmap)
 			{
@@ -660,7 +663,6 @@ package telas
 			}
 			
 			ObjetoAprendizagem.areaImagem.addChild(this._imagem[_imagem.length - 1]);
-			
 			for (var i:int = 0; i < _balao.length; i++)
 			{
 				ObjetoAprendizagem.areaImagem.addChild(this._balao[i]);
@@ -677,7 +679,75 @@ package telas
 			this._balao[_balao.length - 1].x = ObjetoAprendizagem.areaImagem.width / 4;
 			this._balao[_balao.length - 1].y = ObjetoAprendizagem.areaImagem.height / 4;
 			ObjetoAprendizagem.areaImagem.addChild(_balao[_balao.length - 1]);
-			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliquePropB);
+			this._balao[_balao.length - 1].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+		
+		}
+		
+		private function cliqueArrastaImg(evento:MouseEvent):void
+		{
+			trace('arrasta img:');
+			var imagem:Imagem = evento.target as Imagem
+			var dados:Object = new Object();
+			
+			for (var k:int = 0; k < _balao.length; k++)
+			{
+				_balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+				_balao[k].mouseEnabled = false;
+				_balao[k].alpha = 0.5;
+				
+				trace('aplicando alpha em', _balao[k].id);
+			 }
+			
+			for (k = 0; k < _imagem.length; k++)
+			{
+				_imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				_imagem[k].alpha = 0.5;
+				mouseEnabled = false;
+			}
+			if (imagem != null)
+			{
+				
+				imagem.alpha = 1;
+				imagem.mouseEnabled = true;
+				trace('arrasta img:', imagem.id);
+				dados.balao = _balao;
+				dados.imagem = imagem;
+				imagem.removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				mudaTela('editimagem', dados);
+			}
+		
+		}
+		
+		private function cliqueArrasta(evento:MouseEvent):void
+		{
+			var balao:Balao = evento.target as Balao;
+			var dados:Object = new Object();
+			
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				_balao[i].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+				_balao[i].mouseEnabled = false;
+				_balao[i].alpha = 0.5;
+				
+				trace('aplicando alpha em', _balao[i].id);
+			}
+			for (i = 0; i < _imagem.length; i++)
+			{
+				_imagem[i].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				_imagem[i].alpha = 0.5;
+				mouseEnabled = false;
+			}
+			if (balao != null)
+			{
+				balao.alpha = 1;
+				balao.mouseEnabled = true;
+				
+				trace('arrasta', balao.id);
+				dados.balao = balao;
+				dados.imagem = _imagem
+				balao.removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+				mudaTela('editbalao', dados);
+			}
 		
 		}
 		
@@ -751,7 +821,7 @@ package telas
 			
 			if (dados != null)
 			{
-		
+				
 				if (dados.id != null)
 				{
 					carregaProjeto(dados.id)
