@@ -158,7 +158,21 @@ package recursos
 		[Embed(source = "imagens/quadro8.png")]
 		public static var ImgAnimacao8:Class;
 		
-		
+		// telas de compartilhamento
+		[Embed(source="imagens/BTCompAjuda.png")] 
+		public static var GRBTCompAjuda:Class;
+		[Embed(source="imagens/BTCompFechar.png")] 
+		public static var GRBTCompFechar:Class;
+		[Embed(source="imagens/BTCompScan.png")] 
+		public static var GRBTCompScan:Class;
+		[Embed(source="imagens/BTCompVoltar.png")] 
+		public static var GRBTCompVoltar:Class;
+		[Embed(source="imagens/telaAguarde.png")] 
+		public static var GRCompAguarde:Class;
+		[Embed(source="imagens/telaArquivoRecebido.png")] 
+		public static var GRCompRecebido:Class;
+		[Embed(source="imagens/telaErro.png")] 
+		public static var GRCompErro:Class;
 		
 		public function Graficos() 
 		{

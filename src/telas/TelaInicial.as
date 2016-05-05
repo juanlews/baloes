@@ -110,6 +110,10 @@ package telas
 			this._balao = new Vector.<Balao>;
 			// criando acesso à camera
 			camera = new CameraUI();
+			
+			// tela de compartilhamento
+			ObjetoAprendizagem.compartilhamento.addEventListener(Event.CLOSE, onCompartilhamentoClose);
+			ObjetoAprendizagem.compartilhamento.addEventListener(Event.COMPLETE, onCompartilhamentoComplete);
 		
 		}
 		
@@ -500,11 +504,6 @@ package telas
 			trace ('arquivos');
 		}
 		
-		private function cliqueReceber(evento:MouseEvent):void
-		{
-			trace('receber');
-		}
-		
 		override public function escondendo(evento:Event):void
 		{
 			trace('escondendo');
@@ -547,6 +546,37 @@ package telas
 			this._help.x = animinicial;
 			addChild(this._help);
 			this.desenho();
+		}
+		
+		/**
+		 * O botão "receber projeto" foi clicado.
+		 */
+		private function cliqueReceber(evt:MouseEvent):void {
+			ObjetoAprendizagem.compartilhamento.iniciaLeitura();
+			this.stage.addChild(ObjetoAprendizagem.compartilhamento);
+		}
+		
+		/**
+		 * A tela de compartilhamento foi fechada.
+		 */
+		private function onCompartilhamentoClose(evt:Event):void
+		{
+			// não fazer nada: a própria tela se remove
+		}
+		
+		/**
+		 * Foi recebido um arquivo de projeto.
+		 */
+		private function onCompartilhamentoComplete(evt:Event):void
+		{
+			/*
+			this._acAtual = 'projeto recebido';
+			if (!Main.projeto.importar(ObjetoAprendizagem.compartilhamento.download)) {
+				this._telaMensagem.defineMensagem('<b>Erro de importação!</b><br />&nbsp;<br />Não foi possível importar o projeto recebido. Por favor tente novamente.');
+				this.stage.removeChild(ObjetoAprendizagem.compartilhamento);
+				this.addChild(this._telaMensagem);
+			}
+			*/
 		}
 	
 	}

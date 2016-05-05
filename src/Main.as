@@ -1,6 +1,7 @@
 package
 {
 	import colabora.display.AreaImagens;
+	import colabora.display.Compartilhamento;
 	import colabora.oaprendizagem.servidor.Servidor;
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
@@ -60,11 +61,18 @@ package
 			// condigurando app
 			ObjetoAprendizagem.nome = 'Narrativas visuais';
 			ObjetoAprendizagem.codigo = 'narvisuais';
-			ObjetoAprendizagem.urlServidor = 'http://localhost/oaprendizagem/web/';
-			// preparando servidor
-			ObjetoAprendizagem.servidor = new Servidor();
-			// verificando o usuário
-			ObjetoAprendizagem.usuario = new Usuario(stage.stageWidth, stage.stageHeight);
+			
+			// preparando as funções de compartilhamento
+			ObjetoAprendizagem.compartilhamento = new Compartilhamento(new BotaoIcone(Graficos.GRBTCompScan),
+																		new BotaoIcone(Graficos.GRBTCompFechar),
+																		new BotaoIcone(Graficos.GRBTCompVoltar),
+																		new BotaoIcone(Graficos.GRBTCompAjuda),
+																		'',
+																		new BotaoIcone(Graficos.GRCompErro),
+																		new BotaoIcone(Graficos.GRCompRecebido),
+																		new BotaoIcone(Graficos.GRCompAguarde));
+																		
+			
 			// criando área de imagem
 			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920, 0x808080);
 			

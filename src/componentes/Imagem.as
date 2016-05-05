@@ -34,6 +34,7 @@ package componentes
 			addChild(this.btExcImagem);
 			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, complete);
 			this.btExcImagem.visible = false;
+			this.mouseChildren = false;
 		
 		}
 		
@@ -69,7 +70,6 @@ package componentes
 			dados.scaleY = this.scaleY;
 			
 			// acrescentar aqui todas as outras propriedades a salvar
-			mouseChildren = true;
 			return (dados);
 		}
 		
@@ -123,13 +123,11 @@ package componentes
 				this.btExcImagem.x = loader.x;
 				this.btExcImagem.y = loader.y;
 				this.btExcImagem.addEventListener(MouseEvent.CLICK, excluiImagem);
-				this.mouseChildren = true;
 				
 			}
 			else
 			{
 				this.btExcImagem.visible = false
-				this.mouseChildren = false;
 			}
 		
 		}

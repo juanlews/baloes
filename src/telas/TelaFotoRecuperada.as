@@ -705,8 +705,10 @@ package telas
 		
 		private function cliqueArrastaImg(evento:MouseEvent):void
 		{
-			trace('arrasta img:');
-			var imagem:Imagem = evento.target as Imagem
+			var imagem:Imagem = evento.target as Imagem;
+			
+			trace ('imagem', imagem, evento.target);
+			
 			var dados:Object = new Object();
 			
 			for (var k:int = 0; k < _balao.length; k++)
@@ -727,12 +729,14 @@ package telas
 			if (imagem != null)
 			{
 				
+				trace ('tô aqui');
+				
 				imagem.alpha = 1;
 				imagem.mouseEnabled = true;
-				trace('arrasta img:', imagem.id);
+				trace('arrasta img:', imagem, imagem.id);
 				dados.balao = _balao;
 				dados.imagem = imagem;
-				imagem.removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				// imagem.removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 				mudaTela('editimagem', dados);
 			}
 		
