@@ -83,6 +83,9 @@ package telas
 		
 		private var _btExcluiPagina:BotaoIcone;
 		
+		// tela de biblioteca
+		private var _telaBiblioteca:TelaBiblioteca;
+		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
@@ -116,6 +119,11 @@ package telas
 			this._file = File.documentsDirectory;
 			
 			this.camera = new CameraUI();
+			
+			// biblioteca de imagens
+			this._telaBiblioteca = new TelaBiblioteca();
+			this._telaBiblioteca.addEventListener(Event.CANCEL, onBibliotecaCancel);
+			this._telaBiblioteca.addEventListener(Event.SELECT, onBibliotecaSelect);
 		
 		}
 		
@@ -269,6 +277,8 @@ package telas
 					this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 					this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 					this._btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
+					
+					this._btBiblioteca.addEventListener(MouseEvent.CLICK, adicionaBiblioteca);
 					
 					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 					
@@ -432,6 +442,14 @@ package telas
 				Main.projeto.salvarDados();
 			}
 		
+		}
+		
+		/**
+		 * Abre a seleção de uma moldura da biblioteca.
+		 */
+		private function adicionaBiblioteca(evt:MouseEvent):void
+		{
+			this.stage.addChild(this._telaBiblioteca);
 		}
 		
 		private function proximaPagina(evento:MouseEvent):void
@@ -638,6 +656,8 @@ package telas
 		
 		private function imagemCarregada(evento:Event):void
 		{
+			
+			trace ('imagem carregada');
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
@@ -930,6 +950,34 @@ package telas
 			Main.projeto.guardaPagina(pagina);
 		
 			// salvar o projeto aqui???
+		}
+		
+		/**
+		 * Inclusão a partir da biblioteca cancelada.
+		 */
+		private function onBibliotecaCancel(evt:Event):void
+		{
+			// nada a fazer: a própria tela da biblioteca se remove
+		}
+		
+		/**
+		 * Inclusão a partir da biblioteca confirmada.
+		 */
+		private function onBibliotecaSelect(evt:Event):void
+		{
+			// localizando imagem selecionada na biblioteca
+			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.arquivo);
+			if (img.exists) {
+				// adicionando a imagem
+				this._imagem[_imagem.length] = new Imagem(_imagem.length);
+				// copiando o arquivo da biblioteca para o destino
+				var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
+				img.copyTo(arquivoDestino, true);
+				// carregando a imagem do loader a partir do arquivo de destino
+				this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
+				this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
+				this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+			}
 		}
 	
 	}

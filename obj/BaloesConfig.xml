@@ -38,8 +38,8 @@
     </source-path>
     <library-path append="true">
       <path-element>C:\Users\Lucas\Documents\OAprendizagem\LibColabora\src\compilados\fzip.swc</path-element>
-      <path-element>C:\Users\Lucas\Documents\Code\baloes\bin\NativeDialogs.ane</path-element>
       <path-element>C:\Users\Lucas\Documents\OAprendizagem\LibColabora\src\extensoes\ZXing.ane</path-element>
+      <path-element>C:\Users\Lucas\Documents\OAprendizagem\LibColabora\src\compilados\ZXing.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>

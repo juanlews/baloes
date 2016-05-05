@@ -63,6 +63,7 @@
     <element path="..\OAprendizagemLibs\extensoes\ZXing.ane" />
     <element path="bin\NativeDialogs.ane" />
     <element path="..\..\OAprendizagem\LibColabora\src\extensoes\ZXing.ane" />
+    <element path="..\..\OAprendizagem\LibColabora\src\compilados\ZXing.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

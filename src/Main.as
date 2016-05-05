@@ -5,6 +5,7 @@ package
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
 	import componentes.BotaoIcone;
+	import flash.filesystem.File;
 	import informacoes.ProjetoDados;
 	import flash.desktop.NativeApplication;
 	import flash.display.Loader;
@@ -66,6 +67,11 @@ package
 			ObjetoAprendizagem.usuario = new Usuario(stage.stageWidth, stage.stageHeight);
 			// criando área de imagem
 			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920, 0x808080);
+			
+			// preparando listagem da biblioteca
+			var biblio:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/biblioteca/');
+			var original:File = File.applicationDirectory.resolvePath('biblioteca/');
+			original.copyToAsync(biblio, true);
 			
 			//
 			Main.projeto = new ProjetoDados();
