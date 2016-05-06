@@ -23,6 +23,10 @@ package recursos
 		
 		[Embed(source = "imagens/BTBiblioteca.png")]
 		public static var ImgBiblioteca:Class;
+		[Embed(source = "imagens/BTCompartilhar.png")]
+		public static var ImgCompartilhar:Class;
+		[Embed(source = "imagens/BTExportarImagem.png")]
+		public static var ImgExportarImagem:Class;
 		
 		// tela foto recuperada
 		//[Embed(source = "imagens/btnConfigBalao.png")]
