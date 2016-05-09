@@ -2,6 +2,7 @@
 package telas
 {
 	import caurina.transitions.Tweener;
+	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
@@ -53,7 +54,7 @@ package telas
 		private var _proxPagina:BotaoIcone;
 		private var _antPagina:BotaoIcone;
 		
-		private var _btBiblioteca:BotaoIcone;
+		
 		
 		// balão
 		private var _balao:Vector.<Balao>;
@@ -83,8 +84,12 @@ package telas
 		
 		private var _btExcluiPagina:BotaoIcone;
 		
-		// tela de biblioteca
-		private var _telaBiblioteca:TelaBiblioteca;
+		private var _btBiblioteca:BotaoIcone;			// botão para abrir a biblioteca de molduras
+		private var _btCompartilhar:BotaoIcone;			// botão para compartilhar o projeto atual
+		private var _btExportarImg:BotaoIcone;			// botão para exportar projeto como imagens
+		private var _telaBiblioteca:TelaBiblioteca;		// tela da biblioteca de molduras
+		private var _telaMensagem:TelaMensagemStage;	// tela de mensagens
+		private var _ultimaAc:String = '';				// última ação (para controle da tela de mensagens)
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -111,6 +116,8 @@ package telas
 			this._btExcluiPagina = new BotaoIcone(Graficos.excImagem);
 			
 			this._btBiblioteca = new BotaoIcone(Graficos.ImgBiblioteca);
+			this._btCompartilhar = new BotaoIcone(Graficos.ImgCompartilhar);
+			this._btExportarImg = new BotaoIcone(Graficos.ImgExportarImagem);
 			
 			this._imagem = new Vector.<Imagem>;
 			_dados = new Object();
@@ -124,6 +131,11 @@ package telas
 			this._telaBiblioteca = new TelaBiblioteca();
 			this._telaBiblioteca.addEventListener(Event.CANCEL, onBibliotecaCancel);
 			this._telaBiblioteca.addEventListener(Event.SELECT, onBibliotecaSelect);
+			
+			// tela de mensagens
+			this._telaMensagem = new TelaMensagemStage(720, 1280, new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), 0x666666);
+			this._telaMensagem.addEventListener(Event.COMPLETE, onMensagemComplete);
+			this._telaMensagem.addEventListener(Event.CANCEL, onMensagemCancel);
 		
 		}
 		
@@ -205,8 +217,20 @@ package telas
 				// biblioteca
 				this._btBiblioteca.height = this._cancelar.height;
 				this._btBiblioteca.scaleX = this._btBiblioteca.scaleY;
-				this._btBiblioteca.x = (this.stage.stageWidth / 2) - (this._btBiblioteca.width / 2);
+				this._btBiblioteca.x = (this.stage.stageWidth / 2) - this._btBiblioteca.width - 10;
 				this._btBiblioteca.y = this._cancelar.y;
+				
+				// compartilhar projeto
+				this._btCompartilhar.height = this._cancelar.height;
+				this._btCompartilhar.scaleX = this._btCompartilhar.scaleY;
+				this._btCompartilhar.x = (this.stage.stageWidth / 2) + 10;
+				this._btCompartilhar.y = this._cancelar.y;
+				
+				// exportar imagens
+				this._btExportarImg.height = this._cancelar.height;
+				this._btExportarImg.scaleX = this._btCompartilhar.scaleY;
+				this._btExportarImg.x = this._btCompartilhar.x + this._btCompartilhar.width + 10;
+				this._btExportarImg.y = this._cancelar.y;
 				
 				//imagem recuperada
 				
@@ -264,6 +288,8 @@ package telas
 					this.addChild(this._camera);
 					this.addChild(this._galeria);
 					this.addChild(this._btBiblioteca);
+					this.addChild(this._btCompartilhar);
+					this.addChild(this._btExportarImg);
 					
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
@@ -279,6 +305,8 @@ package telas
 					this._btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
 					
 					this._btBiblioteca.addEventListener(MouseEvent.CLICK, adicionaBiblioteca);
+					this._btCompartilhar.addEventListener(MouseEvent.CLICK, compartilhaProjeto);
+					this._btExportarImg.addEventListener(MouseEvent.CLICK, exportaImagem);
 					
 					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 					
@@ -450,6 +478,38 @@ package telas
 		private function adicionaBiblioteca(evt:MouseEvent):void
 		{
 			this.stage.addChild(this._telaBiblioteca);
+		}
+		
+		/**
+		 * Compartilha o projeto atual.
+		 */
+		private function compartilhaProjeto(evt:MouseEvent):void
+		{
+			if (Main.projeto.titulo == '') {
+				this._ultimaAc = 'aviso falta titulo';
+				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Seu projeto ainda não tem um título e não pode ser compartilhado. Salve o projeto primeiro e tente novamente.');
+				this.stage.addChild(this._telaMensagem);
+			} else {
+				this._ultimaAc = 'compartilhar projeto';
+				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Você tem certeza de que quer compartilhar o projeto atual com o título <b>' + Main.projeto.titulo + '</b>?', true);
+				this.stage.addChild(this._telaMensagem);
+			}
+		}
+		
+		/**
+		 * Exporta a página atual como uma imagem.
+		 */
+		private function exportaImagem(evt:MouseEvent):void
+		{
+			if (Main.projeto.titulo == '') {
+				this._ultimaAc = 'aviso falta titulo';
+				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Seu projeto ainda não tem um título. Não é possível exportar a página como uma imagem. Salve o projeto e tente novamente.');
+				this.stage.addChild(this._telaMensagem);
+			} else {
+				this._ultimaAc = 'salvar imagem';
+				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Você tem certeza de que quer salvar a página atual como uma imagem?', true);
+				this.stage.addChild(this._telaMensagem);
+			}
 		}
 		
 		private function proximaPagina(evento:MouseEvent):void
@@ -982,6 +1042,64 @@ package telas
 				this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 				this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
 			}
+		}
+		
+		/**
+		 * Clique no botão OK da tela de mensagens.
+		 */
+		private function onMensagemComplete(evt:Event):void
+		{
+			// removendo tela de mensagem
+			this.stage.removeChild(this._telaMensagem);
+			// verificando a ação
+			var acOK:Boolean = false;
+			switch (this._ultimaAc) {
+				case 'salvar imagem':
+					var stream:FileStream = new FileStream();
+					var regExp:RegExp=/[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
+					var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');;
+					if (nomeImagem == '') nomeImagem = Main.projeto.id;
+					nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
+					stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
+					stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
+					stream.close();
+					this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
+					this._ultimaAc = 'imagem exportada';
+					this.stage.addChild(this._telaMensagem);
+					break;
+				case 'compartilhar projeto':
+					var exportado:String = Main.projeto.exportar();
+					if (exportado != '') {
+						// ação ok
+						acOK = true;
+					}
+					if (!acOK) {
+						// avisar sobre problema ao exportar projeto
+						this._ultimaAc = 'erro compartilhando projeto';
+						this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido para compartilhamento. Por favor tente novamente.');
+						this.stage.addChild(this._telaMensagem);
+					} else {
+						// iniciar compartilhamento
+						if (ObjetoAprendizagem.compartilhamento.iniciaURL(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados/' + exportado))) {
+							this.stage.addChild(ObjetoAprendizagem.compartilhamento);
+						} else {
+							// avisar sobre erro de compartilhamento
+							this._ultimaAc = 'erro compartilhando projeto';
+							this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido para compartilhamento. Por favor tente novamente.');
+							this.stage.addChild(this._telaMensagem);
+						}
+					}
+					break;
+			}
+		}
+		
+		/**
+		 * Clique no botão CANCELAR da tela de mensagens.
+		 */
+		private function onMensagemCancel(evt:Event):void
+		{
+			// removendo tela de mensagem
+			this.stage.removeChild(this._telaMensagem);
 		}
 	
 	}

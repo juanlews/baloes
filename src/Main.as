@@ -2,6 +2,7 @@ package
 {
 	import colabora.display.AreaImagens;
 	import colabora.display.Compartilhamento;
+	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.servidor.Servidor;
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
@@ -72,6 +73,7 @@ package
 																		new BotaoIcone(Graficos.GRCompRecebido),
 																		new BotaoIcone(Graficos.GRCompAguarde));
 																		
+														
 			
 			// criando área de imagem
 			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920, 0x808080);

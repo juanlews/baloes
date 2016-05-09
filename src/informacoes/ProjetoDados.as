@@ -29,6 +29,8 @@ package informacoes
 		
 		public var editavel:Boolean;
 		
+		public var app:String;	// para validação de projetos exportados
+		
 		public var paginas:Vector.<PaginaDados> = new Vector.<PaginaDados>();
 		//public var pagina:PaginaDados;
 		
@@ -36,6 +38,7 @@ package informacoes
 		
 		public function ProjetoDados ()
 		{
+			this.app = ObjetoAprendizagem.codigo;
 			this.tags = new Array();
 			this.clear();
 		
@@ -174,33 +177,34 @@ package informacoes
 		
 		/**
 		 * Exporta o conteúdo do projeto atual na forma de um arquivo binário único compactado.
+		 * @return	o nome do projeto exportado ou string vazia em caso de erro
 		 */
-		public function exportar():void
+		public function exportar():String
 		{
 			// salvando o projeto atual
 			this.salvarDados();
 			// exportando
-			this.exportarID(this.id);
+			return(this.exportarID(this.id));
 		}
 		
 		/**
 		 * Exporta o conteúdo do projeto com o ID indicado na forma de um arquivo binário único compactado.
 		 * @param	prID	id do projeto a exportar
-		 * @return	TRUE se o projeto existir e puder ser exportado
+		 * @return	o nome do projeto exportado ou string vazia em caso de erro
 		 */
-		public function exportarID(prID:String):Boolean
+		public function exportarID(prID:String):String
 		{
 			// o projeto existe?
 			var pastaProj:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + prID);
 			if (!pastaProj.isDirectory) {
 				// a pasta do projeto indicado não foi encontrada
-				return (false);
+				return ('');
 			} else {
 				// verificando se existe o arquivo de informações do projeto
 				var arqProj:File = pastaProj.resolvePath('projeto.json');
 				if (!arqProj.exists) {
 					// o arquivo de projeto não existe
-					return (false);
+					return ('');
 				} else {
 					// o arquivo de projeto está completo?
 					var ok:Boolean = false;
@@ -215,9 +219,9 @@ package informacoes
 						ok = true;
 					} catch (e:Error) { }
 					// json carregado
-					if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null)) {
+					if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null) || (json.app == null)) {
 						// não há informações suficientes
-						return (false);
+						return ('');
 					} else {
 						// criando zip e arquivos para exportação
 						var zip:FZip = new FZip();
@@ -253,10 +257,10 @@ package informacoes
 							}
 						}
 						// finalizando o arquivo zip
-						stream.open(File.documentsDirectory.resolvePath(json.titulo + '.narrvisual'), FileMode.WRITE);
+						stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados/' + json.titulo + ' - ' + ObjetoAprendizagem.codigo + '.zip'), FileMode.WRITE);
 						zip.serialize(stream);
 						stream.close();
-						return (true);
+						return (json.titulo + ' - ' + ObjetoAprendizagem.codigo + '.zip');
 					}
 				}
 			}
@@ -361,13 +365,18 @@ package informacoes
 							// o arquivo não traz um json válido
 							this.dispatchEvent(new Event(Event.CANCEL));
 						} else {
-							if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null)) {
+							if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null) || (json.app == null)) {
 								// o arquivo json não traz as informações necessárias
 								this.dispatchEvent(new Event(Event.CANCEL));
 							} else {
-								// projeto ok: copiar para a pasta de documentos
-								pastaProjeto.moveTo(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + json.id), true);
-								this.dispatchEvent(new Event(Event.COMPLETE));
+								if (String(json.app) == ObjetoAprendizagem.codigo) {
+									// projeto ok: copiar para a pasta de documentos
+									pastaProjeto.moveTo(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + json.id), true);
+									this.dispatchEvent(new Event(Event.COMPLETE));
+								} else {
+									// o arquivo json não traz um projeto de narratovas visuais
+									this.dispatchEvent(new Event(Event.CANCEL));
+								}
 							}
 						}
 					}

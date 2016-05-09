@@ -1,5 +1,7 @@
 package telas
 {
+	import colabora.display.EscolhaProjeto;
+	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
@@ -64,6 +66,9 @@ package telas
 		private var _btOpen:BotaoIcone;
 		private var _btArquivos:BotaoIcone;
 		private var _btReceber:BotaoIcone;
+		private var _telaEscolha:EscolhaProjeto;
+		private var _navegaProjeto:File;
+		private var _telaMensagem:TelaMensagemStage;
 		
 		//
 		private var editavel:Boolean = false;
@@ -114,6 +119,32 @@ package telas
 			// tela de compartilhamento
 			ObjetoAprendizagem.compartilhamento.addEventListener(Event.CLOSE, onCompartilhamentoClose);
 			ObjetoAprendizagem.compartilhamento.addEventListener(Event.COMPLETE, onCompartilhamentoComplete);
+			
+			// tela de escolha de projetos
+			this._telaEscolha = new EscolhaProjeto('Escolha o projeto',
+													new BotaoIcone(Graficos.ImgPBOK),
+													new BotaoIcone(Graficos.ImgCancelar),
+													new BotaoIcone(Graficos.ImgOpenFile),
+													new BotaoIcone(Graficos.ImgLixeira),
+													File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' ));
+			this._telaEscolha.addEventListener(Event.COMPLETE, onEscolhaOK);
+			this._telaEscolha.addEventListener(Event.CANCEL, onEscolhaCancel);
+			this._telaEscolha.addEventListener(Event.OPEN, onEscolhaOpen);
+			
+			// tela de mensagens
+			this._telaMensagem = new TelaMensagemStage(720, 1280, new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), 0x666666);
+			this._telaMensagem.addEventListener(Event.COMPLETE, onMensagemComplete);
+			this._telaMensagem.addEventListener(Event.CANCEL, onMensagemCancel);
+			
+			// navegação para importar projeto
+			this._navegaProjeto = File.documentsDirectory;
+			this._navegaProjeto.addEventListener(Event.SELECT, onNavegadorPSelect);
+			this._navegaProjeto.addEventListener(Event.CANCEL, onNavegadorPFim);
+			this._navegaProjeto.addEventListener(IOErrorEvent.IO_ERROR, onNavegadorPFim);
+			
+			// importação de projetos
+			Main.projeto.addEventListener(Event.CANCEL, onImportCancel);
+			Main.projeto.addEventListener(Event.COMPLETE, onImportComplete);
 		
 		}
 		
@@ -499,11 +530,6 @@ package telas
 			this.mudaTela('lista', null);
 		}
 		
-		private function cliqueArquivos(evento:MouseEvent):void
-		{
-			trace ('arquivos');
-		}
-		
 		override public function escondendo(evento:Event):void
 		{
 			trace('escondendo');
@@ -549,6 +575,17 @@ package telas
 		}
 		
 		/**
+		 * O botão "arquivos" foi clicado.
+		 */
+		private function cliqueArquivos(evento:MouseEvent):void
+		{
+			if (this._telaEscolha.listar('Defina o projeto a exportar ou escolha um arquivo para importar')) {
+				this.stage.addChild(this._telaEscolha);
+				this._telaEscolha.mostrarAbrir();
+			}
+		}
+		
+		/**
 		 * O botão "receber projeto" foi clicado.
 		 */
 		private function cliqueReceber(evt:MouseEvent):void {
@@ -569,14 +606,120 @@ package telas
 		 */
 		private function onCompartilhamentoComplete(evt:Event):void
 		{
-			/*
-			this._acAtual = 'projeto recebido';
 			if (!Main.projeto.importar(ObjetoAprendizagem.compartilhamento.download)) {
 				this._telaMensagem.defineMensagem('<b>Erro de importação!</b><br />&nbsp;<br />Não foi possível importar o projeto recebido. Por favor tente novamente.');
 				this.stage.removeChild(ObjetoAprendizagem.compartilhamento);
-				this.addChild(this._telaMensagem);
+				this.stage.addChild(this._telaMensagem);
 			}
-			*/
+		}
+		
+		/**
+		 * Um projeto foi escolhido na tela de listagem.
+		 */
+		private function onEscolhaOK(evt:Event):void
+		{
+			var acOK:Boolean = false;
+			if (this._telaEscolha.escolhido != null) {
+				if (this._telaEscolha.escolhido.id != null) {
+					// recuperando nome de arquivo
+					var exportado:String = Main.projeto.exportarID(this._telaEscolha.escolhido.id as String);
+					if (exportado != '') {
+						// ação ok
+						acOK = true;
+					}
+				}
+			}
+			if (!acOK) {
+				// avisar sobre problema ao exportar projeto
+				this.stage.removeChild(this._telaEscolha);
+				this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido. Por favor tente novamente.');
+				this.stage.addChild(this._telaMensagem);
+			} else {
+				// avisar sobre o projeto exportado
+				this.stage.removeChild(this._telaEscolha);
+				this._telaMensagem.defineMensagem('<b>Exportação concluída</b><br />&nbsp;<br />O projeto selecionado foi exportado e está gravado com o nome <br />&nbsp;<br /><b>' + exportado + '</b><br />&nbsp;<br />na pasta <br />&nbsp;<br /><b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados').nativePath + '</b><br />&nbsp;<br />de seu aparelho.');
+				this.stage.addChild(this._telaMensagem);
+			}
+			
+		}
+		
+		/**
+		 * O botão cancelar foi escolhido na tela de listagem de projetos.
+		 */
+		private function onEscolhaCancel(evt:Event):void
+		{
+			this.stage.removeChild(this._telaEscolha);
+		}
+		
+		/**
+		 * O botão abrir foi escolhido na tela de listagem de projetos.
+		 */
+		private function onEscolhaOpen(evt:Event):void
+		{
+			this._telaEscolha.mostrarMensagem('Localizando e importanto um arquivo de projeto.');
+			this._navegaProjeto.browseForOpen('Projetos de Narrativa Visual', [new FileFilter('arquivos de projeto', '*.zip')]);
+		}
+		
+		/**
+		 * Navegação por arquivo terminada sem nenhuma escolha.
+		 */
+		private function onNavegadorPFim(evt:Event):void
+		{
+			// refazendo a listagem
+			this._telaEscolha.listar();
+		}
+		
+		/**
+		 * Recebendo um arquivo de projeto selecionado.
+		 */
+		private function onNavegadorPSelect(evt:Event):void
+		{
+			// importando
+			if (Main.projeto.importar(this._navegaProjeto)) {
+				// aguardar importação
+				this.stage.removeChild(this._telaEscolha);
+			} else {
+				// somentar listar novamente
+				this._telaEscolha.listar();
+			}
+		}
+		
+		/**
+		 * Sucesso na importação de um projeto.
+		 */
+		private function onImportComplete(evt:Event):void
+		{
+			this._telaMensagem.defineMensagem('<b>Projeto importado!</b><br />&nbsp;<br />O projeto recebido foi importado corretamente. Use o botão "abrir projeto" para conferi-lo.');
+			try { this.stage.removeChild(ObjetoAprendizagem.compartilhamento); } catch (e:Error) { }
+			this.stage.addChild(this._telaMensagem);
+		}
+		
+		/**
+		 * Erro na importação de um projeto.
+		 */
+		private function onImportCancel(evt:Event):void
+		{
+			this._telaMensagem.defineMensagem('<b>Erro de importação!</b><br />&nbsp;<br />Não foi possível importar o projeto recebido. Por favor tente novamente.');
+			try { this.stage.removeChild(ObjetoAprendizagem.compartilhamento); } catch (e:Error) { }
+			this.stage.addChild(this._telaMensagem);
+		}
+		
+		/**
+		 * Clique no botão OK da tela de mensagens.
+		 */
+		private function onMensagemComplete(evt:Event):void
+		{
+			// removendo tela de mensagem
+			this.stage.removeChild(this._telaMensagem);
+		}
+		
+		/**
+		 * Clique no botão CANCELAR da tela de mensagens.
+		 */
+		private function onMensagemCancel(evt:Event):void
+		{
+			// removendo tela de mensagem
+			this.stage.removeChild(this._telaMensagem);
 		}
 	
 	}
