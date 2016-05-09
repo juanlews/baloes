@@ -17,7 +17,7 @@ package componentes
 	 */
 	public class Imagem extends Sprite
 	{
-		
+		public var paginaAtual:int;
 		public var loader:Loader;
 		private var _id:int;
 		private var btExcImagem:BotaoIcone;
@@ -80,17 +80,23 @@ package componentes
 			
 			this.removeChildren();
 			this.loader.unload();
+			
+			var arquivo:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + _id + '.jpg');
+			trace('imagem excluida:', _id, arquivo.url); 
 			if (this.loader.hasEventListener(Event.COMPLETE))
 			{
 				try
 				{
 					this.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, complete);
+					arquivo.deleteDirectory(true);
 				}
 				catch (e:Error)
 				{
 				}
 			}
+			this
 			this.loader = null;
+			
 		}
 		
 		public function recebeDados(dados:ImagemDados, pagina:int):void
@@ -115,7 +121,7 @@ package componentes
 		
 		}
 		
-		public function exclui(ativo:Boolean = false):void
+		/*public function exclui(ativo:Boolean = false):void
 		{
 			if (ativo == true)
 			{
@@ -130,16 +136,17 @@ package componentes
 				this.btExcImagem.visible = false
 			}
 		
-		}
-		
-		private function excluiImagem(evento:MouseEvent):void
+		}*/
+		/*
+		public function excluiImagem():void
 		{
-			dispatchEvent(new Event(String(_id), true));
+			//dispatchEvent(new Event(String(_id), true));
+			trace('imagem excluida:', _id); 
 			this.dispose();
-			this.btExcImagem.dispose();
+			//
 		
 		}
-		
+		*/
 		public function redefineId(id:int, nPag:int):void{
 			
 			var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');

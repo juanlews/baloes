@@ -265,7 +265,7 @@ package telas
 						this._imagem[k].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 						this._imagem[k].alpha = 1;
 						this._imagem[k].mouseEnabled = true;
-						this._imagem[k].exclui(false);
+						
 					}
 					for (var i:int = 0; i < _balao.length; i++)
 					{
@@ -332,7 +332,7 @@ package telas
 					for (k = 0; k < _imagem.length; k++)
 					{
 						ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
-						this._imagem[k].exclui(false);
+						
 					}
 					for (i = 0; i < _balao.length; i++)
 					{
@@ -796,6 +796,7 @@ package telas
 				trace('arrasta img:', imagem, imagem.id);
 				dados.balao = _balao;
 				dados.imagem = imagem;
+				dados.paginaAtual = paginaAtual;
 				// imagem.removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 				mudaTela('editimagem', dados);
 			}
@@ -829,6 +830,7 @@ package telas
 				trace('arrasta', balao.id);
 				dados.balao = balao;
 				dados.imagem = _imagem
+				dados.paginaAtual = paginaAtual;
 				balao.removeEventListener(MouseEvent.CLICK, cliqueArrasta);
 				mudaTela('editbalao', dados);
 			}
@@ -853,7 +855,7 @@ package telas
 			
 			this._dados.balao = balaoClicado;
 			
-			this.mudaTela('propriedadesbalao', _dados);
+		//	this.mudaTela('propriedadesbalao', _dados);
 		
 		}
 		
@@ -861,7 +863,7 @@ package telas
 		{
 			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
-			this.mudaTela('editbalao', _dados);
+			//this.mudaTela('editbalao', _dados);
 		}
 		
 		private function cliqueAjusteImg(evento:MouseEvent):void
@@ -870,7 +872,7 @@ package telas
 			this._dados.balao = _balao;
 			this._dados.imagem = this._imagem;
 			this._dados.paginaAtual = this.paginaAtual;
-			this.mudaTela('editimagem', _dados);
+			//this.mudaTela('editimagem', _dados);
 		
 		}
 		
@@ -929,6 +931,18 @@ package telas
 				if (dados.editavel != null)
 				{
 					this.editavel = dados.editavel;
+				}
+				if(dados.imagemExclui != null){
+					
+					this._imagem[int(dados.numero)].visible = false;					
+					this._imagem[int(dados.numero)].paginaAtual = paginaAtual;
+					this._imagem[int(dados.numero)].dispose();					
+					this._imagem.splice(int(dados.numero), 1);	
+					
+					for (var i:int = 0; i < _imagem.length; i++)
+					{
+						this._imagem[i].redefineId(i, paginaAtual);
+					}
 				}
 				if (dados.balaoExclui != null)
 				{

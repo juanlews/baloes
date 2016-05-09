@@ -1,10 +1,11 @@
-package recursos 
+package recursos
 {
+	
 	/**
 	 * ...
 	 * @author colaboa
 	 */
-	public class Graficos 	
+	public class Graficos
 	{
 		
 		// tela inicial
@@ -110,7 +111,7 @@ package recursos
 		// fundo preview propriedades
 		[Embed(source = "imagens/Help.png")]
 		public static var ImgHelp:Class;
-
+		
 		//Botão nova pagina
 		[Embed(source = "imagens/novaPagina.png")]
 		public static var ImgNovaPagina:Class;
@@ -127,8 +128,6 @@ package recursos
 		
 		[Embed(source = "imagens/SetaDir.png")]
 		public static var ImgSetad:Class;
-		
-		
 		
 		// botoes propriedades do balão
 		[Embed(source = "imagens/btnFlipVertical.png")]
@@ -163,26 +162,26 @@ package recursos
 		public static var ImgAnimacao8:Class;
 		
 		// telas de compartilhamento
-		[Embed(source="imagens/BTCompAjuda.png")] 
+		[Embed(source = "imagens/BTCompAjuda.png")]
 		public static var GRBTCompAjuda:Class;
-		[Embed(source="imagens/BTCompFechar.png")] 
+		[Embed(source = "imagens/BTCompFechar.png")]
 		public static var GRBTCompFechar:Class;
-		[Embed(source="imagens/BTCompScan.png")] 
+		[Embed(source = "imagens/BTCompScan.png")]
 		public static var GRBTCompScan:Class;
-		[Embed(source="imagens/BTCompVoltar.png")] 
+		[Embed(source = "imagens/BTCompVoltar.png")]
 		public static var GRBTCompVoltar:Class;
-		[Embed(source="imagens/telaAguarde.png")] 
+		[Embed(source = "imagens/telaAguarde.png")]
 		public static var GRCompAguarde:Class;
-		[Embed(source="imagens/telaArquivoRecebido.png")] 
+		[Embed(source = "imagens/telaArquivoRecebido.png")]
 		public static var GRCompRecebido:Class;
-		[Embed(source="imagens/telaErro.png")] 
+		[Embed(source = "imagens/telaErro.png")]
 		public static var GRCompErro:Class;
 		
-		public function Graficos() 
+		public function Graficos()
 		{
-			
-		}
 		
+		}
+	
 	}
 
 }

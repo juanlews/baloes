@@ -22,6 +22,7 @@ package telas
 	 */
 	public class TelaEditImagem extends Tela
 	{
+		private var _lixeira:BotaoIcone;
 		private var _imagem:Imagem;
 		private var _editavel:Boolean;
 		private var _ok:BotaoIcone;
@@ -35,7 +36,7 @@ package telas
 			super(funcMudaTela);
 			btscala = 10;
 			dados = new Object();
-		    
+		    this._lixeira = new BotaoIcone(Graficos.ImgLixeira);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		   
@@ -49,7 +50,12 @@ package telas
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
 			this._ok.x = stage.stageWidth / 20;
-			this._ok.y = stage.stageHeight - _ok.height - stage.stageHeight / 40;
+			this._ok.y = stage.stageHeight - this._ok.height - stage.stageHeight / 40;
+			
+			this._lixeira.width = stage.stageWidth / btscala;
+			this._lixeira.scaleY = this._lixeira.scaleX;
+			this._lixeira.x = stage.stageWidth / 2 - this._lixeira.width / 2; 
+			this._lixeira.y = stage.stageHeight - this._lixeira.height - stage.stageHeight / 40;
 			
 			//botão cancelar
 			this._cancelar.width = stage.stageWidth / btscala;
@@ -69,7 +75,7 @@ package telas
 				stage.addEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
-				
+				this._lixeira.addEventListener(MouseEvent.CLICK, excluiImagem);
 				/*
 				for (var i:int; i < _imagem.length; i++)
 				{
@@ -87,10 +93,11 @@ package telas
 				*/
 //				this._imagem.exclui(true);
 				this._imagem.addEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
-				this._imagem.addEventListener(String(_imagem.id), excluiImagem);
+				//this._imagem.addEventListener(String(_imagem.id), excluiImagem);
 					
 				this.addChild(linhabaixo);
 				this.addChild(this._ok);
+				this.addChild(this._lixeira);
 				this.addChild(this._cancelar);
 				
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
@@ -100,16 +107,21 @@ package telas
 			}
 		
 		}
-		private function excluiImagem(evento:Event):void {
+		private function excluiImagem(evento:MouseEvent):void {
+			
 			/*
-		    this._imagem[int(evento.type)].removeEventListener(evento.type, excluiImagem);
+		   // this._imagem[int(evento.type)].removeEventListener(evento.type, excluiImagem);
 		
-			this._imagem.splice(int(evento.type), 1);	
+			this._imagem.splice(image, 1);	
 			for (var i:int = 0; i < _imagem.length; i++)
 					{
 						this._imagem[i].redefineId(i, paginaAtual);
-					}*/
-			trace(evento.type);
+					}
+			trace(evento.type);*/
+			dados.imagemExclui = true;
+			dados.numero = _imagem.id;
+			
+			mudaTela('fotorecuperada', dados); 
 		}
 		private function cliqueOk(evento:MouseEvent):void
 		{
