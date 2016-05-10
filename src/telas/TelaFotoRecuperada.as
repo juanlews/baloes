@@ -41,10 +41,6 @@ package telas
 	public class TelaFotoRecuperada extends Tela
 	{
 		
-		// botoes
-		//private var _propBalao:BotaoIcone;
-		private var _ajusteBalao:BotaoIcone;
-		private var _ajusteImagem:BotaoIcone;
 		private var _salvar:BotaoIcone;
 		private var _cancelar:BotaoIcone;
 		private var _galeria:BotaoIcone;
@@ -103,9 +99,7 @@ package telas
 			// criar botões
 			this._addBalao = new BotaoIcone(Graficos.ImgAddBalao);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
-			//this._propBalao = new BotaoIcone(Graficos.ImgPropBalao);
-			this._ajusteBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
-			this._ajusteImagem = new BotaoIcone(Graficos.ImgAjusteImagem);
+			
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
@@ -113,7 +107,7 @@ package telas
 			this._addPagina = new BotaoIcone(Graficos.ImgNovaPagina);
 			this._proxPagina = new BotaoIcone(Graficos.ImgSetaDir);
 			this._antPagina = new BotaoIcone(Graficos.ImgSetaEsq)
-			this._btExcluiPagina = new BotaoIcone(Graficos.excImagem);
+			this._btExcluiPagina = new BotaoIcone(Graficos.ImgLixeira);
 			
 			this._btBiblioteca = new BotaoIcone(Graficos.ImgBiblioteca);
 			this._btCompartilhar = new BotaoIcone(Graficos.ImgCompartilhar);
@@ -161,30 +155,29 @@ package telas
 			
 			if (editavel == true)
 			{
-				this._btExcluiPagina.width = stage.stageWidth / 20;
-				this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
-				this._btExcluiPagina.x = ObjetoAprendizagem.areaImagem.x - this._btExcluiPagina.width;
-				this._btExcluiPagina.y = ObjetoAprendizagem.areaImagem.y;
+				
 				
 				this._galeria.x = stage.stageWidth / 20;
 				this._galeria.y = stage.stageHeight / 40;
 				this._galeria.width = stage.stageWidth / btscala;
 				var numeroG:Number = this._galeria.scaleY = this._galeria.scaleX;
 				
-				//botão ajuste do balão
-				this._ajusteBalao.width = stage.stageWidth / btscala;
-				var numeroAjB:Number = this._ajusteBalao.scaleY = this._ajusteBalao.scaleX;
-				this._ajusteBalao.x = (this._galeria.width + this._galeria.x) + stage.stageWidth / 20;
-				this._ajusteBalao.y = stage.stageHeight / 40;
+				// botão camera
+				this._camera.width = stage.stageWidth / btscala;
+				var numeroCam:Number = this._camera.scaleY = this._camera.scaleX;
+				this._camera.x = _galeria.x + _camera.width + stage.stageWidth / 20;
+				this._camera.y = stage.stageHeight / 40;
 				
-				//botão ajuste imagem
-				this._ajusteImagem.x = (this._ajusteBalao.width + this._ajusteBalao.x) + stage.stageWidth / 20;
-				this._ajusteImagem.y = stage.stageHeight / 40;
-				this._ajusteImagem.width = stage.stageWidth / btscala;
-				var numeroAjI:Number = this._ajusteImagem.scaleY = this._ajusteImagem.scaleX;
+								
+						
+				// biblioteca
+				this._btBiblioteca.width = stage.stageWidth / btscala;
+				var numeroBib:Number = this._btBiblioteca.scaleY = this._btBiblioteca.scaleX;
+				this._btBiblioteca.x = _camera.x + _btBiblioteca.width + stage.stageWidth / 20;;
+				this._btBiblioteca.y = stage.stageHeight / 40;
 				
 				//botão add Balao
-				this._addBalao..x = (this._ajusteImagem.width + this._ajusteImagem.x) + stage.stageWidth / 20;
+				this._addBalao.x = (this._btBiblioteca.width + this._btBiblioteca.x) + stage.stageWidth / 20;
 				this._addBalao.y = stage.stageHeight / 40;
 				this._addBalao.width = stage.stageWidth / btscala;
 				var numeroAddB:Number = this._addBalao.scaleY = this._addBalao.scaleX;
@@ -195,11 +188,10 @@ package telas
 				this._addPagina.width = stage.stageWidth / btscala;
 				var numeroAddP:Number = this._addPagina.scaleY = this._addPagina.scaleX;
 				
-				// botão camera
-				this._camera.width = stage.stageWidth / btscala;
-				var numeroCam:Number = this._camera.scaleY = this._camera.scaleX;
-				this._camera.x = stage.stageWidth - _camera.width - stage.stageWidth / 20;
-				this._camera.y = stage.stageHeight / 40;
+				this._btExcluiPagina.width = stage.stageWidth / btscala;
+				this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
+				this._btExcluiPagina.x = (this._addPagina.width + this._addPagina.x) + stage.stageWidth / 20;
+				this._btExcluiPagina.y = stage.stageHeight / 40;
 				
 				//botão salvar			
 				this._salvar.width = stage.stageWidth / btscala;
@@ -213,13 +205,7 @@ package telas
 				this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
 				this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
 				
-				
-				// biblioteca
-				this._btBiblioteca.height = this._cancelar.height;
-				this._btBiblioteca.scaleX = this._btBiblioteca.scaleY;
-				this._btBiblioteca.x = (this.stage.stageWidth / 2) - this._btBiblioteca.width - 10;
-				this._btBiblioteca.y = this._cancelar.y;
-				
+		
 				// compartilhar projeto
 				this._btCompartilhar.height = this._cancelar.height;
 				this._btCompartilhar.scaleX = this._btCompartilhar.scaleY;
@@ -239,15 +225,15 @@ package telas
 				//tween nos botoes
 				
 				_galeria.scaleX = _galeria.scaleY = 0;
-				_ajusteBalao.scaleX = _ajusteBalao.scaleY = 0;
-				_ajusteImagem.scaleX = _ajusteImagem.scaleY = 0;
+				
+				
 				_addBalao.scaleX = _addBalao.scaleY = 0;
 				_addPagina.scaleX = _addPagina.scaleX = 0;
 				_camera.scaleX = _camera.scaleY = 0;
 				
 				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.8});
-				Tweener.addTween(_ajusteBalao, {scaleX: numeroAjB, scaleY: numeroAjB, time: 0.8});
-				Tweener.addTween(_ajusteImagem, {scaleX: numeroAjI, scaleY: numeroAjI, time: 0.8});
+				
+			
 				Tweener.addTween(_addBalao, {scaleX: numeroAddB, scaleY: numeroAddB, time: 0.8});
 				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.8});
 				Tweener.addTween(_camera, {scaleX: numeroCam, scaleY: numeroCam, time: 0.8});
@@ -276,8 +262,8 @@ package telas
 						this._balao[i].smooth();
 					}
 					
-					this.addChild(this._ajusteBalao);
-					this.addChild(this._ajusteImagem);
+				
+					
 					this.addChild(this._salvar);
 					this.addChild(this._cancelar);
 					this.addChild(this._addBalao);
@@ -292,10 +278,7 @@ package telas
 					this.addChild(this._btExportarImg);
 					
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
-					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
-					//	this._propBalao.addEventListener(MouseEvent.CLICK, cliquePropB);
-					this._ajusteBalao.addEventListener(MouseEvent.CLICK, cliqueAjusteB);
-					this._ajusteImagem.addEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);					
 					this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
 					this._addPagina.addEventListener(MouseEvent.CLICK, addPagina);
 					this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
@@ -514,6 +497,12 @@ package telas
 		
 		private function proximaPagina(evento:MouseEvent):void
 		{
+			
+			for (var k:int = 0; k < _imagem.length; k++)
+				{					
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
 			salvarPagina(paginaAtual);
 			if (Main.projeto.paginas.length > paginaAtual + 1)
 			{
@@ -534,6 +523,7 @@ package telas
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					// trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
@@ -546,14 +536,27 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				
+				if (paginaAtual >= Main.projeto.paginas.length - 1){
+				_addPagina.visible = false;
+				_btExcluiPagina.visible = false;
+				}	
 			}
+			
 		
 		}
 		
 		//
 		private function paginaAnterior(evento:MouseEvent):void
 		{
+			for (var k:int = 0; k < _imagem.length; k++)
+				{					
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
+			trace ('volta' , paginaAtual);
 			salvarPagina(paginaAtual);
+			
 			if (paginaAtual - 1 >= 0)
 			{
 				paginaAtual--;
@@ -572,8 +575,9 @@ package telas
 				{
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
-					//trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+					_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 				}
 				
 				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
@@ -599,10 +603,15 @@ package telas
 			}
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
-			
+			for (var k:int = 0; k < _imagem.length; k++)
+				{					
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
 			while (_imagem.length > 0)
 			{
 				trace('dispose add pagina');
+				
 				_imagem.shift().dispose();
 			}
 			
@@ -883,10 +892,7 @@ package telas
 			// remover listeners
 			
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
-			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
-			//this._propBalao.removeEventListener(MouseEvent.CLICK, cliquePropB);
-			this._ajusteBalao.removeEventListener(MouseEvent.CLICK, cliqueAjusteB);
-			this._ajusteImagem.removeEventListener(MouseEvent.CLICK, cliqueAjusteImg);
+			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);			
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
 			stage.removeEventListener(Event.RESIZE, desenho);
 			for (var i:int = 0; i < _balao.length; i++)
@@ -935,12 +941,16 @@ package telas
 				if(dados.imagemExclui != null){
 					
 					this._imagem[int(dados.numero)].visible = false;					
+				//	this.removeChild(_imagem[int(dados.numero)]
 					this._imagem[int(dados.numero)].paginaAtual = paginaAtual;
-					this._imagem[int(dados.numero)].dispose();					
+					this._imagem[int(dados.numero)].deleteImg();					
 					this._imagem.splice(int(dados.numero), 1);	
+					
+					trace ('total de imagens', this._imagem.length);
 					
 					for (var i:int = 0; i < _imagem.length; i++)
 					{
+						trace ('mudando', this._imagem[i].id, 'para', i);
 						this._imagem[i].redefineId(i, paginaAtual);
 					}
 				}
@@ -968,8 +978,7 @@ package telas
 		private function removeBotoes():void
 		{
 			//	this.removeChild(this._propBalao);
-			this.removeChild(this._ajusteBalao);
-			this.removeChild(this._ajusteImagem);
+		
 			this.removeChild(this._cancelar);
 			this.removeChild(this._salvar);
 			this.removeChild(this._addBalao);

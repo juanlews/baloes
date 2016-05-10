@@ -81,9 +81,7 @@ package componentes
 			this.removeChildren();
 			this.loader.unload();
 			
-			var arquivo:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + _id + '.jpg');
-			trace('imagem excluida:', _id, arquivo.url); 
-			arquivo.deleteDirectory(true);
+			
 			if (this.loader.hasEventListener(Event.COMPLETE))
 			{
 				try
@@ -98,9 +96,15 @@ package componentes
 			}
 		
 			this.loader = null;
+			trace('final');
 			
 		}
-		
+		public function deleteImg():void{
+			var arquivo:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + _id + '.jpg');
+			trace('imagem excluida:', _id, arquivo.url); 
+			arquivo.deleteFile();
+			dispose();
+		}
 		public function recebeDados(dados:ImagemDados, pagina:int):void
 		{
 			
@@ -149,13 +153,23 @@ package componentes
 		
 		}
 		*/
-		public function redefineId(id:int, nPag:int):void{
+		public function redefineId(id:int, nPag:int):void {
+		
+			trace ('redefine inicia', this._id, '>', id, nPag);
 			
-			var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');
-			var arquivoFinal:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + id + '.jpg');
-			arquivoAtual.moveTo(arquivoFinal, true);
-			this._id = id;
+			if (id != this._id) {
 			
+				var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');
+				var arquivoFinal:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + id + '.jpg');
+				
+				trace ('exsite?', arquivoAtual.exists, arquivoFinal.exists);
+				
+				
+				arquivoAtual.moveTo(arquivoFinal, true);
+				this._id = id;
+			}
+			
+			trace ('redefine fim', id, nPag);
 		}
 		
 		private function complete(evt:Event):void

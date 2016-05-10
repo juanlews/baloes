@@ -124,7 +124,7 @@ package telas
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoBalao);
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragBalaoStop);
 			stage.removeEventListener(Event.RESIZE, desenho);
-			
+			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
 			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
