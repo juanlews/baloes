@@ -83,15 +83,17 @@ package componentes
 			
 			var arquivo:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + _id + '.jpg');
 			trace('imagem excluida:', _id, arquivo.url); 
+			arquivo.deleteDirectory(true);
 			if (this.loader.hasEventListener(Event.COMPLETE))
 			{
 				try
 				{
 					this.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, complete);
-					arquivo.deleteDirectory(true);
+					
 				}
 				catch (e:Error)
 				{
+					trace(e);
 				}
 			}
 			this
