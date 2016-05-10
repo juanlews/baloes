@@ -96,7 +96,7 @@ package componentes
 					trace(e);
 				}
 			}
-			this
+		
 			this.loader = null;
 			
 		}

@@ -26,6 +26,7 @@ package telas
 		private var _imagem:Vector.<Imagem>;
 		private var _ok:BotaoIcone;
 		private var _cancelar:BotaoIcone;
+		private var _configBalao:BotaoIcone;
 		private var _oRotacao:Number;
 		private var _oPosicao:Point;
 		private var _oZoom:Number;
@@ -44,7 +45,9 @@ package telas
 			dados = new Object();
 			balaOrig = new Balao(1);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
+			this._configBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
+			
 		
 		}
 		
@@ -57,6 +60,10 @@ package telas
 			this._ok.x = stage.stageWidth / 20;
 			this._ok.y = stage.stageHeight - this._ok.height - (stage.stageHeight / 40);
 			
+			this._configBalao.width = stage.stageWidth / btscala;
+			this._configBalao.scaleY = this._configBalao.scaleX;
+			this._configBalao.x = stage.stageWidth / 2 - this._configBalao.width / 2; 
+			this._configBalao.y = stage.stageHeight - this._configBalao.height - stage.stageHeight / 40;
 			//botão cancelar
 			this._cancelar.width = stage.stageWidth / btscala;
 			this._cancelar.scaleY = this._cancelar.scaleX;
@@ -78,6 +85,7 @@ package telas
 				this._balao.addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
 				
 				this.addChild(this._ok);
+				this.addChild(this._configBalao);
 				this.addChild(this._cancelar);
 				
 				trace('usa tween');
@@ -85,6 +93,7 @@ package telas
 				//	Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
+				this._configBalao.addEventListener(MouseEvent.CLICK, configBalao);
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
 				
 				stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomBalao);
@@ -97,7 +106,14 @@ package telas
 				
 			}
 		}
-		
+		private function configBalao(evento:MouseEvent):void {
+			
+			var dados:Object = new Object();
+			dados.balao = _balao;
+			
+			this.mudaTela('propriedadesbalao', dados);
+			
+		}
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
@@ -110,6 +126,7 @@ package telas
 			stage.removeEventListener(Event.RESIZE, desenho);
 			
 			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
+			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			
 			this._balao.removeEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
