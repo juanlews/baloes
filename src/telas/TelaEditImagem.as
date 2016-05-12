@@ -131,6 +131,10 @@ package telas
 			this.mudaTela('fotorecuperada', null);
 		}
 		
+		override public function botaoBack():void 
+		{
+			this.cliqueCancelar(null);
+		}
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
 			this._imagem.copyAllProp(imgOrig);

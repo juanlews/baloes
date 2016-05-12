@@ -7,7 +7,9 @@ package
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
 	import componentes.BotaoIcone;
+	import flash.events.KeyboardEvent;
 	import flash.filesystem.File;
+	import flash.ui.Keyboard;
 	import informacoes.ProjetoDados;
 	import flash.desktop.NativeApplication;
 	import flash.display.Loader;
@@ -49,6 +51,7 @@ package
 		private var PfennigRegular:Class;
 		public static var projeto:ProjetoDados;
 		private var _telas:Array;
+		private var nomeTela:String = '';
 		
 		public function Main() {
 			stage.scaleMode = StageScaleMode.NO_SCALE;
@@ -117,7 +120,21 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			
 					
+		}
+		
+		private function onKeyDown(evento:KeyboardEvent):void
+		{
+			switch (evento.keyCode) {
+				case Keyboard.BACK:
+					evento.preventDefault();
+					if (nomeTela != '') {
+						this._telas[nomeTela].botaoBack();
+					}
+					break;
+			}
 		}
 		
 		
@@ -125,7 +142,7 @@ package
 			this.removeChildren();			
 			
 			this._telas[nome].recebeDados(dados);
-			
+			nomeTela = nome;
 			trace('adicionando tela', nome);
 			
 			this.addChild(this._telas[nome]);

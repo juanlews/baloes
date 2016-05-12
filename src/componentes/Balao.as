@@ -54,11 +54,12 @@ package componentes
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
 			this._texto.wordWrap = true;
-			this._texto.defaultTextFormat = new TextFormat('Pfennig', 90, 0, null, null, null, null, null, null, null, null, null, -45);
+			this._texto.defaultTextFormat = new TextFormat('Pfennig', 90, 0, null, null, null, null, null, 'center', null, null, null, -45);
 			this.addChild(this._texto);
 			this._texto.border = false;
 			this.mouseChildren = false;
 			this._texto.autoSize = TextFieldAutoSize.NONE;
+			
 			this._texto.type = TextFieldType.INPUT;
 			this._texto.needsSoftKeyboard = true;
 			this._texto.width = 700;

@@ -330,6 +330,10 @@ package telas
 			trace('erro no envio');
 		}
 		
+		override public function botaoBack():void 
+		{
+			this.volta(null);
+		}
 		private function volta(evento:MouseEvent):void
 		{
 			mudaTela('fotorecuperada', null);

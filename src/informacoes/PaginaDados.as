@@ -23,6 +23,11 @@ package informacoes
 		 */
 		public var baloes:Vector.<BalaoDados> = new Vector.<BalaoDados>();
 		
+		/**
+		 * A página tem uma moldura?
+		 */
+		public var moldura:Boolean = false;
+		
 		
 		public function PaginaDados(objeto:Object = null) 
 		{
@@ -46,6 +51,8 @@ package informacoes
 				for (var i:int = 0; i < dados.imagens.length; i++) this.imagens.push(new ImagemDados(dados.imagens[i]));
 				// balões
 				for (i = 0; i < dados.baloes.length; i++) this.baloes.push(new BalaoDados(dados.baloes[i]));
+				// moldura
+				if (dados.moldura != null) this.moldura = Boolean(dados.moldura);
 				// página recriada
 				return (true);
 			} 

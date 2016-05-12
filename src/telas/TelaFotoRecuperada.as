@@ -84,6 +84,7 @@ package telas
 		private var _telaBiblioteca:TelaBiblioteca;		// tela da biblioteca de molduras
 		private var _telaMensagem:TelaMensagemStage;	// tela de mensagens
 		private var _ultimaAc:String = '';				// última ação (para controle da tela de mensagens)
+		private var _moldura:Imagem;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -123,6 +124,7 @@ package telas
 			this._telaBiblioteca = new TelaBiblioteca();
 			this._telaBiblioteca.addEventListener(Event.CANCEL, onBibliotecaCancel);
 			this._telaBiblioteca.addEventListener(Event.SELECT, onBibliotecaSelect);
+			this._moldura = new Imagem(0);
 			
 			// tela de mensagens
 			this._telaMensagem = new TelaMensagemStage(720, 1280, new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), 0x666666);
@@ -225,12 +227,12 @@ package telas
 				_camera.scaleX = _camera.scaleY = 0;
 				_btBiblioteca.scaleX = _btBiblioteca.scaleY = 0;
 				
-				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.6, transition:'easeOutElastic'});
-				Tweener.addTween(_addBalao, {scaleX: numeroAddB, scaleY: numeroAddB, time: 0.6, transition:'easeOutElastic'});
-				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.6, transition:'easeOutElastic'});
-				Tweener.addTween(_camera, {scaleX: numeroCam, scaleY: numeroCam, time: 0.6, transition:'easeOutElastic'});
-				Tweener.addTween(_btExcluiPagina, {scaleX: numeroExc, scaleY: numeroExc, time: 0.6, transition:'easeOutElastic'});
-				Tweener.addTween(_btBiblioteca, {scaleX: numeroBib, scaleY: numeroBib, time: 0.6, transition:'easeOutElastic'});
+				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.6, transition: 'easeOutElastic'});
+				Tweener.addTween(_addBalao, {scaleX: numeroAddB, scaleY: numeroAddB, time: 0.6, transition: 'easeOutElastic'});
+				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.6, transition: 'easeOutElastic'});
+				Tweener.addTween(_camera, {scaleX: numeroCam, scaleY: numeroCam, time: 0.6, transition: 'easeOutElastic'});
+				Tweener.addTween(_btExcluiPagina, {scaleX: numeroExc, scaleY: numeroExc, time: 0.6, transition: 'easeOutElastic'});
+				Tweener.addTween(_btBiblioteca, {scaleX: numeroBib, scaleY: numeroBib, time: 0.6, transition: 'easeOutElastic'});
 				
 				// adicionar listeners dos cliques dos botões
 				if (!this._salvar.hasEventListener(MouseEvent.CLICK))
@@ -334,6 +336,11 @@ package telas
 		
 		}
 		
+		override public function botaoBack():void
+		{
+			this.cliqueCancelar(null);
+		}
+		
 		public function carregaProjeto(id:String):void
 		{
 			trace('carrega P');
@@ -382,6 +389,22 @@ package telas
 					_balao[i].tipo = Main.projeto.paginas[0].baloes[i].tipo;
 					
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
+				}
+				if (Main.projeto.paginas[paginaAtual].moldura == true)
+				{
+					// copiando o arquivo da biblioteca para o destino
+					ObjetoAprendizagem.areaImagem.clearCover();
+					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+					
+					// carregar o arquivo da moldura
+					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+				}
+				else
+				{
+					ObjetoAprendizagem.areaImagem.clearCover();
 					
 				}
 				trace('carregou');
@@ -445,31 +468,31 @@ package telas
 				salvarPagina(paginaAtual);
 				Main.projeto.salvarDados();
 				if (paginaAtual == Main.projeto.paginas.length - 1)
-			{
-				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
 				{
-					_addPagina.addEventListener(MouseEvent.CLICK, addPagina);
-					_btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
+					if (!_addPagina.hasEventListener(MouseEvent.CLICK))
+					{
+						_addPagina.addEventListener(MouseEvent.CLICK, addPagina);
+						_btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
+						
+					}
+					
+					_addPagina.alpha = 1;
+					_btExcluiPagina.alpha = 1;
+					
+				}
+				else
+				{
+					if (_addPagina.hasEventListener(MouseEvent.CLICK))
+					{
+						_addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
+						_btExcluiPagina.removeEventListener(MouseEvent.CLICK, excluiPagina);
+						
+					}
+					_addPagina.alpha = 0.4;
+					_btExcluiPagina.alpha = 0.4;
 					
 				}
 				
-				_addPagina.alpha = 1;
-				_btExcluiPagina.alpha = 1;
-				
-			}
-			else
-			{
-				if (_addPagina.hasEventListener(MouseEvent.CLICK))
-				{
-					_addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
-					_btExcluiPagina.removeEventListener(MouseEvent.CLICK, excluiPagina);
-					
-				}
-				_addPagina.alpha = 0.4;
-				_btExcluiPagina.alpha = 0.4;
-				
-			}
-		
 			}
 		
 		}
@@ -561,10 +584,26 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				if (Main.projeto.paginas[paginaAtual].moldura == true)
+				{
+					// copiando o arquivo da biblioteca para o destino
+					ObjetoAprendizagem.areaImagem.clearCover();
+					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+					
+					// carregar o arquivo da moldura
+					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+				}
+				else
+				{
+					ObjetoAprendizagem.areaImagem.clearCover();
+					
+				}
 				
 			}
 			
-		if (paginaAtual == Main.projeto.paginas.length - 1)
+			if (paginaAtual == Main.projeto.paginas.length - 1)
 			{
 				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
 				{
@@ -636,7 +675,42 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
+				
+				trace('tem moldura?', Main.projeto.paginas[paginaAtual].moldura);
+				
+				if (Main.projeto.paginas[paginaAtual].moldura)
+				{
+					// copiando o arquivo da biblioteca para o destino
+					ObjetoAprendizagem.areaImagem.clearCover();
+					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+					
+					// carregar o arquivo da moldura
+					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+				}
+				else
+				{
+					ObjetoAprendizagem.areaImagem.clearCover();
+					
+				}
 			}
+			if (Main.projeto.paginas[paginaAtual].moldura)
+				{
+					// copiando o arquivo da biblioteca para o destino
+					ObjetoAprendizagem.areaImagem.clearCover();
+					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+					
+					// carregar o arquivo da moldura
+					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+				}
+				else
+				{
+					ObjetoAprendizagem.areaImagem.clearCover();
+					
+				}
 			if (paginaAtual == Main.projeto.paginas.length - 1)
 			{
 				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
@@ -669,6 +743,8 @@ package telas
 		
 		private function addPagina(evento:MouseEvent):void
 		{
+			ObjetoAprendizagem.areaImagem.clearCover();
+
 			if (Main.projeto.paginas.length == 0)
 			{
 				var criaPagina:int = Main.projeto.paginas.length;
@@ -692,7 +768,7 @@ package telas
 			{
 				_balao.shift().dispose();
 			}
-			
+						
 			criaPagina = Main.projeto.paginas.length;
 			Main.projeto.paginas[criaPagina] = new PaginaDados();
 			paginaAtual = Main.projeto.paginas[criaPagina].numero = criaPagina;
@@ -758,7 +834,9 @@ package telas
 				arquivoDestino.createDirectory();
 				
 			}
+			
 			// copiando o arquivo de imagem original para o destino
+			arquivoDestino = arquivoDestino.resolvePath((_imagem.length - 1) + '.jpg');
 			arquivoOrigem.copyTo(arquivoDestino, true);
 			
 			// carregando a imagem do loader a partir do arquivo de destino
@@ -994,6 +1072,7 @@ package telas
 				if (dados.imagem != null)
 				{
 					this._imagem = dados.imagem as Vector.<Imagem>;
+					while (Main.projeto.paginas.length < (paginaAtual + 1)) Main.projeto.paginas.push(new PaginaDados());
 				}
 				if (dados.balaoProp != null)
 				{
@@ -1107,6 +1186,8 @@ package telas
 				pagina.imagens.push(this._imagem[i].recuperaDados());
 			}
 			
+			pagina.moldura = Main.projeto.paginas[paginaAtual].moldura;
+			
 			// gravando a página no projeto
 			Main.projeto.guardaPagina(pagina);
 		
@@ -1130,16 +1211,40 @@ package telas
 			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.arquivo);
 			if (img.exists)
 			{
-				// adicionando a imagem
-				this._imagem[_imagem.length] = new Imagem(_imagem.length);
+				
 				// copiando o arquivo da biblioteca para o destino
-				var arquivoDestino:File = Main.projeto.arquivoImagem(_imagem.length, paginaAtual);
+				var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
 				img.copyTo(arquivoDestino, true);
-				// carregando a imagem do loader a partir do arquivo de destino
-				this._imagem[_imagem.length - 1].loader.load(new URLRequest(arquivoDestino.url));
-				this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
-				this._imagem[_imagem.length - 1].loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
+				
+				// carregar o arquivo da moldura
+				this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+				this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+				this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
 			}
+		}
+		
+		/**
+		 * Erro ao carregar a imagem da moldura.
+		 */
+		private function molduraErro(evt:IOErrorEvent):void
+		{
+			this._moldura.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, molduraCarregada);
+			this._moldura.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+			ObjetoAprendizagem.areaImagem.clearCover();
+			Main.projeto.paginas[paginaAtual].moldura = false;
+		}
+		
+		/**
+		 * Arquivo de moldura carregado.
+		 */
+		private function molduraCarregada(evt:Event):void
+		{
+			this._moldura.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, molduraCarregada);
+			this._moldura.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+			ObjetoAprendizagem.areaImagem.addCover(this._moldura);
+			trace('paginaAtual', paginaAtual, Main.projeto.paginas.length);
+			
+			Main.projeto.paginas[paginaAtual].moldura = true;
 		}
 		
 		/**

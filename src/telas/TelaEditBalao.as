@@ -153,6 +153,11 @@ package telas
 		
 		}
 		
+		override public function botaoBack():void 
+		{
+			this.cliqueCancelar(null);
+		}
+		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
 			_balao.copyAllProp(balaOrig);
