@@ -243,7 +243,7 @@ package telas
 			this.addChild(this._tipo3);
 			
 			//cor
-			this._cor1.x = stage.stageWidth / 30 ;
+			this._cor1.x = stage.stageWidth / 20 ;
 			this._cor1.y = this._excluir.y + this._excluir.height + this._cor1.height/4 ;
 			this._cor1.width = stage.stageWidth / 8;
 			this._cor1.scaleY = this._cor1.scaleX;
@@ -267,7 +267,7 @@ package telas
 			this._cor4.scaleY = this._cor4.scaleX;
 			this.addChild(this._cor4);
 			
-			this._cor5.x = this._cor4.x + stage.stageWidth /5;
+			this._cor5.x = stage.stageWidth - this._excluir.width - stage.stageWidth/20;
 			this._cor5.y = this._excluir.y + this._excluir.height + this._cor5.height/4 ;
 			this._cor5.width = stage.stageWidth / 8;
 			this._cor5.scaleY = this._cor5.scaleX;
