@@ -36,7 +36,7 @@ package informacoes
 		
 		private var _pastaTemp:File;
 		
-		public function ProjetoDados ()
+		public function ProjetoDados()
 		{
 			this.app = ObjetoAprendizagem.codigo;
 			this.tags = new Array();
@@ -46,10 +46,9 @@ package informacoes
 		
 		public function arquivoImagem(length:int, numero:int):File
 		{
-			return (this.pasta.resolvePath('imagens/pagina' + numero + '/' +  (length - 1) + '.jpg'));
+			return (this.pasta.resolvePath('imagens/pagina' + numero + '/' + (length - 1) + '.jpg'));
 		}
 		
-				
 		public function parse(strdados:String):Boolean
 		{
 			
@@ -87,9 +86,12 @@ package informacoes
 		
 		public function clear(id:String = null):void
 		{
-			if (id == null) {
+			if (id == null)
+			{
 				this.id = String(new Date().getTime());
-			} else {
+			}
+			else
+			{
 				this.id = id;
 			}
 			this.titulo = '';
@@ -102,10 +104,8 @@ package informacoes
 				this.paginas.shift().dispose();
 			}
 			
-			
-			
 			this.pasta = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + this.id);
-			
+		
 			//trace ('pasta 1', this.pasta.url);
 		
 		}
@@ -113,29 +113,27 @@ package informacoes
 		public function salvarDados():Boolean
 		{
 			
-			
 			if (!this.pasta.isDirectory)
 			{
 				this.pasta.createDirectory();
 			}
 			
-		var pastaImagens:File = this.pasta.resolvePath('imagens');
-		
+			var pastaImagens:File = this.pasta.resolvePath('imagens');
+			
 			if (!pastaImagens.isDirectory)
 			{
 				pastaImagens.createDirectory();
 				
 			}
 			
-			
 			var stringSave:String = JSON.stringify(this);
 			var arquivo:File = this.pasta.resolvePath('projeto.json');
 			var stream:FileStream = new FileStream();
-		    stream.open(arquivo, FileMode.WRITE);
+			stream.open(arquivo, FileMode.WRITE);
 			stream.writeUTFBytes(stringSave);
 			stream.close();
 			
-			return(true);
+			return (true);
 		
 		}
 		
@@ -145,32 +143,36 @@ package informacoes
 		 * @return	TRUE se os dados enviados estiverem de acordo com a estrutura de página
 		 */
 		public function guardaPagina(pagina:PaginaDados):Boolean
-        {
-            if (pagina.numero >= 0)
-            { // somente guardar páginas com número maior ou igual a zero
-                // o número da página indicada ainda não existe
-                while (this.paginas.length < (pagina.numero + 1)) {
-                    this.paginas.push(new PaginaDados());
-                }
-                // guardar as informações da página no local certo
-                return (this.paginas[pagina.numero].processar(pagina));
-            }
-            else
-            {
-                return (false);
-            }
-        }
+		{
+			if (pagina.numero >= 0)
+			{ // somente guardar páginas com número maior ou igual a zero
+				// o número da página indicada ainda não existe
+				while (this.paginas.length < (pagina.numero + 1))
+				{
+					this.paginas.push(new PaginaDados());
+				}
+				// guardar as informações da página no local certo
+				return (this.paginas[pagina.numero].processar(pagina));
+			}
+			else
+			{
+				return (false);
+			}
+		}
 		
 		public function carregaProjeto(id:String):Boolean
 		{
 			var json:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + id + '/projeto.json');
-			if (json.exists) {
+			if (json.exists)
+			{
 				var stream:FileStream = new FileStream();
 				stream.open(json, FileMode.READ);
 				var jsonText:String = stream.readUTFBytes(stream.bytesAvailable);
 				stream.close();
 				return (this.parse(jsonText));
-			} else {
+			}
+			else
+			{
 				return (false);
 			}
 		}
@@ -184,7 +186,7 @@ package informacoes
 			// salvando o projeto atual
 			this.salvarDados();
 			// exportando
-			return(this.exportarID(this.id));
+			return (this.exportarID(this.id));
 		}
 		
 		/**
@@ -196,16 +198,22 @@ package informacoes
 		{
 			// o projeto existe?
 			var pastaProj:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + prID);
-			if (!pastaProj.isDirectory) {
+			if (!pastaProj.isDirectory)
+			{
 				// a pasta do projeto indicado não foi encontrada
 				return ('');
-			} else {
+			}
+			else
+			{
 				// verificando se existe o arquivo de informações do projeto
 				var arqProj:File = pastaProj.resolvePath('projeto.json');
-				if (!arqProj.exists) {
+				if (!arqProj.exists)
+				{
 					// o arquivo de projeto não existe
 					return ('');
-				} else {
+				}
+				else
+				{
 					// o arquivo de projeto está completo?
 					var ok:Boolean = false;
 					var json:Object;
@@ -214,15 +222,22 @@ package informacoes
 					var fileData:String = stream.readUTFBytes(stream.bytesAvailable);
 					stream.close();
 					// recuperando o json
-					try {
+					try
+					{
 						json = JSON.parse(fileData);
 						ok = true;
-					} catch (e:Error) { }
+					}
+					catch (e:Error)
+					{
+					}
 					// json carregado
-					if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null) || (json.app == null)) {
+					if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null) || (json.app == null))
+					{
 						// não há informações suficientes
 						return ('');
-					} else {
+					}
+					else
+					{
 						// criando zip e arquivos para exportação
 						var zip:FZip = new FZip();
 						var fileBytes:ByteArray = new ByteArray();
@@ -233,7 +248,8 @@ package informacoes
 						stream.close();
 						zip.addFile((prID + '/projeto.json'), fileBytes);
 						// adicionando arquivo de capa
-						if (pastaProj.resolvePath('capa.jpg').exists) {
+						if (pastaProj.resolvePath('capa.jpg').exists)
+						{
 							stream.open(pastaProj.resolvePath('capa.jpg'), FileMode.READ);
 							fileBytes.clear();
 							stream.readBytes(fileBytes);
@@ -242,11 +258,14 @@ package informacoes
 						}
 						// adicionando arquivos de imagem
 						var pastaImagem:Array = pastaProj.resolvePath('imagens').getDirectoryListing();
-						for (var indice:int = 0; indice < pastaImagem.length; indice++) {
+						for (var indice:int = 0; indice < pastaImagem.length; indice++)
+						{
 							var pastaPagina:File = pastaImagem[indice] as File;
-							if (pastaPagina.isDirectory) {
+							if (pastaPagina.isDirectory)
+							{
 								var paginaLista:Array = pastaPagina.getDirectoryListing();
-								for (var indiceLista:int = 0; indiceLista < paginaLista.length; indiceLista++) {
+								for (var indiceLista:int = 0; indiceLista < paginaLista.length; indiceLista++)
+								{
 									var arqImagem:File = paginaLista[indiceLista] as File;
 									stream.open(arqImagem, FileMode.READ);
 									fileBytes.clear();
@@ -266,9 +285,16 @@ package informacoes
 			}
 		}
 		
-		public function excluiPastaPagina(nPaginaPasta:int):void{
-			Main.projeto.pasta.resolvePath('imagens/pagina' + nPaginaPasta).deleteDirectory(true);
-			if (nPaginaPasta == 0 ){
+		public function excluiPastaPagina(nPaginaPasta:int):void
+		{
+			
+			if (Main.projeto.pasta.resolvePath('imagens/pagina' + nPaginaPasta).isDirectory)
+			{
+				
+				Main.projeto.pasta.resolvePath('imagens/pagina' + nPaginaPasta).deleteDirectory(true);
+			}
+			if (nPaginaPasta == 0)
+			{
 				Main.projeto.pasta.resolvePath('imagens/pagina' + nPaginaPasta).createDirectory();
 			}
 		}
@@ -282,7 +308,8 @@ package informacoes
 		{
 			
 			// abrindo arquivo de origem
-			if (origem.exists) {
+			if (origem.exists)
+			{
 				// criando pasta temporária de importação
 				this._pastaTemp = File.createTempDirectory();
 				// recuperando informações do arquivo
@@ -299,7 +326,9 @@ package informacoes
 				zip.loadBytes(fileBytes);
 				// começando importação
 				return (true);
-			} else {
+			}
+			else
+			{
 				// o arquivo indicado não foi encontrado
 				return (false);
 			}
@@ -311,9 +340,12 @@ package informacoes
 		private function onZipLoaded(evt:FZipEvent):void
 		{
 			var zipfile:FZipFile = evt.file;
-			if (zipfile.sizeUncompressed == 0) {
+			if (zipfile.sizeUncompressed == 0)
+			{
 				// arquivo sem dados: não recriar
-			} else {
+			}
+			else
+			{
 				// descompactando o arquivo em disco
 				var stream:FileStream = new FileStream();
 				stream.open(this._pastaTemp.resolvePath(zipfile.filename), FileMode.WRITE);
@@ -322,7 +354,6 @@ package informacoes
 			}
 		}
 		
-			
 		/**
 		 * Todos os arquivos dentro do zip de importação foram extraídos.
 		 */
@@ -334,22 +365,31 @@ package informacoes
 			zip.removeEventListener(Event.COMPLETE, onUnzipComplete);
 			// verificando integridade do projeto
 			var pastas:Array = this._pastaTemp.getDirectoryListing();
-			if (pastas.length != 1) {
+			if (pastas.length != 1)
+			{
 				// o arquivo descompactado não contém uma única pasta: não é uma exportação válida
 				this.dispatchEvent(new Event(Event.CANCEL));
-			} else {
+			}
+			else
+			{
 				// verificando a pasta de projeto encontrada
 				var pastaProjeto:File = pastas[0] as File;
-				if (!pastaProjeto.isDirectory) {
+				if (!pastaProjeto.isDirectory)
+				{
 					// não há uma pasta recuperada de projeto
 					this.dispatchEvent(new Event(Event.CANCEL));
-				} else {
+				}
+				else
+				{
 					// verificando se há um arquivo de projeto
 					var arquivoProjeto:File = pastaProjeto.resolvePath('projeto.json');
-					if (!arquivoProjeto.exists) {
+					if (!arquivoProjeto.exists)
+					{
 						// não há um arquivo de projeto
 						this.dispatchEvent(new Event(Event.CANCEL));
-					} else {
+					}
+					else
+					{
 						// o arquivo é um json válido?
 						var stream:FileStream = new FileStream();
 						stream.open(arquivoProjeto, FileMode.READ);
@@ -357,23 +397,36 @@ package informacoes
 						stream.close();
 						var ok:Boolean = false;
 						var json:Object;
-						try {
+						try
+						{
 							json = JSON.parse(fdata);
 							ok = true;
-						} catch (e:Error) { }
-						if (!ok) {
+						}
+						catch (e:Error)
+						{
+						}
+						if (!ok)
+						{
 							// o arquivo não traz um json válido
 							this.dispatchEvent(new Event(Event.CANCEL));
-						} else {
-							if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null) || (json.app == null)) {
+						}
+						else
+						{
+							if ((json.id == null) || (json.titulo == null) || (json.tags == null) || (json.paginas == null) || (json.app == null))
+							{
 								// o arquivo json não traz as informações necessárias
 								this.dispatchEvent(new Event(Event.CANCEL));
-							} else {
-								if (String(json.app) == ObjetoAprendizagem.codigo) {
+							}
+							else
+							{
+								if (String(json.app) == ObjetoAprendizagem.codigo)
+								{
 									// projeto ok: copiar para a pasta de documentos
 									pastaProjeto.moveTo(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + json.id), true);
 									this.dispatchEvent(new Event(Event.COMPLETE));
-								} else {
+								}
+								else
+								{
 									// o arquivo json não traz um projeto de narratovas visuais
 									this.dispatchEvent(new Event(Event.CANCEL));
 								}

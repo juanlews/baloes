@@ -42,10 +42,12 @@ package componentes
 		{
 			return (_id);
 		}
+		
 		public function set id(para:int):void
 		{
 			this._id = para;
 		}
+		
 		public function centraliza(refStage:Stage):void
 		{
 			this.loader.x = -this.loader.width / 2;
@@ -76,11 +78,10 @@ package componentes
 		public function dispose():void
 		{
 			
-			trace ("dispose imagem", this._url);
+			trace("dispose imagem", this._url);
 			
 			this.removeChildren();
 			this.loader.unload();
-			
 			
 			if (this.loader.hasEventListener(Event.COMPLETE))
 			{
@@ -94,21 +95,24 @@ package componentes
 					trace(e);
 				}
 			}
-		
+			
 			this.loader = null;
 			trace('final');
-			
+		
 		}
-		public function deleteImg():void{
+		
+		public function deleteImg():void
+		{
 			var arquivo:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + _id + '.jpg');
-			trace('imagem excluida:', _id, arquivo.url); 
+			trace('imagem excluida:', _id, arquivo.url);
 			arquivo.deleteFile();
 			dispose();
 		}
+		
 		public function recebeDados(dados:ImagemDados, pagina:int):void
 		{
 			
-			trace ('recebe dados', JSON.stringify(dados), pagina);
+			trace('recebe dados', JSON.stringify(dados), pagina);
 			
 			this._id = dados.id;
 			this.x = dados.x;
@@ -128,54 +132,65 @@ package componentes
 		}
 		
 		/*public function exclui(ativo:Boolean = false):void
-		{
-			if (ativo == true)
-			{
-				this.btExcImagem.visible = true;
-				this.btExcImagem.x = loader.x;
-				this.btExcImagem.y = loader.y;
-				this.btExcImagem.addEventListener(MouseEvent.CLICK, excluiImagem);
-				
-			}
-			else
-			{
-				this.btExcImagem.visible = false
-			}
+		   {
+		   if (ativo == true)
+		   {
+		   this.btExcImagem.visible = true;
+		   this.btExcImagem.x = loader.x;
+		   this.btExcImagem.y = loader.y;
+		   this.btExcImagem.addEventListener(MouseEvent.CLICK, excluiImagem);
 		
-		}*/
+		   }
+		   else
+		   {
+		   this.btExcImagem.visible = false
+		   }
+		
+		   }*/
 		/*
-		public function excluiImagem():void
+		   public function excluiImagem():void
+		   {
+		   //dispatchEvent(new Event(String(_id), true));
+		   trace('imagem excluida:', _id);
+		   this.dispose();
+		   //
+		
+		   }
+		 */
+		public function redefineId(id:int, nPag:int):void
 		{
-			//dispatchEvent(new Event(String(_id), true));
-			trace('imagem excluida:', _id); 
-			this.dispose();
-			//
-		
-		}
-		*/
-		public function redefineId(id:int, nPag:int):void {
-		
-			trace ('redefine inicia', this._id, '>', id, nPag);
 			
-			if (id != this._id) {
+			trace('redefine inicia', this._id, '>', id, nPag);
 			
+			if (id != this._id)
+			{
+				
 				var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');
 				var arquivoFinal:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + id + '.jpg');
 				
-				trace ('exsite?', arquivoAtual.exists, arquivoFinal.exists);
-				
+				trace('exsite?', arquivoAtual.exists, arquivoFinal.exists);
 				
 				arquivoAtual.moveTo(arquivoFinal, true);
 				this._id = id;
 			}
 			
-			trace ('redefine fim', id, nPag);
+			trace('redefine fim', id, nPag);
+		}
+		
+		public function copyAllProp(img:Imagem):void
+		{
+			this.x = img.x;
+			this.y = img.y;
+			this.rotation = img.rotation;
+			this.scaleX = img.scaleX;
+			this.scaleY = img.scaleY;
+		
 		}
 		
 		private function complete(evt:Event):void
 		{
 			
-		  (this.loader.content as Bitmap).smoothing = true;
+			(this.loader.content as Bitmap).smoothing = true;
 			this.loader.x = -this.loader.width / 2;
 			this.loader.y = -this.loader.height / 2;
 		}
