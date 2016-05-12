@@ -30,12 +30,14 @@ package telas
 		private var dados:Object;
 		private var btscala:Number;
 		private var paginaAtual:int;
+		private var imgOrig:Imagem;
 		
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
 			btscala = 10;
 			dados = new Object();
+			imgOrig = new Imagem();
 		    this._lixeira = new BotaoIcone(Graficos.ImgLixeira);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
@@ -101,8 +103,8 @@ package telas
 				this.addChild(this._cancelar);
 				
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
-				linhacima.x = 0;
-				Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
+				//linhacima.x = 0;
+				//Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
 			}
 		
@@ -131,6 +133,7 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
+			this._imagem.copyAllProp(imgOrig);
 			this.mudaTela('fotorecuperada', null);
 		
 		}
@@ -214,6 +217,7 @@ package telas
 			if (dados != null)
 			{
 				this._imagem = dados.imagem as Imagem;
+				this.imgOrig.copyAllProp(_imagem);
 				this.paginaAtual = dados.paginaAtual;
 			}
 			

@@ -50,8 +50,6 @@ package telas
 		private var _proxPagina:BotaoIcone;
 		private var _antPagina:BotaoIcone;
 		
-		
-		
 		// balão
 		private var _balao:Vector.<Balao>;
 		
@@ -156,7 +154,6 @@ package telas
 			if (editavel == true)
 			{
 				
-				
 				this._galeria.x = stage.stageWidth / 20;
 				this._galeria.y = stage.stageHeight / 40;
 				this._galeria.width = stage.stageWidth / btscala;
@@ -168,12 +165,10 @@ package telas
 				this._camera.x = _galeria.x + _camera.width + stage.stageWidth / 20;
 				this._camera.y = stage.stageHeight / 40;
 				
-								
-						
 				// biblioteca
 				this._btBiblioteca.width = stage.stageWidth / btscala;
 				var numeroBib:Number = this._btBiblioteca.scaleY = this._btBiblioteca.scaleX;
-				this._btBiblioteca.x = _camera.x + _btBiblioteca.width + stage.stageWidth / 20;;
+				this._btBiblioteca.x = _camera.x + _btBiblioteca.width + stage.stageWidth / 20;
 				this._btBiblioteca.y = stage.stageHeight / 40;
 				
 				//botão add Balao
@@ -189,7 +184,7 @@ package telas
 				var numeroAddP:Number = this._addPagina.scaleY = this._addPagina.scaleX;
 				
 				this._btExcluiPagina.width = stage.stageWidth / btscala;
-				this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
+				var numeroExc:Number = this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
 				this._btExcluiPagina.x = (this._addPagina.width + this._addPagina.x) + stage.stageWidth / 20;
 				this._btExcluiPagina.y = stage.stageHeight / 40;
 				
@@ -205,17 +200,16 @@ package telas
 				this._cancelar.x = stage.stageWidth - _cancelar.width - stage.stageWidth / 20;
 				this._cancelar.y = stage.stageHeight - this._cancelar.height - (stage.stageHeight / 40);
 				
-		
 				// compartilhar projeto
 				this._btCompartilhar.height = this._cancelar.height;
 				this._btCompartilhar.scaleX = this._btCompartilhar.scaleY;
-				this._btCompartilhar.x = (this.stage.stageWidth / 2) + 10;
+				this._btCompartilhar.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 1.5;
 				this._btCompartilhar.y = this._cancelar.y;
 				
 				// exportar imagens
 				this._btExportarImg.height = this._cancelar.height;
 				this._btExportarImg.scaleX = this._btCompartilhar.scaleY;
-				this._btExportarImg.x = this._btCompartilhar.x + this._btCompartilhar.width + 10;
+				this._btExportarImg.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 3;
 				this._btExportarImg.y = this._cancelar.y;
 				
 				//imagem recuperada
@@ -225,18 +219,18 @@ package telas
 				//tween nos botoes
 				
 				_galeria.scaleX = _galeria.scaleY = 0;
-				
-				
+				_btExcluiPagina.scaleX = _btExcluiPagina.scaleY = 0;
 				_addBalao.scaleX = _addBalao.scaleY = 0;
-				_addPagina.scaleX = _addPagina.scaleX = 0;
+				_addPagina.scaleX = _addPagina.scaleY = 0;
 				_camera.scaleX = _camera.scaleY = 0;
+				_btBiblioteca.scaleX = _btBiblioteca.scaleY = 0;
 				
-				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.8});
-				
-			
-				Tweener.addTween(_addBalao, {scaleX: numeroAddB, scaleY: numeroAddB, time: 0.8});
-				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.8});
-				Tweener.addTween(_camera, {scaleX: numeroCam, scaleY: numeroCam, time: 0.8});
+				Tweener.addTween(_galeria, {scaleX: numeroG, scaleY: numeroG, time: 0.6, transition:'easeOutElastic'});
+				Tweener.addTween(_addBalao, {scaleX: numeroAddB, scaleY: numeroAddB, time: 0.6, transition:'easeOutElastic'});
+				Tweener.addTween(_addPagina, {scaleX: numeroAddP, scaleY: numeroAddP, time: 0.6, transition:'easeOutElastic'});
+				Tweener.addTween(_camera, {scaleX: numeroCam, scaleY: numeroCam, time: 0.6, transition:'easeOutElastic'});
+				Tweener.addTween(_btExcluiPagina, {scaleX: numeroExc, scaleY: numeroExc, time: 0.6, transition:'easeOutElastic'});
+				Tweener.addTween(_btBiblioteca, {scaleX: numeroBib, scaleY: numeroBib, time: 0.6, transition:'easeOutElastic'});
 				
 				// adicionar listeners dos cliques dos botões
 				if (!this._salvar.hasEventListener(MouseEvent.CLICK))
@@ -262,8 +256,6 @@ package telas
 						this._balao[i].smooth();
 					}
 					
-				
-					
 					this.addChild(this._salvar);
 					this.addChild(this._cancelar);
 					this.addChild(this._addBalao);
@@ -278,7 +270,7 @@ package telas
 					this.addChild(this._btExportarImg);
 					
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
-					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);					
+					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
 					this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
 					this._addPagina.addEventListener(MouseEvent.CLICK, addPagina);
 					this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
@@ -446,11 +438,38 @@ package telas
 				{
 					paginaAnterior(evento);
 				}
-				Main.projeto.salvarDados();
+				
+				trace(Main.projeto.salvarDados());
 				Main.projeto.excluiPastaPagina(Main.projeto.paginas.length - 1);
 				Main.projeto.paginas.splice(Main.projeto.paginas.length - 1, 1);
 				salvarPagina(paginaAtual);
 				Main.projeto.salvarDados();
+				if (paginaAtual == Main.projeto.paginas.length - 1)
+			{
+				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
+				{
+					_addPagina.addEventListener(MouseEvent.CLICK, addPagina);
+					_btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
+					
+				}
+				
+				_addPagina.alpha = 1;
+				_btExcluiPagina.alpha = 1;
+				
+			}
+			else
+			{
+				if (_addPagina.hasEventListener(MouseEvent.CLICK))
+				{
+					_addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
+					_btExcluiPagina.removeEventListener(MouseEvent.CLICK, excluiPagina);
+					
+				}
+				_addPagina.alpha = 0.4;
+				_btExcluiPagina.alpha = 0.4;
+				
+			}
+		
 			}
 		
 		}
@@ -468,11 +487,14 @@ package telas
 		 */
 		private function compartilhaProjeto(evt:MouseEvent):void
 		{
-			if (Main.projeto.titulo == '') {
+			if (Main.projeto.titulo == '')
+			{
 				this._ultimaAc = 'aviso falta titulo';
 				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Seu projeto ainda não tem um título e não pode ser compartilhado. Salve o projeto primeiro e tente novamente.');
 				this.stage.addChild(this._telaMensagem);
-			} else {
+			}
+			else
+			{
 				this._ultimaAc = 'compartilhar projeto';
 				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Você tem certeza de que quer compartilhar o projeto atual com o título <b>' + Main.projeto.titulo + '</b>?', true);
 				this.stage.addChild(this._telaMensagem);
@@ -484,11 +506,14 @@ package telas
 		 */
 		private function exportaImagem(evt:MouseEvent):void
 		{
-			if (Main.projeto.titulo == '') {
+			if (Main.projeto.titulo == '')
+			{
 				this._ultimaAc = 'aviso falta titulo';
 				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Seu projeto ainda não tem um título. Não é possível exportar a página como uma imagem. Salve o projeto e tente novamente.');
 				this.stage.addChild(this._telaMensagem);
-			} else {
+			}
+			else
+			{
 				this._ultimaAc = 'salvar imagem';
 				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Você tem certeza de que quer salvar a página atual como uma imagem?', true);
 				this.stage.addChild(this._telaMensagem);
@@ -498,14 +523,14 @@ package telas
 		private function proximaPagina(evento:MouseEvent):void
 		{
 			
-			for (var k:int = 0; k < _imagem.length; k++)
-				{					
-					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
-					
-				}
 			salvarPagina(paginaAtual);
 			if (Main.projeto.paginas.length > paginaAtual + 1)
 			{
+				for (var k:int = 0; k < _imagem.length; k++)
+				{
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
 				paginaAtual++;
 				while (_imagem.length > 0)
 				{
@@ -537,28 +562,50 @@ package telas
 					
 				}
 				
-				if (paginaAtual >= Main.projeto.paginas.length - 1){
-				_addPagina.visible = false;
-				_btExcluiPagina.visible = false;
-				}	
 			}
 			
+		if (paginaAtual == Main.projeto.paginas.length - 1)
+			{
+				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
+				{
+					_addPagina.addEventListener(MouseEvent.CLICK, addPagina);
+					_btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
+					
+				}
+				
+				_addPagina.alpha = 1;
+				_btExcluiPagina.alpha = 1;
+				
+			}
+			else
+			{
+				if (_addPagina.hasEventListener(MouseEvent.CLICK))
+				{
+					_addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
+					_btExcluiPagina.removeEventListener(MouseEvent.CLICK, excluiPagina);
+					
+				}
+				_addPagina.alpha = 0.4;
+				_btExcluiPagina.alpha = 0.4;
+				
+			}
 		
 		}
 		
 		//
 		private function paginaAnterior(evento:MouseEvent):void
 		{
-			for (var k:int = 0; k < _imagem.length; k++)
-				{					
-					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
-					
-				}
-			trace ('volta' , paginaAtual);
+			
+			trace('volta', paginaAtual);
 			salvarPagina(paginaAtual);
 			
 			if (paginaAtual - 1 >= 0)
 			{
+				for (var k:int = 0; k < _imagem.length; k++)
+				{
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
 				paginaAtual--;
 				while (_imagem.length > 0)
 				{
@@ -590,6 +637,32 @@ package telas
 					
 				}
 			}
+			if (paginaAtual == Main.projeto.paginas.length - 1)
+			{
+				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
+				{
+					_addPagina.addEventListener(MouseEvent.CLICK, addPagina);
+					_btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
+					
+				}
+				
+				_addPagina.alpha = 1;
+				_btExcluiPagina.alpha = 1;
+				
+			}
+			else
+			{
+				if (_addPagina.hasEventListener(MouseEvent.CLICK))
+				{
+					_addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
+					_btExcluiPagina.removeEventListener(MouseEvent.CLICK, excluiPagina);
+					
+				}
+				_addPagina.alpha = 0.4;
+				_btExcluiPagina.alpha = 0.4;
+				
+			}
+		
 		}
 		
 		//
@@ -604,10 +677,10 @@ package telas
 			this.salvarPagina(paginaAtual);
 			Main.projeto.salvarDados();
 			for (var k:int = 0; k < _imagem.length; k++)
-				{					
-					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
-					
-				}
+			{
+				this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				
+			}
 			while (_imagem.length > 0)
 			{
 				trace('dispose add pagina');
@@ -726,7 +799,7 @@ package telas
 		private function imagemCarregada(evento:Event):void
 		{
 			
-			trace ('imagem carregada');
+			trace('imagem carregada');
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
@@ -776,7 +849,7 @@ package telas
 		{
 			var imagem:Imagem = evento.target as Imagem;
 			
-			trace ('imagem', imagem, evento.target);
+			trace('imagem', imagem, evento.target);
 			
 			var dados:Object = new Object();
 			
@@ -787,7 +860,7 @@ package telas
 				_balao[k].alpha = 0.5;
 				
 				trace('aplicando alpha em', _balao[k].id);
-			 }
+			}
 			
 			for (k = 0; k < _imagem.length; k++)
 			{
@@ -798,7 +871,7 @@ package telas
 			if (imagem != null)
 			{
 				
-				trace ('tô aqui');
+				trace('tô aqui');
 				
 				imagem.alpha = 1;
 				imagem.mouseEnabled = true;
@@ -863,8 +936,8 @@ package telas
 			var balaoClicado:Balao = evento.target as Balao;
 			
 			this._dados.balao = balaoClicado;
-			
-		//	this.mudaTela('propriedadesbalao', _dados);
+		
+			//	this.mudaTela('propriedadesbalao', _dados);
 		
 		}
 		
@@ -892,7 +965,7 @@ package telas
 			// remover listeners
 			
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
-			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);			
+			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
 			stage.removeEventListener(Event.RESIZE, desenho);
 			for (var i:int = 0; i < _balao.length; i++)
@@ -938,19 +1011,20 @@ package telas
 				{
 					this.editavel = dados.editavel;
 				}
-				if(dados.imagemExclui != null){
+				if (dados.imagemExclui != null)
+				{
 					
-					this._imagem[int(dados.numero)].visible = false;					
-				//	this.removeChild(_imagem[int(dados.numero)]
+					this._imagem[int(dados.numero)].visible = false;
+					//	this.removeChild(_imagem[int(dados.numero)]
 					this._imagem[int(dados.numero)].paginaAtual = paginaAtual;
-					this._imagem[int(dados.numero)].deleteImg();					
-					this._imagem.splice(int(dados.numero), 1);	
+					this._imagem[int(dados.numero)].deleteImg();
+					this._imagem.splice(int(dados.numero), 1);
 					
-					trace ('total de imagens', this._imagem.length);
+					trace('total de imagens', this._imagem.length);
 					
 					for (var i:int = 0; i < _imagem.length; i++)
 					{
-						trace ('mudando', this._imagem[i].id, 'para', i);
+						trace('mudando', this._imagem[i].id, 'para', i);
 						this._imagem[i].redefineId(i, paginaAtual);
 					}
 				}
@@ -978,7 +1052,7 @@ package telas
 		private function removeBotoes():void
 		{
 			//	this.removeChild(this._propBalao);
-		
+			
 			this.removeChild(this._cancelar);
 			this.removeChild(this._salvar);
 			this.removeChild(this._addBalao);
@@ -1054,7 +1128,8 @@ package telas
 		{
 			// localizando imagem selecionada na biblioteca
 			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.arquivo);
-			if (img.exists) {
+			if (img.exists)
+			{
 				// adicionando a imagem
 				this._imagem[_imagem.length] = new Imagem(_imagem.length);
 				// copiando o arquivo da biblioteca para o destino
@@ -1076,43 +1151,52 @@ package telas
 			this.stage.removeChild(this._telaMensagem);
 			// verificando a ação
 			var acOK:Boolean = false;
-			switch (this._ultimaAc) {
-				case 'salvar imagem':
-					var stream:FileStream = new FileStream();
-					var regExp:RegExp=/[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
-					var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');;
-					if (nomeImagem == '') nomeImagem = Main.projeto.id;
-					nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
-					stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
-					stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
-					stream.close();
-					this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
-					this._ultimaAc = 'imagem exportada';
+			switch (this._ultimaAc)
+			{
+			case 'salvar imagem': 
+				var stream:FileStream = new FileStream();
+				var regExp:RegExp = /[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
+				var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');
+				;
+				if (nomeImagem == '') nomeImagem = Main.projeto.id;
+				nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
+				stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
+				stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
+				stream.close();
+				this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
+				this._ultimaAc = 'imagem exportada';
+				this.stage.addChild(this._telaMensagem);
+				break;
+			case 'compartilhar projeto': 
+				var exportado:String = Main.projeto.exportar();
+				if (exportado != '')
+				{
+					// ação ok
+					acOK = true;
+				}
+				if (!acOK)
+				{
+					// avisar sobre problema ao exportar projeto
+					this._ultimaAc = 'erro compartilhando projeto';
+					this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido para compartilhamento. Por favor tente novamente.');
 					this.stage.addChild(this._telaMensagem);
-					break;
-				case 'compartilhar projeto':
-					var exportado:String = Main.projeto.exportar();
-					if (exportado != '') {
-						// ação ok
-						acOK = true;
+				}
+				else
+				{
+					// iniciar compartilhamento
+					if (ObjetoAprendizagem.compartilhamento.iniciaURL(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados/' + exportado)))
+					{
+						this.stage.addChild(ObjetoAprendizagem.compartilhamento);
 					}
-					if (!acOK) {
-						// avisar sobre problema ao exportar projeto
+					else
+					{
+						// avisar sobre erro de compartilhamento
 						this._ultimaAc = 'erro compartilhando projeto';
 						this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido para compartilhamento. Por favor tente novamente.');
 						this.stage.addChild(this._telaMensagem);
-					} else {
-						// iniciar compartilhamento
-						if (ObjetoAprendizagem.compartilhamento.iniciaURL(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados/' + exportado))) {
-							this.stage.addChild(ObjetoAprendizagem.compartilhamento);
-						} else {
-							// avisar sobre erro de compartilhamento
-							this._ultimaAc = 'erro compartilhando projeto';
-							this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido para compartilhamento. Por favor tente novamente.');
-							this.stage.addChild(this._telaMensagem);
-						}
 					}
-					break;
+				}
+				break;
 			}
 		}
 		
