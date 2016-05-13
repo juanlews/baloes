@@ -49,7 +49,7 @@ package telas
 				linhabaixo.graphics.endFill();
 			}
 			
-			linhabaixo.y = stage.stageHeight - stage.stageHeight / 10 ;
+			linhabaixo.y = stage.stageHeight - stage.stageHeight / 10;
 			linhabaixo.x = 0;		
 			
 			this.addChild(ObjetoAprendizagem.areaImagem);

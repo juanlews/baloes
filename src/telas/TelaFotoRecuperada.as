@@ -49,6 +49,7 @@ package telas
 		private var _addPagina:BotaoIcone;
 		private var _proxPagina:BotaoIcone;
 		private var _antPagina:BotaoIcone;
+		private var _fullscreen:BotaoIcone;
 		
 		// balão
 		private var _balao:Vector.<Balao>;
@@ -99,6 +100,7 @@ package telas
 			this._addBalao = new BotaoIcone(Graficos.ImgAddBalao);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
 			
+			this._fullscreen = new BotaoIcone(Graficos.ImgAmpliar);
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
@@ -207,12 +209,19 @@ package telas
 				this._btCompartilhar.scaleX = this._btCompartilhar.scaleY;
 				this._btCompartilhar.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 1.5;
 				this._btCompartilhar.y = this._cancelar.y;
+				//
+				this._fullscreen.width = stage.stageWidth / btscala;
+				this._fullscreen.scaleY = this._fullscreen.scaleX;
+				this._fullscreen.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 2.0;
+				this._fullscreen.y = stage.stageHeight - this._fullscreen.height - (stage.stageHeight / 40);
 				
 				// exportar imagens
 				this._btExportarImg.height = this._cancelar.height;
 				this._btExportarImg.scaleX = this._btCompartilhar.scaleY;
 				this._btExportarImg.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 3;
 				this._btExportarImg.y = this._cancelar.y;
+				
+				//
 				
 				//imagem recuperada
 				
@@ -241,6 +250,9 @@ package telas
 					this.addChild(linhabaixo);
 					this.addChild(linhacima);
 					
+					var area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
+					ObjetoAprendizagem.areaImagem.fitOnArea(area);
+					
 					for (var k:int = 0; k < _imagem.length; k++)
 					{
 						ObjetoAprendizagem.areaImagem.addChild(this._imagem[k]);
@@ -268,6 +280,7 @@ package telas
 					this.addChild(this._camera);
 					this.addChild(this._galeria);
 					this.addChild(this._btBiblioteca);
+					this.addChild(this._fullscreen);
 					this.addChild(this._btCompartilhar);
 					this.addChild(this._btExportarImg);
 					
@@ -280,7 +293,7 @@ package telas
 					this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 					this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
 					this._btExcluiPagina.addEventListener(MouseEvent.CLICK, excluiPagina);
-					
+					this._fullscreen.addEventListener(MouseEvent.CLICK, fullscreen);
 					this._btBiblioteca.addEventListener(MouseEvent.CLICK, adicionaBiblioteca);
 					this._btCompartilhar.addEventListener(MouseEvent.CLICK, compartilhaProjeto);
 					this._btExportarImg.addEventListener(MouseEvent.CLICK, exportaImagem);
@@ -425,6 +438,53 @@ package telas
 		
 		}
 		
+		private function fullscreen(evento:MouseEvent):void
+		{
+			
+			this.linhabaixo.visible = false;
+			this.linhacima.visible = false;
+			this.removeBotoes();
+			this.escondendo(null);
+			this._fullscreen.addEventListener(MouseEvent.CLICK, resize);
+			this.addChild(_antPagina);
+			this.addChild(_proxPagina);
+			this._proxPagina.alpha = 0.7;
+			this._antPagina.alpha = 0.7;
+			this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnteriorVisual);
+			this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPaginaVisual);
+			ObjetoAprendizagem.areaImagem.fitOnArea(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
+			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
+			for (var k:int = 0; k < _imagem.length; k++)
+			{
+				
+				this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				
+			}
+			for (var i:int = 0; i < _balao.length; i++)
+			{
+				
+				this._balao[i].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+				
+			}
+		
+		}
+		
+		private function resize(evento:MouseEvent):void
+		{
+			
+			this.escondendo(null);
+			
+			this.linhabaixo.visible = true;
+			this.linhacima.visible = true;
+			this._proxPagina.alpha = 1;
+			this._antPagina.alpha = 1;
+			this._antPagina.removeEventListener(MouseEvent.CLICK, paginaAnteriorVisual);
+			this._proxPagina.removeEventListener(MouseEvent.CLICK, proximaPaginaVisual);
+			this._fullscreen.removeEventListener(MouseEvent.CLICK, resize);
+			
+			this.desenho();
+		}
+		
 		private function excluiPagina(evento:MouseEvent):void
 		{
 			
@@ -541,6 +601,70 @@ package telas
 				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Você tem certeza de que quer salvar a página atual como uma imagem?', true);
 				this.stage.addChild(this._telaMensagem);
 			}
+		}
+		
+		
+		private function proximaPaginaVisual(evento:MouseEvent):void
+		{
+			
+			salvarPagina(paginaAtual);
+			if (Main.projeto.paginas.length > paginaAtual + 1)
+			{
+				for (var k:int = 0; k < _imagem.length; k++)
+				{
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
+				paginaAtual++;
+				while (_imagem.length > 0)
+				{
+					trace('dispose proxima pagina');
+					_imagem.shift().dispose();
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[paginaAtual].imagens.length; i++)
+				{
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
+					// trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+				//	_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+				}
+				
+				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
+				{
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
+					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
+					
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
+				}
+				if (Main.projeto.paginas[paginaAtual].moldura == true)
+				{
+					// copiando o arquivo da biblioteca para o destino
+					ObjetoAprendizagem.areaImagem.clearCover();
+					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+					
+					// carregar o arquivo da moldura
+					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+				}
+				else
+				{
+					ObjetoAprendizagem.areaImagem.clearCover();
+					
+				}
+				
+			}
+	
+		
 		}
 		
 		private function proximaPagina(evento:MouseEvent):void
@@ -696,21 +820,21 @@ package telas
 				}
 			}
 			if (Main.projeto.paginas[paginaAtual].moldura)
-				{
-					// copiando o arquivo da biblioteca para o destino
-					ObjetoAprendizagem.areaImagem.clearCover();
-					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
-					
-					// carregar o arquivo da moldura
-					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
-					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
-					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
-				}
-				else
-				{
-					ObjetoAprendizagem.areaImagem.clearCover();
-					
-				}
+			{
+				// copiando o arquivo da biblioteca para o destino
+				ObjetoAprendizagem.areaImagem.clearCover();
+				var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+				
+				// carregar o arquivo da moldura
+				this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+				this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+				this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+			}
+			else
+			{
+				ObjetoAprendizagem.areaImagem.clearCover();
+				
+			}
 			if (paginaAtual == Main.projeto.paginas.length - 1)
 			{
 				if (!_addPagina.hasEventListener(MouseEvent.CLICK))
@@ -738,13 +862,96 @@ package telas
 			}
 		
 		}
+		//
+		private function paginaAnteriorVisual(evento:MouseEvent):void
+		{
+			
+			trace('volta', paginaAtual);
+			salvarPagina(paginaAtual);
+			
+			if (paginaAtual - 1 >= 0)
+			{
+				for (var k:int = 0; k < _imagem.length; k++)
+				{
+					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
+				}
+				paginaAtual--;
+				while (_imagem.length > 0)
+				{
+					trace('dispose anterior pagina');
+					_imagem.shift().dispose();
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				
+				for (var i:int = 0; i < Main.projeto.paginas[paginaAtual].imagens.length; i++)
+				{
+					_imagem[i] = new Imagem(i);
+					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
+					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+					//_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+				}
+				
+				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
+				{
+					_balao[i] = new Balao(i);
+					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
+					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
+					
+					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
+					
+				}
+				
+				trace('tem moldura?', Main.projeto.paginas[paginaAtual].moldura);
+				
+				if (Main.projeto.paginas[paginaAtual].moldura)
+				{
+					// copiando o arquivo da biblioteca para o destino
+					ObjetoAprendizagem.areaImagem.clearCover();
+					var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+					
+					// carregar o arquivo da moldura
+					this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+					this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+					this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+				}
+				else
+				{
+					ObjetoAprendizagem.areaImagem.clearCover();
+					
+				}
+			}
+			if (Main.projeto.paginas[paginaAtual].moldura)
+			{
+				// copiando o arquivo da biblioteca para o destino
+				ObjetoAprendizagem.areaImagem.clearCover();
+				var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+				
+				// carregar o arquivo da moldura
+				this._moldura.loader.load(new URLRequest(arquivoDestino.url));
+				this._moldura.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, molduraCarregada);
+				this._moldura.loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, molduraErro);
+			}
+			else
+			{
+				ObjetoAprendizagem.areaImagem.clearCover();
+				
+			}
+	
+		
+		}
 		
 		//
 		
 		private function addPagina(evento:MouseEvent):void
 		{
 			ObjetoAprendizagem.areaImagem.clearCover();
-
+			
 			if (Main.projeto.paginas.length == 0)
 			{
 				var criaPagina:int = Main.projeto.paginas.length;
@@ -768,7 +975,7 @@ package telas
 			{
 				_balao.shift().dispose();
 			}
-						
+			
 			criaPagina = Main.projeto.paginas.length;
 			Main.projeto.paginas[criaPagina] = new PaginaDados();
 			paginaAtual = Main.projeto.paginas[criaPagina].numero = criaPagina;
@@ -1045,6 +1252,18 @@ package telas
 			this._salvar.removeEventListener(MouseEvent.CLICK, cliqueSalvar);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			this._addBalao.removeEventListener(MouseEvent.CLICK, addBalao);
+			this._addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
+			this._btBiblioteca.removeEventListener(MouseEvent.CLICK, adicionaBiblioteca);
+			this._btCompartilhar.removeEventListener(MouseEvent.CLICK, compartilhaProjeto);
+			this._antPagina.removeEventListener(MouseEvent.CLICK, paginaAnterior);
+			this._proxPagina.removeEventListener(MouseEvent.CLICK, proximaPagina)
+			this._galeria.removeEventListener(MouseEvent.CLICK, cliqueGaleria);
+			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
+			this._addPagina.removeEventListener(MouseEvent.CLICK, addPagina);
+			this._btExcluiPagina.removeEventListener(MouseEvent.CLICK, excluiPagina);
+			this._btExportarImg.removeEventListener(MouseEvent.CLICK, exportaImagem);
+			this._fullscreen.removeEventListener(MouseEvent.CLICK, fullscreen);
+			
 			stage.removeEventListener(Event.RESIZE, desenho);
 			for (var i:int = 0; i < _balao.length; i++)
 			{
@@ -1137,6 +1356,11 @@ package telas
 			this.removeChild(this._addBalao);
 			this.removeChild(this._galeria);
 			this.removeChild(this._camera);
+			this.removeChild(this._addPagina);
+			this.removeChild(this._btBiblioteca);
+			this.removeChild(this._btCompartilhar);
+			this.removeChild(this._btExcluiPagina);
+			this.removeChild(this._btExportarImg);
 		
 			// remove child em todos os outros botoes
 		}
