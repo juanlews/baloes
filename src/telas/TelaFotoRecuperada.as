@@ -1243,7 +1243,6 @@ package telas
 				{
 					_balao.shift().dispose();
 				}
-				
 				Main.projeto.paginas[paginaAtual].clear();
 				
 			editavel = false;
