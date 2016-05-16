@@ -675,9 +675,17 @@ package telas
 			{
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
+					if (this._imagem[k].hasEventListener(MouseEvent.CLICK)){	
 					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
-					
+					}
 				}
+				for (k = 0; k < _balao.length; k++)
+				{
+					if(this._balao[k].hasEventListener(MouseEvent.CLICK)){
+					this._balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+					}
+				}
+				
 				paginaAtual++;
 				while (_imagem.length > 0)
 				{
@@ -695,7 +703,9 @@ package telas
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					// trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					if(!_imagem[i].hasEventListener(MouseEvent.CLICK)){
 					_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					}
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
@@ -704,7 +714,9 @@ package telas
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
-					
+					if(!_balao[i].hasEventListener(MouseEvent.CLICK)){
+					_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+					}
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
@@ -766,8 +778,15 @@ package telas
 			{
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
+					if (this._imagem[k].hasEventListener(MouseEvent.CLICK)){	
 					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
-					
+					}
+				}
+				for (k = 0; k < _balao.length; k++)
+				{
+					if(this._balao[k].hasEventListener(MouseEvent.CLICK)){
+					this._balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+					}
 				}
 				paginaAtual--;
 				while (_imagem.length > 0)
@@ -787,7 +806,10 @@ package telas
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
+					if(!_imagem[i].hasEventListener(MouseEvent.CLICK)){
 					_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					}
+					
 				}
 				
 				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
@@ -795,7 +817,9 @@ package telas
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
-					
+					if(!_balao[i].hasEventListener(MouseEvent.CLICK)){
+					_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+					}
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
@@ -894,7 +918,7 @@ package telas
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
-					//_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					
 				}
 				
 				for (i = 0; i < Main.projeto.paginas[paginaAtual].baloes.length; i++)
@@ -902,7 +926,9 @@ package telas
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
-					
+					if(!_balao[i].hasEventListener(MouseEvent.CLICK)){
+					_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+					}
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
@@ -1206,7 +1232,20 @@ package telas
 		
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
-			
+			while (_imagem.length > 0)
+				{
+					trace('dispose exclui pagina');
+					_imagem.shift().dispose();
+					
+				}
+				
+				while (_balao.length > 0)
+				{
+					_balao.shift().dispose();
+				}
+				
+				Main.projeto.paginas[paginaAtual].clear();
+				
 			editavel = false;
 			var dados:Object = new Object;
 			dados.editavel = editavel;

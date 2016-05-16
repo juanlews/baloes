@@ -84,6 +84,7 @@ package informacoes
 				
 			}
 			this.imagens = null;
+			this.moldura = null;
 			this.baloes = null;
 		}
 		
