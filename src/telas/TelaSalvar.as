@@ -7,6 +7,7 @@ package telas
 	import flash.display.Loader;
 	import flash.errors.IOError;
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
 	import flash.filesystem.File;
@@ -47,9 +48,9 @@ package telas
 		private var btscala:Number;
 		
 		//
-		private var _btEditT:BotaoIcone;
-		private var _btEditF:BotaoIcone;
-		private var texto:TextField;
+		//	private var _btEditT:BotaoIcone;
+		//	private var _btEditF:BotaoIcone;
+		//	private var texto:TextField;
 		private var editavel:Boolean = true;
 		
 		public function TelaSalvar(funcMudaTela:Function)
@@ -59,11 +60,11 @@ package telas
 			btscala = 10;
 			_caixaTitulo = new TxBox();
 			_caixaTags = new TxBox();
-			
+			_caixaTags.text = 'Tags'
 			_ok = new BotaoIcone(Graficos.ImgPBOK);
 			_cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			_btEditT = new BotaoIcone(Graficos.ImgCheckT);
-			_btEditF = new BotaoIcone(Graficos.ImgCheck);
+			//	_btEditT = new BotaoIcone(Graficos.ImgCheckT);
+			//	_btEditF = new BotaoIcone(Graficos.ImgCheck);
 			
 			var classes:Vector.<Class> = new Vector.<Class>();
 			classes.push(Graficos.ImgAnimacao1);
@@ -75,11 +76,11 @@ package telas
 			classes.push(Graficos.ImgAnimacao7);
 			classes.push(Graficos.ImgAnimacao8);
 			anim = new AnimacaoFrames(classes, 40);
-			
-			this.texto = new TextField();
-			this.texto.embedFonts = true;
-			this.texto.defaultTextFormat = new TextFormat('Pfennig', 25, 0X000000);
-			this.texto.text = 'Editavel';
+		
+			//this.texto = new TextField();
+			//this.texto.embedFonts = true;
+			//this.texto.defaultTextFormat = new TextFormat('Pfennig', 25, 0X000000);
+			//this.texto.text = 'Editavel';
 		
 		}
 		
@@ -169,7 +170,7 @@ package telas
 		}
 		
 		private function imagemErro(evento:IOError):void
-		{			
+		{
 			trace('Erro');
 		}
 		
@@ -178,6 +179,18 @@ package telas
 			this._caixaTitulo.text = Main.projeto.titulo;
 			this._caixaTags.text = Main.projeto.tags.join(' #');
 			
+			trace('Titulo:', '+' + this._caixaTitulo.text + '+');
+			if (_caixaTitulo.text == '')
+			{
+				this._caixaTitulo.text = 'Digite o título';
+				this._caixaTitulo.alpha = 0.5;
+			}
+			if (Main.projeto.tags.length <= 0)
+			{
+				
+				this._caixaTags.alpha = 0.5;
+				_caixaTags.text = 'Digite suas Tags'
+			}
 			this._imagem = new Loader();
 			this._imagem.contentLoaderInfo.addEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, imagemErro);
@@ -189,38 +202,37 @@ package telas
 		{
 			super.desenho(evento);
 			
-			_imagem.x = stage.stageWidth / 20;
-			_imagem.y = linhacima.height + linhacima.height / 10;
-			_imagem.width = stage.stageWidth / 4;
-			_imagem.scaleY = _imagem.scaleX;
+			/*
+			   _btEditF.x = (_imagem.x * 6) + stage.stageWidth / 20;
+			   _btEditF.y = _imagem.y + linhacima.height + linhacima.height / 10;
+			   _btEditF.width = stage.stageWidth / 12;
+			   _btEditF.scaleY = _btEditF.scaleX;
 			
-			//
+			   _btEditT.x = (_imagem.x * 6) + stage.stageWidth / 20;
+			   _btEditT.y = _imagem.y + linhacima.height + linhacima.height / 10;
+			   _btEditT.width = stage.stageWidth / 12;
+			   _btEditT.scaleY = _btEditT.scaleX;
 			
-			_btEditF.x = (_imagem.x * 6) + stage.stageWidth / 20;
-			_btEditF.y = _imagem.y + linhacima.height + linhacima.height / 10;
-			_btEditF.width = stage.stageWidth / 12;
-			_btEditF.scaleY = _btEditF.scaleX;
-			
-			_btEditT.x = (_imagem.x * 6) + stage.stageWidth / 20;
-			_btEditT.y = _imagem.y + linhacima.height + linhacima.height / 10;
-			_btEditT.width = stage.stageWidth / 12;
-			_btEditT.scaleY = _btEditT.scaleX;
-			
-			texto.x = _btEditF.x + _btEditF.width;
-			texto.y = _btEditF.y;// + (_btEditF.height) ;
-			texto.height = _btEditF.height;
-			
+			   texto.x = _btEditF.x + _btEditF.width;
+			   texto.y = _btEditF.y;// + (_btEditF.height) ;
+			   texto.height = _btEditF.height;
+			 */
 			//titulo
 			
 			_caixaTitulo.width = stage.stageWidth / 1.5;
 			_caixaTitulo.height = stage.stageHeight / 20;
 			_caixaTitulo.x = stage.stageWidth / 2 - _caixaTitulo.width / 2;
-			_caixaTitulo.y = stage.stageHeight / 2 - _caixaTitulo.height / 2;
+			_caixaTitulo.y = stage.stageHeight / 20 + _caixaTitulo.height * 2;
 			//tags
 			_caixaTags.width = stage.stageWidth / 1.5;
 			_caixaTags.height = stage.stageHeight / 20;
 			_caixaTags.x = _caixaTitulo.x
 			_caixaTags.y = _caixaTitulo.y + _caixaTitulo.height + stage.stageWidth / 10;
+			
+			_imagem.y = _caixaTags.height + _caixaTags.y + (stage.stageHeight / 40);
+			_imagem.width = stage.stageWidth - _caixaTags.y - (stage.stageHeight / 20);// - linhabaixo.height - (stage.stageHeight / 20);
+			_imagem.scaleY = _imagem.scaleX;
+			_imagem.x = (stage.stageWidth / 2) - (_imagem.width / 2);
 			
 			//botão salvar			
 			this._ok.width = stage.stageWidth / btscala;
@@ -241,14 +253,11 @@ package telas
 				addChild(_caixaTitulo);
 				addChild(_ok);
 				addChild(_cancelar);
-				addChild(_btEditF);
-				addChild(_btEditT);
-				
-				addChild(texto);
-				
-				_btEditT.addEventListener(MouseEvent.CLICK, checkEditF);
-				_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
-				
+				this._caixaTags.addEventListener(FocusEvent.FOCUS_IN, tagFocoIn)
+				this._caixaTitulo.addEventListener(FocusEvent.FOCUS_IN, tituloFocoIn);
+				//_btEditT.addEventListener(MouseEvent.CLICK, checkEditF);
+				//_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
+				//
 				_ok.addEventListener(MouseEvent.CLICK, salvaProjeto);
 				_cancelar.addEventListener(MouseEvent.CLICK, volta);
 				
@@ -256,31 +265,88 @@ package telas
 		
 		}
 		
-		private function checkEditF(evento:MouseEvent):void
+		private function tituloFocoIn(evento:FocusEvent):void
 		{
-			editavel = false;
-			_btEditT.removeEventListener(MouseEvent.CLICK, checkEditT);
-			_btEditT.addEventListener(MouseEvent.CLICK, checkEditF);
-			_btEditT.visible = false;
-			_btEditF.visible = true;
+			if (_caixaTitulo.text == 'Digite o título')
+			{
+				this._caixaTitulo.alpha = 1;
+				_caixaTitulo.text = '';
+			}
+			if (!_caixaTitulo.hasEventListener(FocusEvent.FOCUS_OUT))
+			{
+				_caixaTitulo.addEventListener(FocusEvent.FOCUS_OUT, tituloFocoOut);
+			}
+		
+		}
+		private function tituloFocoOut(evento:FocusEvent):void
+		{
 			
-			trace(editavel);
+			if (_caixaTitulo.text == '')
+			{
+				_caixaTitulo.alpha = 0.5
+				_caixaTitulo.text = 'Digite o título';
+			}
+		
 		}
 		
-		private function checkEditT(evento:MouseEvent):void
+		private function tagFocoIn(evento:FocusEvent):void
 		{
-			editavel = true;
-			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
-			_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
-			_btEditF.visible = false;
-			_btEditT.visible = true;
-			
-			trace(editavel);
+			trace('foco', _caixaTags.text)
+			if (_caixaTags.text == 'Digite suas Tags')
+			{
+				this._caixaTags.alpha = 1;
+				_caixaTags.text = '';
+			}
+			if (!_caixaTags.hasEventListener(FocusEvent.FOCUS_OUT))
+			{
+				_caixaTags.addEventListener(FocusEvent.FOCUS_OUT, tagFocoOut);
+			}
 		}
+		
+		private function tagFocoOut(evento:FocusEvent):void
+		{
+			trace('foco', _caixaTags.text)
+			if (_caixaTags.text == '')
+			{
+				_caixaTags.alpha = 0.5
+				_caixaTags.text = 'Digite suas Tags';
+			}
+		
+		}
+		
+		/*	private function checkEditF(evento:MouseEvent):void
+		   {
+		   //	_btEditT.removeEventListener(MouseEvent.CLICK, checkEditT);
+		   //	_btEditT.addEventListener(MouseEvent.CLICK, checkEditF);
+		   //	_btEditT.visible = false;
+		   //	_btEditF.visible = true;
+		
+		   trace(editavel);
+		   }
+		
+		   private function checkEditT(evento:MouseEvent):void
+		   {
+		   editavel = true;
+		   _btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
+		   //_btEditF.addEventListener(MouseEvent.CLICK, checkEditT);
+		   //_btEditF.visible = false;
+		   //_btEditT.visible = true;
+		
+		   trace(editavel);
+		   }*/
 		
 		private function salvaProjeto(evento:MouseEvent):void
 		{
 			addChild(anim);
+			if (_caixaTitulo.text == 'Digite o título')
+			{
+				_caixaTitulo.text == '';
+			}
+			
+		if (_caixaTags.text == 'Digite suas Tags')
+			{
+				_caixaTags.text = '';
+			}
 			Main.projeto.titulo = this._caixaTitulo.text;
 			Main.projeto.tags = this._caixaTags.text.split('#');
 			Main.projeto.editavel = editavel;
@@ -330,10 +396,11 @@ package telas
 			trace('erro no envio');
 		}
 		
-		override public function botaoBack():void 
+		override public function botaoBack():void
 		{
 			this.volta(null);
 		}
+		
 		private function volta(evento:MouseEvent):void
 		{
 			mudaTela('fotorecuperada', null);
@@ -355,8 +422,8 @@ package telas
 				removeChild(anim);
 			}
 			
-			_btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
-			_btEditT.removeEventListener(MouseEvent.CLICK, checkEditT);
+			//_btEditF.removeEventListener(MouseEvent.CLICK, checkEditF);
+			//_btEditT.removeEventListener(MouseEvent.CLICK, checkEditT);
 			stage.removeEventListener(Event.RESIZE, desenho);
 			_ok.removeEventListener(MouseEvent.CLICK, salvaProjeto);
 			_cancelar.removeEventListener(MouseEvent.CLICK, volta);

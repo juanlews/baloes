@@ -1250,6 +1250,8 @@ package telas
 			dados.editavel = editavel;
 			dados.qualTela = null;
 			
+			ObjetoAprendizagem.areaImagem.removeChildren();
+			
 			this.mudaTela('inicial', dados);
 		
 		}

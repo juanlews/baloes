@@ -90,11 +90,23 @@ package telas
 		
 			this._listaProj.addEventListener(Event.COMPLETE, onEscolhaOK);
 			this._listaProj.addEventListener(Event.CANCEL, onEscolhaCancel);
+			this._listaProj.addEventListener(Event.CLEAR, onEscolhaClear);
 			// this._listaProj.addEventListener(Event.OPEN, onEscolhaOpen);
 			
 			
 		}
 		//
+		private function onEscolhaClear(evt:Event):void
+		{
+			if (this._listaProj.escolhido != null) {
+				var pasta:File = File.documentsDirectory.resolvePath('narvisuais/projetos/' + this._listaProj.escolhido.id);
+				if (pasta.isDirectory) {
+					pasta.deleteDirectory(true);
+					this._listaProj.listar();
+				}
+			}
+		}
+		
 		private function onEscolhaCancel(evt:Event):void
 		{
 			this.stage.removeChild(this._listaProj);
@@ -106,6 +118,7 @@ package telas
 		private function onEscolhaOK(evt:Event):void
 		{   trace('escolhidoOk ');
 			var dados:Object = new Object;
+			if(this._listaProj.escolhido != null){
 			trace('escolhido é', this._listaProj.escolhido.id);
 			trace ('projeto selecionado', JSON.stringify(this._listaProj.escolhido));
 			
@@ -115,6 +128,8 @@ package telas
 			this.stage.removeChild(_listaProj);
 					
 			mudaTela('fotorecuperada', dados);
+			
+			}
 			// carregar projeto this._listaProj.escolhido.id
 			// abrir tela de visualização
 			
@@ -264,6 +279,7 @@ package telas
 						
 			this.stage.addChild(_listaProj);
 			_listaProj.listar();
+			_listaProj.mostrarLixeira();
 			
 			/*
 			
