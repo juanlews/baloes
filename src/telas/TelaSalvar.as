@@ -354,11 +354,13 @@ package telas
 			
 			if (Main.projeto.salvarDados())
 			{
+				
 				var dados:Object = new Object;
 				
 				dados.id = Main.projeto.id;
 				trace('projeto salvo');
 				mudaTela('inicial', dados);
+				
 			}
 		}
 		

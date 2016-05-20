@@ -116,7 +116,8 @@ package telas
 
 		//
 		private function onEscolhaOK(evt:Event):void
-		{   trace('escolhidoOk ');
+		{  
+			trace('escolhidoOk ');
 			var dados:Object = new Object;
 			if(this._listaProj.escolhido != null){
 			trace('escolhido é', this._listaProj.escolhido.id);
