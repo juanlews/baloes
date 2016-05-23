@@ -1472,12 +1472,14 @@ package telas
 		private function onBibliotecaSelect(evt:Event):void
 		{
 			// localizando imagem selecionada na biblioteca
-			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.arquivo);
+			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.titulo +'.png');
+			trace("select", img.url);
 			if (img.exists)
 			{
 				
 				// copiando o arquivo da biblioteca para o destino
 				var arquivoDestino:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/moldura.png');
+				
 				img.copyTo(arquivoDestino, true);
 				
 				// carregar o arquivo da moldura
