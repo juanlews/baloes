@@ -1,5 +1,6 @@
 package telas
 {
+	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import com.adobe.crypto.MD5;
 	import componentes.AnimacaoFrames;
@@ -219,17 +220,41 @@ package telas
 			 */
 			//titulo
 			
-			_caixaTitulo.width = stage.stageWidth / 1.5;
-			_caixaTitulo.height = stage.stageHeight / 20;
-			_caixaTitulo.x = stage.stageWidth / 2 - _caixaTitulo.width / 2;
-			_caixaTitulo.y = stage.stageHeight / 20 + _caixaTitulo.height * 2;
-			//tags
-			_caixaTags.width = stage.stageWidth / 1.5;
-			_caixaTags.height = stage.stageHeight / 20;
-			_caixaTags.x = _caixaTitulo.x
-			_caixaTags.y = _caixaTitulo.y + _caixaTitulo.height + stage.stageWidth / 10;
+			var txtscale:Number;
+			if (((stage.stageWidth / 1.5) / _caixaTitulo.oWidth) < ((stage.stageHeight / 10) / _caixaTitulo.oHeight)) {
+				txtscale = (stage.stageWidth / 1.5) / _caixaTitulo.oWidth;
+				
+				trace ('txtscale w', txtscale, _caixaTitulo.oWidth, (stage.stageWidth / 1.5));
+				
+			} else {
+				txtscale = (stage.stageHeight / 10) / _caixaTitulo.oHeight;
+				
+				trace ('txtscale h', txtscale, _caixaTitulo.oHeight, (stage.stageHeight / 10));
+			}
 			
-			_imagem.y = _caixaTags.height + _caixaTags.y + (stage.stageHeight / 40);
+			
+			
+			
+			//_caixaTitulo.width = stage.stageWidth / 1.5;
+			//_caixaTitulo.height = stage.stageHeight / 20;
+			
+			_caixaTitulo.scaleX = _caixaTitulo.scaleY = txtscale;
+			
+			trace ('tamanho da caixa', _caixaTitulo.width, _caixaTitulo.height);
+			
+			_caixaTitulo.x = stage.stageWidth / 2 - _caixaTitulo.width / 2;
+			_caixaTitulo.y = stage.stageHeight / 30 + _caixaTitulo.height;
+			
+			//tags
+			// _caixaTags.width = stage.stageWidth / 1.5;
+			// _caixaTags.height = stage.stageHeight / 20;
+			
+			_caixaTags.scaleX = _caixaTags.scaleY = txtscale;
+			
+			_caixaTags.x = _caixaTitulo.x
+			_caixaTags.y = _caixaTitulo.y + _caixaTitulo.height + stage.stageWidth / 30;
+			
+			_imagem.y = _caixaTags.height + _caixaTags.y + (stage.stageHeight / 60);
 			_imagem.width = stage.stageWidth - _caixaTags.y - (stage.stageHeight / 20);// - linhabaixo.height - (stage.stageHeight / 20);
 			_imagem.scaleY = _imagem.scaleX;
 			_imagem.x = (stage.stageWidth / 2) - (_imagem.width / 2);
@@ -343,7 +368,7 @@ package telas
 				_caixaTitulo.text == '';
 			}
 			
-		if (_caixaTags.text == 'Digite suas Tags')
+			if (_caixaTags.text == 'Digite suas Tags')
 			{
 				_caixaTags.text = '';
 			}
@@ -359,6 +384,9 @@ package telas
 				
 				dados.id = Main.projeto.id;
 				trace('projeto salvo');
+				
+				dados.qualTela = 'salvar'
+				
 				mudaTela('inicial', dados);
 				
 			}

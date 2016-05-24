@@ -4,6 +4,7 @@ package telas
 	import caurina.transitions.Tweener;
 	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
+	import componentes.AnimacaoFrames;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
@@ -29,6 +30,7 @@ package telas
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 	import informacoes.BalaoDados;
 	import informacoes.PaginaDados;
 	import informacoes.ProjetoDados;
@@ -86,6 +88,7 @@ package telas
 		private var _telaMensagem:TelaMensagemStage;	// tela de mensagens
 		private var _ultimaAc:String = '';				// última ação (para controle da tela de mensagens)
 		private var _moldura:Imagem;
+		private var _anim:AnimacaoFrames;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -139,7 +142,7 @@ package telas
 		{
 			super.desenho(evento);
 			addChild(_btExcluiPagina);
-			
+	
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
 				// centralizar imagem	
@@ -603,7 +606,6 @@ package telas
 			}
 		}
 		
-		
 		private function proximaPaginaVisual(evento:MouseEvent):void
 		{
 			
@@ -632,7 +634,7 @@ package telas
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					// trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
-				//	_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					//	_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
 				
@@ -663,7 +665,6 @@ package telas
 				}
 				
 			}
-	
 		
 		}
 		
@@ -675,14 +676,16 @@ package telas
 			{
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
-					if (this._imagem[k].hasEventListener(MouseEvent.CLICK)){	
-					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					if (this._imagem[k].hasEventListener(MouseEvent.CLICK))
+					{
+						this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 					}
 				}
 				for (k = 0; k < _balao.length; k++)
 				{
-					if(this._balao[k].hasEventListener(MouseEvent.CLICK)){
-					this._balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+					if (this._balao[k].hasEventListener(MouseEvent.CLICK))
+					{
+						this._balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
 					}
 				}
 				
@@ -703,8 +706,9 @@ package telas
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					// trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
-					if(!_imagem[i].hasEventListener(MouseEvent.CLICK)){
-					_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					if (!_imagem[i].hasEventListener(MouseEvent.CLICK))
+					{
+						_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 					}
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 				}
@@ -714,8 +718,9 @@ package telas
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
-					if(!_balao[i].hasEventListener(MouseEvent.CLICK)){
-					_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+					if (!_balao[i].hasEventListener(MouseEvent.CLICK))
+					{
+						_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
 					}
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
@@ -778,14 +783,16 @@ package telas
 			{
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
-					if (this._imagem[k].hasEventListener(MouseEvent.CLICK)){	
-					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					if (this._imagem[k].hasEventListener(MouseEvent.CLICK))
+					{
+						this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 					}
 				}
 				for (k = 0; k < _balao.length; k++)
 				{
-					if(this._balao[k].hasEventListener(MouseEvent.CLICK)){
-					this._balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+					if (this._balao[k].hasEventListener(MouseEvent.CLICK))
+					{
+						this._balao[k].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
 					}
 				}
 				paginaAtual--;
@@ -806,8 +813,9 @@ package telas
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
 					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
-					if(!_imagem[i].hasEventListener(MouseEvent.CLICK)){
-					_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
+					if (!_imagem[i].hasEventListener(MouseEvent.CLICK))
+					{
+						_imagem[i].addEventListener(MouseEvent.CLICK, cliqueArrastaImg);
 					}
 					
 				}
@@ -817,8 +825,9 @@ package telas
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
-					if(!_balao[i].hasEventListener(MouseEvent.CLICK)){
-					_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+					if (!_balao[i].hasEventListener(MouseEvent.CLICK))
+					{
+						_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
 					}
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
@@ -886,6 +895,7 @@ package telas
 			}
 		
 		}
+		
 		//
 		private function paginaAnteriorVisual(evento:MouseEvent):void
 		{
@@ -926,8 +936,9 @@ package telas
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[paginaAtual].baloes[i]);
 					_balao[i].tipo = Main.projeto.paginas[paginaAtual].baloes[i].tipo;
-					if(!_balao[i].hasEventListener(MouseEvent.CLICK)){
-					_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
+					if (!_balao[i].hasEventListener(MouseEvent.CLICK))
+					{
+						_balao[i].addEventListener(MouseEvent.CLICK, cliqueArrasta);
 					}
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
@@ -968,7 +979,6 @@ package telas
 				ObjetoAprendizagem.areaImagem.clearCover();
 				
 			}
-	
 		
 		}
 		
@@ -1233,18 +1243,18 @@ package telas
 		private function cliqueCancelar(evento:MouseEvent):void
 		{
 			while (_imagem.length > 0)
-				{
-					trace('dispose exclui pagina');
-					_imagem.shift().dispose();
-					
-				}
+			{
+				trace('dispose exclui pagina');
+				_imagem.shift().dispose();
 				
-				while (_balao.length > 0)
-				{
-					_balao.shift().dispose();
-				}
-				Main.projeto.paginas[paginaAtual].clear();
-				
+			}
+			
+			while (_balao.length > 0)
+			{
+				_balao.shift().dispose();
+			}
+			Main.projeto.paginas[paginaAtual].clear();
+			
 			editavel = false;
 			var dados:Object = new Object;
 			dados.editavel = editavel;
@@ -1472,7 +1482,7 @@ package telas
 		private function onBibliotecaSelect(evt:Event):void
 		{
 			// localizando imagem selecionada na biblioteca
-			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.titulo +'.png');
+			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.titulo + '.png');
 			trace("select", img.url);
 			if (img.exists)
 			{
@@ -1525,18 +1535,23 @@ package telas
 			switch (this._ultimaAc)
 			{
 			case 'salvar imagem': 
-				var stream:FileStream = new FileStream();
-				var regExp:RegExp = /[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
-				var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');
-				;
-				if (nomeImagem == '') nomeImagem = Main.projeto.id;
-				nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
-				stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
-				stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
-				stream.close();
-				this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
-				this._ultimaAc = 'imagem exportada';
-				this.stage.addChild(this._telaMensagem);
+				var classes:Vector.<Class> = new Vector.<Class>();
+				classes.push(Graficos.ImgAnimacao1);
+				classes.push(Graficos.ImgAnimacao2);
+				classes.push(Graficos.ImgAnimacao3);
+				classes.push(Graficos.ImgAnimacao4);
+				classes.push(Graficos.ImgAnimacao5);
+				classes.push(Graficos.ImgAnimacao6);
+				classes.push(Graficos.ImgAnimacao7);
+				classes.push(Graficos.ImgAnimacao8);
+				this._anim = new AnimacaoFrames(classes, 40);
+				this._anim.width = stage.stageWidth / 2;
+				this._anim.scaleY = this._anim.scaleX;
+				this._anim.x = stage.stageWidth / 2 - this._anim.width / 2;
+				this._anim.y = stage.stageHeight / 2 - this._anim.height / 2;
+				stage.addChild(this._anim);
+				this.mouseEnabled = false;
+				setTimeout(this.salvarImagem, 250);
 				break;
 			case 'compartilhar projeto': 
 				var exportado:String = Main.projeto.exportar();
@@ -1578,6 +1593,23 @@ package telas
 		{
 			// removendo tela de mensagem
 			this.stage.removeChild(this._telaMensagem);
+		}
+		
+		private function salvarImagem():void
+		{
+			var stream:FileStream = new FileStream();
+			var regExp:RegExp = /[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
+			var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');
+			if (nomeImagem == '') nomeImagem = Main.projeto.id;
+			nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
+			stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
+			stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
+			stream.close();
+			this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
+			this._ultimaAc = 'imagem exportada';
+			this.stage.removeChild(this._anim);
+			this.mouseEnabled = true;
+			this.stage.addChild(this._telaMensagem);
 		}
 	
 	}
