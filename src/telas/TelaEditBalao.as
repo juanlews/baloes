@@ -38,6 +38,11 @@ package telas
 		
 		private var balaOrig:Balao;
 		
+		private var _btZoomIn:BotaoIcone;
+		private var _btZoomOut:BotaoIcone;
+		private var _rodaMais:BotaoIcone;
+		private var _rodaMenos:BotaoIcone;
+		
 		public function TelaEditBalao(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -47,13 +52,24 @@ package telas
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._configBalao = new BotaoIcone(Graficos.ImgAjusteBalao);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-			
+			this._btZoomIn = new BotaoIcone(Graficos.ImgZoomIn);
+			this._btZoomOut = new BotaoIcone(Graficos.ImgZoomOut);
 		
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
+			
+			this._btZoomIn.x = stage.stageWidth / 30;
+			this._btZoomIn.width = stage.stageWidth / 15;
+			this._btZoomIn.scaleY = this._btZoomIn.scaleX;
+			this._btZoomIn.y = stage.stageHeight / 2 - (_btZoomIn.height * 1.5);
+			
+			this._btZoomOut.x = stage.stageWidth / 30;
+			this._btZoomOut.width = stage.stageWidth / 15;
+			this._btZoomOut.scaleY = this._btZoomOut.scaleX;
+			this._btZoomOut.y = stage.stageHeight / 2 ;
 			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
@@ -83,10 +99,14 @@ package telas
 				
 				ObjetoAprendizagem.areaImagem.addChild(this._balao);
 				this._balao.addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
+				this._btZoomOut.addEventListener(MouseEvent.CLICK, zoomPorOutBotao);
+				this._btZoomIn.addEventListener(MouseEvent.CLICK, zoomPorInBotao);
 				
 				this.addChild(this._ok);
 				this.addChild(this._configBalao);
 				this.addChild(this._cancelar);
+				this.addChild(this._btZoomIn)
+				this.addChild(this._btZoomOut);
 				
 				trace('usa tween');
 				//	linhacima.x = 0;
@@ -106,6 +126,18 @@ package telas
 				
 			}
 		}
+
+		
+		private function zoomPorOutBotao(evento:MouseEvent):void {
+			_balao.scaleX += -0.05;
+			_balao.scaleY = _balao.scaleX;
+		}
+		
+		private function zoomPorInBotao(evento:MouseEvent):void {
+			_balao.scaleX += +0.05;
+			_balao.scaleY = _balao.scaleX;
+		}
+		
 		private function configBalao(evento:MouseEvent):void {
 			
 			var dados:Object = new Object();
@@ -126,6 +158,8 @@ package telas
 			stage.removeEventListener(Event.RESIZE, desenho);
 			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
+			this._btZoomOut.removeEventListener(MouseEvent.CLICK, zoomPorOutBotao);
+			this._btZoomIn.removeEventListener(MouseEvent.CLICK, zoomPorInBotao);
 			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			
