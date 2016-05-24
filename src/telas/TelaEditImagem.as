@@ -31,6 +31,10 @@ package telas
 		private var btscala:Number;
 		private var paginaAtual:int;
 		private var imgOrig:Imagem;
+		private var _btZoomIn:BotaoIcone;
+		private var _btZoomOut:BotaoIcone;
+		private var _rodaMais:BotaoIcone;
+		private var _rodaMenos:BotaoIcone;
 		
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
@@ -41,13 +45,23 @@ package telas
 		    this._lixeira = new BotaoIcone(Graficos.ImgLixeira);
 			this._ok = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
-		   
+		    this._btZoomIn = new BotaoIcone(Graficos.ImgZoomIn);
+			this._btZoomOut = new BotaoIcone(Graficos.ImgZoomOut);
 		}
 		
 		override public function desenho(evento:Event = null):void
 		{
 			super.desenho(evento);
 			
+			this._btZoomIn.x = stage.stageWidth / 30;
+			this._btZoomIn.width = stage.stageWidth / 15;
+			this._btZoomIn.scaleY = this._btZoomIn.scaleX;
+			this._btZoomIn.y = stage.stageHeight / 2 - _btZoomIn.height;
+			
+			this._btZoomOut.x = stage.stageWidth / 30;
+			this._btZoomOut.width = stage.stageWidth / 15;
+			this._btZoomOut.scaleY = this._btZoomOut.scaleX;
+			this._btZoomOut.y = stage.stageHeight / 2 ;
 			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
@@ -78,6 +92,8 @@ package telas
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._lixeira.addEventListener(MouseEvent.CLICK, excluiImagem);
+				this._btZoomOut.addEventListener(MouseEvent.CLICK, zoomPorOutBotao);
+				this._btZoomIn.addEventListener(MouseEvent.CLICK, zoomPorInBotao);
 				/*
 				for (var i:int; i < _imagem.length; i++)
 				{
@@ -101,13 +117,23 @@ package telas
 				this.addChild(this._ok);
 				this.addChild(this._lixeira);
 				this.addChild(this._cancelar);
-				
+				this.addChild(this._btZoomIn)
+				this.addChild(this._btZoomOut);
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
+				
 				//linhacima.x = 0;
 				//Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				
 			}
 		
+		}
+		private function zoomPorOutBotao(evento:MouseEvent):void {
+			_imagem.scaleX += -0.05;
+			_imagem.scaleY = _imagem.scaleX;
+		}
+		private function zoomPorInBotao(evento:MouseEvent):void {
+			_imagem.scaleX += +0.05;
+			_imagem.scaleY = _imagem.scaleX;
 		}
 		private function excluiImagem(evento:MouseEvent):void {
 			

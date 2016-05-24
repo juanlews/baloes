@@ -9,6 +9,7 @@ package telas
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.ErrorEvent;
 	import flash.events.Event;
@@ -75,6 +76,8 @@ package telas
 		private var definido:Boolean = false;
 		private var redesenha:Boolean;
 		
+		private var salvo:Boolean = false;
+		private var msg:TelaMensagemStage;
 		public function TelaInicial(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
@@ -121,12 +124,7 @@ package telas
 			ObjetoAprendizagem.compartilhamento.addEventListener(Event.COMPLETE, onCompartilhamentoComplete);
 			
 			// tela de escolha de projetos
-			this._telaEscolha = new EscolhaProjeto('Escolha o projeto',
-													new BotaoIcone(Graficos.ImgPBOK),
-													new BotaoIcone(Graficos.ImgCancelar),
-													new BotaoIcone(Graficos.ImgOpenFile),
-													new BotaoIcone(Graficos.ImgLixeira),
-													File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' ));
+			this._telaEscolha = new EscolhaProjeto('Escolha o projeto', new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), new BotaoIcone(Graficos.ImgOpenFile), new BotaoIcone(Graficos.ImgLixeira), File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/'));
 			this._telaEscolha.addEventListener(Event.COMPLETE, onEscolhaOK);
 			this._telaEscolha.addEventListener(Event.CANCEL, onEscolhaCancel);
 			this._telaEscolha.addEventListener(Event.OPEN, onEscolhaOpen);
@@ -262,13 +260,13 @@ package telas
 			var dados:Object = new Object();
 			dados.indice = 0;
 			/*this._balao[dados.indice] = new Balao(dados.indice);
-			this._balao[dados.indice].tipo = this._balao[dados.indice].tipo;
-			this._balao[dados.indice].texto = 'oi';
-			this._balao[dados.indice].width = 300;
-			this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
-			this._balao[dados.indice].x = ObjetoAprendizagem.areaImagem.width / 3;
-			this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
-			*/
+			   this._balao[dados.indice].tipo = this._balao[dados.indice].tipo;
+			   this._balao[dados.indice].texto = 'oi';
+			   this._balao[dados.indice].width = 300;
+			   this._balao[dados.indice].scaleY = this._balao[dados.indice].scaleX;
+			   this._balao[dados.indice].x = ObjetoAprendizagem.areaImagem.width / 3;
+			   this._balao[dados.indice].y = ObjetoAprendizagem.areaImagem.height / 3;
+			 */
 			// mudar tela
 			this.editavel = true;
 			dados.imagem = this._imagem;
@@ -283,6 +281,7 @@ package telas
 		{
 			paginaAtual = 0;
 			editavel = false;
+			salvo = false;
 			Main.projeto.clear();
 			
 			ObjetoAprendizagem.areaImagem.visible = false;
@@ -291,7 +290,12 @@ package telas
 			{
 				if (dados.qualTela != null)
 				{
-					
+					if (dados.qualTela == 'salvar')
+					{
+						trace(dados.qualTela)
+						salvo = true;
+						
+					}
 					if (dados.redesenha != null)
 					{
 						this.redesenha = dados.redesenha;
@@ -406,7 +410,6 @@ package telas
 			this._btReceber.x = this._btOpen.x + this._btOpen.width + intervaloX;
 			this._btArquivos.y = this._btReceber.y = this._btOpen.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
 			
-			
 			// pocisionar e dimensionar help aqui
 			
 			this._help.width = stage.stageWidth - stage.stageWidth / 10;
@@ -415,6 +418,8 @@ package telas
 			this._help.y = stage.stageHeight / 2 - this._help.height / 2;
 			
 			Tweener.addTween(_help, {x: stage.stageWidth / 20, time: 1});
+			
+			
 			
 			// ADICIONAR CLIQUES NOS BOTOES
 			if (!this._galeria.hasEventListener(MouseEvent.CLICK))
@@ -441,6 +446,14 @@ package telas
 				stage.addEventListener(Event.RESIZE, desenho);
 				
 				ObjetoAprendizagem.areaImagem.visible = false;
+				
+				if (salvo == true)
+				{
+				msg = new TelaMensagemStage(stage.stageWidth, stage.stageHeight, new BotaoIcone(Graficos.ImgPBOK) as Sprite, new BotaoIcone(Graficos.ImgCancelar) as Sprite, 0XEFEFEF, 0);
+				addChild(msg);
+				msg.defineMensagem('<b>Projeto gravado</b><br />&nbsp;<br />Seu projeto foi gravado com suecesso.');
+				msg.addEventListener(Event.COMPLETE, fechaMsg);
+			    }
 			}
 			
 			if (!definido)
@@ -453,13 +466,19 @@ package telas
 			}
 		
 		}
-		
-		/*
-		private function cliqueAbreProjeto(evento:MouseEvent):void
-		{
-			this.carregaProjeto(_id);
+		private function fechaMsg(evento:Event):void {
+			msg.removeEventListener(Event.COMPLETE, fechaMsg);
+			trace('fecha');
+			removeChild(msg);
+			salvo = false;
+			desenho();
 		}
-		*/
+		/*
+		   private function cliqueAbreProjeto(evento:MouseEvent):void
+		   {
+		   this.carregaProjeto(_id);
+		   }
+		 */
 		
 		public function carregaProjeto(id:String):void
 		{
@@ -511,8 +530,6 @@ package telas
 				editavel = Main.projeto.editavel;
 				var dados:Object = new Object();
 				
-				
-				
 				dados.imagem = this._imagem;
 				dados.balao = this._balao;
 				dados.paginaAtual = 0;
@@ -541,7 +558,7 @@ package telas
 			this._galeria.removeEventListener(MouseEvent.CLICK, cliqueGaleria);
 			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
 			//this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
-			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;			
+			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);
 		
@@ -579,7 +596,8 @@ package telas
 		 */
 		private function cliqueArquivos(evento:MouseEvent):void
 		{
-			if (this._telaEscolha.listar('Defina o projeto a exportar ou escolha um arquivo para importar')) {
+			if (this._telaEscolha.listar('Defina o projeto a exportar ou escolha um arquivo para importar'))
+			{
 				this.stage.addChild(this._telaEscolha);
 				this._telaEscolha.mostrarAbrir();
 			}
@@ -588,7 +606,8 @@ package telas
 		/**
 		 * O botão "receber projeto" foi clicado.
 		 */
-		private function cliqueReceber(evt:MouseEvent):void {
+		private function cliqueReceber(evt:MouseEvent):void
+		{
 			ObjetoAprendizagem.compartilhamento.iniciaLeitura();
 			this.stage.addChild(ObjetoAprendizagem.compartilhamento);
 		}
@@ -606,7 +625,8 @@ package telas
 		 */
 		private function onCompartilhamentoComplete(evt:Event):void
 		{
-			if (!Main.projeto.importar(ObjetoAprendizagem.compartilhamento.download)) {
+			if (!Main.projeto.importar(ObjetoAprendizagem.compartilhamento.download))
+			{
 				this._telaMensagem.defineMensagem('<b>Erro de importação!</b><br />&nbsp;<br />Não foi possível importar o projeto recebido. Por favor tente novamente.');
 				this.stage.removeChild(ObjetoAprendizagem.compartilhamento);
 				this.stage.addChild(this._telaMensagem);
@@ -619,28 +639,34 @@ package telas
 		private function onEscolhaOK(evt:Event):void
 		{
 			var acOK:Boolean = false;
-			if (this._telaEscolha.escolhido != null) {
-				if (this._telaEscolha.escolhido.id != null) {
+			if (this._telaEscolha.escolhido != null)
+			{
+				if (this._telaEscolha.escolhido.id != null)
+				{
 					// recuperando nome de arquivo
 					var exportado:String = Main.projeto.exportarID(this._telaEscolha.escolhido.id as String);
-					if (exportado != '') {
+					if (exportado != '')
+					{
 						// ação ok
 						acOK = true;
 					}
 				}
 			}
-			if (!acOK) {
+			if (!acOK)
+			{
 				// avisar sobre problema ao exportar projeto
 				this.stage.removeChild(this._telaEscolha);
 				this._telaMensagem.defineMensagem('<b>Erro!</b><br />&nbsp;<br />Não foi possível exportar o projeto escolhido. Por favor tente novamente.');
 				this.stage.addChild(this._telaMensagem);
-			} else {
+			}
+			else
+			{
 				// avisar sobre o projeto exportado
 				this.stage.removeChild(this._telaEscolha);
 				this._telaMensagem.defineMensagem('<b>Exportação concluída</b><br />&nbsp;<br />O projeto selecionado foi exportado e está gravado com o nome <br />&nbsp;<br /><b>' + exportado + '</b><br />&nbsp;<br />na pasta <br />&nbsp;<br /><b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados').nativePath + '</b><br />&nbsp;<br />de seu aparelho.');
 				this.stage.addChild(this._telaMensagem);
 			}
-			
+		
 		}
 		
 		/**
@@ -675,10 +701,13 @@ package telas
 		private function onNavegadorPSelect(evt:Event):void
 		{
 			// importando
-			if (Main.projeto.importar(this._navegaProjeto)) {
+			if (Main.projeto.importar(this._navegaProjeto))
+			{
 				// aguardar importação
 				this.stage.removeChild(this._telaEscolha);
-			} else {
+			}
+			else
+			{
 				// somentar listar novamente
 				this._telaEscolha.listar();
 			}
@@ -690,7 +719,13 @@ package telas
 		private function onImportComplete(evt:Event):void
 		{
 			this._telaMensagem.defineMensagem('<b>Projeto importado!</b><br />&nbsp;<br />O projeto recebido foi importado corretamente. Use o botão "abrir projeto" para conferi-lo.');
-			try { this.stage.removeChild(ObjetoAprendizagem.compartilhamento); } catch (e:Error) { }
+			try
+			{
+				this.stage.removeChild(ObjetoAprendizagem.compartilhamento);
+			}
+			catch (e:Error)
+			{
+			}
 			this.stage.addChild(this._telaMensagem);
 		}
 		
@@ -700,7 +735,13 @@ package telas
 		private function onImportCancel(evt:Event):void
 		{
 			this._telaMensagem.defineMensagem('<b>Erro de importação!</b><br />&nbsp;<br />Não foi possível importar o projeto recebido. Por favor tente novamente.');
-			try { this.stage.removeChild(ObjetoAprendizagem.compartilhamento); } catch (e:Error) { }
+			try
+			{
+				this.stage.removeChild(ObjetoAprendizagem.compartilhamento);
+			}
+			catch (e:Error)
+			{
+			}
 			this.stage.addChild(this._telaMensagem);
 		}
 		

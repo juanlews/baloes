@@ -49,6 +49,11 @@ package recursos
 		[Embed(source = "imagens/textohelp3.1.png")]
 		public static var ImgHelp03:Class;
 		
+		[Embed(source = "imagens/zoom_out.png")]
+		public static var ImgZoomOut:Class;
+		// add balão
+		[Embed(source = "imagens/zoom_in.png")]
+		public static var ImgZoomIn:Class;
 		//
 		[Embed(source = "imagens/barra.png")]
 		public static var ImgBarra:Class;
