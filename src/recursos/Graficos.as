@@ -78,6 +78,8 @@ package recursos
 		public static var ImgBalao02:Class;
 		[Embed(source = "imagens/btnBalaoRect.png")]
 		public static var ImgBalao03:Class;
+		[Embed(source = "imagens/btnBalaoGrito.png")]
+		public static var ImgBalao10:Class;
 		//
 		[Embed(source = "imagens/btnBalaoNuvemSemBorda.png")]
 		public static var ImgBalao04:Class;
@@ -85,6 +87,8 @@ package recursos
 		public static var ImgBalao05:Class;
 		[Embed(source = "imagens/btnBalaoRectSemBorda.png")]
 		public static var ImgBalao06:Class;
+		[Embed(source = "imagens/btnBalaoGritoSemBorda.png")]
+		public static var ImgBalao11:Class;
 		//
 		[Embed(source = "imagens/btnBalaoNuvemPreto.png")]
 		public static var ImgBalao07:Class;
@@ -92,6 +96,8 @@ package recursos
 		public static var ImgBalao08:Class;
 		[Embed(source = "imagens/btnBalaoRectPreto.png")]
 		public static var ImgBalao09:Class;
+		[Embed(source = "imagens/btnBalaoGritoPreto.png")]
+		public static var ImgBalao12:Class;
 		
 		// botoes tipo de balão
 		[Embed(source = "imagens/btnBalaoNuvem.png")]
@@ -100,6 +106,8 @@ package recursos
 		public static var ImgBTBalao02:Class;
 		[Embed(source = "imagens/btnBalaoRect.png")]
 		public static var ImgBTBalao03:Class;
+		[Embed(source = "imagens/btnBalaoGrito.png")]
+		public static var ImgBTBalao11:Class;
 		
 		// botoes cor
 		[Embed(source = "imagens/btnCor0xFF0000.png")]

@@ -1,6 +1,7 @@
 package componentes
 {
 	import flash.display.Bitmap;
+	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.ColorTransform;
@@ -40,9 +41,10 @@ package componentes
 			this.filters = new Array(new DropShadowFilter(4, 45, 0, 0.8, 4, 4, 1, 1, false));
 			
 			this._imgsBalao = new Vector.<Bitmap>();
-			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap)
+			this._imgsBalao.push(new Graficos.ImgBalao07() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao08() as Bitmap);
 			this._imgsBalao.push(new Graficos.ImgBalao09() as Bitmap);
+			this._imgsBalao.push(new Graficos.ImgBalao12() as Bitmap);
 			smooth();
 	
 			this._tipo = tipo;
@@ -118,6 +120,8 @@ package componentes
 				case 2: 
 					this._texto.x = 200;
 					break;
+				case 3:
+					this._texto.x = 300;
 				}
 			}
 			else
@@ -133,6 +137,8 @@ package componentes
 				case 2: 
 					this._texto.x = 200;
 					break;
+				case 3:
+					this._texto.x = 300;
 				}
 			}
 			
@@ -149,6 +155,8 @@ package componentes
 				case 2: 
 					this._texto.y = 100;
 					break;
+				case 3:
+					this._texto.y = 300;
 				}
 			}
 			else
@@ -164,6 +172,8 @@ package componentes
 				case 2: 
 					this._texto.y = 400;
 					break;
+				case 3:
+					this._texto.y = 400;
 				}
 			}
 			

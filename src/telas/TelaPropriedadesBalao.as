@@ -28,6 +28,7 @@ package telas
 		private var _tipo1:BotaoRadio;
 		private var _tipo2:BotaoRadio;
 		private var _tipo3:BotaoRadio;
+		private var _tipo4:BotaoRadio;
 		
 		private var _cor1:BotaoRadio;
 		private var _cor2:BotaoRadio;
@@ -70,13 +71,16 @@ package telas
 			this._tipo1 = new BotaoRadio(Graficos.ImgBTBalao01, '1', true);
 			this._tipo2 = new BotaoRadio(Graficos.ImgBTBalao02, '2');
 			this._tipo3 = new BotaoRadio(Graficos.ImgBTBalao03, '3');
+			this._tipo4 = new BotaoRadio(Graficos.ImgBTBalao11, '4');
 			
 			var grupoTipoBalao:Vector.<BotaoRadio> = new Vector.<BotaoRadio>();
+			
 			grupoTipoBalao.push(this._tipo1);
 			grupoTipoBalao.push(this._tipo2);
 			grupoTipoBalao.push(this._tipo3);
+			grupoTipoBalao.push(this._tipo4);
 			
-			this._tipo1.grupo = this._tipo2.grupo = this._tipo3.grupo = grupoTipoBalao;
+			this._tipo1.grupo = this._tipo2.grupo = this._tipo3.grupo = this._tipo4.grupo = grupoTipoBalao;
 			
 			// adicionando grupo de radio de cores
 			this._cor1 = new BotaoRadio(Graficos.ImgBTCor01, '1', true);
@@ -156,6 +160,11 @@ package telas
 				this._balaoP.tipo = this._modelobalao;
 				trace('clicoumodelobalao3');
 				break;
+			case '4':
+				this._modelobalao = 3;
+				this._balaoP.tipo = this._modelobalao;
+				trace('clicoumodelobalao4');
+				break;
 			}
 		
 		}
@@ -225,22 +234,29 @@ package telas
 			//balao
 			this._tipo1.x =stage.stageWidth/20;
 			this._tipo1.y = this.linhabaixo.y - this.stage.stageHeight/7;
-			this._tipo1.width = stage.stageWidth / 3.5;
+			this._tipo1.width = stage.stageWidth / 4.5;
 			this._tipo1.scaleY = this._tipo1.scaleX;
 			this.addChild(this._tipo1);
 			
 			this._tipo2.x = this._tipo1.x + this._tipo1.width + this._tipo1.width/20;
 			this._tipo2.y= this.linhabaixo.y - this.stage.stageHeight/7;
-			this._tipo2.width = stage.stageWidth / 3.5;
+			this._tipo2.width = stage.stageWidth / 4.5;
 			this._tipo2.scaleY = this._tipo2.scaleX;
 			this.addChild(this._tipo2);
 			
 			
 			this._tipo3.x = this._tipo2.x + this._tipo2.width + this._tipo1.width/20;
 			this._tipo3.y = this.linhabaixo.y - this.stage.stageHeight/7;
-			this._tipo3.width = stage.stageWidth / 3.5;
+			this._tipo3.width = stage.stageWidth / 4.5;
 			this._tipo3.scaleY = this._tipo3.scaleX;
 			this.addChild(this._tipo3);
+			
+			this._tipo4.x = this._tipo3.x + this._tipo3.width + this._tipo1.width/20
+			this._tipo4.y = this.linhabaixo.y - this.stage.stageHeight/7;
+			this._tipo4.width = stage.stageWidth / 4.5;
+			this._tipo4.scaleY = this._tipo4.scaleX;
+			this.addChild(this._tipo4);
+			
 			
 			//cor
 			this._cor1.x = stage.stageWidth / 20 ;
@@ -285,6 +301,8 @@ package telas
 				this._tipo2.addEventListener('marcado', cliqueBTipo);
 				
 				this._tipo3.addEventListener('marcado', cliqueBTipo);
+				
+				this._tipo4.addEventListener('marcado', cliqueBTipo);
 				
 				this._cor1.addEventListener('marcado', cliqueCor);
 				
@@ -382,6 +400,7 @@ package telas
 			this._tipo1.removeEventListener('marcado', cliqueBTipo);
 			this._tipo2.removeEventListener('marcado', cliqueBTipo);
 			this._tipo3.removeEventListener('marcado', cliqueBTipo);
+			this._tipo4.removeEventListener('marcado', cliqueBTipo);
 			
 			this._cor1.removeEventListener('marcado', cliqueCor);
 			this._cor2.removeEventListener('marcado', cliqueCor);
