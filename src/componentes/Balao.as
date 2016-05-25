@@ -173,7 +173,7 @@ package componentes
 					this._texto.y = 400;
 					break;
 				case 3:
-					this._texto.y = 400;
+					this._texto.y = 300;
 				}
 			}
 			
