@@ -52,7 +52,7 @@ package telas
 		private var _proxPagina:BotaoIcone;
 		private var _antPagina:BotaoIcone;
 		private var _fullscreen:BotaoIcone;
-		
+		private var _recolher:BotaoIcone;
 		// balão
 		private var _balao:Vector.<Balao>;
 		
@@ -104,6 +104,7 @@ package telas
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
 			
 			this._fullscreen = new BotaoIcone(Graficos.ImgAmpliar);
+			this._recolher = new BotaoIcone(Graficos.ImgRecolher);
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
@@ -217,7 +218,11 @@ package telas
 				this._fullscreen.scaleY = this._fullscreen.scaleX;
 				this._fullscreen.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 2.0;
 				this._fullscreen.y = stage.stageHeight - this._fullscreen.height - (stage.stageHeight / 40);
-				
+				//
+				this._recolher.width = stage.stageWidth / btscala;
+				this._recolher.scaleY = this._fullscreen.scaleX;
+				this._recolher.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 2.0;
+				this._recolher.y = stage.stageHeight - this._fullscreen.height - (stage.stageHeight / 40);
 				// exportar imagens
 				this._btExportarImg.height = this._cancelar.height;
 				this._btExportarImg.scaleX = this._btCompartilhar.scaleY;
@@ -286,7 +291,7 @@ package telas
 					this.addChild(this._fullscreen);
 					this.addChild(this._btCompartilhar);
 					this.addChild(this._btExportarImg);
-					
+					this.removeEventListener(MouseEvent.CLICK, resize);
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
 					this._addBalao.addEventListener(MouseEvent.CLICK, addBalao);
@@ -444,6 +449,11 @@ package telas
 		private function fullscreen(evento:MouseEvent):void
 		{
 			
+			this.removeChild(_fullscreen);
+			this._fullscreen.dispose;
+			this.removeEventListener(MouseEvent.CLICK, fullscreen);
+			this.addChild(_recolher);
+			this._recolher.addEventListener(MouseEvent.CLICK, resize);
 			this.linhabaixo.visible = false;
 			this.linhacima.visible = false;
 			this.removeBotoes();
@@ -451,6 +461,7 @@ package telas
 			this._fullscreen.addEventListener(MouseEvent.CLICK, resize);
 			this.addChild(_antPagina);
 			this.addChild(_proxPagina);
+			this._recolher.alpha = 0.7;
 			this._proxPagina.alpha = 0.7;
 			this._antPagina.alpha = 0.7;
 			this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnteriorVisual);

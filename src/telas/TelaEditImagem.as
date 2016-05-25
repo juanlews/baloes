@@ -56,7 +56,7 @@ package telas
 			this._btZoomIn.x = stage.stageWidth / 30;
 			this._btZoomIn.width = stage.stageWidth / 15;
 			this._btZoomIn.scaleY = this._btZoomIn.scaleX;
-			this._btZoomIn.y = stage.stageHeight / 2 - _btZoomIn.height;
+			this._btZoomIn.y = stage.stageHeight / 2 - (_btZoomIn.height * 1.5);
 			
 			this._btZoomOut.x = stage.stageWidth / 30;
 			this._btZoomOut.width = stage.stageWidth / 15;
@@ -117,7 +117,7 @@ package telas
 				this.addChild(this._ok);
 				this.addChild(this._lixeira);
 				this.addChild(this._cancelar);
-				this.addChild(this._btZoomIn)
+				this.addChild(this._btZoomIn);
 				this.addChild(this._btZoomOut);
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
 				
@@ -174,7 +174,8 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
-			
+			this._btZoomOut.removeEventListener(MouseEvent.CLICK, zoomPorOutBotao);
+			this._btZoomIn.removeEventListener(MouseEvent.CLICK, zoomPorInBotao);
 			this._imagem.removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);
