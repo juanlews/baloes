@@ -3,6 +3,7 @@ package
 	import colabora.display.AreaImagens;
 	import colabora.display.Compartilhamento;
 	import colabora.display.TelaMensagemStage;
+	import colabora.display.TelaSplash;
 	import colabora.oaprendizagem.servidor.Servidor;
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
@@ -39,13 +40,11 @@ package
 	 * @author colaboa
 	 */
 	
-	
-	
 	public class Main extends Sprite 
 	{
 		
-		
-		
+		public static var graficos:Graficos;
+		private var _splash:TelaSplash;
 	    private const link:String = 'http://192.168.10.159/';	
 		[Embed(source='./fontes/Pfennig.ttf', fontFamily='Pfennig', fontStyle='normal', fontWeight='normal', unicodeRange='U+0020-002F,U+0030-0039,U+003A-0040,U+0041-005A,U+005B-0060,U+0061-007A,U+007B-007E,U+0020,U+00A1-00FF,U+2000-206F,U+20A0-20CF,U+2100-2183', embedAsCFF='false', advancedAntiAliasing='false', mimeType="application/x-font")]
 		private var PfennigRegular:Class;
@@ -58,6 +57,7 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			
+			Main.graficos = new Graficos();
 			// touch or gesture?
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 
@@ -120,10 +120,23 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
+			this._splash = new TelaSplash(Main.graficos.getSPGR('Splash'), 3);
+            this._splash.addEventListener(Event.COMPLETE, onSplash);
+            this.stage.addChild(this._splash);
+
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			
 					
 		}
+		
+		/**
+         * O tempo da tela inicial terminou.
+         */
+        private function onSplash(evt:Event):void
+        {
+            this._splash.removeEventListener(Event.COMPLETE, onSplash);
+            this._splash = null;
+        }
 		
 		private function onKeyDown(evento:KeyboardEvent):void
 		{

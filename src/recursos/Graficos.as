@@ -198,6 +198,119 @@ package recursos
 		
 		}
 	
+		
+			public function getGR(nome:String):Bitmap
+		{
+			var bmp:Bitmap;
+			switch (nome) {
+				case 'AreaVazia': bmp = new GRAreaVazia() as Bitmap; break;
+				case 'AreaCheia1': bmp = new GRAreaCheia1() as Bitmap; break;
+				case 'AreaCheiaInicio': bmp = new GRAreaCheiaInicio() as Bitmap; break;
+				case 'AreaCheiaMeio': bmp = new GRAreaCheiaMeio() as Bitmap; break;
+				case 'AreaCheiaFim': bmp = new GRAreaCheiaFim() as Bitmap; break;
+				case 'FundoTrilhas': bmp = new GRFundoTrilhas() as Bitmap; break;
+				case 'BTAvancar': bmp = new GRBTAvancar() as Bitmap; break;
+				case 'BTAvancar10': bmp = new GRBTAvancar10() as Bitmap; break;
+				case 'BTVoltar': bmp = new GRBTVoltar() as Bitmap; break;
+				case 'BTVoltar10': bmp = new GRBTVoltar10() as Bitmap; break;
+				case 'BTInicio': bmp = new GRBTInicio() as Bitmap; break;
+				case 'BTPlay': bmp = new GRBTPlay() as Bitmap; break;
+				case 'BTPause': bmp = new GRBTPause() as Bitmap; break;
+				case 'BTStop': bmp = new GRBTStop() as Bitmap; break;
+				case 'BTCompAjuda': bmp = new GRBTCompAjuda() as Bitmap; break;
+				case 'BTCompFechar': bmp = new GRBTCompFechar() as Bitmap; break;
+				case 'BTCompScan': bmp = new GRBTCompScan() as Bitmap; break;
+				case 'BTCompVoltar': bmp = new GRBTCompVoltar() as Bitmap; break;
+				case 'MensagemErroDownload': bmp = new GRMensagemErroDownload() as Bitmap; break;
+				case 'MensagemSucessoDownload': bmp = new GRMensagemSucessoDownload() as Bitmap; break;
+				case 'MensagemAguardeDownload': bmp = new GRMensagemAguardeDownload() as Bitmap; break;
+				case 'BTAbrir': bmp = new GRBTAbrir() as Bitmap; break;
+				case 'BTAjuda': bmp = new GRBTAjuda() as Bitmap; break;
+				case 'BTArquivos': bmp = new GRBTArquivos() as Bitmap; break;
+				case 'BTCompartilhar': bmp = new GRBTCompartilhar() as Bitmap; break;
+				case 'BTInfo': bmp = new GRBTInfo() as Bitmap; break;
+				case 'BTMixer': bmp = new GRBTMixer() as Bitmap; break;
+				case 'BTNovo': bmp = new GRBTNovo() as Bitmap; break;
+				case 'BTSalvar': bmp = new GRBTSalvar() as Bitmap; break;
+				case 'BTReceber': bmp = new GRBTReceber() as Bitmap; break;
+				case 'BTOk': bmp = new GRBTOk() as Bitmap; break;
+				case 'BTCancel': bmp = new GRBTCancel() as Bitmap; break;
+				case 'BTLixeira': bmp = new GRBTLixeira() as Bitmap; break;
+				case 'FundoJanela': bmp = new GRFundoJanela() as Bitmap; break;
+				case 'BTBiblioteca': bmp = new GRBTBiblioteca() as Bitmap; break;
+				case 'BTMeusAudios': bmp = new GRBTMeusAudios() as Bitmap; break;
+				case 'BTBibliotecaIm': bmp = new GRBTBibliotecaIm() as Bitmap; break;
+				case 'BTMinhasImagens': bmp = new GRBTMinhasImagens() as Bitmap; break;
+				case 'BTTexto': bmp = new GRBTTexto() as Bitmap; break;
+				case 'BTAbrirMp3': bmp = new GRBTAbrirMp3() as Bitmap; break;
+				case 'BTGravarMp3': bmp = new GRBTGravarMp3() as Bitmap; break;
+				case 'AreaTextoNome': bmp = new GRAreaTextoNome() as Bitmap; break;
+				case 'AreaTextoId': bmp = new GRAreaTextoId() as Bitmap; break;
+				case 'AreaTextoSobre': bmp = new GRAreaTextoSobre() as Bitmap; break;
+				case 'AreaTextoTexto': bmp = new GRAreaTextoTexto() as Bitmap; break;
+				case 'AreaTextoLink': bmp = new GRAreaTextoLink() as Bitmap; break;
+				case 'AreaVolume': bmp = new GRAreaVolume() as Bitmap; break;
+				case 'BTVolume': bmp = new GRBTVolume() as Bitmap; break;
+				case 'BTMicrofoneGrande': bmp = new GRBTMicrofoneGrande() as Bitmap; break;
+				case 'MensagemGravandoAudio': bmp = new GRMensagemGravandoAudio() as Bitmap; break;
+				case 'MensagemProcessandoAudio': bmp = new GRMensagemProcessandoAudio() as Bitmap; break;
+				case 'SobreID': bmp = new GRSobreID() as Bitmap; break;
+				case 'BTMais': bmp = new GRBTMais() as Bitmap; break;
+				case 'BTFontePfennig': bmp = new GRBTFontePfennig() as Bitmap; break;
+				case 'BTFonteAveria': bmp = new GRBTFonteAveria() as Bitmap; break;
+				case 'BTFonteGamaliel': bmp = new GRBTFonteGamaliel() as Bitmap; break;
+				case 'BTFonteCodeRoman': bmp = new GRBTFonteCodeRoman() as Bitmap; break;
+				case 'BTPropMais': bmp = new GRBTPropMais() as Bitmap; break;
+				case 'BTPropMenos': bmp = new GRBTPropMenos() as Bitmap; break;
+				case 'PropTamanho': bmp = new GRPropTamanho() as Bitmap; break;
+				case 'PropRotacao': bmp = new GRPropRotacao() as Bitmap; break;
+				case 'PropVermelho': bmp = new GRPropVermelho() as Bitmap; break;
+				case 'PropVerde': bmp = new GRPropVerde() as Bitmap; break;
+				case 'PropAzul': bmp = new GRPropAzul() as Bitmap; break;
+				case 'PropOrdem': bmp = new GRPropOrdem() as Bitmap; break;
+				case 'BTLink': bmp = new GRBTLink() as Bitmap; break;
+				case 'BTMaisPagina': bmp = new GRBTMaisPagina() as Bitmap; break;
+				case 'BTMenosPagina': bmp = new GRBTMenosPagina() as Bitmap; break;
+				case 'BTPaginaAnterior': bmp = new GRBTPaginaAnterior() as Bitmap; break;
+				case 'BTPaginaProxima': bmp = new GRBTPaginaProxima() as Bitmap; break;
+				case 'BTResetImagem': bmp = new GRBTResetImagem() as Bitmap; break;
+				case 'BTEditaTexto': bmp = new GRBTEditaTexto() as Bitmap; break;
+				case 'BTApresentar': bmp = new GRBTApresentar() as Bitmap; break;
+				case 'BTExportarImagem': bmp = new GRBTExportarImagem() as Bitmap; break;
+				case 'BTTelaCheia': bmp = new GRBTTelaCheia() as Bitmap; break;
+				case 'BTManagana': bmp = new GRBTManagana() as Bitmap; break;
+				case 'BTEsquerda': bmp = new GRBTEsquerda() as Bitmap; break;
+				case 'BTDireita': bmp = new GRBTDireita() as Bitmap; break;
+				case 'BTFechar': bmp = new GRBTFechar() as Bitmap; break;
+				
+				case 'HELP01': bmp = new HELP01() as Bitmap; break;
+				case 'HELP02': bmp = new HELP02() as Bitmap; break;
+				case 'HELP03': bmp = new HELP03() as Bitmap; break;
+				case 'HELP04': bmp = new HELP04() as Bitmap; break;
+				case 'BTHelp2': bmp = new GRBTHelp2() as Bitmap; break;
+				case 'BTHelp3': bmp = new GRBTHelp3() as Bitmap; break;
+			}
+			if (bmp != null) bmp.smoothing = true;
+			return (bmp);
+		}
+		
+		/**
+		 * Recupera um sprite com o gráfico indicado.
+		 * @param	nome	o nome do gráfico a ser usado
+		 * @return	objeto Sprite com o gráfico ou null caso o nome não seja encontrado
+		 */
+		public function getSPGR(nome:String):Sprite
+		{
+			var retorno:Sprite;
+			var bmp:Bitmap = this.getGR(nome);
+			if (bmp != null) {
+				retorno = new Sprite();
+				retorno.addChild(bmp);
+				retorno.useHandCursor = true;
+				retorno.buttonMode = true;
+			}
+			return (retorno);
+		}
 	}
 
 }
