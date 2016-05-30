@@ -12,6 +12,7 @@ package telas
 	import flash.events.TransformGestureEvent;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
+	import flash.ui.Mouse;
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import recursos.Graficos;
@@ -33,8 +34,8 @@ package telas
 		private var imgOrig:Imagem;
 		private var _btZoomIn:BotaoIcone;
 		private var _btZoomOut:BotaoIcone;
-		private var _rodaMais:BotaoIcone;
-		private var _rodaMenos:BotaoIcone;
+		private var _rodaDireita:BotaoIcone;
+		private var _rodaEsquerda:BotaoIcone;
 		
 		public function TelaEditImagem(funcMudaTela:Function)
 		{
@@ -47,6 +48,8 @@ package telas
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 		    this._btZoomIn = new BotaoIcone(Graficos.ImgZoomIn);
 			this._btZoomOut = new BotaoIcone(Graficos.ImgZoomOut);
+			this._rodaDireita = new BotaoIcone(Graficos.rotacaoDireita);
+			this._rodaEsquerda = new BotaoIcone(Graficos.rotacaoEsquerda);
 		}
 		
 		override public function desenho(evento:Event = null):void
@@ -62,6 +65,16 @@ package telas
 			this._btZoomOut.width = stage.stageWidth / 15;
 			this._btZoomOut.scaleY = this._btZoomOut.scaleX;
 			this._btZoomOut.y = stage.stageHeight / 2 ;
+						
+			this._rodaDireita.width = stage.stageWidth / 15;
+			this._rodaDireita.scaleY = this._rodaDireita.scaleX;
+			this._rodaDireita.x = stage.stageWidth - stage.stageWidth / 30 - this._rodaDireita.width;
+			this._rodaDireita.y = stage.stageHeight / 2 - (_rodaDireita.height * 1.5);
+			
+			this._rodaEsquerda.width = stage.stageWidth / 15;
+			this._rodaEsquerda.scaleY = this._rodaEsquerda.scaleX;
+			this._rodaEsquerda.x = stage.stageWidth - stage.stageWidth / 30 - this._rodaEsquerda.width;
+			this._rodaEsquerda.y = stage.stageHeight / 2;
 			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
@@ -92,8 +105,10 @@ package telas
 				this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);				
 				this._ok.addEventListener(MouseEvent.CLICK, cliqueOk);
 				this._lixeira.addEventListener(MouseEvent.CLICK, excluiImagem);
-				this._btZoomOut.addEventListener(MouseEvent.CLICK, zoomPorOutBotao);
-				this._btZoomIn.addEventListener(MouseEvent.CLICK, zoomPorInBotao);
+				this._btZoomOut.addEventListener(MouseEvent.CLICK, zoomOutPorBotao);
+				this._btZoomIn.addEventListener(MouseEvent.CLICK, zoomInPorBotao);
+				this._rodaDireita.addEventListener(MouseEvent.CLICK,  rodaDireita);
+				this._rodaEsquerda.addEventListener(MouseEvent.CLICK, rodaEsquerda);
 				/*
 				for (var i:int; i < _imagem.length; i++)
 				{
@@ -119,6 +134,8 @@ package telas
 				this.addChild(this._cancelar);
 				this.addChild(this._btZoomIn);
 				this.addChild(this._btZoomOut);
+				this.addChild(this._rodaDireita);
+				this.addChild(this._rodaEsquerda);
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
 				
 				//linhacima.x = 0;
@@ -127,11 +144,23 @@ package telas
 			}
 		
 		}
-		private function zoomPorOutBotao(evento:MouseEvent):void {
+		
+		private function rodaDireita(evento:MouseEvent):void {
+		
+			_imagem.rotation +=  1;
+			
+		}
+		private function rodaEsquerda(evento:MouseEvent):void {
+		
+			_imagem.rotation +=  -1;
+			
+		}
+		
+		private function zoomOutPorBotao(evento:MouseEvent):void {
 			_imagem.scaleX += -0.05;
 			_imagem.scaleY = _imagem.scaleX;
 		}
-		private function zoomPorInBotao(evento:MouseEvent):void {
+		private function zoomInPorBotao(evento:MouseEvent):void {
 			_imagem.scaleX += +0.05;
 			_imagem.scaleY = _imagem.scaleX;
 		}
@@ -174,8 +203,11 @@ package telas
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, zoomImagem);
 			stage.removeEventListener(TransformGestureEvent.GESTURE_ROTATE, rotacaoImagem);
-			this._btZoomOut.removeEventListener(MouseEvent.CLICK, zoomPorOutBotao);
-			this._btZoomIn.removeEventListener(MouseEvent.CLICK, zoomPorInBotao);
+			this._rodaDireita.removeEventListener(MouseEvent.CLICK,  rodaDireita);
+			this._rodaEsquerda.removeEventListener(MouseEvent.CLICK, rodaEsquerda);
+			this._btZoomOut.removeEventListener(MouseEvent.CLICK, zoomOutPorBotao);
+			this._btZoomIn.removeEventListener(MouseEvent.CLICK, zoomInPorBotao);
+			
 			this._imagem.removeEventListener(MouseEvent.MOUSE_DOWN, dragImagemStart);
 			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, dragImagemStop);

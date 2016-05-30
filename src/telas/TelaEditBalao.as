@@ -40,8 +40,8 @@ package telas
 		
 		private var _btZoomIn:BotaoIcone;
 		private var _btZoomOut:BotaoIcone;
-		private var _rodaMais:BotaoIcone;
-		private var _rodaMenos:BotaoIcone;
+			private var _rodaDireita:BotaoIcone;
+		private var _rodaEsquerda:BotaoIcone;
 		
 		public function TelaEditBalao(funcMudaTela:Function)
 		{
@@ -54,6 +54,8 @@ package telas
 			this._cancelar = new BotaoIcone(Graficos.ImgCancelar);
 			this._btZoomIn = new BotaoIcone(Graficos.ImgZoomIn);
 			this._btZoomOut = new BotaoIcone(Graficos.ImgZoomOut);
+			this._rodaDireita = new BotaoIcone(Graficos.rotacaoDireita);
+			this._rodaEsquerda = new BotaoIcone(Graficos.rotacaoEsquerda);
 		
 		}
 		
@@ -70,6 +72,16 @@ package telas
 			this._btZoomOut.width = stage.stageWidth / 15;
 			this._btZoomOut.scaleY = this._btZoomOut.scaleX;
 			this._btZoomOut.y = stage.stageHeight / 2 ;
+			
+			this._rodaDireita.width = stage.stageWidth / 15;
+			this._rodaDireita.scaleY = this._rodaDireita.scaleX;
+			this._rodaDireita.x = stage.stageWidth - stage.stageWidth / 30 - this._rodaDireita.width;
+			this._rodaDireita.y = stage.stageHeight / 2 - (_rodaDireita.height * 1.5);
+			
+			this._rodaEsquerda.width = stage.stageWidth / 15;
+			this._rodaEsquerda.scaleY = this._rodaEsquerda.scaleX;
+			this._rodaEsquerda.x = stage.stageWidth - stage.stageWidth / 30 - this._rodaEsquerda.width;
+			this._rodaEsquerda.y = stage.stageHeight / 2;
 			
 			this._ok.width = stage.stageWidth / btscala;
 			this._ok.scaleY = this._ok.scaleX;
@@ -99,15 +111,19 @@ package telas
 				
 				ObjetoAprendizagem.areaImagem.addChild(this._balao);
 				this._balao.addEventListener(MouseEvent.MOUSE_DOWN, dragBalaoStart);
-				this._btZoomOut.addEventListener(MouseEvent.CLICK, zoomPorOutBotao);
-				this._btZoomIn.addEventListener(MouseEvent.CLICK, zoomPorInBotao);
+				this._btZoomOut.addEventListener(MouseEvent.CLICK, zoomOutPorBotao);
+				this._btZoomIn.addEventListener(MouseEvent.CLICK, zoomInPorBotao);
+				this._rodaDireita.addEventListener(MouseEvent.CLICK,  rodaDireita);
+				this._rodaEsquerda.addEventListener(MouseEvent.CLICK, rodaEsquerda);
 				
 				this.addChild(this._ok);
 				this.addChild(this._configBalao);
 				this.addChild(this._cancelar);
 				this.addChild(this._btZoomIn)
 				this.addChild(this._btZoomOut);
-				
+				this.addChild(this._rodaDireita);
+				this.addChild(this._rodaEsquerda);
+			
 				trace('usa tween');
 				//	linhacima.x = 0;
 				//	Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
@@ -128,12 +144,12 @@ package telas
 		}
 
 		
-		private function zoomPorOutBotao(evento:MouseEvent):void {
+		private function zoomOutPorBotao(evento:MouseEvent):void {
 			_balao.scaleX += -0.05;
 			_balao.scaleY = _balao.scaleX;
 		}
 		
-		private function zoomPorInBotao(evento:MouseEvent):void {
+		private function zoomInPorBotao(evento:MouseEvent):void {
 			_balao.scaleX += +0.05;
 			_balao.scaleY = _balao.scaleX;
 		}
@@ -146,6 +162,17 @@ package telas
 			this.mudaTela('propriedadesbalao', dados);
 			
 		}
+			private function rodaDireita(evento:MouseEvent):void {
+		
+			_balao.rotation +=  1;
+			
+		}
+		private function rodaEsquerda(evento:MouseEvent):void {
+		
+			_balao.rotation +=  -1;
+			
+		}
+		
 		override public function escondendo(evento:Event):void
 		{
 			super.escondendo(evento);
@@ -158,8 +185,11 @@ package telas
 			stage.removeEventListener(Event.RESIZE, desenho);
 			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._ok.removeEventListener(MouseEvent.CLICK, cliqueOk);
-			this._btZoomOut.removeEventListener(MouseEvent.CLICK, zoomPorOutBotao);
-			this._btZoomIn.removeEventListener(MouseEvent.CLICK, zoomPorInBotao);
+			this._btZoomOut.removeEventListener(MouseEvent.CLICK, zoomOutPorBotao);
+			this._btZoomIn.removeEventListener(MouseEvent.CLICK, zoomInPorBotao);
+			this._rodaDireita.removeEventListener(MouseEvent.CLICK,  rodaDireita);
+			this._rodaEsquerda.removeEventListener(MouseEvent.CLICK, rodaEsquerda);
+				
 			this._configBalao.removeEventListener(MouseEvent.CLICK, configBalao);
 			this._cancelar.removeEventListener(MouseEvent.CLICK, cliqueCancelar);
 			

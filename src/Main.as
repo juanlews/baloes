@@ -120,7 +120,7 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
-			this._splash = new TelaSplash(Main.graficos.getSPGR('Splash'), 3);
+			this._splash = new TelaSplash(Main.graficos.getGR('Splash'), 3);
             this._splash.addEventListener(Event.COMPLETE, onSplash);
             this.stage.addChild(this._splash);
 
@@ -134,8 +134,30 @@ package
          */
         private function onSplash(evt:Event):void
         {
+			
             this._splash.removeEventListener(Event.COMPLETE, onSplash);
-            this._splash = null;
+           
+			this._splash = null;
+			this._splash = new TelaSplash(Main.graficos.getGR('Splash2'), 3);			
+			this.stage.addChild(_splash);
+			this._splash.addEventListener(Event.COMPLETE, onSplash2);
+        }
+		private function onSplash2(evt:Event):void
+        {
+			
+            this._splash.removeEventListener(Event.COMPLETE, onSplash);
+           
+			this._splash = null;
+			this._splash = new TelaSplash(Main.graficos.getGR('Splash3'), 3);	
+			this.stage.addChild(_splash);
+			this._splash.addEventListener(Event.COMPLETE, onSplash3);
+        }
+			private function onSplash3(evt:Event):void
+        {
+			
+            this._splash.removeEventListener(Event.COMPLETE, onSplash);            
+			this._splash = null;
+			
         }
 		
 		private function onKeyDown(evento:KeyboardEvent):void

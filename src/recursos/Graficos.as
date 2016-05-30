@@ -1,5 +1,7 @@
 package recursos
 {
+	import flash.display.Bitmap;
+	import flash.display.Sprite;
 	
 	/**
 	 * ...
@@ -51,9 +53,13 @@ package recursos
 		
 		[Embed(source = "imagens/zoom_out.png")]
 		public static var ImgZoomOut:Class;
-		// add balão
 		[Embed(source = "imagens/zoom_in.png")]
 		public static var ImgZoomIn:Class;
+		[Embed(source = "imagens/rotacionarDireita.png")]
+		public static var rotacaoDireita:Class;
+		[Embed(source = "imagens/rotacionarEsquerda.png")]
+		public static var rotacaoEsquerda:Class;
+		// add balão	
 		//
 		[Embed(source = "imagens/barra.png")]
 		public static var ImgBarra:Class;
@@ -196,6 +202,16 @@ package recursos
 		[Embed(source = "imagens/telaErro.png")]
 		public static var GRCompErro:Class;
 		
+		//Splash
+		[Embed(source = "imagens/Splash/Colabora-950x446.jpg")]
+		public static var Colabora:Class;
+		[Embed(source = "imagens/Splash/Plug.jpg")]
+		public static var Plug:Class;
+		[Embed(source = "imagens/Splash/AIC.jpg")]
+		public static var AIC:Class;
+		
+		
+		
 		public function Graficos()
 		{
 		
@@ -206,7 +222,7 @@ package recursos
 		{
 			var bmp:Bitmap;
 			switch (nome) {
-				case 'AreaVazia': bmp = new GRAreaVazia() as Bitmap; break;
+	/*			case 'AreaVazia': bmp = new GRAreaVazia() as Bitmap; break;
 				case 'AreaCheia1': bmp = new GRAreaCheia1() as Bitmap; break;
 				case 'AreaCheiaInicio': bmp = new GRAreaCheiaInicio() as Bitmap; break;
 				case 'AreaCheiaMeio': bmp = new GRAreaCheiaMeio() as Bitmap; break;
@@ -292,7 +308,13 @@ package recursos
 				case 'HELP04': bmp = new HELP04() as Bitmap; break;
 				case 'BTHelp2': bmp = new GRBTHelp2() as Bitmap; break;
 				case 'BTHelp3': bmp = new GRBTHelp3() as Bitmap; break;
+				*/
+				case 'Splash': bmp = new Colabora() as Bitmap; break;
+				case 'Splash2': bmp = new AIC() as Bitmap; break;
+				case 'Splash3': bmp = new Plug() as Bitmap; break;
+				
 			}
+			
 			if (bmp != null) bmp.smoothing = true;
 			return (bmp);
 		}
