@@ -8,6 +8,7 @@ package
 	import colabora.oaprendizagem.servidor.Usuario;
 	import componentes.AnimacaoFrames;
 	import componentes.BotaoIcone;
+	import flash.display.Bitmap;
 	import flash.events.KeyboardEvent;
 	import flash.filesystem.File;
 	import flash.ui.Keyboard;
@@ -120,7 +121,7 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
-			this._splash = new TelaSplash(Main.graficos.getGR('Splash'), 3);
+			this._splash = new TelaSplash(new Graficos.Splash as Bitmap, 3);
             this._splash.addEventListener(Event.COMPLETE, onSplash);
             this.stage.addChild(this._splash);
 
@@ -135,20 +136,21 @@ package
         private function onSplash(evt:Event):void
         {
 			
-            this._splash.removeEventListener(Event.COMPLETE, onSplash);
-           
+            this._splash.removeEventListener(Event.COMPLETE, onSplash);           
 			this._splash = null;
-			this._splash = new TelaSplash(Main.graficos.getGR('Splash2'), 3);			
+			/*this._splash = new TelaSplash(new Graficos.Splash() as Bitmap, 4);			
 			this.stage.addChild(_splash);
-			this._splash.addEventListener(Event.COMPLETE, onSplash2);
-        }
+			//this._splash.addEventListener(Event.COMPLETE, onSplash2);
+       
+			*/
+	   }
 		private function onSplash2(evt:Event):void
         {
 			
-            this._splash.removeEventListener(Event.COMPLETE, onSplash);
+            this._splash.removeEventListener(Event.COMPLETE, onSplash2);
            
 			this._splash = null;
-			this._splash = new TelaSplash(Main.graficos.getGR('Splash3'), 3);	
+			this._splash = new TelaSplash(new Graficos.Colabora() as Bitmap, 3);	
 			this.stage.addChild(_splash);
 			this._splash.addEventListener(Event.COMPLETE, onSplash3);
         }

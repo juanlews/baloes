@@ -210,6 +210,10 @@ package recursos
 		[Embed(source = "imagens/Splash/AIC.jpg")]
 		public static var AIC:Class;
 		
+		[Embed(source = "imagens/Splash/Splash.png")]
+		public static var Splash:Class;
+		
+		
 		
 		
 		public function Graficos()
