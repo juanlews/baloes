@@ -142,8 +142,11 @@ package recursos
 		[Embed(source = "imagens/SetaDir.png")]
 		public static var ImgSetad:Class;
 		
-		[Embed(source = "imagens/ampliar.jpg")]
+		[Embed(source = "imagens/BTExpandir.png")]
 		public static var ImgAmpliar:Class;
+		
+		[Embed(source = "imagens/BTRecolher.png")]
+		public static var ImgRecolher:Class;
 		
 		// botoes propriedades do balão
 		[Embed(source = "imagens/btnFlipVertical.png")]
