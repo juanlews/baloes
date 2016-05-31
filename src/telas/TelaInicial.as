@@ -6,6 +6,7 @@ package telas
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
+	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -146,6 +147,11 @@ package telas
 		
 		}
 		
+			override public function botaoBack():void
+		{
+			
+			NativeApplication.nativeApplication.exit();
+		}
 		private function cliqueCamera(evento:MouseEvent):void
 		{
 			this.camera.addEventListener(MediaEvent.COMPLETE, cameracomplete);

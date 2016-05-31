@@ -43,7 +43,7 @@ set DIST_PATH=dist
 set DIST_NAME=Baloes
 
 :: Debugging using a custom IP
-set DEBUG_IP=
+set DEBUG_IP=192.168.10.135
 
 :validation
 findstr /C:"<id>%APP_ID%</id>" "%APP_XML%" > NUL

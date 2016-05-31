@@ -31,6 +31,7 @@ package
 	import telas.TelaPropriedadesBalao;
 	import telas.TelaSalvar;
 	import telas.TelaVisualizar;
+	import flash.utils.setTimeout;
 	
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	
@@ -54,6 +55,10 @@ package
 		private var nomeTela:String = '';
 		
 		public function Main() {
+			setTimeout(iniciar, 250);
+		}
+		
+		public function iniciar():void {
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			stage.addEventListener(Event.DEACTIVATE, deactivate);
@@ -135,16 +140,17 @@ package
          */
         private function onSplash(evt:Event):void
         {
-			
             this._splash.removeEventListener(Event.COMPLETE, onSplash);           
+			this._splash.visible = false;
 			this._splash = null;
+			
 			/*this._splash = new TelaSplash(new Graficos.Splash() as Bitmap, 4);			
 			this.stage.addChild(_splash);
 			//this._splash.addEventListener(Event.COMPLETE, onSplash2);
        
 			*/
 	   }
-		private function onSplash2(evt:Event):void
+		/*private function onSplash2(evt:Event):void
         {
 			
             this._splash.removeEventListener(Event.COMPLETE, onSplash2);
@@ -160,7 +166,7 @@ package
             this._splash.removeEventListener(Event.COMPLETE, onSplash);            
 			this._splash = null;
 			
-        }
+        }*/
 		
 		private function onKeyDown(evento:KeyboardEvent):void
 		{
