@@ -192,7 +192,7 @@ package telas
 			this.addChild(this._fndprev);
 			
 			// balao padrao
-			this._balaoP.width = this._fndprev.width - this._fndprev.width/5;
+			this._balaoP.width = stage.stageWidth  + stage.stageWidth/2;
 			this._balaoP.scaleY = this._balaoP.scaleX;
 			this._balaoP.x = this._fndprev.x + ((this._fndprev.width - this._balaoP.width) / 2);
 			this._balaoP.y = this._fndprev.y + ((this._fndprev.height - this._balaoP.height) / 2);
