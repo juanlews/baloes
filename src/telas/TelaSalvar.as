@@ -255,8 +255,8 @@ package telas
 			_caixaTags.y = _caixaTitulo.y + _caixaTitulo.height + stage.stageWidth / 30;
 			
 			_imagem.y = _caixaTags.height + _caixaTags.y + (stage.stageHeight / 60);
-			_imagem.height = stage.stageHeight - _caixaTags.y - _caixaTitulo.height  -linhabaixo.height-(stage.stageHeight / 60);//  -(stage.stageHeight / 20);
-			_imagem.scaleX = _imagem.scaleY;
+			_imagem.width = stage.stageWidth - _caixaTags.y - (stage.stageHeight / 20);// - linhabaixo.height - (stage.stageHeight / 20);
+			_imagem.scaleY = _imagem.scaleX;
 			_imagem.x = (stage.stageWidth / 2) - (_imagem.width / 2);
 			
 			//botão salvar			
