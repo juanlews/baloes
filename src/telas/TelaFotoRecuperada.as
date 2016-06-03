@@ -90,6 +90,7 @@ package telas
 		private var _moldura:Imagem;
 		private var _anim:AnimacaoFrames;
 		private var estadoFullscreen:Boolean = false;
+		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
@@ -143,13 +144,13 @@ package telas
 		{
 			super.desenho(evento);
 			addChild(_btExcluiPagina);
-	
+			
 			if ((evento != null) && (evento.type == Event.RESIZE))
 			{
 				// centralizar imagem	
 			}
 			
-			trace ('tamanho recuperada', this.stage.stageWidth, this.stage.stageHeight);
+			trace('tamanho recuperada', this.stage.stageWidth, this.stage.stageHeight);
 			
 			this._proxPagina.width = stage.stageWidth / btscala;
 			this._proxPagina.scaleY = this._proxPagina.scaleX;
@@ -349,8 +350,6 @@ package telas
 					this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPagina);
 					this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnterior);
 					
-					
-					
 					stage.addEventListener(Event.RESIZE, desenho);
 					
 				}
@@ -362,10 +361,12 @@ package telas
 		override public function botaoBack():void
 		{
 			
-			if(!estadoFullscreen){
+			if (!estadoFullscreen)
+			{
 				this.cliqueCancelar(null);
 			}
-			if(estadoFullscreen){
+			if (estadoFullscreen)
+			{
 				this.resize(null);
 				
 			}
@@ -458,7 +459,7 @@ package telas
 		private function fullscreen(evento:MouseEvent):void
 		{
 			
-			this.estadoFullscreen = true;			
+			this.estadoFullscreen = true;
 			this.removeChild(_fullscreen);
 			this._fullscreen.dispose;
 			this.removeEventListener(MouseEvent.CLICK, fullscreen);
@@ -474,10 +475,13 @@ package telas
 			this._antPagina.addEventListener(MouseEvent.CLICK, paginaAnteriorVisual);
 			this._proxPagina.addEventListener(MouseEvent.CLICK, proximaPaginaVisual);
 			ObjetoAprendizagem.areaImagem.fitOnArea(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
+			ObjetoAprendizagem.areaImagem.addEventListener(MouseEvent.MOUSE_DOWN, AreaStartDrag);
+			this.stage.addEventListener(MouseEvent.MOUSE_UP, AreaStopDrag);
+			this.stage.addEventListener(MouseEvent.DOUBLE_CLICK, areaVolta);
 			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
 			Multitouch.inputMode = MultitouchInputMode.GESTURE;
 			this.stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, areaImagemZoom);
-			this.stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipePagina);			
+			this.stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipePagina);
 			this.stage.addEventListener(MouseEvent.CLICK, escondeBotoes);
 			
 			for (var k:int = 0; k < _imagem.length; k++)
@@ -492,27 +496,38 @@ package telas
 				this._balao[i].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
 				
 			}
-			
 		
 		}
 		
-		private function areaImagemZoom(evento:TransformGestureEvent):void {
-			if(evento!=null){
-			evento.preventDefault();
-			evento.stopPropagation();
-			}
+		private function areaVolta(evento:MouseEvent):void
+		{
+			ObjetoAprendizagem.areaImagem.fitOnArea(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
+		
+		}
+		
+		private function AreaStartDrag(evento:MouseEvent):void
+		{
+			ObjetoAprendizagem.areaImagem.startDrag();
+		}
+		
+		private function AreaStopDrag(evento:MouseEvent):void
+		{
+			ObjetoAprendizagem.areaImagem.stopDrag();
+		}
+		
+		private function areaImagemZoom(evento:TransformGestureEvent):void
+		{
+			
 			ObjetoAprendizagem.areaImagem.scaleX *= evento.scaleX;
 			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
 		}
 		
-		private function swipePagina(evento:TransformGestureEvent):void {
-		trace('swipe');	
-		
-		if(evento!=null){
-			evento.preventDefault();
-			evento.stopPropagation();
-			}
-		
+		private function swipePagina(evento:TransformGestureEvent):void
+		{
+			trace('swipe');
+			
+			
+			
 			if (evento.offsetX < 0)
 			{
 				trace(evento.offsetX, 'mais');
@@ -523,25 +538,29 @@ package telas
 				trace(evento.offsetX, 'menos');
 				paginaAnteriorVisual(null);
 			}
-			
+		
 		}
-		private function escondeBotoes(evento:MouseEvent):void {
-			trace('escondeBotoes!');	
-			if (this._recolher.alpha == 1) {
+		
+		private function escondeBotoes(evento:MouseEvent):void
+		{
+			trace('escondeBotoes!');
+			if (this._recolher.alpha == 1)
+			{
 				trace('escondeBotoes1');
-				Tweener.addTween(this._recolher, { alpha:0, time: 0.5, transition: 'linear', onComplete:termineiTween, onCompleteParams:['recolher'] } );
-				Tweener.addTween(this._proxPagina, { alpha:0, time: 0.5, transition: 'linear', onComplete:termineiTween, onCompleteParams:['proxima'] } );
-				Tweener.addTween(this._antPagina, { alpha:0, time: 0.5, transition: 'linear', onComplete:termineiTween, onCompleteParams:['anterior'] } );
+				Tweener.addTween(this._recolher, {alpha: 0, time: 0.5, transition: 'linear', onComplete: termineiTween, onCompleteParams: ['recolher']});
+				Tweener.addTween(this._proxPagina, {alpha: 0, time: 0.5, transition: 'linear', onComplete: termineiTween, onCompleteParams: ['proxima']});
+				Tweener.addTween(this._antPagina, {alpha: 0, time: 0.5, transition: 'linear', onComplete: termineiTween, onCompleteParams: ['anterior']});
 				this._proxPagina.mouseEnabled = false;
 				this._antPagina.mouseEnabled = false;
 				this._recolher.mouseEnabled = false;
 			}
-		
-			if(this._recolher.alpha == 0){
+			
+			if (this._recolher.alpha == 0)
+			{
 				trace('ApareceBotoes1');
-				Tweener.addTween(this._recolher, { alpha:1, time: 0.5, transition: 'linear' } );
-				Tweener.addTween(this._proxPagina, { alpha:1, time: 0.5, transition: 'linear' } );
-				Tweener.addTween(this._antPagina, { alpha:1, time: 0.5, transition: 'linear' } );
+				Tweener.addTween(this._recolher, {alpha: 1, time: 0.5, transition: 'linear'});
+				Tweener.addTween(this._proxPagina, {alpha: 1, time: 0.5, transition: 'linear'});
+				Tweener.addTween(this._antPagina, {alpha: 1, time: 0.5, transition: 'linear'});
 				this._proxPagina.mouseEnabled = true;
 				this._antPagina.mouseEnabled = true;
 				this._recolher.mouseEnabled = true;
@@ -550,7 +569,7 @@ package telas
 		
 		private function termineiTween(qual:String):void
 		{
-			trace ('termnei o tween', qual);
+			trace('termnei o tween', qual);
 		}
 		
 		private function resize(evento:MouseEvent):void
@@ -567,6 +586,9 @@ package telas
 			this.stage.removeEventListener(MouseEvent.CLICK, escondeBotoes);
 			this._fullscreen.removeEventListener(MouseEvent.CLICK, resize);
 			this.stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipePagina);
+			ObjetoAprendizagem.areaImagem.removeEventListener(MouseEvent.MOUSE_DOWN, AreaStartDrag);
+			this.stage.removeEventListener(MouseEvent.MOUSE_UP, AreaStopDrag);
+			this.stage.removeEventListener(MouseEvent.DOUBLE_CLICK, areaVolta);
 			this.estadoFullscreen = false;
 			this.stage.removeEventListener(TransformGestureEvent.GESTURE_ZOOM, areaImagemZoom);
 			var area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
@@ -695,9 +717,10 @@ package telas
 		
 		private function proximaPaginaVisual(evento:MouseEvent):void
 		{
-			if(evento!=null){
-			evento.preventDefault();
-			evento.stopPropagation();
+			if (evento != null)
+			{
+				evento.preventDefault();
+				evento.stopPropagation();
 			}
 			salvarPagina(paginaAtual);
 			if (Main.projeto.paginas.length > paginaAtual + 1)
@@ -989,9 +1012,10 @@ package telas
 		//
 		private function paginaAnteriorVisual(evento:MouseEvent):void
 		{
-			if(evento!=null){
-			evento.preventDefault();
-			evento.stopPropagation();
+			if (evento != null)
+			{
+				evento.preventDefault();
+				evento.stopPropagation();
 			}
 			trace('volta', paginaAtual);
 			salvarPagina(paginaAtual);
