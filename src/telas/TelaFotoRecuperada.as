@@ -31,6 +31,7 @@ package telas
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.ByteArray;
 	import flash.utils.setTimeout;
+	import flash.utils.clearTimeout;
 	import informacoes.BalaoDados;
 	import informacoes.PaginaDados;
 	import informacoes.ProjetoDados;
@@ -90,7 +91,8 @@ package telas
 		private var _moldura:Imagem;
 		private var _anim:AnimacaoFrames;
 		private var estadoFullscreen:Boolean = false;
-		
+		private var _timeArrasta:int =0;
+		private var _arrasta:Boolean =false;
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
@@ -501,13 +503,19 @@ package telas
 		
 		private function areaVolta(evento:MouseEvent):void
 		{
+		    _arrasta = false;	
+			
 			ObjetoAprendizagem.areaImagem.fitOnArea(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
 		
 		}
 		
 		private function AreaStartDrag(evento:MouseEvent):void
 		{
+			if(_arrasta){
+			
 			ObjetoAprendizagem.areaImagem.startDrag();
+			}
+			
 		}
 		
 		private function AreaStopDrag(evento:MouseEvent):void
@@ -517,6 +525,8 @@ package telas
 		
 		private function areaImagemZoom(evento:TransformGestureEvent):void
 		{
+			_arrasta = true;
+
 			
 			ObjetoAprendizagem.areaImagem.scaleX *= evento.scaleX;
 			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
@@ -526,8 +536,7 @@ package telas
 		{
 			trace('swipe');
 			
-			
-			
+			if(!_arrasta){
 			if (evento.offsetX < 0)
 			{
 				trace(evento.offsetX, 'mais');
@@ -538,7 +547,8 @@ package telas
 				trace(evento.offsetX, 'menos');
 				paginaAnteriorVisual(null);
 			}
-		
+			}
+			
 		}
 		
 		private function escondeBotoes(evento:MouseEvent):void
