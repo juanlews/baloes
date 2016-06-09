@@ -56,6 +56,7 @@ package
 		
 		public function Main() {
 			setTimeout(iniciar, 250);
+			
 		}
 		
 		public function iniciar():void {
@@ -126,7 +127,7 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
-			this._splash = new TelaSplash(new Graficos.Splash as Bitmap, 3);
+			this._splash = new TelaSplash(7);
             this._splash.addEventListener(Event.COMPLETE, onSplash);
             this.stage.addChild(this._splash);
 

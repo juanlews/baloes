@@ -35,6 +35,7 @@ package telas
 	import informacoes.PaginaDados;
 	import informacoes.ProjetoDados;
 	import recursos.Graficos;
+	import flash.utils.clearTimeout;
 	
 	/**
 	 * ...
@@ -90,6 +91,8 @@ package telas
 		private var _moldura:Imagem;
 		private var _anim:AnimacaoFrames;
 		private var estadoFullscreen:Boolean = false;
+		private var _zoomFullscreen:Boolean = false;
+		private var _timeoutDrag:int = -1;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -460,6 +463,7 @@ package telas
 		{
 			
 			this.estadoFullscreen = true;
+			this._zoomFullscreen = false;
 			this.removeChild(_fullscreen);
 			this._fullscreen.dispose;
 			this.removeEventListener(MouseEvent.CLICK, fullscreen);
@@ -488,12 +492,13 @@ package telas
 			{
 				
 				this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
-				
+				this._imagem[k].mouseEnabled = false;
 			}
 			for (var i:int = 0; i < _balao.length; i++)
 			{
 				
 				this._balao[i].removeEventListener(MouseEvent.CLICK, cliqueArrasta);
+				this._balao[i].mouseEnabled = false;
 				
 			}
 		
@@ -502,16 +507,30 @@ package telas
 		private function areaVolta(evento:MouseEvent):void
 		{
 			ObjetoAprendizagem.areaImagem.fitOnArea(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
+			this._zoomFullscreen = false;
 		
 		}
 		
 		private function AreaStartDrag(evento:MouseEvent):void
 		{
+			if (this._timeoutDrag >= 0) {
+				clearTimeout(this._timeoutDrag);
+				this._timeoutDrag = -1;
+			}
+			if (this._zoomFullscreen) {
+				this._timeoutDrag = setTimeout(comecaDrag, 75);
+			}
+		}
+		
+		private function comecaDrag():void
+		{
 			ObjetoAprendizagem.areaImagem.startDrag();
+			this._timeoutDrag = -1;
 		}
 		
 		private function AreaStopDrag(evento:MouseEvent):void
 		{
+			this._timeoutDrag = -1;
 			ObjetoAprendizagem.areaImagem.stopDrag();
 		}
 		
@@ -520,6 +539,7 @@ package telas
 			
 			ObjetoAprendizagem.areaImagem.scaleX *= evento.scaleX;
 			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
+			this._zoomFullscreen = true;
 		}
 		
 		private function swipePagina(evento:TransformGestureEvent):void
@@ -527,16 +547,23 @@ package telas
 			trace('swipe');
 			
 			
-			
-			if (evento.offsetX < 0)
-			{
-				trace(evento.offsetX, 'mais');
-				proximaPaginaVisual(null);
-			}
-			if (evento.offsetX > 0)
-			{
-				trace(evento.offsetX, 'menos');
-				paginaAnteriorVisual(null);
+			if (!this._zoomFullscreen) {
+				
+				if (this._timeoutDrag >= 0) {
+					clearTimeout(this._timeoutDrag);
+					this._timeoutDrag = -1;
+				}
+				
+				if (evento.offsetX < 0)
+				{
+					trace(evento.offsetX, 'mais');
+					proximaPaginaVisual(null);
+				}
+				if (evento.offsetX > 0)
+				{
+					trace(evento.offsetX, 'menos');
+					paginaAnteriorVisual(null);
+				}
 			}
 		
 		}
@@ -577,6 +604,7 @@ package telas
 			
 			this.escondendo(null);
 			
+			this._zoomFullscreen = false;
 			this.linhabaixo.visible = true;
 			this.linhacima.visible = true;
 			this._proxPagina.alpha = 1;
@@ -1719,9 +1747,14 @@ package telas
 			var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');
 			if (nomeImagem == '') nomeImagem = Main.projeto.id;
 			nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
+			if (CameraRoll.supportsAddBitmapData) {
+			
+				new CameraRoll().addBitmapData(ObjetoAprendizagem.areaImagem.getBitmapData());
+			}
 			stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
 			stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
 			stream.close();
+			
 			this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
 			this._ultimaAc = 'imagem exportada';
 			this.stage.removeChild(this._anim);

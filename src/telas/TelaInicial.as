@@ -688,6 +688,7 @@ package telas
 		 */
 		private function onEscolhaOpen(evt:Event):void
 		{
+			trace('import')
 			this._telaEscolha.mostrarMensagem('Localizando e importanto um arquivo de projeto.');
 			this._navegaProjeto.browseForOpen('Projetos de Narrativa Visual', [new FileFilter('arquivos de projeto', '*.zip')]);
 		}

@@ -28,34 +28,36 @@ package telas
 		
 		private var _listaProj:EscolhaProjeto;
 		
-		private const IMAGENSPORPAGINA:int = 5;
+		/*private const IMAGENSPORPAGINA:int = 5;
 		private const link:String = 'http://192.168.10.159/';
 		private var _lista:Vector.<BotaoLista>;
-		private var _pagina:int = 0;
+	    private var _pagina:int = 0;
 		private var _nomes:Vector.<String>;
 		
 		private var _total:int = 100;
 		private var atual:int = 0;
+		*/
 		private var _voltar:BotaoIcone;
 		private var _proximo:BotaoIcone;
 		private var _anterior:BotaoIcone;
 		private var _btOk:BotaoIcone;
 		private var _btCancelar:BotaoIcone;
 		private var _btAbrir:BotaoIcone;
-		
+		/*
 		//Conexão com server
 		private var _request:URLRequest;
 		private var _urlLoader:URLLoader;
 		private var envio:URLVariables;
-		private var btscala:Number;
 		
+		*/
+		private var btscala:Number;
 		public function TelaLista(funcMudaTela:Function)
 		{
 			super(funcMudaTela);
 			btscala = 10;
             /* _voltar = new BotaoIcone(Graficos.ImgCancelar);
-		//_proximo = new BotaoIcone(Graficos.ImgSetad);
-		//	_anterior = new BotaoIcone(Graficos.ImgSetae); */
+		    //_proximo = new BotaoIcone(Graficos.ImgSetad);
+		    //_anterior = new BotaoIcone(Graficos.ImgSetae); */
 			_btOk = new BotaoIcone(Graficos.ImgPBOK);
 			_btCancelar = new BotaoIcone(Graficos.ImgCancelar);
 			_btAbrir = new BotaoIcone(Graficos.ImgOpenFile);
