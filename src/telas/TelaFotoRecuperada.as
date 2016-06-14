@@ -88,17 +88,18 @@ package telas
 		private var _telaBiblioteca:TelaBiblioteca;		// tela da biblioteca de molduras
 		private var _telaMensagem:TelaMensagemStage;	// tela de mensagens
 		private var _ultimaAc:String = '';				// última ação (para controle da tela de mensagens)
-		private var _moldura:Imagem;
-		private var _anim:AnimacaoFrames;
+		private var _moldura:Imagem;		
 		private var estadoFullscreen:Boolean = false;
 		private var _timeArrasta:int =0;
 		private var _arrasta:Boolean =false;
+		private var salvaMsg:BotaoIcone;			
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
 			btscala = 10;
 			super(funcMudaTela);
 			
+			salvaMsg = new BotaoIcone(Graficos.salvando);
 			// criar balão
 			this._balao = new Vector.<Balao>;
 			
@@ -1662,21 +1663,13 @@ package telas
 			switch (this._ultimaAc)
 			{
 			case 'salvar imagem': 
-				var classes:Vector.<Class> = new Vector.<Class>();
-				classes.push(Graficos.ImgAnimacao1);
-				classes.push(Graficos.ImgAnimacao2);
-				classes.push(Graficos.ImgAnimacao3);
-				classes.push(Graficos.ImgAnimacao4);
-				classes.push(Graficos.ImgAnimacao5);
-				classes.push(Graficos.ImgAnimacao6);
-				classes.push(Graficos.ImgAnimacao7);
-				classes.push(Graficos.ImgAnimacao8);
-				this._anim = new AnimacaoFrames(classes, 40);
-				this._anim.width = stage.stageWidth / 2;
-				this._anim.scaleY = this._anim.scaleX;
-				this._anim.x = stage.stageWidth / 2 - this._anim.width / 2;
-				this._anim.y = stage.stageHeight / 2 - this._anim.height / 2;
-				stage.addChild(this._anim);
+			
+			this.salvaMsg.width = this.stage.stageWidth;
+			this.salvaMsg.scaleY = this.salvaMsg.scaleX;
+			this.salvaMsg.x = 0;
+			this.salvaMsg.y = this.stage.stageHeight / 2 - this.salvaMsg.height / 2;
+			this.stage.addChild(this.salvaMsg);
+				
 				this.mouseEnabled = false;
 				setTimeout(this.salvarImagem, 250);
 				break;
@@ -1724,17 +1717,20 @@ package telas
 		
 		private function salvarImagem():void
 		{
+			trace('salvaImagem IMG');
+			
+			
 			var stream:FileStream = new FileStream();
 			var regExp:RegExp = /[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
 			var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');
 			if (nomeImagem == '') nomeImagem = Main.projeto.id;
-			nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
+			nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'			
 			stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
 			stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
 			stream.close();
 			this._telaMensagem.defineMensagem('<b>Imagem gravada</b><br />&nbsp;<br />A imagem da página atual foi gravada na pasta <b>' + File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/').nativePath + '</b> de seu dispositivo com o nome <b>' + nomeImagem + '</b>.');
 			this._ultimaAc = 'imagem exportada';
-			this.stage.removeChild(this._anim);
+			this.stage.removeChild(this.salvaMsg);
 			this.mouseEnabled = true;
 			this.stage.addChild(this._telaMensagem);
 		}

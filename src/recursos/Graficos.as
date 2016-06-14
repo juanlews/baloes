@@ -213,6 +213,9 @@ package recursos
 		[Embed(source = "imagens/Splash/Splash.png")]
 		public static var Splash:Class;
 		
+		[Embed(source = "imagens/Salvando.png")]
+		public static var salvando:Class;
+		
 		
 		
 		
