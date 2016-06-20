@@ -148,22 +148,18 @@ package telas
 			case '1': 
 				this._modelobalao = 0;
 				this._balaoP.tipo = this._modelobalao;
-				trace('clicoumodelobalao1');
 				break;
 			case '2': 
 				this._modelobalao = 1;
 				this._balaoP.tipo = this._modelobalao;
-				trace('clicoumodelobalao2');
 				break;
 			case '3': 
 				this._modelobalao = 2;
 				this._balaoP.tipo = this._modelobalao;
-				trace('clicoumodelobalao3');
 				break;
 			case '4':
 				this._modelobalao = 3;
 				this._balaoP.tipo = this._modelobalao;
-				trace('clicoumodelobalao4');
 				break;
 			}
 		
@@ -191,6 +187,7 @@ package telas
 			this._fndprev.y = stage.stageHeight / 40;
 			this.addChild(this._fndprev);
 			
+				
 			// balao padrao
 			this._balaoP.width = this._fndprev.width - this._fndprev.width/5;
 			this._balaoP.scaleY = this._balaoP.scaleX;
@@ -198,7 +195,7 @@ package telas
 			this._balaoP.y = this._fndprev.y + ((this._fndprev.height - this._balaoP.height) / 2);
 			this._balaoP.tipo = this._modelobalao;
 			this.addChild(this._balaoP);
-			trace(this._balaoO.id);
+			
 			
 			//botoes do tipo icone 
 			
@@ -294,7 +291,6 @@ package telas
 			if (!this._ok.hasEventListener(MouseEvent.CLICK))
 			{
 				
-				//trace('criando listener');
 				
 				this._tipo1.addEventListener('marcado', cliqueBTipo);
 				
@@ -367,6 +363,28 @@ package telas
 				
 				this._balaoP.copyProp(_balaoO);
 				
+				
+				switch(this._balaoP.tipo)
+				{
+				case 0:
+					this._modelobalao = this._balaoP.tipo;	
+					this._tipo1.marcado = true;
+					break;
+				case 1:	
+					this._modelobalao = this._balaoP.tipo;	
+					this._tipo2.marcado = true;
+					break;
+				case 2:
+					this._modelobalao = this._balaoP.tipo;	
+					this._tipo3.marcado = true;
+					break;
+				case 3:
+					this._modelobalao = this._balaoP.tipo;
+					this._tipo4.marcado = true;
+					
+					break;
+						
+				}	
 				switch (this._balaoP.botaoCor)
 				{
 				case 1: 
