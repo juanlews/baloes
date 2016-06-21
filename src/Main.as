@@ -126,7 +126,7 @@ package
 			
 			this.addChild(this._telas['inicial']);
 			
-			this._splash = new TelaSplash(7);
+			this._splash = new TelaSplash(7 );
             this._splash.addEventListener(Event.COMPLETE, onSplash);
             this.stage.addChild(this._splash);
 

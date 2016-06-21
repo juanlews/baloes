@@ -88,11 +88,12 @@ package telas
 		private var _telaBiblioteca:TelaBiblioteca;		// tela da biblioteca de molduras
 		private var _telaMensagem:TelaMensagemStage;	// tela de mensagens
 		private var _ultimaAc:String = '';				// última ação (para controle da tela de mensagens)
-		private var _moldura:Imagem;		
+		private var _moldura:Imagem;
 		private var estadoFullscreen:Boolean = false;
-		private var _timeArrasta:int =0;
-		private var _arrasta:Boolean =false;
-		private var salvaMsg:BotaoIcone;			
+		private var _timeArrasta:int = 0;
+		private var _arrasta:Boolean = false;
+		private var salvaMsg:BotaoIcone;
+		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
 		{
@@ -504,7 +505,7 @@ package telas
 		
 		private function areaVolta(evento:MouseEvent):void
 		{
-		    _arrasta = false;	
+			_arrasta = false;
 			
 			ObjetoAprendizagem.areaImagem.fitOnArea(new Rectangle(0, 0, stage.stageWidth, stage.stageHeight));
 		
@@ -512,11 +513,12 @@ package telas
 		
 		private function AreaStartDrag(evento:MouseEvent):void
 		{
-			if(_arrasta){
-			
-			ObjetoAprendizagem.areaImagem.startDrag();
+			if (_arrasta)
+			{
+				
+				ObjetoAprendizagem.areaImagem.startDrag();
 			}
-			
+		
 		}
 		
 		private function AreaStopDrag(evento:MouseEvent):void
@@ -527,7 +529,6 @@ package telas
 		private function areaImagemZoom(evento:TransformGestureEvent):void
 		{
 			_arrasta = true;
-
 			
 			ObjetoAprendizagem.areaImagem.scaleX *= evento.scaleX;
 			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
@@ -537,19 +538,20 @@ package telas
 		{
 			trace('swipe');
 			
-			if(!_arrasta){
-			if (evento.offsetX < 0)
+			if (!_arrasta)
 			{
-				trace(evento.offsetX, 'mais');
-				proximaPaginaVisual(null);
+				if (evento.offsetX < 0)
+				{
+					trace(evento.offsetX, 'mais');
+					proximaPaginaVisual(null);
+				}
+				if (evento.offsetX > 0)
+				{
+					trace(evento.offsetX, 'menos');
+					paginaAnteriorVisual(null);
+				}
 			}
-			if (evento.offsetX > 0)
-			{
-				trace(evento.offsetX, 'menos');
-				paginaAnteriorVisual(null);
-			}
-			}
-			
+		
 		}
 		
 		private function escondeBotoes(evento:MouseEvent):void
@@ -1662,13 +1664,13 @@ package telas
 			var acOK:Boolean = false;
 			switch (this._ultimaAc)
 			{
-			case 'salvar imagem': 
-			
-			this.salvaMsg.width = this.stage.stageWidth;
-			this.salvaMsg.scaleY = this.salvaMsg.scaleX;
-			this.salvaMsg.x = 0;
-			this.salvaMsg.y = this.stage.stageHeight / 2 - this.salvaMsg.height / 2;
-			this.stage.addChild(this.salvaMsg);
+			case 'salvar imagem':
+				
+				this.salvaMsg.width = this.stage.stageWidth;
+				this.salvaMsg.scaleY = this.salvaMsg.scaleX;
+				this.salvaMsg.x = 0;
+				this.salvaMsg.y = this.stage.stageHeight / 2 - this.salvaMsg.height / 2;
+				this.stage.addChild(this.salvaMsg);
 				
 				this.mouseEnabled = false;
 				setTimeout(this.salvarImagem, 250);
@@ -1719,12 +1721,19 @@ package telas
 		{
 			trace('salvaImagem IMG');
 			
-			
 			var stream:FileStream = new FileStream();
 			var regExp:RegExp = /[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;
 			var nomeImagem:String = Main.projeto.titulo.replace(regExp, '');
 			if (nomeImagem == '') nomeImagem = Main.projeto.id;
-			nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'			
+			if (paginaAtual + 1 < 10)
+			{
+				nomeImagem = nomeImagem + ' - pg0' + (this.paginaAtual + 1) + '.png'
+			}
+			else
+			{
+				nomeImagem = nomeImagem + ' - pg' + (this.paginaAtual + 1) + '.png'
+			}
+			
 			stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/imagens/' + nomeImagem), FileMode.WRITE);
 			stream.writeBytes(ObjetoAprendizagem.areaImagem.getPicture('png'));
 			stream.close();
