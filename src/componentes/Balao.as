@@ -52,7 +52,7 @@ package componentes
 			
 			this._texto = new TextField();
 			
-			this._texto.maxChars = 50;
+			this._texto.maxChars = 70;
 			this._texto.multiline = true;
 			this._texto.embedFonts = true;
 			this._texto.wordWrap = true;
@@ -115,13 +115,13 @@ package componentes
 					this._texto.x = 370;
 					break;
 				case 1: 
-					this._texto.x = 300;
+					this._texto.x = 320;
 					break;
 				case 2: 
-					this._texto.x = 200;
+					this._texto.x = 300;
 					break;
 				case 3:
-					this._texto.x = 300;
+					this._texto.x = 310;
 				}
 			}
 			else
@@ -135,7 +135,7 @@ package componentes
 					this._texto.x = 300;
 					break;
 				case 2: 
-					this._texto.x = 200;
+					this._texto.x = 300;
 					break;
 				case 3:
 					this._texto.x = 300;
@@ -150,10 +150,10 @@ package componentes
 					this._texto.y = 350;
 					break;
 				case 1: 
-					this._texto.y = 190;
+					this._texto.y =210;
 					break;
 				case 2: 
-					this._texto.y = 100;
+					this._texto.y = 110;
 					break;
 				case 3:
 					this._texto.y = 300;
@@ -167,7 +167,7 @@ package componentes
 					this._texto.y = 250;
 					break;
 				case 1: 
-					this._texto.y = 190;
+					this._texto.y = 215;
 					break;
 				case 2: 
 					this._texto.y = 400;

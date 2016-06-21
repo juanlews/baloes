@@ -333,7 +333,7 @@ package telas
 		//trace('excluir balão' + retorno.balaoExclui);
 			
 		}
-		
+		 
 		public function fliphclick(event:MouseEvent):void
 		{
 			this._balaoP.flipH();
