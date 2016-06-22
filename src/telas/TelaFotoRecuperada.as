@@ -81,7 +81,7 @@ package telas
 		private var editavel:Boolean = false;
 		
 		private var _btExcluiPagina:BotaoIcone;
-		
+		private var _btInfo:BotaoIcone;
 		private var _btBiblioteca:BotaoIcone;			// botão para abrir a biblioteca de molduras
 		private var _btCompartilhar:BotaoIcone;			// botão para compartilhar o projeto atual
 		private var _btExportarImg:BotaoIcone;			// botão para exportar projeto como imagens
@@ -107,7 +107,7 @@ package telas
 			// criar botões
 			this._addBalao = new BotaoIcone(Graficos.ImgAddBalao);
 			this._camera = new BotaoIcone(Graficos.ImgCamera);
-			
+			this._btInfo = new BotaoIcone(Graficos.ImgBtInfo);
 			this._fullscreen = new BotaoIcone(Graficos.ImgAmpliar);
 			this._recolher = new BotaoIcone(Graficos.ImgRecolher);
 			this._salvar = new BotaoIcone(Graficos.ImgPBOK);
@@ -236,6 +236,10 @@ package telas
 				this._btExportarImg.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 3;
 				this._btExportarImg.y = this._cancelar.y;
 				
+				this._btInfo.height = this._btExportarImg.height;
+				this._btInfo.scaleX = this._btInfo.scaleY;
+				this._btInfo.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 5;
+				this._btInfo.y = this._cancelar.y;
 				//
 				
 				//imagem recuperada
@@ -298,6 +302,7 @@ package telas
 					this.addChild(this._fullscreen);
 					this.addChild(this._btCompartilhar);
 					this.addChild(this._btExportarImg);
+					this.addChild(this._btInfo);
 					this.removeEventListener(MouseEvent.CLICK, resize);
 					this._salvar.addEventListener(MouseEvent.CLICK, cliqueSalvar);
 					this._cancelar.addEventListener(MouseEvent.CLICK, cliqueCancelar);
@@ -487,7 +492,7 @@ package telas
 			this.stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, areaImagemZoom);
 			this.stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipePagina);
 			this.stage.addEventListener(MouseEvent.CLICK, escondeBotoes);
-			
+			this.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseZoom);
 			for (var k:int = 0; k < _imagem.length; k++)
 			{
 				
@@ -501,6 +506,23 @@ package telas
 				
 			}
 		
+		}
+		
+		private function mouseZoom(evento:MouseEvent):void
+		{
+			
+			
+			trace('zoom', evento.delta / 15);
+			_arrasta = true;
+			if ((ObjetoAprendizagem.areaImagem.scaleX + evento.delta / 100) >= 0.1)
+			{
+				ObjetoAprendizagem.areaImagem.scaleX += evento.delta / 100;
+				ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
+			}
+			else
+			{
+				ObjetoAprendizagem.areaImagem.scaleX = ObjetoAprendizagem.areaImagem.scaleY;
+			}
 		}
 		
 		private function areaVolta(evento:MouseEvent):void
@@ -589,7 +611,7 @@ package telas
 		{
 			
 			this.escondendo(null);
-			
+			this._arrasta = false;
 			this.linhabaixo.visible = true;
 			this.linhacima.visible = true;
 			this._proxPagina.alpha = 1;
@@ -600,6 +622,7 @@ package telas
 			this._fullscreen.removeEventListener(MouseEvent.CLICK, resize);
 			this.stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipePagina);
 			ObjetoAprendizagem.areaImagem.removeEventListener(MouseEvent.MOUSE_DOWN, AreaStartDrag);
+			this.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseZoom);
 			this.stage.removeEventListener(MouseEvent.MOUSE_UP, AreaStopDrag);
 			this.stage.removeEventListener(MouseEvent.DOUBLE_CLICK, areaVolta);
 			this.estadoFullscreen = false;
@@ -608,6 +631,7 @@ package telas
 			ObjetoAprendizagem.areaImagem.fitOnArea(area);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			this.desenho();
+		
 		}
 		
 		private function excluiPagina(evento:MouseEvent):void
@@ -730,6 +754,7 @@ package telas
 		
 		private function proximaPaginaVisual(evento:MouseEvent):void
 		{
+			
 			if (evento != null)
 			{
 				evento.preventDefault();
@@ -738,6 +763,7 @@ package telas
 			salvarPagina(paginaAtual);
 			if (Main.projeto.paginas.length > paginaAtual + 1)
 			{
+				this.areaVolta(null);
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
 					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
@@ -1035,6 +1061,7 @@ package telas
 			
 			if (paginaAtual - 1 >= 0)
 			{
+				this.areaVolta(null);
 				for (var k:int = 0; k < _imagem.length; k++)
 				{
 					this._imagem[k].removeEventListener(MouseEvent.CLICK, cliqueArrastaImg);
@@ -1541,6 +1568,7 @@ package telas
 			this.removeChild(this._btCompartilhar);
 			this.removeChild(this._btExcluiPagina);
 			this.removeChild(this._btExportarImg);
+			this.removeChild(this._btInfo);
 		
 			// remove child em todos os outros botoes
 		}
