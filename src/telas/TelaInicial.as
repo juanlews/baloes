@@ -143,7 +143,9 @@ package telas
 			this._navegaProjeto.addEventListener(Event.SELECT, onNavegadorPSelect);
 			this._navegaProjeto.addEventListener(Event.CANCEL, onNavegadorPFim);
 			this._navegaProjeto.addEventListener(IOErrorEvent.IO_ERROR, onNavegadorPFim);
+		
 			
+			// navegação de importação em aparelhos móveis
 			this._navegaMobile = new FileBrowser(Main.graficos.getSPGR('BTOk'), Main.graficos.getSPGR('BTCancel'), 0xfbe0cc);
 			this._navegaMobile.addEventListener(Event.COMPLETE, onNavegadorMobSelect);
 			this._navegaMobile.addEventListener(Event.CANCEL, onNavegadorMobFim);
