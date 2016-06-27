@@ -1,5 +1,6 @@
 package telas
 {
+	import art.ciclope.io.FileBrowser;
 	import colabora.display.EscolhaProjeto;
 	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
@@ -77,6 +78,8 @@ package telas
 		private var definido:Boolean = false;
 		private var redesenha:Boolean;
 		
+		private var _navegaMobile:FileBrowser;
+		
 		private var salvo:Boolean = false;
 		private var msg:TelaMensagemStage;
 		public function TelaInicial(funcMudaTela:Function)
@@ -140,6 +143,10 @@ package telas
 			this._navegaProjeto.addEventListener(Event.SELECT, onNavegadorPSelect);
 			this._navegaProjeto.addEventListener(Event.CANCEL, onNavegadorPFim);
 			this._navegaProjeto.addEventListener(IOErrorEvent.IO_ERROR, onNavegadorPFim);
+			
+			this._navegaMobile = new FileBrowser(Main.graficos.getSPGR('BTOk'), Main.graficos.getSPGR('BTCancel'), 0xfbe0cc);
+			this._navegaMobile.addEventListener(Event.COMPLETE, onNavegadorMobSelect);
+			this._navegaMobile.addEventListener(Event.CANCEL, onNavegadorMobFim);
 			
 			// importação de projetos
 			Main.projeto.addEventListener(Event.CANCEL, onImportCancel);
@@ -608,7 +615,17 @@ package telas
 				this._telaEscolha.mostrarAbrir();
 			}
 		}
-		
+		private function onEscolhaOpen(evt:Event):void
+		{
+			if (Main.desktop) {
+				this._telaEscolha.mostrarMensagem('Localizando e importanto um arquivo de projeto.');
+				this._navegaProjeto.browseForOpen('Projetos de Infográfico', [new FileFilter('arquivos de projeto', '*.nrv')]);
+			} else {
+				this._telaEscolha.parent.removeChild(this._telaEscolha);
+				this._navegaMobile.listar('nrv', 'Escolha um projeto para importar');
+				this.stage.addChild(this._navegaMobile);
+			}
+		}
 		/**
 		 * O botão "receber projeto" foi clicado.
 		 */
@@ -686,19 +703,15 @@ package telas
 		/**
 		 * O botão abrir foi escolhido na tela de listagem de projetos.
 		 */
-		private function onEscolhaOpen(evt:Event):void
-		{
-			this._telaEscolha.mostrarMensagem('Localizando e importanto um arquivo de projeto.');
-			this._navegaProjeto.browseForOpen('Projetos de Narrativa Visual', [new FileFilter('arquivos de projeto', '*.zip')]);
-		}
-		
+
+		//
 		/**
 		 * Navegação por arquivo terminada sem nenhuma escolha.
 		 */
 		private function onNavegadorPFim(evt:Event):void
 		{
 			// refazendo a listagem
-			this._telaEscolha.listar();
+			this._telaEscolha.listar('Defina o projeto a exportar ou escolha um arquivo para importar');
 		}
 		
 		/**
@@ -707,18 +720,44 @@ package telas
 		private function onNavegadorPSelect(evt:Event):void
 		{
 			// importando
-			if (Main.projeto.importar(this._navegaProjeto))
-			{
+			if (Main.projeto.importar(this._navegaProjeto)) {
 				// aguardar importação
 				this.stage.removeChild(this._telaEscolha);
-			}
-			else
-			{
+			} else {
 				// somentar listar novamente
-				this._telaEscolha.listar();
+				this._telaEscolha.listar('Erro ao importar o projeto: defina o projeto a exportar ou escolha um arquivo para importar');
 			}
 		}
 		
+		/**
+		 * Navegação por arquivo móvel terminada sem nenhuma escolha.
+		 */
+		private function onNavegadorMobFim(evt:Event):void
+		{
+			// refazendo a listagem
+			this._navegaMobile.parent.removeChild(this._navegaMobile);
+			this._telaEscolha.listar('Defina o projeto a exportar ou escolha um arquivo para importar');
+			this.stage.addChild(this._telaEscolha);
+		}
+		
+		/**
+		 * Recebendo um arquivo móvel de projeto selecionado.
+		 */
+		private function onNavegadorMobSelect(evt:Event):void
+		{
+			// importando
+			this._navegaMobile.parent.removeChild(this._navegaMobile);
+			var arq:File = new File(this._navegaMobile.escolhido.arquivo);
+			if (Main.projeto.importar(arq)) {
+				// aguardar importação
+			} else {
+				// somente listar novamente
+				this._telaEscolha.listar('Erro ao importar o projeto: defina o projeto a exportar ou escolha um arquivo para importar');
+				this.stage.addChild(this._telaEscolha);
+			}
+		}
+			
+	
 		/**
 		 * Sucesso na importação de um projeto.
 		 */

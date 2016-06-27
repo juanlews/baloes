@@ -54,8 +54,8 @@ package telas
 			super(funcMudaTela);
 			btscala = 10;
             /* _voltar = new BotaoIcone(Graficos.ImgCancelar);
-		//_proximo = new BotaoIcone(Graficos.ImgSetad);
-		//	_anterior = new BotaoIcone(Graficos.ImgSetae); */
+		    //_proximo = new BotaoIcone(Graficos.ImgSetad);
+		    //	_anterior = new BotaoIcone(Graficos.ImgSetae); */
 			_btOk = new BotaoIcone(Graficos.ImgPBOK);
 			_btCancelar = new BotaoIcone(Graficos.ImgCancelar);
 			_btAbrir = new BotaoIcone(Graficos.ImgOpenFile);
