@@ -487,6 +487,9 @@ package telas
 			ObjetoAprendizagem.areaImagem.addEventListener(MouseEvent.MOUSE_DOWN, AreaStartDrag);
 			this.stage.addEventListener(MouseEvent.MOUSE_UP, AreaStopDrag);
 			this.stage.addEventListener(MouseEvent.DOUBLE_CLICK, areaVolta);
+			
+			this.stage.doubleClickEnabled = true;
+			
 			ObjetoAprendizagem.areaImagem.scaleY = ObjetoAprendizagem.areaImagem.scaleX;
 			Multitouch.inputMode = MultitouchInputMode.GESTURE;
 			this.stage.addEventListener(TransformGestureEvent.GESTURE_ZOOM, areaImagemZoom);

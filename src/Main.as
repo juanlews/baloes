@@ -85,7 +85,7 @@ package
 														
 			
 			// criando área de imagem
-			ObjetoAprendizagem.areaImagem = new AreaImagens(1080, 1920, 0x808080);
+			ObjetoAprendizagem.areaImagem = new AreaImagens(1440, 2560, 0x808080);
 			
 			// preparando listagem da biblioteca
 			var biblio:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/biblioteca/');
