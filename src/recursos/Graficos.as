@@ -225,7 +225,7 @@ package recursos
 		}
 	
 		
-			public function getGR(nome:String):Bitmap
+			/*; public function getGR(nome:String):Bitmap
 		{
 			var bmp:Bitmap;
 			switch (nome) {
@@ -315,7 +315,7 @@ package recursos
 				case 'HELP04': bmp = new HELP04() as Bitmap; break;
 				case 'BTHelp2': bmp = new GRBTHelp2() as Bitmap; break;
 				case 'BTHelp3': bmp = new GRBTHelp3() as Bitmap; break;
-				*/
+				*
 				case 'Splash': bmp = new Colabora() as Bitmap; break;
 				case 'Splash2': bmp = new AIC() as Bitmap; break;
 				case 'Splash3': bmp = new Plug() as Bitmap; break;
@@ -324,13 +324,13 @@ package recursos
 			
 			if (bmp != null) bmp.smoothing = true;
 			return (bmp);
-		}
+		}*/
 		
 		/**
 		 * Recupera um sprite com o gráfico indicado.
 		 * @param	nome	o nome do gráfico a ser usado
 		 * @return	objeto Sprite com o gráfico ou null caso o nome não seja encontrado
-		 */
+		 *
 		public function getSPGR(nome:String):Sprite
 		{
 			var retorno:Sprite;
@@ -342,7 +342,7 @@ package recursos
 				retorno.buttonMode = true;
 			}
 			return (retorno);
-		}
+		}*/
 	}
 
 }
