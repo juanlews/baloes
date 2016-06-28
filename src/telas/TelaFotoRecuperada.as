@@ -1,7 +1,8 @@
-
 package telas
 {
 	import caurina.transitions.Tweener;
+	import colabora.display.TelaAjuda;
+	import colabora.display.TelaAjuda;
 	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.AnimacaoFrames;
@@ -12,6 +13,7 @@ package telas
 	import flash.display.BitmapData;
 	import flash.display.JPEGEncoderOptions;
 	import flash.display.Loader;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MediaEvent;
@@ -93,6 +95,7 @@ package telas
 		private var _timeArrasta:int = 0;
 		private var _arrasta:Boolean = false;
 		private var salvaMsg:BotaoIcone;
+		private var _telaAjuda:TelaAjuda;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -141,6 +144,16 @@ package telas
 			this._telaMensagem = new TelaMensagemStage(720, 1280, new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), 0x666666);
 			this._telaMensagem.addEventListener(Event.COMPLETE, onMensagemComplete);
 			this._telaMensagem.addEventListener(Event.CANCEL, onMensagemCancel);
+			
+			// tela de ajuda
+			var pgAjuda:Vector.<Bitmap> = new Vector.<Bitmap>();
+			for (var iaj:int = 0; iaj <= 16; iaj++) {
+				pgAjuda.push(Graficos.imgAjuda(iaj));
+			}
+			this._telaAjuda = new TelaAjuda(pgAjuda, new BotaoIcone(Graficos.ImgSetaDir), new BotaoIcone(Graficos.ImgSetaEsq), new BotaoIcone(Graficos.ImgCancelar));
+			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp1), 0);
+			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp2), 12);
+			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp3), 16);
 		
 		}
 		
@@ -338,6 +351,7 @@ package telas
 					this._btBiblioteca.addEventListener(MouseEvent.CLICK, adicionaBiblioteca);
 					this._btCompartilhar.addEventListener(MouseEvent.CLICK, compartilhaProjeto);
 					this._btExportarImg.addEventListener(MouseEvent.CLICK, exportaImagem);
+					this._btInfo.addEventListener(MouseEvent.CLICK, mostraHelp);
 					
 					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 					
@@ -1794,6 +1808,11 @@ package telas
 			this.stage.removeChild(this.salvaMsg);
 			this.mouseEnabled = true;
 			this.stage.addChild(this._telaMensagem);
+		}
+		
+		private function mostraHelp(evt:MouseEvent):void
+		{
+			this.stage.addChild(this._telaAjuda);
 		}
 	
 	}
