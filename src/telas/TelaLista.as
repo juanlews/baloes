@@ -117,11 +117,11 @@ package telas
 		//
 		private function onEscolhaOK(evt:Event):void
 		{  
-			trace('escolhidoOk ');
+			//trace('escolhidoOk ');
 			var dados:Object = new Object;
 			if(this._listaProj.escolhido != null){
-			trace('escolhido é', this._listaProj.escolhido.id);
-			trace ('projeto selecionado', JSON.stringify(this._listaProj.escolhido));
+			//trace('escolhido é', this._listaProj.escolhido.id);
+			//trace ('projeto selecionado', JSON.stringify(this._listaProj.escolhido));
 			
 			dados.id = String(this._listaProj.escolhido.id);
 			dados.tela = 'carregar'; 
@@ -195,7 +195,7 @@ package telas
 		private function erroIO(evento:IOErrorEvent):void
 		{
 			
-			trace(evento.text);
+			//trace(evento.text);
 		}
 		
 		/*	private function recebeu(evento:Event):void

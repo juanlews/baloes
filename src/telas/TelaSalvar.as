@@ -164,7 +164,7 @@ package telas
 		
 		private function imagemCarregada(evento:Event):void
 		{
-			trace('carregou');
+			//trace('carregou');
 			addChild(_imagem);
 			desenho();
 		
@@ -172,7 +172,7 @@ package telas
 		
 		private function imagemErro(evento:IOError):void
 		{
-			trace('Erro');
+			//trace('Erro');
 		}
 		
 		override public function recebeDados(dados:Object):void
@@ -180,7 +180,7 @@ package telas
 			this._caixaTitulo.text = Main.projeto.titulo;
 			this._caixaTags.text = Main.projeto.tags.join(' #');
 			
-			trace('Titulo:', '+' + this._caixaTitulo.text + '+');
+			//trace('Titulo:', '+' + this._caixaTitulo.text + '+');
 			if (_caixaTitulo.text == '')
 			{
 				this._caixaTitulo.text = 'Digite o título';
@@ -224,12 +224,12 @@ package telas
 			if (((stage.stageWidth / 1.5) / _caixaTitulo.oWidth) < ((stage.stageHeight / 10) / _caixaTitulo.oHeight)) {
 				txtscale = (stage.stageWidth / 1.5) / _caixaTitulo.oWidth;
 				
-				trace ('txtscale w', txtscale, _caixaTitulo.oWidth, (stage.stageWidth / 1.5));
+				//trace ('txtscale w', txtscale, _caixaTitulo.oWidth, (stage.stageWidth / 1.5));
 				
 			} else {
 				txtscale = (stage.stageHeight / 10) / _caixaTitulo.oHeight;
 				
-				trace ('txtscale h', txtscale, _caixaTitulo.oHeight, (stage.stageHeight / 10));
+				//trace ('txtscale h', txtscale, _caixaTitulo.oHeight, (stage.stageHeight / 10));
 			}
 			
 			
@@ -240,7 +240,7 @@ package telas
 			
 			_caixaTitulo.scaleX = _caixaTitulo.scaleY = txtscale;
 			
-			trace ('tamanho da caixa', _caixaTitulo.width, _caixaTitulo.height);
+			//trace ('tamanho da caixa', _caixaTitulo.width, _caixaTitulo.height);
 			
 			_caixaTitulo.x = stage.stageWidth / 2 - _caixaTitulo.width / 2;
 			_caixaTitulo.y = stage.stageHeight / 30 + _caixaTitulo.height;
@@ -316,7 +316,7 @@ package telas
 		
 		private function tagFocoIn(evento:FocusEvent):void
 		{
-			trace('foco', _caixaTags.text)
+			//trace('foco', _caixaTags.text)
 			if (_caixaTags.text == 'Digite suas Tags')
 			{
 				this._caixaTags.alpha = 1;
@@ -330,7 +330,7 @@ package telas
 		
 		private function tagFocoOut(evento:FocusEvent):void
 		{
-			trace('foco', _caixaTags.text)
+			//trace('foco', _caixaTags.text)
 			if (_caixaTags.text == '')
 			{
 				_caixaTags.alpha = 0.5
@@ -375,7 +375,7 @@ package telas
 			Main.projeto.titulo = this._caixaTitulo.text;
 			Main.projeto.tags = this._caixaTags.text.split('#');
 			Main.projeto.editavel = editavel;
-			trace(Main.projeto.titulo, Main.projeto.tags);
+			//trace(Main.projeto.titulo, Main.projeto.tags);
 			
 			if (Main.projeto.salvarDados())
 			{
@@ -383,7 +383,7 @@ package telas
 				var dados:Object = new Object;
 				
 				dados.id = Main.projeto.id;
-				trace('projeto salvo');
+				//trace('projeto salvo');
 				
 				dados.qualTela = 'salvar'
 				
@@ -423,7 +423,7 @@ package telas
 		
 		private function erroNoEnvio(evento:IOErrorEvent):void
 		{
-			trace('erro no envio');
+			//trace('erro no envio');
 		}
 		
 		override public function botaoBack():void

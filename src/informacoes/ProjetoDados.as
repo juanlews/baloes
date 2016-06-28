@@ -276,10 +276,10 @@ package informacoes
 							}
 						}
 						// finalizando o arquivo zip
-						stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados/' + json.titulo + ' - ' + ObjetoAprendizagem.codigo + '.zip'), FileMode.WRITE);
+						stream.open(File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/exportados/' + json.titulo + '.nrv'), FileMode.WRITE);
 						zip.serialize(stream);
 						stream.close();
-						return (json.titulo + ' - ' + ObjetoAprendizagem.codigo + '.zip');
+						return (json.titulo + '.nrv');
 					}
 				}
 			}

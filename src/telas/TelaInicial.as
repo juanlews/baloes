@@ -146,7 +146,7 @@ package telas
 		
 			
 			// navegação de importação em aparelhos móveis
-			this._navegaMobile = new FileBrowser(Main.graficos.getSPGR('BTOk'), Main.graficos.getSPGR('BTCancel'), 0xfbe0cc);
+			this._navegaMobile = new FileBrowser(new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), 0xfbe0cc);
 			this._navegaMobile.addEventListener(Event.COMPLETE, onNavegadorMobSelect);
 			this._navegaMobile.addEventListener(Event.CANCEL, onNavegadorMobFim);
 			
@@ -262,12 +262,12 @@ package telas
 			
 			if (this._imagem[0].loader.width > this._imagem[0].loader.height)
 			{
-				trace("largura", this._imagem[0].width = ObjetoAprendizagem.areaImagem.width / ObjetoAprendizagem.areaImagem.scaleX);
+				//trace("largura", this._imagem[0].width = ObjetoAprendizagem.areaImagem.width / ObjetoAprendizagem.areaImagem.scaleX);
 				this._imagem[0].scaleY = this._imagem[0].scaleX;
 			}
 			else
 			{
-				trace('altura');
+				//trace('altura');
 				this._imagem[0].height = ObjetoAprendizagem.areaImagem.height;
 				this._imagem[0].scaleX = this._imagem[0].scaleY;
 			}
@@ -307,7 +307,7 @@ package telas
 				{
 					if (dados.qualTela == 'salvar')
 					{
-						trace(dados.qualTela)
+						//trace(dados.qualTela)
 						salvo = true;
 						
 					}
@@ -330,13 +330,13 @@ package telas
 				}
 				if (dados.qualTela != null)
 				{
-					trace('dados recebidos');
+					//trace('dados recebidos');
 				}
 				else
 				{
 					if (dados.imagem != null)
 					{
-						trace('tem Imagem');
+						//trace('tem Imagem');
 						this._imagem = dados.imagem as Vector.<Imagem>;
 						
 					}
@@ -351,7 +351,7 @@ package telas
 					}
 					if (dados.balao != null)
 					{
-						trace('tem Balao');
+						//trace('tem Balao');
 						
 						this._balao = dados.balao as Vector.<Balao>;
 					}
@@ -362,7 +362,7 @@ package telas
 					}
 					while (_imagem.length > 0)
 					{
-						trace('dispose lista recebe dados');
+						//trace('dispose lista recebe dados');
 						_imagem.shift().dispose();
 					}
 					
@@ -477,13 +477,13 @@ package telas
 				var area:Rectangle = new Rectangle(0, (0 + linhacima.height), stage.stageWidth, (stage.stageHeight - linhacima.height - linhabaixo.height));
 				ObjetoAprendizagem.areaImagem.fitOnArea(area);
 				
-				trace('fiton', definido);
+				//trace('fiton', definido);
 			}
 		
 		}
 		private function fechaMsg(evento:Event):void {
 			msg.removeEventListener(Event.COMPLETE, fechaMsg);
-			trace('fecha');
+			//trace('fecha');
 			removeChild(msg);
 			salvo = false;
 			desenho();
@@ -497,11 +497,11 @@ package telas
 		
 		public function carregaProjeto(id:String):void
 		{
-			trace('carrega P');
+			//trace('carrega P');
 			
 			if (Main.projeto.carregaProjeto(id))
 			{
-				trace(_id = id);
+				//trace(_id = id);
 				
 				paginaAtual = 0;
 				editavel = false;
@@ -510,7 +510,7 @@ package telas
 				
 				while (_imagem.length > 0)
 				{
-					trace('dispose lista carrega projeto');
+					//trace('dispose lista carrega projeto');
 					_imagem.shift().dispose();
 				}
 				
@@ -522,7 +522,7 @@ package telas
 				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++)
 				{
 					
-					trace('acrescentando imagem', i);
+					//trace('acrescentando imagem', i);
 					
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i], paginaAtual);
@@ -532,7 +532,7 @@ package telas
 				for (i = 0; i < Main.projeto.paginas[0].baloes.length; i++)
 				{
 					
-					trace('acrescentando balao', i);
+					//trace('acrescentando balao', i);
 					
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
@@ -541,7 +541,7 @@ package telas
 					ObjetoAprendizagem.areaImagem.addChild(_balao[i]);
 					
 				}
-				trace('carregou');
+				//trace('carregou');
 				editavel = Main.projeto.editavel;
 				var dados:Object = new Object();
 				
@@ -549,7 +549,7 @@ package telas
 				dados.balao = this._balao;
 				dados.paginaAtual = 0;
 				dados.editavel = this.editavel;
-				trace('dados ok');
+				//trace('dados ok');
 				mudaTela('fotorecuperada', dados);
 				
 			}
@@ -558,13 +558,13 @@ package telas
 		
 		private function cliqueCarregar(evento:MouseEvent):void
 		{
-			trace('server');
+			//trace('server');
 			this.mudaTela('lista', null);
 		}
 		
 		override public function escondendo(evento:Event):void
 		{
-			trace('escondendo');
+			//trace('escondendo');
 			
 			this.removeChild(_camera);
 			//this.removeChild(_carregar);

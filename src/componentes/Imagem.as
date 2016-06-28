@@ -78,7 +78,7 @@ package componentes
 		public function dispose():void
 		{
 			
-			trace("dispose imagem", this._url);
+			//trace("dispose imagem", this._url);
 			
 			this.removeChildren();
 			this.loader.unload();
@@ -97,14 +97,14 @@ package componentes
 			}
 			
 			this.loader = null;
-			trace('final');
+			//trace('final');
 		
 		}
 		
 		public function deleteImg():void
 		{
 			var arquivo:File = Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + _id + '.jpg');
-			trace('imagem excluida:', _id, arquivo.url);
+			//trace('imagem excluida:', _id, arquivo.url);
 			arquivo.deleteFile();
 			dispose();
 		}
@@ -112,7 +112,7 @@ package componentes
 		public function recebeDados(dados:ImagemDados, pagina:int):void
 		{
 			
-			trace('recebe dados', JSON.stringify(dados), pagina);
+			//trace('recebe dados', JSON.stringify(dados), pagina);
 			
 			this._id = dados.id;
 			this.x = dados.x;
@@ -121,7 +121,7 @@ package componentes
 			this.scaleX = dados.scaleX;
 			this.scaleY = dados.scaleY;
 			
-			trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
+			//trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url);
 			
 			this._url = Main.projeto.pasta.resolvePath('imagens/pagina' + pagina + '/' + _id + '.jpg').url;
 			
@@ -160,7 +160,7 @@ package componentes
 		public function redefineId(id:int, nPag:int):void
 		{
 			
-			trace('redefine inicia', this._id, '>', id, nPag);
+			//trace('redefine inicia', this._id, '>', id, nPag);
 			
 			if (id != this._id)
 			{
@@ -168,13 +168,13 @@ package componentes
 				var arquivoAtual:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + _id + '.jpg');
 				var arquivoFinal:File = Main.projeto.pasta.resolvePath('imagens/pagina' + nPag + '/' + id + '.jpg');
 				
-				trace('exsite?', arquivoAtual.exists, arquivoFinal.exists);
+				//trace('exsite?', arquivoAtual.exists, arquivoFinal.exists);
 				
 				arquivoAtual.moveTo(arquivoFinal, true);
 				this._id = id;
 			}
 			
-			trace('redefine fim', id, nPag);
+			//trace('redefine fim', id, nPag);
 		}
 		
 		public function copyAllProp(img:Imagem):void

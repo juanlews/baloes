@@ -124,7 +124,7 @@ package telas
 				this.addChild(this._rodaDireita);
 				this.addChild(this._rodaEsquerda);
 			
-				trace('usa tween');
+				//trace('usa tween');
 				//	linhacima.x = 0;
 				//	Tweener.addTween(linhacima, {x: -linhacima.width, time: 1});
 				

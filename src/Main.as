@@ -47,7 +47,7 @@ package
 		/**
 		 * App funcionando em um computador?
 		 */
-		public static var desktop:Boolean = true;
+		public static var desktop:Boolean = false;
 		
 		public static var graficos:Graficos;
 		
@@ -92,7 +92,8 @@ package
 																		new BotaoIcone(Graficos.GRCompRecebido),
 																		new BotaoIcone(Graficos.GRCompAguarde));
 																		
-														
+			// copiando o projeto de exemplo
+			ObjetoAprendizagem.copiaExemplo('achave');
 			
 			// criando área de imagem
 			ObjetoAprendizagem.areaImagem = new AreaImagens(1440, 2560, 0x808080);
@@ -196,7 +197,7 @@ package
 			
 			this._telas[nome].recebeDados(dados);
 			nomeTela = nome;
-			trace('adicionando tela', nome);
+			//trace('adicionando tela', nome);
 			
 			this.addChild(this._telas[nome]);
 			

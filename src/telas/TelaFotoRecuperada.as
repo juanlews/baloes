@@ -154,7 +154,7 @@ package telas
 				// centralizar imagem	
 			}
 			
-			trace('tamanho recuperada', this.stage.stageWidth, this.stage.stageHeight);
+			//trace('tamanho recuperada', this.stage.stageWidth, this.stage.stageHeight);
 			
 			this._proxPagina.width = stage.stageWidth / btscala;
 			this._proxPagina.scaleY = this._proxPagina.scaleX;
@@ -383,11 +383,11 @@ package telas
 		
 		public function carregaProjeto(id:String):void
 		{
-			trace('carrega P');
+			//trace('carrega P');
 			
 			if (Main.projeto.carregaProjeto(id))
 			{
-				trace(id);
+				//trace(id);
 				
 				paginaAtual = 0;
 				editavel = false;
@@ -398,7 +398,7 @@ package telas
 					
 					while (_imagem.length > 0)
 					{
-						trace('dispose lista carrega projeto');
+						//trace('dispose lista carrega projeto');
 						_imagem.shift().dispose();
 					}
 				}
@@ -412,7 +412,7 @@ package telas
 				for (var i:int = 0; i < Main.projeto.paginas[0].imagens.length; i++)
 				{
 					
-					trace('acrescentando imagem', i);
+					//trace('acrescentando imagem', i);
 					
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[0].imagens[i], paginaAtual);
@@ -422,7 +422,7 @@ package telas
 				for (i = 0; i < Main.projeto.paginas[0].baloes.length; i++)
 				{
 					
-					trace('acrescentando balao', i);
+					//trace('acrescentando balao', i);
 					
 					_balao[i] = new Balao(i);
 					_balao[i].recebeDados(Main.projeto.paginas[0].baloes[i]);
@@ -447,7 +447,7 @@ package telas
 					ObjetoAprendizagem.areaImagem.clearCover();
 					
 				}
-				trace('carregou');
+				//trace('carregou');
 				editavel = Main.projeto.editavel;
 				var dados:Object = new Object();
 				
@@ -457,7 +457,7 @@ package telas
 				dados.editavel = this.editavel;
 				// dados.redesenha = this.redesenha;
 				
-				trace('dados ok');
+				//trace('dados ok');
 					//escondendo(null);
 					//	mudaTela('fotorecuperada', dados);
 				
@@ -515,7 +515,7 @@ package telas
 		{
 			
 			
-			trace('zoom', evento.delta / 15);
+			//trace('zoom', evento.delta / 15);
 			_arrasta = true;
 			if ((ObjetoAprendizagem.areaImagem.scaleX + evento.delta / 100) >= 0.1)
 			{
@@ -561,18 +561,18 @@ package telas
 		
 		private function swipePagina(evento:TransformGestureEvent):void
 		{
-			trace('swipe');
+			//trace('swipe');
 			
 			if (!_arrasta)
 			{
 				if (evento.offsetX < 0)
 				{
-					trace(evento.offsetX, 'mais');
+					//trace(evento.offsetX, 'mais');
 					proximaPaginaVisual(null);
 				}
 				if (evento.offsetX > 0)
 				{
-					trace(evento.offsetX, 'menos');
+					//trace(evento.offsetX, 'menos');
 					paginaAnteriorVisual(null);
 				}
 			}
@@ -581,10 +581,10 @@ package telas
 		
 		private function escondeBotoes(evento:MouseEvent):void
 		{
-			trace('escondeBotoes!');
+			//trace('escondeBotoes!');
 			if (this._recolher.alpha == 1)
 			{
-				trace('escondeBotoes1');
+				//trace('escondeBotoes1');
 				Tweener.addTween(this._recolher, {alpha: 0, time: 0.5, transition: 'linear', onComplete: termineiTween, onCompleteParams: ['recolher']});
 				Tweener.addTween(this._proxPagina, {alpha: 0, time: 0.5, transition: 'linear', onComplete: termineiTween, onCompleteParams: ['proxima']});
 				Tweener.addTween(this._antPagina, {alpha: 0, time: 0.5, transition: 'linear', onComplete: termineiTween, onCompleteParams: ['anterior']});
@@ -595,7 +595,7 @@ package telas
 			
 			if (this._recolher.alpha == 0)
 			{
-				trace('ApareceBotoes1');
+				//trace('ApareceBotoes1');
 				Tweener.addTween(this._recolher, {alpha: 1, time: 0.5, transition: 'linear'});
 				Tweener.addTween(this._proxPagina, {alpha: 1, time: 0.5, transition: 'linear'});
 				Tweener.addTween(this._antPagina, {alpha: 1, time: 0.5, transition: 'linear'});
@@ -607,7 +607,7 @@ package telas
 		
 		private function termineiTween(qual:String):void
 		{
-			trace('termnei o tween', qual);
+			//trace('termnei o tween', qual);
 		}
 		
 		private function resize(evento:MouseEvent):void
@@ -653,7 +653,7 @@ package telas
 			{
 				while (_imagem.length > 0)
 				{
-					trace('dispose exclui pagina');
+					//trace('dispose exclui pagina');
 					_imagem.shift().dispose();
 					
 				}
@@ -674,7 +674,7 @@ package telas
 					paginaAnterior(evento);
 				}
 				
-				trace(Main.projeto.salvarDados());
+				//trace(Main.projeto.salvarDados());
 				Main.projeto.excluiPastaPagina(Main.projeto.paginas.length - 1);
 				Main.projeto.paginas.splice(Main.projeto.paginas.length - 1, 1);
 				salvarPagina(paginaAtual);
@@ -775,7 +775,7 @@ package telas
 				paginaAtual++;
 				while (_imagem.length > 0)
 				{
-					trace('dispose proxima pagina');
+					//trace('dispose proxima pagina');
 					_imagem.shift().dispose();
 				}
 				
@@ -847,7 +847,7 @@ package telas
 				paginaAtual++;
 				while (_imagem.length > 0)
 				{
-					trace('dispose proxima pagina');
+					//trace('dispose proxima pagina');
 					_imagem.shift().dispose();
 				}
 				
@@ -931,7 +931,7 @@ package telas
 		private function paginaAnterior(evento:MouseEvent):void
 		{
 			
-			trace('volta', paginaAtual);
+			//trace('volta', paginaAtual);
 			salvarPagina(paginaAtual);
 			
 			if (paginaAtual - 1 >= 0)
@@ -953,7 +953,7 @@ package telas
 				paginaAtual--;
 				while (_imagem.length > 0)
 				{
-					trace('dispose anterior pagina');
+					//trace('dispose anterior pagina');
 					_imagem.shift().dispose();
 				}
 				
@@ -966,7 +966,7 @@ package telas
 				{
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
-					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					//trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 					if (!_imagem[i].hasEventListener(MouseEvent.CLICK))
 					{
@@ -988,7 +988,7 @@ package telas
 					
 				}
 				
-				trace('tem moldura?', Main.projeto.paginas[paginaAtual].moldura);
+				//trace('tem moldura?', Main.projeto.paginas[paginaAtual].moldura);
 				
 				if (Main.projeto.paginas[paginaAtual].moldura)
 				{
@@ -1059,7 +1059,7 @@ package telas
 				evento.preventDefault();
 				evento.stopPropagation();
 			}
-			trace('volta', paginaAtual);
+			//trace('volta', paginaAtual);
 			salvarPagina(paginaAtual);
 			
 			if (paginaAtual - 1 >= 0)
@@ -1073,7 +1073,7 @@ package telas
 				paginaAtual--;
 				while (_imagem.length > 0)
 				{
-					trace('dispose anterior pagina');
+					//trace('dispose anterior pagina');
 					_imagem.shift().dispose();
 				}
 				
@@ -1086,7 +1086,7 @@ package telas
 				{
 					_imagem[i] = new Imagem(i);
 					_imagem[i].recebeDados(Main.projeto.paginas[paginaAtual].imagens[i], paginaAtual);
-					trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
+					//trace('carregando', Main.projeto.pasta.resolvePath('imagens/pagina' + paginaAtual + '/' + i + '.jpg').url);
 					ObjetoAprendizagem.areaImagem.addChild(_imagem[i]);
 					
 				}
@@ -1104,7 +1104,7 @@ package telas
 					
 				}
 				
-				trace('tem moldura?', Main.projeto.paginas[paginaAtual].moldura);
+				//trace('tem moldura?', Main.projeto.paginas[paginaAtual].moldura);
 				
 				if (Main.projeto.paginas[paginaAtual].moldura)
 				{
@@ -1162,7 +1162,7 @@ package telas
 			}
 			while (_imagem.length > 0)
 			{
-				trace('dispose add pagina');
+				//trace('dispose add pagina');
 				
 				_imagem.shift().dispose();
 			}
@@ -1280,7 +1280,7 @@ package telas
 		private function imagemCarregada(evento:Event):void
 		{
 			
-			trace('imagem carregada');
+			//trace('imagem carregada');
 			
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, imagemCarregada);
 			this._imagem[_imagem.length - 1].loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, imagemErro);
@@ -1330,7 +1330,7 @@ package telas
 		{
 			var imagem:Imagem = evento.target as Imagem;
 			
-			trace('imagem', imagem, evento.target);
+			//trace('imagem', imagem, evento.target);
 			
 			var dados:Object = new Object();
 			
@@ -1340,7 +1340,7 @@ package telas
 				_balao[k].mouseEnabled = false;
 				_balao[k].alpha = 0.5;
 				
-				trace('aplicando alpha em', _balao[k].id);
+				//trace('aplicando alpha em', _balao[k].id);
 			}
 			
 			for (k = 0; k < _imagem.length; k++)
@@ -1352,11 +1352,11 @@ package telas
 			if (imagem != null)
 			{
 				
-				trace('tô aqui');
+				//trace('tô aqui');
 				
 				imagem.alpha = 1;
 				imagem.mouseEnabled = true;
-				trace('arrasta img:', imagem, imagem.id);
+				//trace('arrasta img:', imagem, imagem.id);
 				dados.balao = _balao;
 				dados.imagem = imagem;
 				dados.paginaAtual = paginaAtual;
@@ -1377,7 +1377,7 @@ package telas
 				_balao[i].mouseEnabled = false;
 				_balao[i].alpha = 0.5;
 				
-				trace('aplicando alpha em', _balao[i].id);
+				//trace('aplicando alpha em', _balao[i].id);
 			}
 			for (i = 0; i < _imagem.length; i++)
 			{
@@ -1390,7 +1390,7 @@ package telas
 				balao.alpha = 1;
 				balao.mouseEnabled = true;
 				
-				trace('arrasta', balao.id);
+				//trace('arrasta', balao.id);
 				dados.balao = balao;
 				dados.imagem = _imagem
 				dados.paginaAtual = paginaAtual;
@@ -1404,7 +1404,7 @@ package telas
 		{
 			while (_imagem.length > 0)
 			{
-				trace('dispose exclui pagina');
+				//trace('dispose exclui pagina');
 				_imagem.shift().dispose();
 				
 			}
@@ -1483,7 +1483,7 @@ package telas
 		
 		override public function recebeDados(dados:Object):void
 		{
-			trace('telafotorecu recebeDados');
+			//trace('telafotorecu recebeDados');
 			
 			if (!ObjetoAprendizagem.areaImagem.visible)
 			{
@@ -1528,11 +1528,11 @@ package telas
 					this._imagem[int(dados.numero)].deleteImg();
 					this._imagem.splice(int(dados.numero), 1);
 					
-					trace('total de imagens', this._imagem.length);
+					//trace('total de imagens', this._imagem.length);
 					
 					for (var i:int = 0; i < _imagem.length; i++)
 					{
-						trace('mudando', this._imagem[i].id, 'para', i);
+						//trace('mudando', this._imagem[i].id, 'para', i);
 						this._imagem[i].redefineId(i, paginaAtual);
 					}
 				}
@@ -1553,7 +1553,7 @@ package telas
 				
 			}
 			
-			trace('em recebe dados', this.stage);
+			//trace('em recebe dados', this.stage);
 		
 		}
 		
@@ -1644,7 +1644,7 @@ package telas
 		{
 			// localizando imagem selecionada na biblioteca
 			var img:File = File.applicationDirectory.resolvePath('biblioteca/' + this._telaBiblioteca.selecionado.titulo + '.png');
-			trace("select", img.url);
+			//trace("select", img.url);
 			if (img.exists)
 			{
 				
@@ -1679,7 +1679,7 @@ package telas
 			this._moldura.loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, molduraCarregada);
 			this._moldura.loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR, molduraErro);
 			ObjetoAprendizagem.areaImagem.addCover(this._moldura);
-			trace('paginaAtual', paginaAtual, Main.projeto.paginas.length);
+			//trace('paginaAtual', paginaAtual, Main.projeto.paginas.length);
 			
 			Main.projeto.paginas[paginaAtual].moldura = true;
 		}
@@ -1750,7 +1750,7 @@ package telas
 		
 		private function salvarImagem():void
 		{
-			trace('salvaImagem IMG');
+			//trace('salvaImagem IMG');
 			
 			var stream:FileStream = new FileStream();
 			var regExp:RegExp = /[:|\/|.|&|$|#|*|+|=|<|>|\\|@|%]/g;

@@ -44,7 +44,7 @@ package telas
 			
 			if (this._imagem.width > this._imagem.height)
 			{
-				trace("largura");
+				//trace("largura");
 				this._imagem.width = stage.stageWidth;
 				this._imagem.scaleY = this._imagem.scaleX;
 				this._imagem.y = this.stage.stageHeight / 2 - this._imagem.height / 2;
@@ -52,7 +52,7 @@ package telas
 			}
 			else
 			{
-				trace('altura');
+				//trace('altura');
 				this._imagem.width = stage.stageWidth;
 				this._imagem.scaleY = this._imagem.scaleX;
 				this._imagem.y = stage.stageHeight / 2 - _imagem.height / 2;
@@ -95,7 +95,7 @@ package telas
 			{
 				_link += dados.link as String;
 				_imagem.load(new URLRequest(_link));
-				trace("tela visualizar:", _link);
+				//trace("tela visualizar:", _link);
 			}
 		
 			// add child _image
@@ -104,7 +104,7 @@ package telas
 		
 		private function imagemCarregada(evento:Event):void
 		{
-			trace('carregou', _link)
+			//trace('carregou', _link)
 			addChild(this._imagem);
 			desenho();
 		}

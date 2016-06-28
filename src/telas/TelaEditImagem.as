@@ -287,7 +287,7 @@ package telas
 			else
 			{
 				
-				trace('imagem nao carregada');
+				//trace('imagem nao carregada');
 			}
 		
 		}
