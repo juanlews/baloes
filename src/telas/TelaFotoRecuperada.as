@@ -169,6 +169,8 @@ package telas
 			if (editavel == true)
 			{
 				
+				
+				
 				this._galeria.x = stage.stageWidth / 20;
 				this._galeria.y = stage.stageHeight / 40;
 				this._galeria.width = stage.stageWidth / btscala;
@@ -202,6 +204,15 @@ package telas
 				var numeroExc:Number = this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
 				this._btExcluiPagina.x = (this._addPagina.width + this._addPagina.x) + stage.stageWidth / 20;
 				this._btExcluiPagina.y = stage.stageHeight / 40;
+				
+				var delta:Number = 0;
+				delta = (stage.stageWidth - (6 * this._galeria.width)) / 7;
+				this._galeria.x = delta;
+				this._camera.x = this._galeria.x + this._galeria.width + delta;
+				this._btBiblioteca.x = this._camera.x + this._camera.width + delta;
+				this._addBalao.x = this._btBiblioteca.x + this._btBiblioteca.width + delta;
+				this._addPagina.x = this._addBalao.x + this._addBalao.width + delta;
+				this._btExcluiPagina.x = this._addPagina.x + this._addPagina.width + delta;
 				
 				//botão salvar			
 				this._salvar.width = stage.stageWidth / btscala;
@@ -240,6 +251,16 @@ package telas
 				this._btInfo.scaleX = this._btInfo.scaleY;
 				this._btInfo.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 5;
 				this._btInfo.y = this._cancelar.y;
+				
+				
+				this._salvar.x = delta;
+				this._btInfo.x = this._salvar.x + this._salvar.width + delta;
+				this._btExportarImg.x = this._btInfo.x + this._btInfo.width + delta;
+				this._fullscreen.x = this._btExportarImg.x + this._btExportarImg.width + delta;
+				this._btCompartilhar.x = this._fullscreen.x + this._fullscreen.width + delta;
+				this._cancelar.x = this._btCompartilhar.x + this._btCompartilhar.width + delta;
+				
+				
 				//
 				
 				//imagem recuperada
