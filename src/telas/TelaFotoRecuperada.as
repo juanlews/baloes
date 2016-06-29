@@ -1,7 +1,8 @@
-
 package telas
 {
 	import caurina.transitions.Tweener;
+	import colabora.display.TelaAjuda;
+	import colabora.display.TelaAjuda;
 	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.AnimacaoFrames;
@@ -12,6 +13,7 @@ package telas
 	import flash.display.BitmapData;
 	import flash.display.JPEGEncoderOptions;
 	import flash.display.Loader;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MediaEvent;
@@ -93,6 +95,7 @@ package telas
 		private var _timeArrasta:int = 0;
 		private var _arrasta:Boolean = false;
 		private var salvaMsg:BotaoIcone;
+		private var _telaAjuda:TelaAjuda;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -141,6 +144,16 @@ package telas
 			this._telaMensagem = new TelaMensagemStage(720, 1280, new BotaoIcone(Graficos.ImgPBOK), new BotaoIcone(Graficos.ImgCancelar), 0x666666);
 			this._telaMensagem.addEventListener(Event.COMPLETE, onMensagemComplete);
 			this._telaMensagem.addEventListener(Event.CANCEL, onMensagemCancel);
+			
+			// tela de ajuda
+			var pgAjuda:Vector.<Bitmap> = new Vector.<Bitmap>();
+			for (var iaj:int = 0; iaj <= 16; iaj++) {
+				pgAjuda.push(Graficos.imgAjuda(iaj));
+			}
+			this._telaAjuda = new TelaAjuda(pgAjuda, new BotaoIcone(Graficos.ImgSetaDir), new BotaoIcone(Graficos.ImgSetaEsq), new BotaoIcone(Graficos.ImgCancelar));
+			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp1), 0);
+			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp2), 12);
+			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp3), 16);
 		
 		}
 		
@@ -168,6 +181,8 @@ package telas
 			
 			if (editavel == true)
 			{
+				
+				
 				
 				this._galeria.x = stage.stageWidth / 20;
 				this._galeria.y = stage.stageHeight / 40;
@@ -202,6 +217,15 @@ package telas
 				var numeroExc:Number = this._btExcluiPagina.scaleY = this._btExcluiPagina.scaleX
 				this._btExcluiPagina.x = (this._addPagina.width + this._addPagina.x) + stage.stageWidth / 20;
 				this._btExcluiPagina.y = stage.stageHeight / 40;
+				
+				var delta:Number = 0;
+				delta = (stage.stageWidth - (6 * this._galeria.width)) / 7;
+				this._galeria.x = delta;
+				this._camera.x = this._galeria.x + this._galeria.width + delta;
+				this._btBiblioteca.x = this._camera.x + this._camera.width + delta;
+				this._addBalao.x = this._btBiblioteca.x + this._btBiblioteca.width + delta;
+				this._addPagina.x = this._addBalao.x + this._addBalao.width + delta;
+				this._btExcluiPagina.x = this._addPagina.x + this._addPagina.width + delta;
 				
 				//botão salvar			
 				this._salvar.width = stage.stageWidth / btscala;
@@ -240,6 +264,16 @@ package telas
 				this._btInfo.scaleX = this._btInfo.scaleY;
 				this._btInfo.x = (this.stage.stageWidth - (stage.stage.width / 20) * 2) / 5;
 				this._btInfo.y = this._cancelar.y;
+				
+				
+				this._salvar.x = delta;
+				this._btInfo.x = this._salvar.x + this._salvar.width + delta;
+				this._btExportarImg.x = this._btInfo.x + this._btInfo.width + delta;
+				this._fullscreen.x = this._btExportarImg.x + this._btExportarImg.width + delta;
+				this._btCompartilhar.x = this._fullscreen.x + this._fullscreen.width + delta;
+				this._cancelar.x = this._btCompartilhar.x + this._btCompartilhar.width + delta;
+				
+				
 				//
 				
 				//imagem recuperada
@@ -317,6 +351,7 @@ package telas
 					this._btBiblioteca.addEventListener(MouseEvent.CLICK, adicionaBiblioteca);
 					this._btCompartilhar.addEventListener(MouseEvent.CLICK, compartilhaProjeto);
 					this._btExportarImg.addEventListener(MouseEvent.CLICK, exportaImagem);
+					this._btInfo.addEventListener(MouseEvent.CLICK, mostraHelp);
 					
 					Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 					
@@ -1773,6 +1808,11 @@ package telas
 			this.stage.removeChild(this.salvaMsg);
 			this.mouseEnabled = true;
 			this.stage.addChild(this._telaMensagem);
+		}
+		
+		private function mostraHelp(evt:MouseEvent):void
+		{
+			this.stage.addChild(this._telaAjuda);
 		}
 	
 	}
