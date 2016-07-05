@@ -2,7 +2,6 @@ package telas
 {
 	import caurina.transitions.Tweener;
 	import colabora.display.TelaAjuda;
-	import colabora.display.TelaAjuda;
 	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
 	import componentes.AnimacaoFrames;
@@ -95,7 +94,6 @@ package telas
 		private var _timeArrasta:int = 0;
 		private var _arrasta:Boolean = false;
 		private var salvaMsg:BotaoIcone;
-		private var _telaAjuda:TelaAjuda;
 		
 		//
 		public function TelaFotoRecuperada(funcMudaTela:Function)
@@ -145,16 +143,6 @@ package telas
 			this._telaMensagem.addEventListener(Event.COMPLETE, onMensagemComplete);
 			this._telaMensagem.addEventListener(Event.CANCEL, onMensagemCancel);
 			
-			// tela de ajuda
-			var pgAjuda:Vector.<Bitmap> = new Vector.<Bitmap>();
-			for (var iaj:int = 0; iaj <= 16; iaj++) {
-				pgAjuda.push(Graficos.imgAjuda(iaj));
-			}
-			this._telaAjuda = new TelaAjuda(pgAjuda, new BotaoIcone(Graficos.ImgSetaDir), new BotaoIcone(Graficos.ImgSetaEsq), new BotaoIcone(Graficos.ImgCancelar));
-			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp1), 0);
-			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp2), 12);
-			this._telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp3), 16);
-		
 		}
 		
 		override public function desenho(evento:Event = null):void
@@ -1812,7 +1800,7 @@ package telas
 		
 		private function mostraHelp(evt:MouseEvent):void
 		{
-			this.stage.addChild(this._telaAjuda);
+			this.stage.addChild(Main.telaAjuda);
 		}
 	
 	}

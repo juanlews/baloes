@@ -5,7 +5,7 @@
   <versionNumber>0.1</versionNumber>
   <supportedProfiles>extendedDesktop desktop</supportedProfiles>
   <filename>Baloes</filename>
-  <name>Baloes</name>
+  <name>Narrativas Visuais</name>
   <android>
     <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
 	<uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
@@ -30,7 +30,7 @@
     <requestedDisplayResolution>high</requestedDisplayResolution>
   </iPhone>
   <initialWindow>
-    <title>Baloes</title>
+    <title>Narrativas Visuais</title>
     <content>Baloes.swf</content>
     <visible>true</visible>
     <fullScreen>true</fullScreen>

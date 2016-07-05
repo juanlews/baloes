@@ -2,6 +2,7 @@ package
 {
 	import colabora.display.AreaImagens;
 	import colabora.display.Compartilhamento;
+	import colabora.display.TelaAjuda;
 	import colabora.display.TelaMensagemStage;
 	import colabora.display.TelaSplash;
 	import colabora.oaprendizagem.servidor.Servidor;
@@ -60,6 +61,8 @@ package
 		
 		public static var projeto:ProjetoDados;
 		
+		public static var telaAjuda:TelaAjuda;
+		
 		private var _telas:Array;
 		
 		private var nomeTela:String = '';
@@ -94,6 +97,16 @@ package
 																		
 			// copiando o projeto de exemplo
 			ObjetoAprendizagem.copiaExemplo('achave');
+			
+			// tela de ajuda
+			var pgAjuda:Vector.<Bitmap> = new Vector.<Bitmap>();
+			for (var iaj:int = 0; iaj <= 17; iaj++) {
+				pgAjuda.push(Graficos.imgAjuda(iaj));
+			}
+			Main.telaAjuda = new TelaAjuda(pgAjuda, new BotaoIcone(Graficos.ImgSetaDir), new BotaoIcone(Graficos.ImgSetaEsq), new BotaoIcone(Graficos.ImgCancelar));
+			Main.telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp1), 0);
+			Main.telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp2), 12);
+			Main.telaAjuda.adicionaBotao(new BotaoIcone(Graficos.BTHelp3), 16);
 			
 			// criando área de imagem
 			ObjetoAprendizagem.areaImagem = new AreaImagens(1440, 2560, 0x808080);

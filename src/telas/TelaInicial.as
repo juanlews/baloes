@@ -72,6 +72,7 @@ package telas
 		private var _telaEscolha:EscolhaProjeto;
 		private var _navegaProjeto:File;
 		private var _telaMensagem:TelaMensagemStage;
+		private var _btInfo:BotaoIcone;
 		
 		//
 		private var editavel:Boolean = false;
@@ -92,6 +93,7 @@ package telas
 			this._btOpen = new BotaoIcone(Graficos.ImgOpenFile);
 			this._btArquivos = new BotaoIcone(Graficos.ImgArquivos);
 			this._btReceber = new BotaoIcone(Graficos.ImgReceber);
+			this._btInfo = new BotaoIcone(Graficos.ImgBtInfo);
 			
 			this.addChild(this._galeria);
 			this.addChild(this._btOpen);
@@ -418,12 +420,16 @@ package telas
 			this._btReceber.height = this._btOpen.height;
 			this._btReceber.scaleX = this._btReceber.scaleY;
 			
+			this._btInfo.height = this._btOpen.height;
+			this._btInfo.scaleX = this._btInfo.scaleY;
+			
 			// posicionando botões inferiores
-			var intervaloX:Number = (this.stage.stageWidth - this._btOpen.width - this._btArquivos.width - this._btReceber.width) / 4;
+			var intervaloX:Number = (this.stage.stageWidth - this._btOpen.width - this._btArquivos.width - this._btReceber.width - this._btInfo.width) / 5;
 			this._btArquivos.x = intervaloX;
 			this._btOpen.x = this._btArquivos.x + this._btArquivos.width + intervaloX;
 			this._btReceber.x = this._btOpen.x + this._btOpen.width + intervaloX;
-			this._btArquivos.y = this._btReceber.y = this._btOpen.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
+			this._btInfo.x = this._btReceber.x + this._btReceber.width + intervaloX;
+			this._btArquivos.y = this._btReceber.y = this._btOpen.y = this._btInfo.y = stage.stageHeight - this._btOpen.height - this.stage.stageHeight / 40;
 			
 			// pocisionar e dimensionar help aqui
 			
@@ -447,6 +453,7 @@ package telas
 				this.addChild(this._btOpen);
 				this.addChild(this._btArquivos);
 				this.addChild(this._btReceber);
+				this.addChild(this._btInfo);
 				
 				this._galeria.addEventListener(MouseEvent.CLICK, cliqueGaleria);
 				this._camera.addEventListener(MouseEvent.CLICK, cliqueCamera);
@@ -454,6 +461,7 @@ package telas
 				this._btOpen.addEventListener(MouseEvent.CLICK, cliqueCarregar);
 				this._btArquivos.addEventListener(MouseEvent.CLICK, cliqueArquivos);
 				this._btReceber.addEventListener(MouseEvent.CLICK, cliqueReceber);
+				this._btInfo.addEventListener(MouseEvent.CLICK, mostraHelp);
 				
 				// TROCA DO HELP
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
@@ -810,6 +818,11 @@ package telas
 			this.stage.removeChild(this._telaMensagem);
 		}
 	
+		
+		private function mostraHelp(evt:MouseEvent):void
+		{
+			this.stage.addChild(Main.telaAjuda);
+		}
 	}
 
 }

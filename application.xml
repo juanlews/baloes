@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<application xmlns="http://ns.adobe.com/air/application/20.0">
-<!--<application xmlns="http://ns.adobe.com/air/application/21.0">-->
+<!--<application xmlns="http://ns.adobe.com/air/application/20.0">-->
+<application xmlns="http://ns.adobe.com/air/application/21.0">
   <id>air.Baloes</id>
   <versionNumber>0.1</versionNumber>
   <supportedProfiles>mobileDevice</supportedProfiles>
   <filename>Baloes</filename>
-  <name>Baloes</name>
+  <name>Narrativas Visuais</name>
   <android>
     <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
 	<uses-permission android:name="android.permission.DELETE_CACHE_FILES" />

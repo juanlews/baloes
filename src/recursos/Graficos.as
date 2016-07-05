@@ -251,6 +251,8 @@ package recursos
 		public static var ajuda15:Class;
 		[Embed(source = "help/ajuda16.png", compression="true", quality="80")]
 		public static var ajuda16:Class;
+		[Embed(source = "help/ajuda17.png", compression="true", quality="70")]
+		public static var ajuda17:Class;
 		
 		[Embed(source = "imagens/BTHelp1.png")]
 		public static var BTHelp1:Class;
@@ -285,6 +287,7 @@ package recursos
 				case 14: bmp = new ajuda14() as Bitmap; break;
 				case 15: bmp = new ajuda15() as Bitmap; break;
 				case 16: bmp = new ajuda16() as Bitmap; break;
+				case 17: bmp = new ajuda17() as Bitmap; break;
 			}
 			bmp.smoothing = true;
 			return (bmp);
