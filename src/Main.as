@@ -96,7 +96,7 @@ package
 																		new BotaoIcone(Graficos.GRCompAguarde));
 																		
 			// copiando o projeto de exemplo
-			ObjetoAprendizagem.copiaExemplo('achave');
+			ObjetoAprendizagem.copiaExemplo('exemplo-achave');
 			
 			// tela de ajuda
 			var pgAjuda:Vector.<Bitmap> = new Vector.<Bitmap>();

@@ -1601,17 +1601,26 @@ package telas
 		
 		private function cliqueSalvar(evento:MouseEvent):void
 		{
-			//this.removeBotoes();
-			ObjetoAprendizagem.areaImagem.visible = false;
-			salvarPagina(paginaAtual);
-			var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
-			var bmpCache:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/capa.jpg');
-			var fstream:FileStream = new FileStream();
-			fstream.open(bmpCache, FileMode.WRITE);
-			fstream.writeBytes(bmpArray);
-			fstream.close();
-			
-			this.mudaTela('salvar', null);
+			if (Main.projeto.id == 'exemplo-achave')
+			{
+				this._ultimaAc = 'aviso exemplo';
+				this._telaMensagem.defineMensagem('<b>Atenção!</b><br />&nbsp;<br />Alterações no projeto de exemplo não podem ser gravadas.');
+				this.stage.addChild(this._telaMensagem);
+			}
+			else 
+			{
+				//this.removeBotoes();
+				ObjetoAprendizagem.areaImagem.visible = false;
+				salvarPagina(paginaAtual);
+				var bmpArray:ByteArray = ObjetoAprendizagem.areaImagem.getPicture('jpg', 100);
+				var bmpCache:File = File.documentsDirectory.resolvePath(ObjetoAprendizagem.codigo + '/projetos/' + Main.projeto.id + '/capa.jpg');
+				var fstream:FileStream = new FileStream();
+				fstream.open(bmpCache, FileMode.WRITE);
+				fstream.writeBytes(bmpArray);
+				fstream.close();
+				
+				this.mudaTela('salvar', null);
+			}
 		
 		}
 		

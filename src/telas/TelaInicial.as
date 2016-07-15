@@ -4,6 +4,7 @@ package telas
 	import colabora.display.EscolhaProjeto;
 	import colabora.display.TelaMensagemStage;
 	import colabora.oaprendizagem.dados.ObjetoAprendizagem;
+	import com.adobe.utils.IntUtil;
 	import componentes.Balao;
 	import componentes.BotaoIcone;
 	import componentes.Imagem;
@@ -34,6 +35,8 @@ package telas
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import caurina.transitions.Tweener;
+	import flash.utils.setInterval;
+	import flash.utils.clearInterval;
 	
 	/**
 	 * ...
@@ -52,6 +55,7 @@ package telas
 		private var _imgsHelp:Vector.<Class>;
 		private var _imgAtual:int;
 		private var _help:Bitmap;
+		private var _helpInt:int = -1;
 		private var _imagem:Vector.<Imagem>;
 		//balao
 		private var _balao:Vector.<Balao>;
@@ -104,8 +108,9 @@ package telas
 			this._imgsHelp.push(Graficos.ImgHelp01);
 			this._imgsHelp.push(Graficos.ImgHelp02);
 			this._imgsHelp.push(Graficos.ImgHelp03);
-			this._imgAtual = 0;
+			this._imgAtual = 2;
 			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;
+			this._help.smoothing = true;
 			
 			this.addChild(this._help);
 			
@@ -465,8 +470,9 @@ package telas
 				
 				// TROCA DO HELP
 				Multitouch.inputMode = MultitouchInputMode.GESTURE;
-				stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
+				//stage.addEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 				stage.addEventListener(Event.RESIZE, desenho);
+				
 				
 				ObjetoAprendizagem.areaImagem.visible = false;
 				
@@ -487,8 +493,32 @@ package telas
 				
 				//trace('fiton', definido);
 			}
+			
+			if (this._helpInt < 0) {
+				this._helpInt = setInterval(mudaHelp, 7000);
+			}
 		
 		}
+		
+		private function mudaHelp():void
+		{
+			this._imgAtual++;
+			if (this._imgAtual >= this._imgsHelp.length) this._imgAtual = 0;
+			var animinicial:Number = this._help.x;
+			this.removeChild(this._help);
+			this._help.bitmapData.dispose();
+			this._help = null;
+			this._help = new this._imgsHelp[this._imgAtual]() as Bitmap;
+			this._help.x = animinicial;
+			this._help.smoothing = true;
+			this.addChild(this._help);
+			this._help.width = stage.stageWidth - stage.stageWidth / 10;
+			this._help.scaleY = _help.scaleX;
+			this._help.y = stage.stageHeight / 2 - this._help.height / 2;
+			
+		}
+		
+		
 		private function fechaMsg(evento:Event):void {
 			msg.removeEventListener(Event.COMPLETE, fechaMsg);
 			//trace('fecha');
@@ -582,11 +612,15 @@ package telas
 			this._camera.removeEventListener(MouseEvent.CLICK, cliqueCamera);
 			//this._carregar.removeEventListener(MouseEvent.CLICK, cliqueCarregar);
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
-			stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
+			//stage.removeEventListener(TransformGestureEvent.GESTURE_SWIPE, swipeTela);
 			stage.removeEventListener(Event.RESIZE, desenho);
+			
+			try { clearInterval(this._helpInt); } catch (e:Error) { }
+			this._helpInt = -1;
 		
 		}
 		
+		/*
 		private function swipeTela(evento:TransformGestureEvent):void
 		{
 			// conferir evento.offsetX para saber se foi swipe direita ou esquerda
@@ -613,6 +647,7 @@ package telas
 			addChild(this._help);
 			this.desenho();
 		}
+		*/
 		
 		/**
 		 * O botão "arquivos" foi clicado.
